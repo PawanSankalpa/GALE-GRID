@@ -1,44 +1,27 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./styles/NavBar.css"; 
-import { useNavigate } from "react-router-dom";
 
 function NavBar() {
-
-  const navigate = useNavigate();
-
   const [isActive, setIsActive] = useState(false);
 
   const closeMenu = () => {
     setIsActive(false);
   };
 
-  function goToRegister(){
-    navigate("/register")
-  }
-
-  function goToLogin(){
-    navigate("/login")
-  }
-
-  function goToServices(){
-    navigate("/services")
-  }
-
-  function goToTeam(){
-    navigate("/Team")
-  }
-
-  function goToContact(){
-    navigate("/contact")
-  }
+  // Keyboard handler for hamburger menu toggle
+  const handleMenuKeyDown = (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      setIsActive(!isActive);
+    }
+  };
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" aria-label="Primary navigation">
       <div className="logo">
-        {/* Using NavLink for consistency, though Link would also work here */}
-        <NavLink to="/" onClick={closeMenu}>
-          <img src="images/logo5.png" alt="GaleGrid" />
+        <NavLink to="/" onClick={closeMenu} end>
+          <img src="images/logo5.png" alt="GaleGrid logo" />
         </NavLink>
       </div>
 
@@ -46,9 +29,10 @@ function NavBar() {
       <div
         className={`menu-toggle ${isActive ? "active" : ""}`}
         onClick={() => setIsActive(!isActive)}
-        aria-label="Toggle navigation menu" // Accessibility improvement
-        role="button" // Indicate it's an interactive element
-        tabIndex="0" // Make it focusable
+        onKeyDown={handleMenuKeyDown}
+        aria-label="Toggle navigation menu"
+        role="button"
+        tabIndex={0}
       >
         <span></span>
         <span></span>
@@ -58,33 +42,35 @@ function NavBar() {
       {/* Navigation Links */}
       <ul className={`nav-links ${isActive ? "active" : ""}`}>
         <li>
-          {/* NavLink automatically applies 'active' class when path matches */}
-          <NavLink to="/" onClick={closeMenu} end> {/* 'end' prop for exact match on '/' */}
+          <NavLink to="/" onClick={closeMenu} end>
             Home
           </NavLink>
         </li>
         <li>
-          <NavLink to="/services" onClick={goToServices}>
+          <NavLink to="/services" onClick={closeMenu}>
             Services
           </NavLink>
         </li>
         <li>
-          <NavLink to="/team" onClick={goToTeam}>
+          <NavLink to="/team" onClick={closeMenu}>
             Our Team
           </NavLink>
         </li>
         <li>
-          <NavLink to="/contact" onClick={goToContact}>
+          <NavLink to="/contact" onClick={closeMenu}>
             Contact
           </NavLink>
         </li>
       </ul>
 
-      <div className="login-register-boc">
-        <button className="nav-login" onClick={goToLogin}>Log in</button>
-        <button className="nav-register" onClick={goToRegister}>Register</button>
+      <div className="login-register-box">
+        <NavLink to="/login" className="nav-login" onClick={closeMenu}>
+          Log in
+        </NavLink>
+        <NavLink to="/register" className="nav-register" onClick={closeMenu}>
+          Register
+        </NavLink>
       </div>
-      
     </nav>
   );
 }
