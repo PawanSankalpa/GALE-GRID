@@ -1,0 +1,128 @@
+/* ThemeToggle.css - Revised for clearer icon visibility */
+
+.toggle-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px; /* Example: push it slightly from other navbar items */
+}
+
+.toggle-switch label {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 34px;
+  border-radius: 20px;
+  background-color: #0a090a21; /* Light mode background */
+  transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Important for icons */
+}
+
+/* Dark mode styles for the label */
+.toggle-switch input:checked + .slider {
+  background-color: #f0eeed3b; /* Dark mode background */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space out icons */
+  padding: 0 5px; /* Padding for icons inside the track */
+}
+
+/* Icon styling */
+.icon {
+  font-size: 20px;
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  z-index: 2; /* Ensure icons are above the glow but below handle */
+}
+
+.light-icon {
+  color: #f5f2ee; /* Sun color */
+}
+
+.dark-icon {
+  color: #0a000e; /* Moon/night sky color */
+  /* Initially less prominent */
+  opacity: 0.6;
+}
+
+/* When checked (dark mode) */
+.toggle-switch input:checked + .slider .light-icon {
+  opacity: 0.6; /* Light icon becomes less prominent */
+}
+
+.toggle-switch input:checked + .slider .dark-icon {
+  opacity: 1; /* Dark icon becomes fully visible */
+}
+
+/* Handle (the circular draggable part) */
+.handle {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background-color: #151414;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3; /* Ensure handle is on top */
+}
+
+.toggle-switch input:checked + .slider .handle {
+  transform: translateX(36px); /* Move handle to the right for dark mode */
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Glow effect (behind the handle) - Adjusted */
+.glow {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  pointer-events: none;
+  z-index: 1; /* Behind handle and icons */
+  top: 1px; /* Align with handle */
+  left: 1px; /* Align with handle */
+}
+
+/* Animate glow on hover/focus */
+.toggle-switch label:hover .glow,
+.toggle-switch input:focus + .slider .glow {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Glow specific to light/dark mode */
+.toggle-switch input:not(:checked) + .slider .glow {
+  background: radial-gradient(circle, rgba(243, 156, 18, 0.3) 0%, rgba(243, 156, 18, 0) 70%);
+}
+
+.toggle-switch input:checked + .slider .glow {
+  background: radial-gradient(circle, rgba(155, 89, 182, 0.3) 0%, rgba(155, 89, 182, 0) 70%);
+  transform: translateX(36px) scale(1);
+  opacity: 1;
+}
+
+/* Accessibility: Focus outline */
+.toggle-switch input:focus-visible + .slider {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}

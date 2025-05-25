@@ -1,6 +1,12 @@
-/* Services.css */
+/* ================================================== */
+/* Services Section - Light and Dark Mode Styles */
+/* Light theme uses bright teal, dark cyan, and light gray palette */
+/* Dark theme uses greenish luxury purple (#6B4E9B), rich cyan (#26C6DA), and antique gold (#D4AF37) palette for an eye-comfy, luxurious look */
+/* ================================================== */
 
-/* Color Variables (matching your light theme) */
+/* ------------------------------------ */
+/* Color Variables (Light Theme) */
+/* ------------------------------------ */
 :root {
   --primary: #21E0B2; /* Bright Teal */
   --primary-dark: #00A389; /* Darker Cyan */
@@ -17,7 +23,9 @@
   --border-radius-lg: 16px;
 }
 
-/* Base page container */
+/* ------------------------------------ */
+/* Light Theme - Base Page Container */
+/* ------------------------------------ */
 .services-page {
   padding: 4rem 2rem;
   max-width: 1200px;
@@ -25,10 +33,12 @@
   background-color: var(--gray-light);
   color: var(--text);
   font-family: 'Inter', system-ui, sans-serif;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-x: hidden;
 }
 
-/* Intro Section */
+/* ------------------------------------ */
+/* Light Theme - Intro Section */
+/* ------------------------------------ */
 .services-intro {
   text-align: center;
   margin-bottom: 4rem;
@@ -55,7 +65,9 @@
   animation: fadeIn 1s ease-out 0.2s both;
 }
 
-/* Core and Additional Services Sections */
+/* ------------------------------------ */
+/* Light Theme - Core and Additional Services Sections */
+/* ------------------------------------ */
 .services-section {
   margin-bottom: 5rem;
 }
@@ -127,12 +139,12 @@
 .service-icon {
   margin-bottom: 1.5rem;
   transition: transform var(--transition-speed), color var(--transition-speed);
-  display: inline-block; /* Ensures transform works */
+  display: inline-block;
 }
 
 .service-card:hover .service-icon {
   transform: scale(1.15) rotate(5deg);
-  color: var(--primary-dark); /* Darker teal on hover */
+  color: var(--primary-dark);
 }
 
 .service-card h3 {
@@ -144,17 +156,19 @@
 }
 
 .service-card:hover h3 {
-  color: var(--primary); /* Teal on hover */
+  color: var(--primary);
 }
 
 .service-card p {
   font-size: clamp(0.95rem, 1.8vw, 1.05rem);
   color: var(--text-light);
   line-height: 1.6;
-  flex-grow: 1; /* Allows description to take available space */
+  flex-grow: 1;
 }
 
-/* Why Choose Us Section */
+/* ------------------------------------ */
+/* Light Theme - Why Choose Us Section */
+/* ------------------------------------ */
 .services-highlight {
   background-color: var(--white);
   border-radius: var(--border-radius-lg);
@@ -177,39 +191,37 @@
   padding: 0;
   max-width: 800px;
   margin: 0 auto;
-  /* NEW: Grid container for icon-li pairs */
   display: grid;
-  grid-template-columns: auto 1fr; /* First column for icon, second for text */
-  gap: 0.5rem 1rem; /* Row gap, column gap */
-  align-items: flex-start; /* Align icon and text to the top of their row */
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1rem;
+  align-items: flex-start;
 }
 
-/* Styling for the directly placed SVG icons within the ul */
 .services-highlight ul > svg {
-  color: var(--primary); /* Apply the primary color to the icons */
-  font-size: 25px; /* Ensure consistent icon size as per JSX */
-  margin-top: 0.2rem; /* Slight adjustment to align with text baseline */
-  flex-shrink: 0; /* Prevent icon from shrinking */
+  color: var(--primary);
+  font-size: 25px;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
 }
 
 .services-highlight li {
   font-size: clamp(1rem, 2vw, 1.1rem);
   color: var(--text);
   line-height: 1.8;
-  margin-bottom: 0; /* Reset margin-bottom as gap handles it */
-  padding-left: 0; /* Remove padding-left as icon is now a sibling */
-  position: static; /* Reset position */
-  /* No need for display: flex here unless content within li needs it */
+  margin-bottom: 0;
+  padding-left: 0;
+  position: static;
 }
 
 .services-highlight li::before {
-  /* REMOVED: All content and positioning for the checkmark emoji, as icons are now directly in JSX */
   content: none;
   position: static;
   transform: none;
 }
 
-/* Call to Action Section */
+/* ------------------------------------ */
+/* Light Theme - Call to Action Section */
+/* ------------------------------------ */
 .services-cta {
   text-align: center;
   padding: 2rem 1rem;
@@ -240,7 +252,7 @@
   background-color: var(--white);
   color: var(--primary-dark);
   text-decoration: none;
-  border-radius: 50px; /* Pill shape */
+  border-radius: 50px;
   font-weight: 700;
   font-size: clamp(1rem, 2vw, 1.1rem);
   transition: var(--transition-speed);
@@ -254,7 +266,290 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
-/* Animations */
+/* ------------------------------------ */
+/* Light Theme - Company Philosophy Section */
+/* ------------------------------------ */
+.company-philosophy {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  margin: 40px auto;
+  border-radius: 8px;
+  max-width: 900px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.company-philosophy h2 {
+  color: #00A389;
+  margin-bottom: 20px;
+  font-size: 2.2em;
+}
+
+.company-philosophy p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.company-philosophy ul {
+  list-style: none;
+  padding: 0;
+  margin: 25px 0;
+  text-align: left;
+}
+
+.company-philosophy ul li {
+  background-color: #e6f7f5;
+  padding: 15px;
+  border-left: 5px solid #00A389;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-size: 1em;
+  line-height: 1.5;
+  color: #333;
+}
+
+.company-philosophy ul li strong {
+  color: #007B6B;
+  font-size: 1.1em;
+}
+
+/* ------------------------------------ */
+/* Light Theme - Contact Action Section */
+/* ------------------------------------ */
+.contact-action-section {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #00A389 0%, #007B6B 100%);
+  color: #ffffff;
+  margin: 60px 0;
+  border-radius: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.contact-action-section:hover {
+  transform: translateY(-5px);
+}
+
+.contact-action-section h2 {
+  font-size: 2.8em;
+  margin-bottom: 15px;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.contact-action-section p {
+  font-size: 1.4em;
+  line-height: 1.6;
+  margin-bottom: 35px;
+  font-weight: 300;
+}
+
+.contact-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #ffffff;
+  color: #007B6B;
+  padding: 18px 40px;
+  font-size: 1.3em;
+  font-weight: bold;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border: 2px solid transparent;
+}
+
+.contact-button:hover {
+  background-color: #e6f7f5;
+  color: #005f52;
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+  border-color: #00A389;
+}
+
+.contact-button .button-icon {
+  font-size: 1.1em;
+  transition: transform 0.3s ease;
+}
+
+.contact-button:hover .button-icon {
+  transform: translateX(5px);
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Base Page Container */
+/* ------------------------------------ */
+.dark .services-page {
+  background-color: #1E1E1E; /* Dark gray for eye-comfy backdrop */
+  color: #E8E8E8; /* Soft off-white for readability */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Intro Section */
+/* ------------------------------------ */
+.dark .services-intro h1 {
+  background: linear-gradient(90deg, #6B4E9B, #26C6DA); /* Purple to cyan */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.dark .services-intro p {
+  color: #B0B0B0; /* Muted silver for secondary text */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Core and Additional Services Sections */
+/* ------------------------------------ */
+.dark .services-section h2 {
+  color: #E8E8E8; /* Off-white for readability */
+}
+
+.dark .services-section h2::after {
+  background: linear-gradient(90deg, #6B4E9B, #26C6DA); /* Purple to cyan */
+}
+
+.dark .service-card {
+  background-color: #2A2A2A; /* Slightly lighter gray for cards */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Darker shadow */
+  border: 1px solid rgba(107, 78, 155, 0.2); /* Subtle purple border */
+}
+
+.dark .service-card::before {
+  background: radial-gradient(circle at 50% 0%, rgba(38, 198, 218, 0.05), transparent 60%); /* Subtle cyan gradient */
+}
+
+.dark .service-card:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); /* Enhanced shadow */
+  border-color: #26C6DA; /* Cyan on hover */
+}
+
+.dark .service-card:hover .service-icon {
+  color: #26C6DA; /* Cyan on hover */
+}
+
+.dark .service-card h3 {
+  color: #E8E8E8; /* Off-white for readability */
+}
+
+.dark .service-card:hover h3 {
+  color: #26C6DA; /* Cyan on hover */
+}
+
+.dark .service-card p {
+  color: #B0B0B0; /* Muted silver for secondary text */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Why Choose Us Section */
+/* ------------------------------------ */
+.dark .services-highlight {
+  background-color: #2A2A2A; /* Slightly lighter gray */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Darker shadow */
+}
+
+.dark .services-highlight h2 {
+  color: #6B4E9B; /* Luxury purple */
+}
+
+.dark .services-highlight ul > svg {
+  color: #26C6DA; /* Cyan for icons */
+}
+
+.dark .services-highlight li {
+  color: #E8E8E8; /* Off-white for readability */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Call to Action Section */
+/* ------------------------------------ */
+.dark .services-cta {
+  background-color: #2A2A2A; /* Slightly lighter gray */
+  color: #E8E8E8; /* Off-white for readability */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Darker shadow */
+}
+
+.dark .services-cta h2 {
+  color: #E8E8E8; /* Off-white */
+}
+
+.dark .services-cta p {
+  color: #B0B0B0; /* Muted silver */
+}
+
+.dark .cta-button {
+  background-color: #E8E8E8; /* Off-white */
+  color: #6B4E9B; /* Purple for text */
+}
+
+.dark .cta-button:hover {
+  background-color: #D4AF37; /* Gold on hover */
+  color: #1E1E1E; /* Dark gray for contrast */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Darker shadow */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Company Philosophy Section */
+/* ------------------------------------ */
+.dark .company-philosophy {
+  background-color: #2A2A2A; /* Slightly lighter gray */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Darker shadow */
+}
+
+.dark .company-philosophy h2 {
+  color: #26C6DA; /* Cyan for heading */
+}
+
+.dark .company-philosophy p {
+  color: #B0B0B0; /* Muted silver */
+}
+
+.dark .company-philosophy ul li {
+  background-color: rgba(38, 198, 218, 0.1); /* Subtle cyan background */
+  border-left: 5px solid #26C6DA; /* Cyan border */
+  color: #E8E8E8; /* Off-white for readability */
+}
+
+.dark .company-philosophy ul li strong {
+  color: #D4AF37; /* Gold for emphasis */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Contact Action Section */
+/* ------------------------------------ */
+.dark .contact-action-section {
+  background: linear-gradient(135deg, #6B4E9B 0%, #26C6DA 100%); /* Purple to cyan gradient */
+  color: #E8E8E8; /* Off-white for readability */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Darker shadow */
+}
+
+.dark .contact-action-section h2 {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Slightly darker shadow */
+}
+
+.dark .contact-action-section p {
+  color: #B0B0B0; /* Muted silver */
+}
+
+.dark .contact-button {
+  background-color: #E8E8E8; /* Off-white */
+  color: #6B4E9B; /* Purple for text */
+}
+
+.dark .contact-button:hover {
+  background-color: #5be79a; /* Gold on hover */
+  color: #1E1E1E; /* Dark gray for contrast */
+  border-color: #5be79a; /* Gold border */
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5); /* Darker shadow */
+}
+
+/* ------------------------------------ */
+/* Shared - Animations */
+/* ------------------------------------ */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -271,285 +566,208 @@
   }
 }
 
-/* Responsive Adjustments */
+/* ------------------------------------ */
+/* Responsive Adjustments (Both Themes) */
+/* ------------------------------------ */
 @media (max-width: 1024px) {
-  .services-page {
+  .services-page,
+  .dark .services-page {
     padding: 3rem 1.5rem;
   }
 
-  .services-intro h1 {
+  .services-intro h1,
+  .dark .services-intro h1 {
     font-size: clamp(2rem, 5vw, 3rem);
   }
 
-  .services-intro p {
+  .services-intro p,
+  .dark .services-intro p {
     font-size: clamp(0.95rem, 1.8vw, 1.1rem);
   }
 
-  .services-section h2 {
+  .services-section h2,
+  .dark .services-section h2 {
     font-size: clamp(1.8rem, 4.5vw, 2.5rem);
   }
 
-  .service-card {
+  .service-card,
+  .dark .service-card {
     padding: 2rem;
   }
 
-  .service-card h3 {
+  .service-card h3,
+  .dark .service-card h3 {
     font-size: clamp(1.2rem, 2.2vw, 1.5rem);
   }
 
-  .service-card p {
+  .service-card p,
+  .dark .service-card p {
     font-size: clamp(0.9rem, 1.6vw, 1rem);
   }
 
-  .services-highlight {
+  .services-highlight,
+  .dark .services-highlight {
     padding: 2.5rem;
   }
 
-  .services-highlight h2 {
+  .services-highlight h2,
+  .dark .services-highlight h2 {
     font-size: clamp(1.8rem, 4.5vw, 2.2rem);
   }
 
-  .services-highlight li {
+  .services-highlight li,
+  .dark .services-highlight li {
     font-size: clamp(0.95rem, 1.8vw, 1.05rem);
   }
 
-  .services-cta h2 {
+  .services-cta h2,
+  .dark .services-cta h2 {
     font-size: clamp(1.8rem, 4.5vw, 2.5rem);
   }
 
-  .services-cta p {
+  .services-cta p,
+  .dark .services-cta p {
     font-size: clamp(0.95rem, 1.8vw, 1.1rem);
   }
 
-  .cta-button {
+  .cta-button,
+  .dark .cta-button {
     padding: 0.8rem 2rem;
     font-size: clamp(0.95rem, 1.8vw, 1.05rem);
   }
 }
 
 @media (max-width: 768px) {
-  .services-page {
+  .services-page,
+  .dark .services-page {
     padding: 2rem 1rem;
   }
 
-  .services-intro {
+  .services-intro,
+  .dark .services-intro {
     margin-bottom: 3rem;
   }
 
-  .services-section {
+  .services-section,
+  .dark .services-section {
     margin-bottom: 4rem;
   }
 
-  .services-grid {
-    grid-template-columns: 1fr; /* Stack cards on smaller screens */
+  .services-grid,
+  .dark .services-grid {
+    grid-template-columns: 1fr;
     gap: 2rem;
   }
 
-  .service-card {
+  .service-card,
+  .dark .service-card {
     padding: 1.5rem;
   }
 
-  .services-highlight {
+  .services-highlight,
+  .dark .services-highlight {
     padding: 2rem;
   }
 
-  .services-highlight ul {
-    grid-template-columns: auto 1fr; /* Maintain grid for icon-li alignment */
+  .services-highlight ul,
+  .dark .services-highlight ul {
+    grid-template-columns: auto 1fr;
     gap: 0.5rem 0.8rem;
   }
 
-  .services-highlight li {
-    padding-left: 0; /* Ensure no extra padding */
+  .services-highlight li,
+  .dark .services-highlight li {
+    padding-left: 0;
   }
 
-  .services-cta {
+  .services-cta,
+  .dark .services-cta {
     padding: 1.5rem;
+  }
+
+  .contact-action-section,
+  .dark .contact-action-section {
+    padding: 40px 15px;
+    margin: 40px 0;
+  }
+
+  .contact-action-section h2,
+  .dark .contact-action-section h2 {
+    font-size: 2em;
+  }
+
+  .contact-action-section p,
+  .dark .contact-action-section p {
+    font-size: 1.1em;
+  }
+
+  .contact-button,
+  .dark .contact-button {
+    padding: 15px 30px;
+    font-size: 1.1em;
   }
 }
 
 @media (max-width: 480px) {
-  .services-intro h1 {
+  .services-intro h1,
+  .dark .services-intro h1 {
     font-size: clamp(1.8rem, 5vw, 2.5rem);
   }
 
-  .services-intro p {
+  .services-intro p,
+  .dark .services-intro p {
     font-size: clamp(0.9rem, 2vw, 1rem);
   }
 
-  .services-section h2 {
+  .services-section h2,
+  .dark .services-section h2 {
     font-size: clamp(1.6rem, 4vw, 2rem);
     margin-bottom: 2rem;
   }
 
-  .service-card {
+  .service-card,
+  .dark .service-card {
     padding: 1.25rem;
   }
 
-  .service-card h3 {
+  .service-card h3,
+  .dark .service-card h3 {
     font-size: clamp(1.1rem, 2.5vw, 1.3rem);
   }
 
-  .service-card p {
+  .service-card p,
+  .dark .service-card p {
     font-size: clamp(0.85rem, 1.8vw, 0.95rem);
   }
 
-  .services-highlight h2 {
+  .services-highlight h2,
+  .dark .services-highlight h2 {
     font-size: clamp(1.6rem, 4vw, 2rem);
   }
 
-  .services-highlight ul {
+  .services-highlight ul,
+  .dark .services-highlight ul {
     gap: 0.4rem 0.6rem;
   }
 
-  .services-highlight li {
+  .services-highlight li,
+  .dark .services-highlight li {
     font-size: clamp(0.85rem, 1.8vw, 0.95rem);
   }
 
-  .services-cta h2 {
+  .services-cta h2,
+  .dark .services-cta h2 {
     font-size: clamp(1.6rem, 4vw, 2rem);
   }
 
-  .services-cta p {
+  .services-cta p,
+  .dark .services-cta p {
     font-size: clamp(0.9rem, 2vw, 1rem);
   }
 
-  .cta-button {
+  .cta-button,
+  .dark .cta-button {
     padding: 0.7rem 1.8rem;
     font-size: clamp(0.9rem, 2vw, 1rem);
   }
-}
-
-/* Services.css additions */
-
-.company-philosophy {
-    text-align: center;
-    padding: 40px 20px;
-    background-color: #f9f9f9; /* Light background for separation */
-    margin: 40px auto;
-    border-radius: 8px;
-    max-width: 900px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-}
-
-.company-philosophy h2 {
-    color: #00A389; /* Your primary color */
-    margin-bottom: 20px;
-    font-size: 2.2em;
-}
-
-.company-philosophy p {
-    font-size: 1.1em;
-    line-height: 1.6;
-    color: #555;
-    margin-bottom: 15px;
-}
-
-.company-philosophy ul {
-    list-style: none;
-    padding: 0;
-    margin: 25px 0;
-    text-align: left; /* Align list items left */
-}
-
-.company-philosophy ul li {
-    background-color: #e6f7f5; /* Lighter background for list items */
-    padding: 15px;
-    border-left: 5px solid #00A389;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    font-size: 1em;
-    line-height: 1.5;
-    color: #333;
-}
-
-.company-philosophy ul li strong {
-    color: #007B6B; /* Slightly darker shade for emphasis */
-    font-size: 1.1em;
-}
-
-/* Existing styles below this */
-
-/* New Contact Action Section Styles */
-/* New Contact Action Section Styles */
-.contact-action-section {
-    text-align: center;
-    padding: 60px 20px; /* Generous padding */
-    background: linear-gradient(135deg, #00A389 0%, #007B6B 100%); /* Gradient background */
-    color: #ffffff; /* White text for contrast */
-    /* Changed to span full width */
-    margin: 60px 0; /* 60px top/bottom margin, 0 left/right margin */
-    /* max-width: 900px;  REMOVE THIS LINE */
-    border-radius: 0; /* Remove border-radius for full width, or adjust as desired */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Stronger shadow for pop */
-    transition: transform 0.3s ease-in-out;
-}
-
-.contact-action-section:hover {
-    transform: translateY(-5px); /* Subtle lift on hover */
-}
-
-.contact-action-section h2 {
-    font-size: 2.8em; /* Larger, more impactful heading */
-    margin-bottom: 15px;
-    font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Text shadow for depth */
-}
-
-.contact-action-section p {
-    font-size: 1.4em; /* Clear, inviting paragraph */
-    line-height: 1.6;
-    margin-bottom: 35px;
-    font-weight: 300; /* Lighter font weight for readability */
-}
-
-.contact-button {
-    display: inline-flex; /* Use flexbox for button content (text + icon) */
-    align-items: center; /* Vertically align text and icon */
-    gap: 10px; /* Space between text and icon */
-    background-color: #ffffff; /* White button for contrast */
-    color: #007B6B; /* Your primary green for button text */
-    padding: 18px 40px; /* Larger padding for a more substantial button */
-    font-size: 1.3em;
-    font-weight: bold;
-    border-radius: 50px;
-    text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    border: 2px solid transparent; /* Start with transparent border */
-}
-
-.contact-button:hover {
-    background-color: #e6f7f5; /* Light green on hover */
-    color: #005f52; /* Darker green for text on hover */
-    transform: translateY(-5px) scale(1.02); /* More pronounced lift and slight scale */
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
-    border-color: #00A389; /* Border appears on hover */
-}
-
-.contact-button .button-icon {
-    font-size: 1.1em; /* Adjust icon size */
-    transition: transform 0.3s ease;
-}
-
-.contact-button:hover .button-icon {
-    transform: translateX(5px); /* Move icon slightly right on hover */
-}
-
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-    .contact-action-section {
-        padding: 40px 15px;
-        /* margin: 40px auto; REMOVED as it will be full width */
-        margin: 40px 0; /* Maintain top/bottom margin, full width */
-    }
-    .contact-action-section h2 {
-        font-size: 2em;
-    }
-    .contact-action-section p {
-        font-size: 1.1em;
-    }
-    .contact-button {
-        padding: 15px 30px;
-        font-size: 1.1em;
-    }
 }

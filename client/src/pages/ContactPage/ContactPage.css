@@ -1,7 +1,13 @@
-/* ContactPage.css */
+/* ================================================== */
+/* Contact Page - Light and Dark Mode Styles */
+/* Light theme uses soft blue, teal, and gray palette */
+/* Dark theme uses greenish luxury purple (#6B4E9B), rich cyan (#26C6DA), and antique gold (#D4AF37) palette for an eye-comfy, luxurious look */
+/* ================================================== */
 
+/* ------------------------------------ */
+/* Color Variables (Light Theme) */
+/* ------------------------------------ */
 :root {
-  /* Soft Color Palette */
   --soft-blue: #e6f2ff;
   --light-gray: #f8f9fa;
   --medium-gray: #e9ecef;
@@ -15,6 +21,9 @@
   --transition: all 0.3s ease;
 }
 
+/* ------------------------------------ */
+/* Light Theme - Contact Page */
+/* ------------------------------------ */
 .contact-page {
   max-width: 800px;
   margin: 2rem auto;
@@ -23,6 +32,9 @@
   color: var(--dark-gray);
 }
 
+/* ------------------------------------ */
+/* Light Theme - Heading */
+/* ------------------------------------ */
 .contact-page h2 {
   text-align: center;
   color: var(--dark-gray);
@@ -31,6 +43,9 @@
   font-size: 2rem;
 }
 
+/* ------------------------------------ */
+/* Light Theme - Contact Form */
+/* ------------------------------------ */
 .contact-form {
   display: flex;
   flex-direction: column;
@@ -91,47 +106,117 @@
   transform: translateY(0);
 }
 
-/* Placeholder styling */
+/* ------------------------------------ */
+/* Light Theme - Placeholder Styling */
+/* ------------------------------------ */
 ::placeholder {
   color: #adb5bd;
   opacity: 1;
 }
 
-/* Responsive Adjustments */
+/* ------------------------------------ */
+/* Dark Theme - Contact Page */
+/* ------------------------------------ */
+.dark .contact-page {
+  color: #E8E8E8; /* Soft off-white for readability */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Heading */
+/* ------------------------------------ */
+.dark .contact-page h2 {
+  color: #E8E8E8; /* Off-white for readability */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Contact Form */
+/* ------------------------------------ */
+.dark .contact-form {
+  background-color: #2A2A2A; /* Slightly lighter gray for form */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); /* Darker shadow */
+}
+
+.dark .contact-form input,
+.dark .contact-form select,
+.dark .contact-form textarea {
+  border: 1px solid #B0B0B0; /* Muted silver for borders */
+  background-color: #333333; /* Slightly darker gray for inputs */
+  color: #E8E8E8; /* Off-white for text */
+}
+
+.dark .contact-form input:focus,
+.dark .contact-form select:focus,
+.dark .contact-form textarea:focus {
+  border-color: #6B4E9B; /* Luxury purple for focus */
+  box-shadow: 0 0 0 2px rgba(107, 78, 155, 0.2); /* Subtle purple glow */
+  background-color: #2A2A2A; /* Match form background */
+}
+
+.dark .contact-form button {
+  background-color: #44a8c9f4; /* Cyan for button */
+  color: #1E1E1E; /* Dark gray for contrast */
+}
+
+.dark .contact-form button:hover {
+  background-color: #24750bf2; /* Gold on hover */
+  color: #1E1E1E; /* Dark gray for contrast */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); /* Darker shadow */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Placeholder Styling */
+/* ------------------------------------ */
+.dark ::placeholder {
+  color: #fdfdfc; /* Gold for placeholders */
+}
+
+/* ------------------------------------ */
+/* Responsive Adjustments (Both Themes) */
+/* ------------------------------------ */
 @media (max-width: 768px) {
-  .contact-page {
+  .contact-page,
+  .dark .contact-page {
     padding: 1rem;
     margin: 1rem auto;
   }
   
-  .contact-form {
+  .contact-form,
+  .dark .contact-form {
     padding: 1.5rem;
   }
   
-  .contact-page h2 {
+  .contact-page h2,
+  .dark .contact-page h2 {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
   }
 }
 
 @media (max-width: 480px) {
-  .contact-form {
+  .contact-form,
+  .dark .contact-form {
     gap: 1rem;
     padding: 1rem;
   }
   
   .contact-form input,
   .contact-form select,
-  .contact-form textarea {
+  .contact-form textarea,
+  .dark .contact-form input,
+  .dark .contact-form select,
+  .dark .contact-form textarea {
     padding: 0.7rem;
   }
   
-  .contact-form button {
+  .contact-form button,
+  .dark .contact-form button {
     padding: 0.8rem;
   }
 }
 
-/* Animation for form elements */
+/* ------------------------------------ */
+/* Animation for Form Elements (Both Themes) */
+/* ------------------------------------ */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }

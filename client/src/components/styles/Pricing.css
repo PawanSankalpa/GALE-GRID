@@ -232,3 +232,78 @@
     padding: 1.5rem 1rem;
   }
 }
+
+
+/* ================================= */
+/* Ultra-Readable Luxury Dark Theme */
+/* Only color values changed */
+/* ================================= */
+
+.dark .gale-home-container {
+  background: #111827; /* Deep navy base */
+  color: #f3f4f6;     /* Bright soft white */
+}
+
+.dark .gale-home-title {
+  background: linear-gradient(90deg, #10b981, #3b82f6); /* Emerald to royal blue */
+}
+
+.dark .gale-home-subtitle {
+  color: #9ca3af;      /* Medium gray */
+}
+
+/* Cards */
+.dark .gale-home-package-card {
+  background: #1f2937;  /* Dark slate */
+  border: 1px solid #374151;
+}
+
+/* Text */
+.dark .gale-home-package-name {
+  color: #ffffff;      /* Pure white */
+}
+
+.dark .gale-home-package-price {
+  color: #3b82f6;      /* Vibrant blue */
+}
+
+.dark .gale-home-package-price::after {
+  color: #6b7280;      /* Dark gray */
+}
+
+/* Features */
+.dark .gale-home-package-features li {
+  color: #e5e7eb;      /* Light gray */
+}
+
+.dark .gale-home-package-features li::before {
+  color: #10b981;      /* Emerald check */
+}
+
+/* Buttons */
+.dark .gale-home-explore-button {
+  background: #10b981;  /* Emerald green */
+  color: #111827;       /* Dark text */
+}
+
+/* Premium Tier */
+.dark .gale-home-package-card.premium {
+  border-color: #d97706; /* Amber */
+}
+
+.dark .gale-home-package-card.premium .gale-home-package-name,
+.dark .gale-home-package-card.premium .gale-home-package-price {
+  color: #d97706;       /* Amber */
+}
+
+.dark .gale-home-package-card.premium .gale-home-explore-button {
+  background: #d97706;  /* Amber */
+  color: #111827;       /* Dark text */
+}
+
+.dark .gale-home-title {
+  background: none;
+  color: #00FFAA; /* Solid bright teal */
+  -webkit-text-stroke: 0.7px #000;
+  text-shadow: 0 0 10px rgba(0,255,170,0.3);
+}

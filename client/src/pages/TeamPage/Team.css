@@ -1,102 +1,67 @@
-/* Team.css - Styled to match GALE GRID's aesthetic */
+/* ================================================== */
+/* Team Section - Light and Dark Mode Styles */
+/* Light theme uses bright teal, dark cyan, violet, and pink palette */
+/* Dark theme uses greenish luxury purple (#6B4E9B), rich cyan (#26C6DA), and antique gold (#D4AF37) palette for an eye-comfy, luxurious look */
+/* ================================================== */
 
-/*
-   ------------------------------------------------------------
-   COLOR VARIABLES
-   Ensuring these match your existing theme for consistency.
-   ------------------------------------------------------------
-*/
+/* ------------------------------------ */
+/* Color Variables (Light Theme) */
+/* ------------------------------------ */
 :root {
   --bright-teal: #21E0B2;         /* Bright Teal */
   --dark-cyan: #00A389;           /* Darker Cyan */
   --accent-violet: #A78BFA;       /* From Pricing.css */
   --accent-pink: #FF5C76;         /* From Services.css */
-
-  /* General Text & Backgrounds */
   --dark-text: #333333;           /* Dark Gray for main text */
   --light-bg-primary: #F8F8F8;    /* Very light gray background */
   --light-bg-secondary: #FFFFFF;  /* Pure white for card backgrounds */
   --light-text-secondary: #666666; /* Slightly lighter gray for secondary text */
-
-  /* Shadows & Borders */
   --subtle-shadow: rgba(0, 0, 0, 0.08);
   --light-shadow: rgba(0, 0, 0, 0.1);
   --light-border: rgba(0, 0, 0, 0.08);
-
-  /* Transitions */
   --transition-fast: all 0.2s ease-out;
   --transition-medium: all 0.3s ease-in-out;
-  --transition-slow: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); /* From Services.css */
+  --transition-slow: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/*
-   ------------------------------------------------------------
-   PAGE CONTAINER
-   Base styling for the entire team page content.
-   ------------------------------------------------------------
-*/
+/* ------------------------------------ */
+/* Light Theme - Page Container */
+/* ------------------------------------ */
 .team-page {
-  padding: 4rem 8vw; /* Consistent padding with other sections */
+  padding: 4rem 8vw;
   background-color: var(--light-bg-primary);
   color: var(--dark-text);
   font-family: 'Inter', system-ui, sans-serif;
-  text-align: center; /* Center aligns title and sections */
+  text-align: center;
 }
 
-/*
-   ------------------------------------------------------------
-   PAGE TITLE
-   Styling for the main "Meet Our Team" heading.
-   ------------------------------------------------------------
-*/
+/* ------------------------------------ */
+/* Light Theme - Page Title */
+/* ------------------------------------ */
 .team-title {
   font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 800;
-  margin-bottom: 3.5rem; /* More space below the title */
+  margin-bottom: 3.5rem;
   background: linear-gradient(90deg, var(--accent-violet), var(--bright-teal));
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent; /* Makes text transparent to show gradient */
-  display: inline-block; /* To apply gradient correctly */
-  position: relative; /* For potential underline effect */
+  color: transparent;
+  display: inline-block;
+  position: relative;
 }
 
-/* You could add an underline similar to the Services title if desired: */
-/*
-.team-title::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--bright-teal), var(--accent-pink));
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
-}
-
-.team-title:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-*/
-
-/*
-   ------------------------------------------------------------
-   OWNER SECTION
-   Styling for the founder's information.
-   ------------------------------------------------------------
-*/
+/* ------------------------------------ */
+/* Light Theme - Owner Section */
+/* ------------------------------------ */
 .owner-section {
   background-color: var(--light-bg-secondary);
   border-radius: 18px;
   padding: 3rem 2.5rem;
   box-shadow: 0 10px 25px var(--light-shadow);
   border: 1px solid var(--light-border);
-  max-width: 800px; /* Constrain width for readability */
-  margin: 0 auto 4rem auto; /* Center and add space below */
-  text-align: left; /* Align text within section */
+  max-width: 800px;
+  margin: 0 auto 4rem auto;
+  text-align: left;
   position: relative;
   overflow: hidden;
   transition: var(--transition-slow);
@@ -121,7 +86,7 @@
 .owner-title {
   font-size: clamp(1.1rem, 2vw, 1.4rem);
   font-weight: 500;
-  color: rgb(68, 0, 128); /* Use accent pink for contrast */
+  color: var(--accent-pink);
   margin-bottom: 1.5rem;
 }
 
@@ -144,15 +109,15 @@
   padding: 0;
   margin: 0 0 1.5rem 0;
   display: flex;
-  flex-wrap: wrap; /* Allows skills to wrap */
-  gap: 0.75rem; /* Space between skill items */
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 .skill-item {
-  background-color: var(--gray); /* Use a soft gray or primary light */
+  background-color: var(--gray);
   color: var(--dark-text);
   padding: 0.5rem 1rem;
-  border-radius: 8px; /* Slightly rounded pills */
+  border-radius: 8px;
   font-size: 0.95rem;
   font-weight: 500;
   transition: var(--transition-fast);
@@ -161,13 +126,13 @@
 
 .skill-item:hover {
   background-color: var(--bright-teal);
-  color: var(--white); /* Assuming --white is defined from Navbar/Footer */
+  color: var(--white);
   transform: translateY(-2px);
   box-shadow: 0 2px 8px rgba(33, 224, 178, 0.2);
 }
 
 .read-more-btn {
-  background-color: var(--dark-cyan); /* Use a darker accent for the button */
+  background-color: var(--dark-cyan);
   color: var(--white);
   border: none;
   padding: 0.8rem 1.5rem;
@@ -190,16 +155,13 @@
   box-shadow: 0 2px 5px rgba(0, 163, 137, 0.2);
 }
 
-/*
-   ------------------------------------------------------------
-   TEAM MEMBERS SECTION
-   Grid layout for individual team member cards.
-   ------------------------------------------------------------
-*/
+/* ------------------------------------ */
+/* Light Theme - Team Members Section */
+/* ------------------------------------ */
 .team-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem; /* Space between cards */
+  gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -213,8 +175,8 @@
   transition: var(--transition-medium);
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center content vertically */
-  align-items: center; /* Center content horizontally */
+  justify-content: center;
+  align-items: center;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -227,7 +189,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 50% 0%, rgba(167, 139, 250, 0.03), transparent 60%); /* Subtle violet gradient */
+  background: radial-gradient(circle at 50% 0%, rgba(167, 139, 250, 0.03), transparent 60%);
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;
@@ -240,7 +202,7 @@
 .team-member-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
-  border-color: var(--accent-violet); /* Violet border on hover */
+  border-color: var(--accent-violet);
 }
 
 .member-role {
@@ -252,7 +214,7 @@
 }
 
 .team-member-card:hover .member-role {
-  color: var(--accent-violet); /* Violet on hover */
+  color: var(--accent-violet);
   text-shadow: 0 0 5px rgba(167, 139, 250, 0.2);
 }
 
@@ -260,106 +222,232 @@
   font-size: 1rem;
   line-height: 1.6;
   color: var(--light-text-secondary);
-  flex-grow: 1; /* Allows description to take available space */
+  flex-grow: 1;
 }
 
-/*
-   ------------------------------------------------------------
-   RESPONSIVE ADJUSTMENTS
-   Ensuring the team page looks great on all screen sizes.
-   ------------------------------------------------------------
-*/
+/* ------------------------------------ */
+/* Dark Theme - Page Container */
+/* ------------------------------------ */
+.dark .team-page {
+  background-color: #1E1E1E; /* Dark gray for eye-comfy backdrop */
+  color: #E8E8E8; /* Soft off-white for readability */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Page Title */
+/* ------------------------------------ */
+.dark .team-title {
+  background: linear-gradient(90deg, #6B4E9B, #26C6DA); /* Purple to cyan */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Owner Section */
+/* ------------------------------------ */
+.dark .owner-section {
+  background-color: #2A2A2A; /* Slightly lighter gray for cards */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); /* Darker shadow */
+  border: 1px solid rgba(107, 78, 155, 0.2); /* Subtle purple border */
+}
+
+.dark .owner-section:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); /* Enhanced shadow */
+  border-color: #26C6DA; /* Cyan on hover */
+}
+
+.dark .owner-name {
+  background: linear-gradient(90deg, #6B4E9B, #26C6DA); /* Purple to cyan */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.dark .owner-title {
+  color: #66d9e88c;
+}
+
+.dark .owner-bio {
+  color: #B0B0B0; /* Muted silver for secondary text */
+}
+
+.dark .owner-skills h4 {
+  color: #E8E8E8; /* Off-white for readability */
+}
+
+.dark .skill-item {
+  background-color: rgba(107, 78, 155, 0.1); /* Subtle purple background */
+  color: #E8E8E8; /* Off-white for readability */
+  border: 1px solid rgba(107, 78, 155, 0.2); /* Subtle purple border */
+}
+
+.dark .skill-item:hover {
+  background-color: #26C6DA; /* Cyan on hover */
+  color: #1E1E1E; /* Dark gray for contrast */
+  box-shadow: 0 2px 8px rgba(38, 198, 218, 0.3); /* Cyan glow */
+}
+
+.dark .read-more-btn {
+  background-color: #6B4E9B; /* Purple for button */
+  color: #E8E8E8; /* Off-white for readability */
+  box-shadow: 0 4px 10px rgba(107, 78, 155, 0.3); /* Purple shadow */
+}
+
+.dark .read-more-btn:hover {
+  background: linear-gradient(90deg, #6B4E9B, #26C6DA); /* Purple to cyan gradient */
+  box-shadow: 0 6px 15px rgba(38, 198, 218, 0.4); /* Cyan-enhanced shadow */
+}
+
+.dark .read-more-btn:active {
+  box-shadow: 0 2px 5px rgba(107, 78, 155, 0.3); /* Purple shadow */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Team Members Section */
+/* ------------------------------------ */
+.dark .team-member-card {
+  background-color: #2A2A2A; /* Slightly lighter gray for cards */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Darker shadow */
+  border: 1px solid rgba(107, 78, 155, 0.2); /* Subtle purple border */
+}
+
+.dark .team-member-card::before {
+  background: radial-gradient(circle at 50% 0%, rgba(38, 198, 218, 0.05), transparent 60%); /* Subtle cyan gradient */
+}
+
+.dark .team-member-card:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5); /* Enhanced shadow */
+  border-color: #26C6DA; /* Cyan on hover */
+}
+
+.dark .member-role {
+  color: #E8E8E8; /* Off-white for readability */
+}
+
+.dark .team-member-card:hover .member-role {
+  color: #26C6DA; /* Cyan on hover */
+  text-shadow: 0 0 5px rgba(38, 198, 218, 0.3); /* Subtle cyan glow */
+}
+
+.dark .member-description {
+  color: #B0B0B0; /* Muted silver for secondary text */
+}
+
+/* ------------------------------------ */
+/* Responsive Adjustments (Both Themes) */
+/* ------------------------------------ */
 @media (max-width: 992px) {
-  .owner-section {
+  .owner-section,
+  .dark .owner-section {
     padding: 2.5rem 2rem;
   }
 }
 
 @media (max-width: 768px) {
-  .team-page {
+  .team-page,
+  .dark .team-page {
     padding: 3rem 6vw;
   }
 
-  .team-title {
+  .team-title,
+  .dark .team-title {
     font-size: clamp(2rem, 5vw, 3rem);
     margin-bottom: 2.5rem;
   }
 
-  .owner-section {
+  .owner-section,
+  .dark .owner-section {
     padding: 2rem 1.5rem;
     margin-bottom: 3rem;
   }
 
-  .owner-name {
+  .owner-name,
+  .dark .owner-name {
     font-size: clamp(1.8rem, 3.5vw, 2.2rem);
   }
 
-  .owner-title {
+  .owner-title,
+  .dark .owner-title {
     font-size: clamp(1rem, 1.8vw, 1.2rem);
   }
 
-  .owner-bio {
+  .owner-bio,
+  .dark .owner-bio {
     font-size: 0.95rem;
   }
 
-  .owner-skills ul {
-    justify-content: center; /* Center skills on smaller screens */
+  .owner-skills ul,
+  .dark .owner-skills ul {
+    justify-content: center;
   }
 
-  .read-more-btn {
+  .read-more-btn,
+  .dark .read-more-btn {
     width: 100%;
     padding: 0.7rem 1.2rem;
   }
 
-  .team-list {
-    grid-template-columns: 1fr; /* Stack cards on smaller screens */
-    max-width: 500px; /* Constrain width for stacked cards */
+  .team-list,
+  .dark .team-list {
+    grid-template-columns: 1fr;
+    max-width: 500px;
     margin: 0 auto;
     gap: 1.5rem;
   }
 
-  .team-member-card {
+  .team-member-card,
+  .dark .team-member-card {
     padding: 2rem 1.5rem;
   }
 
-  .member-role {
+  .member-role,
+  .dark .member-role {
     font-size: clamp(1.2rem, 2vw, 1.6rem);
   }
 
-  .member-description {
+  .member-description,
+  .dark .member-description {
     font-size: 0.95rem;
   }
 }
 
 @media (max-width: 480px) {
-  .team-page {
+  .team-page,
+  .dark .team-page {
     padding: 2.5rem 4vw;
   }
 
-  .team-title {
+  .team-title,
+  .dark .team-title {
     font-size: clamp(1.8rem, 4.5vw, 2.5rem);
     margin-bottom: 2rem;
   }
 
-  .owner-section {
+  .owner-section,
+  .dark .owner-section {
     padding: 1.5rem 1rem;
     margin-bottom: 2.5rem;
   }
 
-  .owner-name {
+  .owner-name,
+  .dark .owner-name {
     font-size: clamp(1.6rem, 3vw, 2rem);
   }
 
-  .owner-skills ul {
+  .owner-skills ul,
+  .dark .owner-skills ul {
     gap: 0.5rem;
   }
 
-  .skill-item {
+  .skill-item,
+  .dark .skill-item {
     font-size: 0.9rem;
     padding: 0.4rem 0.8rem;
   }
 
-  .team-member-card {
+  .team-member-card,
+  .dark .team-member-card {
     padding: 1.5rem 1rem;
   }
 }

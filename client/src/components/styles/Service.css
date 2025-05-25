@@ -1,9 +1,17 @@
-/* Service.css - Scoped Styles with Your Color Palette */
+/* ================================================== */
+/* Service Section - Light and Dark Mode Styles */
+/* Light theme uses bright teal, soft purple, and pastel pink palette */
+/* Dark theme uses greenish luxury purple (#6B4E9B), rich cyan (#26C6DA), and antique gold (#D4AF37) palette for an eye-comfy, luxurious look */
+/* ================================================== */
+
+/* ------------------------------------ */
+/* Color Variables (Light Theme) */
+/* ------------------------------------ */
 :root {
   /* Existing vibrant colors */
   --bright-teal: #21E0B2;
-  --accent-pink: #FF5C76; /* Soft pastel pink from the original request but slightly more vibrant */
-  --soft-purple: #9A7DFF; /* Soft pastel purple from the original request but slightly more vibrant */
+  --accent-pink: #FF5C76; /* Soft pastel pink, slightly vibrant */
+  --soft-purple: #9A7DFF; /* Soft pastel purple, slightly vibrant */
 
   /* New light theme colors */
   --light-bg-primary: #FFFFFF; /* Pure white for main background */
@@ -14,11 +22,13 @@
   --light-border: rgba(0, 0, 0, 0.08); /* Light border for elements */
 }
 
-
+/* ------------------------------------ */
+/* Light Theme - Services Section */
+/* ------------------------------------ */
 .sp-services-section {
   padding: 1rem 8vw 5rem;
-  background-color: var(--light-bg-primary); /* Changed to a very light background */
-  color: var(--dark-text); /* Changed to dark text */
+  background-color: var(--light-bg-primary);
+  color: var(--dark-text);
   font-family: 'Inter', system-ui, sans-serif;
   position: relative;
   overflow: hidden;
@@ -30,14 +40,16 @@
   left: 0;
   width: 100%;
   height: 100%;
-  /* Keep vibrant gradient, adjust opacity for light theme */
   background:
     radial-gradient(circle at 20% 30%, var(--bright-teal), transparent 70%),
     radial-gradient(circle at 80% 70%, var(--soft-purple), transparent 70%);
-  opacity: 0.15; /* Increased opacity slightly for visibility on light background */
+  opacity: 0.15;
   z-index: 0;
 }
 
+/* ------------------------------------ */
+/* Light Theme - Services Title */
+/* ------------------------------------ */
 .sp-services__title {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
@@ -47,11 +59,10 @@
   display: inline-block;
   left: 50%;
   transform: translateX(-50%);
-  /* Text gradient remains */
   background: linear-gradient(90deg, var(--bright-teal), var(--accent-pink));
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent; /* Text color remains transparent for gradient */
+  color: transparent;
 }
 
 .sp-services__title::after {
@@ -61,7 +72,6 @@
   left: 0;
   width: 100%;
   height: 3px;
-  /* Underline gradient remains */
   background: linear-gradient(90deg, var(--bright-teal), var(--soft-purple));
   transform: scaleX(0);
   transform-origin: right;
@@ -73,6 +83,9 @@
   transform-origin: left;
 }
 
+/* ------------------------------------ */
+/* Light Theme - Services Grid */
+/* ------------------------------------ */
 .sp-services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -81,17 +94,20 @@
   z-index: 1;
 }
 
+/* ------------------------------------ */
+/* Light Theme - Service Card */
+/* ------------------------------------ */
 .sp-service-card {
-  background: var(--light-bg-secondary); /* Changed to light gray for cards */
+  background: var(--light-bg-secondary);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 16px;
   padding: 2.5rem 2rem;
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-  border: 1px solid var(--light-border); /* Changed to a light border */
+  border: 1px solid var(--light-border);
   box-shadow:
-    0 8px 24px var(--light-shadow), /* Lighter shadow */
-    inset 0 1px 1px rgba(255, 255, 255, 0.02); /* Keep subtle inset for depth */
+    0 8px 24px var(--light-shadow),
+    inset 0 1px 1px rgba(255, 255, 255, 0.02);
   position: relative;
   overflow: hidden;
 }
@@ -104,8 +120,8 @@
   height: 100%;
   background: linear-gradient(
     135deg,
-    rgba(33, 224, 178, 0.05), /* Very subtle teal */
-    rgba(154, 125, 255, 0.02) /* Very subtle purple */
+    rgba(33, 224, 178, 0.05),
+    rgba(154, 125, 255, 0.02)
   );
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -114,52 +130,55 @@
 .sp-service-card:hover {
   transform: translateY(-6px);
   box-shadow:
-    0 12px 36px rgba(33, 224, 178, 0.1), /* Lighter hover shadow */
-    0 4px 12px rgba(0, 163, 137, 0.08), /* Lighter secondary shadow */
-    inset 0 1px 1px rgba(255, 255, 255, 0.05); /* Keep subtle inset */
-  border-color: rgba(33, 224, 178, 0.2); /* Lighter border on hover */
+    0 12px 36px rgba(33, 224, 178, 0.1),
+    0 4px 12px rgba(0, 163, 137, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  border-color: rgba(33, 224, 178, 0.2);
 }
 
 .sp-service-card:hover .sp-service-card__bg {
   opacity: 1;
 }
 
+/* ------------------------------------ */
+/* Light Theme - Service Card Elements */
+/* ------------------------------------ */
 .sp-service-card__icon {
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
   transition: all 0.5s ease;
   display: inline-block;
-  color: var(--bright-teal); /* Ensure icon is visible against light background */
-  text-shadow: none; /* Remove initial shadow for light theme */
+  color: var(--bright-teal);
+  text-shadow: none;
 }
 
 .sp-service-card:hover .sp-service-card__icon {
   transform: scale(1.15) rotate(5deg);
-  text-shadow: 0 0 12px var(--bright-teal); /* Keep hover shadow */
+  text-shadow: 0 0 12px var(--bright-teal);
 }
 
 .sp-service-card__heading {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: var(--dark-text); /* Changed to dark text */
+  color: var(--dark-text);
   transition: color 0.3s ease;
 }
 
 .sp-service-card:hover .sp-service-card__heading {
-  color: var(--bright-teal); /* Keep teal on hover */
-  text-shadow: 0 0 8px rgba(33, 224, 178, 0.1); /* Lighter text shadow on hover */
+  color: var(--bright-teal);
+  text-shadow: 0 0 8px rgba(33, 224, 178, 0.1);
 }
 
 .sp-service-card__description {
-  color: var(--light-text-secondary); /* Changed to a lighter dark gray */
+  color: var(--light-text-secondary);
   line-height: 1.6;
   font-size: 1rem;
   transition: all 0.3s ease;
 }
 
 .sp-service-card:hover .sp-service-card__description {
-  color: var(--dark-text); /* Darker text on hover for contrast */
+  color: var(--dark-text);
 }
 
 .sp-service-card__hover-effect {
@@ -170,7 +189,7 @@
   height: 200%;
   background: radial-gradient(
     circle,
-    rgba(33, 224, 178, 0.05) 0%, /* Lighter gradient */
+    rgba(33, 224, 178, 0.05) 0%,
     transparent 70%
   );
   transform: scale(0);
@@ -182,10 +201,12 @@
 
 .sp-service-card:hover .sp-service-card__hover-effect {
   transform: scale(1);
-  opacity: 0.4; /* Slightly less opaque hover effect */
+  opacity: 0.4;
 }
 
-/* Status Indicator Pulse */
+/* ------------------------------------ */
+/* Light Theme - Status Indicator Pulse */
+/* ------------------------------------ */
 .sp-service-card::before {
   content: '';
   position: absolute;
@@ -194,8 +215,8 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--accent-pink); /* Pulse color remains */
-  opacity: 0.8; /* Slightly more opaque for visibility */
+  background: var(--accent-pink);
+  opacity: 0.8;
   box-shadow: 0 0 0 0 rgba(255, 92, 118, 0.7);
   animation: pulse 2s infinite;
 }
@@ -212,52 +233,281 @@
   }
 }
 
-/* Responsive Adjustments */
+/* ------------------------------------ */
+/* Dark Theme - Services Section */
+/* ------------------------------------ */
+.dark .sp-services-section {
+  /* Layout & Background */
+  padding: 1rem 8vw 5rem;
+  background-color: #1E1E1E; /* Dark gray for eye-comfy backdrop */
+  color: #E8E8E8; /* Soft off-white for readability */
+  font-family: 'Inter', system-ui, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.dark .sp-services-section__bg-overlay {
+  /* Background Overlay */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(107, 78, 155, 0.15), transparent 70%),
+    radial-gradient(circle at 80% 70%, rgba(38, 198, 218, 0.15), transparent 70%);
+  opacity: 0.2; /* Slightly higher opacity for dark theme */
+  z-index: 0;
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Services Title */
+/* ------------------------------------ */
+.dark .sp-services__title {
+  /* Typography */
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #6B4E9B, #26C6DA); /* Purple to cyan */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.dark .sp-services__title::after {
+  /* Decorative Underline */
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #6B4E9B, #26C6DA); /* Purple to cyan */
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.dark .sp-services__title:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Services Grid */
+/* ------------------------------------ */
+.dark .sp-services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Service Card */
+/* ------------------------------------ */
+.dark .sp-service-card {
+  /* Layout & Background */
+  background: #2A2A2A; /* Slightly lighter gray for depth */
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  border: 1px solid rgba(107, 78, 155, 0.2); /* Subtle purple border */
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.4), /* Softer shadow for eye comfort */
+    inset 0 1px 1px rgba(255, 255, 255, 0.02);
+  position: relative;
+  overflow: hidden;
+}
+
+.dark .sp-service-card__bg {
+  /* Background Gradient */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(107, 78, 155, 0.05), /* Subtle purple */
+    rgba(38, 198, 218, 0.05) /* Subtle cyan */
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.dark .sp-service-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 12px 36px rgba(38, 198, 218, 0.1), /* Subtle cyan shadow */
+    0 4px 12px rgba(107, 78, 155, 0.08), /* Subtle purple shadow */
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  border-color: rgba(38, 198, 218, 0.2); /* Cyan border on hover */
+}
+
+.dark .sp-service-card:hover .sp-service-card__bg {
+  opacity: 1;
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Service Card Elements */
+/* ------------------------------------ */
+.dark .sp-service-card__icon {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.5s ease;
+  display: inline-block;
+  color: #26C6DA; /* Cyan for visibility */
+}
+
+.dark .sp-service-card:hover .sp-service-card__icon {
+  transform: scale(1.15) rotate(5deg);
+  text-shadow: 0 0 12px rgba(38, 198, 218, 0.3); /* Cyan glow */
+}
+
+.dark .sp-service-card__heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #E8E8E8; /* Off-white for readability */
+  transition: color 0.3s ease;
+}
+
+.dark .sp-service-card:hover .sp-service-card__heading {
+  color: #26C6DA; /* Cyan on hover */
+  text-shadow: 0 0 8px rgba(38, 198, 218, 0.1); /* Subtle cyan glow */
+}
+
+.dark .sp-service-card__description {
+  color: #B0B0B0; /* Muted silver for eye comfort */
+  line-height: 1.6;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.dark .sp-service-card:hover .sp-service-card__description {
+  color: #E8E8E8; /* Off-white on hover for clarity */
+}
+
+.dark .sp-service-card__hover-effect {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(38, 198, 218, 0.05) 0%, /* Subtle cyan gradient */
+    transparent 70%
+  );
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1),
+              opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.dark .sp-service-card:hover .sp-service-card__hover-effect {
+  transform: scale(1);
+  opacity: 0.4;
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Status Indicator Pulse */
+/* ------------------------------------ */
+.dark .sp-service-card::before {
+  content: '';
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #26C6DA; /* Cyan for visibility */
+  opacity: 0.8;
+  box-shadow: 0 0 0 0 rgba(38, 198, 218, 0.7);
+  animation: pulse 2s infinite;
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Featurette Divider */
+/* ------------------------------------ */
+.dark .featurette-divider {
+  margin: 5rem 0;
+  border: 0;
+  height: 1px;
+  background-color: #B0B0B0; /* Muted silver for divider */
+  opacity: 0.5;
+  transition: opacity 0.3s ease, height 0.3s ease;
+}
+
+.dark .featurette-divider:hover {
+  opacity: 1;
+  height: 2px;
+  background-color: #D4AF37; /* Gold on hover */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Highlight */
+/* ------------------------------------ */
+.dark .highlight {
+  outline: 3px solid #26C6DA; /* Cyan for highlight */
+  border-radius: 10px;
+  transition: outline 0.3s ease;
+}
+
+/* ------------------------------------ */
+/* Responsive Adjustments (Both Themes) */
+/* ------------------------------------ */
 @media (max-width: 768px) {
-  .sp-services-section {
+  .sp-services-section,
+  .dark .sp-services-section {
     padding: 4rem 6vw;
   }
 
-  .sp-services-grid {
+  .sp-services-grid,
+  .dark .sp-services-grid {
     grid-template-columns: 1fr;
     max-width: 500px;
     margin: 0 auto;
   }
 
-  .sp-service-card::before {
+  .sp-service-card::before,
+  .dark .sp-service-card::before {
     top: 1rem;
     right: 1rem;
   }
 }
 
 @media (max-width: 480px) {
-  .sp-services-section {
+  .sp-services-section,
+  .dark .sp-services-section {
     padding: 3rem 4vw;
   }
 
-  .sp-service-card {
+  .sp-service-card,
+  .dark .sp-service-card {
     padding: 2rem 1.5rem;
   }
 }
 
-/* Solid Line Version */
-.featurette-divider {
-  margin: 5rem 0;
-  border: 0;
-  height: 1px;
-  background-color: var(--gray); /* Use your --gray variable */
-  opacity: 0.5;
-  transition: all 0.3s ease;
-}
-
-.featurette-divider:hover {
-  opacity: 1;
-  height: 2px;
-  background-color: var(--primary-color);
-}
-
-.highlight {
-  outline: 3px solid #00A389;
-  border-radius: 10px;
-  transition: outline 0.3s ease;
+/* ------------------------------------ */
+/* Shared - Pulse Animation */
+/* ------------------------------------ */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(38, 198, 218, 0.7); /* Matches dark theme cyan */
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(38, 198, 218, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(38, 198, 218, 0);
+  }
 }

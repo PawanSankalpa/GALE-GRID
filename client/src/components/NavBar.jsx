@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./styles/NavBar.css"; 
+import ThemeToggle from "./ThemeToggle";
 
 function NavBar() {
   const [isActive, setIsActive] = useState(false);
@@ -63,6 +64,10 @@ function NavBar() {
         </li>
       </ul>
 
+      <div className="ThemeToggle">
+        <ThemeToggle />
+      </div>
+      
       <div className="login-register-box">
         <NavLink to="/login" className="nav-login" onClick={closeMenu}>
           Log in

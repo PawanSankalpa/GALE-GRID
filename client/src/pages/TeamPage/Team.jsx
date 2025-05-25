@@ -7,19 +7,19 @@ import BackToTop from "../../components/BackToTop";
 const teamMembers = [
   {
     name: "Identity Hidden",
-    title: "Cybersecurity Engineer",
+    title: "( Cybersecurity Engineer )",
     bio: "A cybersecurity engineer with a bachelor's degree.",
     skills: ["Hidden"],
   },
   {
     name: "Nimal",
-    title: "Artist",
+    title: "( logo designer )",
     bio: "An artist who does paintings with 40+ years of experience (hand paints).",
     skills: ["Hand paint artist", "sculpturer", "40+ years experience"],
   },
   {
     name: "Tharani",
-    title: "Developer",
+    title: "( Developer )",
     bio: "A fourth year student of Moratuwa University in Sri Lanka (Faculty of IT).",
     skills: [
       "Marketing",
@@ -43,13 +43,13 @@ const teamMembers = [
   },
   {
     name: "Santhushi",
-    title: "Developer",
+    title: "( Developer )",
     bio: "A fourth year student of SLIT (Faculty of Computer Science).",
     skills: ["Web development", "Java", "Python"],
   },
   {
     name: "Thushal",
-    title: "Figma Designer",
+    title: "( Figma Designer )",
     bio: "Figma Designer currently completing a course in Java.",
     skills: ["Figma Designing", "Java"],
   },

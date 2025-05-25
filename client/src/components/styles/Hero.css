@@ -287,3 +287,83 @@
   height: 2px;
   background-color: var(--primary-color);
 }
+
+/* Luxurious Dark Theme with Emerald & Gold Accents */
+.dark .hero-container .hero {
+  background-color: #121212; /* Deep rich black for luxury feel */
+  color: #f0f0f0; /* Crisp white for high contrast */
+}
+
+.dark .hero-container .hero-title {
+  /* Emerald gradient with gold accent */
+  background: linear-gradient(90deg, #2dd4bf, #10b981, #f59e0b); /* Emerald to gold */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.dark .hero-container .hero-tagline {
+  color: #d1d5db; /* Soft platinum gray */
+}
+
+.dark .hero-container .hero-subtitle {
+  color: #e5e7eb; /* Bright white */
+}
+
+.dark .hero-container .hero-subtitle::after {
+  background: linear-gradient(90deg, #2dd4bf, #f59e0b); /* Emerald to gold */
+}
+
+.dark .hero-container .hero-list li {
+  color: #e5e7eb; /* Bright white */
+}
+
+.dark .hero-container .hero-list li::before {
+  color: #10b981; /* Vibrant emerald */
+}
+
+.dark .hero-container .primary-button {
+  background: linear-gradient(90deg, #10b981, #2dd4bf); /* Emerald gradient */
+  color: #121212;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+  border: 1px solid rgba(245, 158, 11, 0.3); /* Subtle gold border */
+}
+
+.dark .hero-container .primary-button:hover {
+  background: linear-gradient(90deg, #0d9c71, #1abfa5);
+  box-shadow: 0 6px 25px rgba(16, 185, 129, 0.5);
+  transform: scale(1.03);
+}
+
+.dark .hero-container .secondary-button {
+  color: #2dd4bf; /* Light emerald */
+  border-color: #4b5563; /* Dark gray border */
+  box-shadow: 0 2px 12px rgba(45, 212, 191, 0.15);
+  background: rgba(18, 18, 18, 0.7); /* Semi-transparent black */
+  backdrop-filter: blur(4px); /* Frosted glass effect */
+}
+
+.dark .hero-container .secondary-button:hover {
+  color: #f59e0b; /* Gold on hover */
+  border-color: #f59e0b;
+  background: rgba(18, 18, 18, 0.9);
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.25);
+}
+
+.dark .hero-container .hero-img img {
+  filter: brightness(0.85) contrast(1.1) saturate(1.1);
+  border: 1px solid rgba(245, 158, 11, 0.1); /* Subtle gold border */
+}
+
+.dark .featurette-divider {
+  background: linear-gradient(90deg, transparent, #4b5563, transparent); /* Elegant gray gradient */
+  height: 1px;
+  opacity: 0.5;
+}
+
+.dark .featurette-divider:hover {
+  background: linear-gradient(90deg, transparent, #f59e0b, transparent); /* Gold gradient on hover */
+  opacity: 0.8;
+  height: 1.5px;
+}

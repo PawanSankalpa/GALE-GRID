@@ -1,6 +1,13 @@
-/* Modern Light Theme BackToTop Button */
+/* ================================================== */
+/* Back to Top Button - Light and Dark Mode Styles */
+/* Light theme uses bright teal, violet, and light gray palette */
+/* Dark theme uses muted luxury purple (#7D5EB3), soft cyan (#4EC5D6), and muted gold (#D1B354) palette for a smoother, eye-comfy, luxurious look */
+/* ================================================== */
+
+/* ------------------------------------ */
+/* Color Variables (Light Theme) */
+/* ------------------------------------ */
 :root {
-  /* Using your color variables */
   --backtop-primary: var(--bright-teal); /* #21E0B2 */
   --backtop-secondary: var(--accent-violet); /* #A78BFA */
   --backtop-text: var(--dark-text); /* #333333 */
@@ -12,7 +19,9 @@
   --transition-medium: all 0.3s ease-in-out;
 }
 
-/* Core Button Styles */
+/* ------------------------------------ */
+/* Light Theme - Core Button Styles */
+/* ------------------------------------ */
 .back-to-top {
   position: fixed;
   bottom: calc(2rem + 80px);
@@ -20,7 +29,7 @@
   width: var(--backtop-size);
   height: var(--backtop-size);
   border-radius: 50%;
-  background: var(--light-bg-secondary);
+  background: var(--backtop-bg);
   color: var(--backtop-primary);
   border: 2px solid var(--backtop-primary);
   cursor: pointer;
@@ -39,13 +48,17 @@
   padding: 0;
 }
 
-/* Visibility States */
+/* ------------------------------------ */
+/* Light Theme - Visibility States */
+/* ------------------------------------ */
 .back-to-top.visible {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
 
-/* Hover Effects */
+/* ------------------------------------ */
+/* Light Theme - Hover Effects */
+/* ------------------------------------ */
 .back-to-top:hover {
   background: linear-gradient(135deg, var(--backtop-primary) 0%, var(--backtop-secondary) 100%);
   color: var(--light-bg-secondary);
@@ -55,13 +68,17 @@
   animation: float 2s ease-in-out infinite;
 }
 
-/* Active State */
+/* ------------------------------------ */
+/* Light Theme - Active State */
+/* ------------------------------------ */
 .back-to-top:active {
   transform: translateY(0) scale(0.95);
   box-shadow: 0 2px 10px var(--backtop-shadow);
 }
 
-/* Icon Styling */
+/* ------------------------------------ */
+/* Light Theme - Icon Styling */
+/* ------------------------------------ */
 .back-to-top-icon {
   display: block;
   position: relative;
@@ -73,10 +90,11 @@
   transform: scale(1.2) translateY(-3px);
 }
 
-/* Animated Elements */
-/* Hover Effects - Updated for modern, clean style */
+/* ------------------------------------ */
+/* Light Theme - Animated Hover Effects */
+/* ------------------------------------ */
 .back-to-top:hover {
-  background: #25d3b3b3; /* solid clean teal */
+  background: #25d3b3b3; /* Solid clean teal */
   color: rgb(255, 255, 255);
   border-color: transparent;
   box-shadow: 0 8px 24px rgba(33, 224, 178, 0.35);
@@ -95,7 +113,48 @@
   opacity: 0.4;
 }
 
-/* Animations */
+/* ------------------------------------ */
+/* Dark Theme - Core Button Styles */
+/* ------------------------------------ */
+.dark .back-to-top {
+  background: #2A2A2A; /* Slightly lighter gray for button */
+  color: #4EC5D6; /* Soft cyan for icon */
+  border: 2px solid #4EC5D6; /* Soft cyan border */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Softer shadow */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Hover Effects */
+/* ------------------------------------ */
+.dark .back-to-top:hover {
+  background: linear-gradient(135deg, #4EC5D6 0%, #7D5EB3 100%); /* Soft cyan to muted purple gradient */
+  color: #E8E8E8; /* Off-white for icon */
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(78, 197, 214, 0.2); /* Subtle cyan glow */
+  transform: translateY(-4px) scale(1.05);
+  animation: float 2s ease-in-out infinite;
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Animated Hover Effects */
+/* ------------------------------------ */
+.dark .back-to-top:hover {
+  background:  #075E54;
+  color: #1E1E1E; /* Dark gray for contrast */
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); /* Softer shadow */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Icon Styling */
+/* ------------------------------------ */
+.dark .back-to-top:hover .back-to-top-icon {
+  transform: scale(1.1) translateY(-2px);
+}
+
+/* ------------------------------------ */
+/* Animations (Both Themes) */
+/* ------------------------------------ */
 @keyframes pulse {
   0% {
     transform: scale(0.9);
@@ -120,9 +179,12 @@
   }
 }
 
-/* Responsive Design */
+/* ------------------------------------ */
+/* Responsive Design (Both Themes) */
+/* ------------------------------------ */
 @media (max-width: 1024px) {
-  .back-to-top {
+  .back-to-top,
+  .dark .back-to-top {
     --backtop-size: 54px;
     font-size: 1.6rem;
     bottom: calc(1.5rem + 70px);
@@ -130,9 +192,12 @@
   }
 }
 
-/* Mobile devices (hidden) */
+/* ------------------------------------ */
+/* Mobile Devices - Hidden (Both Themes) */
+/* ------------------------------------ */
 @media (max-width: 768px) {
-  .back-to-top {
+  .back-to-top,
+  .dark .back-to-top {
     display: none !important;
   }
 }

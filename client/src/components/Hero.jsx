@@ -2,7 +2,7 @@ import React from "react";
 import "./styles/Hero.css";
 import { Helmet } from "react-helmet";
 
-function Hero(props) {
+function Hero() {
   return (
     <div className="hero-container">
       <Helmet>
@@ -11,11 +11,18 @@ function Hero(props) {
           name="description"
           content="Gale Grid is your trusted web designing agency in Kamburupitiya, Sri Lanka. We build custom websites, handle hosting, domain buying, and provide cybersecurity expertise. Contact us to impress online."
         />
-        <meta name="keywords" content="Web design, Hosting, Cybersecurity, Domain buying, Sri Lanka, Kamburupitiya, Online store, SSL, Responsive websites" />
+        <meta
+          name="keywords"
+          content="Web design, Hosting, Cybersecurity, Domain buying, Sri Lanka, Kamburupitiya, Online store, SSL, Responsive websites"
+        />
         <meta name="author" content="Gale Grid Team" />
       </Helmet>
 
-      <section className="hero" role="banner" aria-label="Introduction to Gale Grid web designing agency">
+      <section
+        className="hero"
+        role="banner"
+        aria-label="Introduction to Gale Grid web designing agency"
+      >
         <div className="hero-left">
           <h1 className="hero-title">GALE GRID</h1>
           <p className="hero-tagline">Built to Impress.</p>

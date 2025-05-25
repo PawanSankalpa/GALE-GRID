@@ -36,3 +36,71 @@
     transform: rotate(360deg);
   }
 }
+
+/* ================================================== */
+/* Animated Background for Dark Theme Body */
+/* Uses greenish luxury purple (#6B4E9B), rich cyan (#26C6DA), and antique gold (#D4AF37) palette */
+/* Creates a subtle, eye-comfy gradient animation for a luxurious, soothing effect */
+/* ================================================== */
+
+/* Dark Theme - Body Background */
+.dark body {
+  /* Base background color for fallback */
+  background-color: #1E1E1E; /* Dark gray, similar to rgba(0, 0, 0, 0.876) */
+  position: relative; /* Required for pseudo-element positioning */
+  min-height: 100vh; /* Ensure full viewport coverage */
+  overflow-x: hidden; /* Prevent horizontal scroll from animation */
+}
+
+/* Pseudo-element for animated gradient */
+.dark body::before {
+  content: '';
+  position: fixed; /* Fixed to cover viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(107, 78, 155, 0.15), transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(38, 198, 218, 0.15), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.1), transparent 60%);
+  z-index: -1; /* Behind all content */
+  animation: gradientShift 20s ease-in-out infinite; /* Smooth, slow animation */
+  will-change: transform; /* Optimize for GPU */
+}
+
+/* Keyframes for gradient animation */
+@keyframes gradientShift {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.8;
+  }
+  25% {
+    transform: scale(1.1) translate(5%, 5%);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2) translate(-5%, -5%);
+    opacity: 0.8;
+  }
+  75% {
+    transform: scale(1.1) translate(5%, -5%);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.8;
+  }
+}
+
+/* Accessibility: Disable animation for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .dark body::before {
+    animation: none; /* Disable animation */
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(107, 78, 155, 0.15), transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(38, 198, 218, 0.15), transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.1), transparent 60%);
+    opacity: 0.8; /* Static gradient as fallback */
+  }
+}

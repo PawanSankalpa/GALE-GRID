@@ -1,13 +1,22 @@
-/* Color Variables */
+/* ================================================== */
+/* Carousel Section - Light and Dark Mode Styles */
+/* Light theme uses bright teal, dark cyan, violet, and pink palette */
+/* Dark theme uses greenish luxury purple (#6B4E9B), rich cyan (#26C6DA), and gold (#D4AF37) palette */
+/* Optimized for speed with simplified animations and reduced GPU load */
+/* ================================================== */
+
+/* ------------------------------------ */
+/* Color Variables (Light Theme) */
+/* ------------------------------------ */
 :root {
-  --galaxy-black: #F8F8F8; /* Changed to very light gray for background */
-  --text-white: #333333; /* Changed to dark gray for primary text */
+  --galaxy-black: #F8F8F8; /* Very light gray for background */
+  --text-white: #333333; /* Dark gray for primary text */
   --bright-teal: #21E0B2;
   --dark-cyan: #00A389;
   --accent-pink: #FF5C76;
-  --carousel-bg: #FFFFFF; /* Changed to pure white for carousel background */
-  --card-bg: #F0F0F0; /* Changed to a light gray for card backgrounds */
-  --text-secondary: #666666; /* Changed to a medium gray for secondary text */
+  --carousel-bg: #FFFFFF; /* Pure white for carousel background */
+  --card-bg: #F0F0F0; /* Light gray for card backgrounds */
+  --text-secondary: #666666; /* Medium gray for secondary text */
   --accent-violet: #A78BFA;
   --muted-gold: #D4A017;
   --shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Lighter shadow for light theme */
@@ -16,13 +25,16 @@
   --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother easing */
 }
 
-/* Carousel Container */
+/* ------------------------------------ */
+/* Light Theme - Carousel Container */
+/* ------------------------------------ */
 .MainContainer-carousel {
-  background: var(--carousel-bg); /* Uses the new light carousel background */
+  background: var(--carousel-bg);
 }
+
 .works-carousel-container {
   padding: 4rem 4rem;
-  background-color: var(--carousel-bg); /* Uses the new light carousel background */
+  background-color: var(--carousel-bg);
   max-width: 1400px;
   margin: 0 auto;
   position: relative;
@@ -38,24 +50,25 @@
   left: 0;
   width: 100%;
   height: 100%;
-  /* Using lighter colors for the overlay background */
   background: radial-gradient(circle at 20% 30%, rgba(167, 139, 250, 0.05), transparent 70%),
               radial-gradient(circle at 80% 70%, rgba(212, 160, 23, 0.05), transparent 70%);
-  opacity: 0.2; /* Slightly increased opacity for visibility on light background */
+  opacity: 0.2;
   z-index: 0;
   transition: opacity 0.6s ease;
 }
 
-/* Carousel Title */
+/* ------------------------------------ */
+/* Light Theme - Carousel Title */
+/* ------------------------------------ */
 .carousel-title {
-  color: var(--text-white); /* Will be transparent due to background-clip */
+  color: var(--text-white);
   font-size: clamp(2rem, 5vw, 2.8rem);
   font-weight: 700;
   text-align: center;
   margin-bottom: 3rem;
   position: relative;
   z-index: 1;
-  background: linear-gradient(90deg, var(--accent-violet), var(--muted-gold)); /* Gradient remains */
+  background: linear-gradient(90deg, var(--accent-violet), var(--muted-gold));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -69,22 +82,24 @@
   width: 60%;
   height: 3px;
   transform: translateX(-50%);
-  background: linear-gradient(90deg, var(--accent-violet), var(--muted-gold)); /* Gradient remains */
+  background: linear-gradient(90deg, var(--accent-violet), var(--muted-gold));
   transition: width 0.5s ease, background 0.5s ease;
 }
 
 .carousel-title:hover::after {
   width: 80%;
-  background: linear-gradient(90deg, var(--muted-gold), var(--accent-violet)); /* Gradient remains */
+  background: linear-gradient(90deg, var(--muted-gold), var(--accent-violet));
 }
 
-/* Project Card */
+/* ------------------------------------ */
+/* Light Theme - Project Card */
+/* ------------------------------------ */
 .project-card {
-  background: var(--card-bg); /* Changed to light gray card background */
+  background: var(--card-bg);
   border-radius: 16px;
   overflow: hidden;
-  border: 1px solid rgba(167, 139, 250, 0.1); /* Lighter border */
-  box-shadow: var(--shadow); /* Uses the new lighter shadow */
+  border: 1px solid rgba(167, 139, 250, 0.1);
+  box-shadow: var(--shadow);
   transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
   text-align: center;
   padding: 2rem;
@@ -100,8 +115,8 @@
 
 .project-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 14px 32px rgba(167, 139, 250, 0.15); /* Lighter hover shadow */
-  border-color: rgba(167, 139, 250, 0.3); /* Lighter hover border */
+  box-shadow: 0 14px 32px rgba(167, 139, 250, 0.15);
+  border-color: rgba(167, 139, 250, 0.3);
 }
 
 .project-card::before {
@@ -111,16 +126,18 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle, rgba(167, 139, 250, 0.05), transparent 70%); /* Lighter radial gradient */
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.05), transparent 70%);
   opacity: 0;
   transition: opacity 0.5s ease;
 }
 
 .project-card:hover::before {
-  opacity: 0.6; /* Reduced opacity for hover effect on light theme */
+  opacity: 0.6;
 }
 
-/* Project Card Image */
+/* ------------------------------------ */
+/* Light Theme - Project Card Image */
+/* ------------------------------------ */
 .project-card img {
   width: 100%;
   height: clamp(200px, 30vw, 240px);
@@ -128,17 +145,19 @@
   border-radius: 12px;
   margin-bottom: 1.5rem;
   transition: transform 0.5s ease, filter 0.5s ease;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2)); /* Lighter image shadow */
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
 }
 
 .project-card:hover img {
   transform: scale(1.05);
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3)); /* Lighter hover image shadow */
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
 }
 
-/* Project Card Text */
+/* ------------------------------------ */
+/* Light Theme - Project Card Text */
+/* ------------------------------------ */
 .project-card h3 {
-  color: var(--text-white); /* Changed to dark gray for headings */
+  color: var(--text-white);
   font-size: clamp(1.3rem, 2vw, 1.5rem);
   font-weight: 600;
   margin-bottom: 1rem;
@@ -146,12 +165,12 @@
 }
 
 .project-card:hover h3 {
-  color: var(--accent-violet); /* Remains violet on hover */
-  text-shadow: 0 0 8px var(--glow-violet); /* Uses lighter glow */
+  color: var(--accent-violet);
+  text-shadow: 0 0 8px var(--glow-violet);
 }
 
 .project-card p {
-  color: var(--text-secondary); /* Changed to medium gray for descriptions */
+  color: var(--text-secondary);
   font-size: clamp(0.9rem, 1.5vw, 1rem);
   margin-bottom: 1.5rem;
   line-height: 1.6;
@@ -159,10 +178,12 @@
 }
 
 .project-card:hover p {
-  color: var(--text-white); /* Changes to primary dark text on hover */
+  color: var(--text-white);
 }
 
-/* Button Container */
+/* ------------------------------------ */
+/* Light Theme - Button Container */
+/* ------------------------------------ */
 .button-container {
   display: flex;
   gap: 1rem;
@@ -170,7 +191,9 @@
   margin-top: 1rem;
 }
 
-/* Base Button Styles */
+/* ------------------------------------ */
+/* Light Theme - Base Button Styles */
+/* ------------------------------------ */
 .project-card a.button {
   display: inline-flex;
   align-items: center;
@@ -185,9 +208,9 @@
 
 /* Primary Button (View Site) */
 .button-primary {
-  color: var(--text-white); /* Text is dark gray */
+  color: var(--text-white);
   border: 2px solid var(--accent-violet);
-  background: linear-gradient(135deg, rgba(167, 139, 250, 0.08), transparent); /* Lighter background gradient */
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.08), transparent);
   position: relative;
   overflow: hidden;
 }
@@ -199,7 +222,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, var(--glow-violet), transparent); /* Uses lighter glow */
+  background: linear-gradient(90deg, transparent, var(--glow-violet), transparent);
   transition: left 0.5s ease;
 }
 
@@ -209,34 +232,33 @@
 
 .button-primary:hover {
   background: linear-gradient(135deg, var(--accent-violet), var(--muted-gold));
-  color: var(--carousel-bg); /* Text becomes light on hover */
+  color: var(--carousel-bg);
   border-color: var(--muted-gold);
-  box-shadow: 0 4px 15px var(--glow-violet); /* Uses lighter glow */
+  box-shadow: 0 4px 15px var(--glow-violet);
   transform: translateY(-3px);
 }
 
 /* Secondary Button (Live Demo) */
 .button-secondary {
-  color: var(--text-white); /* Text is dark gray */
+  color: var(--text-white);
   border: 2px solid var(--bright-teal);
-  background: linear-gradient(135deg, rgba(33, 224, 178, 0.08), transparent); /* Lighter background gradient */
+  background: linear-gradient(135deg, rgba(33, 224, 178, 0.08), transparent);
   position: relative;
 }
 
-/* Removed the ::after pseudo-element for the underline */
 .button-secondary:hover {
   background: linear-gradient(135deg, var(--bright-teal), var(--dark-cyan));
-  color: var(--carousel-bg); /* Text becomes light on hover */
+  color: var(--carousel-bg);
   border-color: var(--dark-cyan);
-  box-shadow: 0 4px 15px rgba(33, 224, 178, 0.3); /* Lighter shadow */
+  box-shadow: 0 4px 15px rgba(33, 224, 178, 0.3);
   transform: translateY(-3px);
 }
 
 /* Tertiary Button (Source Code) */
 .button-tertiary {
-  color: var(--text-white); /* Text is dark gray */
+  color: var(--text-white);
   border: 2px solid var(--accent-pink);
-  background: linear-gradient(135deg, rgba(255, 92, 118, 0.08), transparent); /* Lighter background gradient */
+  background: linear-gradient(135deg, rgba(255, 92, 118, 0.08), transparent);
   position: relative;
   overflow: hidden;
 }
@@ -248,7 +270,7 @@
   left: 50%;
   width: 0;
   height: 0;
-  background: rgba(255, 92, 118, 0.15); /* Lighter background on hover */
+  background: rgba(255, 92, 118, 0.15);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   transition: width 0.5s ease, height 0.5s ease;
@@ -261,13 +283,15 @@
 
 .button-tertiary:hover {
   background: linear-gradient(135deg, var(--accent-pink), var(--muted-gold));
-  color: var(--carousel-bg); /* Text becomes light on hover */
+  color: var(--carousel-bg);
   border-color: var(--muted-gold);
-  box-shadow: 0 4px 15px rgba(255, 92, 118, 0.3); /* Lighter shadow */
+  box-shadow: 0 4px 15px rgba(255, 92, 118, 0.3);
   transform: translateY(-3px);
 }
 
-/* Swiper Styles */
+/* ------------------------------------ */
+/* Light Theme - Swiper Styles */
+/* ------------------------------------ */
 .swiper {
   padding-bottom: 3.5rem;
   position: relative;
@@ -280,7 +304,7 @@
 }
 
 .swiper-pagination-bullet {
-  background: var(--text-secondary); /* Uses medium gray for bullets */
+  background: var(--text-secondary);
   opacity: 0.6;
   width: 10px;
   height: 10px;
@@ -288,112 +312,384 @@
 }
 
 .swiper-pagination-bullet-active {
-  background: var(--accent-violet); /* Remains violet when active */
+  background: var(--accent-violet);
   opacity: 1;
 }
 
 .swiper-button-next,
 .swiper-button-prev {
-  color: var(--accent-violet); /* Remains violet */
+  color: var(--accent-violet);
   transition: color 0.3s ease, transform 0.3s ease;
   padding: 1rem;
 }
 
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
-  color: var(--muted-gold); /* Remains gold on hover */
+  color: var(--muted-gold);
   transform: scale(1.15);
 }
 
-/* Responsive Design */
+/* ------------------------------------ */
+/* Dark Theme - Carousel Container */
+/* ------------------------------------ */
+.dark .MainContainer-carousel {
+  background: #121212; /* Deep charcoal for eye comfort */
+}
+
+.dark .works-carousel-container {
+  /* Layout & Background */
+  padding: 4rem 4rem;
+  background-color: #121212; /* Deep charcoal for soothing backdrop */
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Carousel Title */
+/* ------------------------------------ */
+.dark .carousel-title {
+  /* Typography */
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
+  
+  /* Gradient for Luxury */
+  background: linear-gradient(90deg, #6B4E9B, #26C6DA, #D4AF37); /* Purple to cyan to gold */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.dark .carousel-title::after {
+  /* Decorative Underline */
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  width: 60%;
+  height: 2px; /* Thinner for performance */
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #6B4E9B, #26C6DA); /* Purple to cyan */
+  transition: width 0.3s ease; /* Faster transition */
+}
+
+.dark .carousel-title:hover::after {
+  width: 80%;
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Project Card */
+/* ------------------------------------ */
+.dark .project-card {
+  /* Layout & Background */
+  background: #1C1C1C; /* Slightly lighter charcoal for depth */
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(107, 78, 155, 0.2); /* Subtle purple border */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); /* Simpler shadow */
+  transition: transform 0.2s ease; /* Faster, transform-only */
+  text-align: center;
+  padding: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.dark .project-card:hover {
+  transform: translateY(-6px); /* Reduced lift for speed */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); /* Simpler hover shadow */
+}
+
+.dark .project-card::before {
+  /* Simplified Gradient */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(107, 78, 155, 0.1), transparent); /* Simpler gradient */
+  opacity: 0;
+  transition: opacity 0.2s ease; /* Faster transition */
+}
+
+.dark .project-card:hover::before {
+  opacity: 0.4; /* Lower opacity for performance */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Project Card Image */
+/* ------------------------------------ */
+.dark .project-card img {
+  width: 100%;
+  height: clamp(200px, 30vw, 240px);
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease; /* Transform-only for speed */
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3)); /* Lighter shadow */
+}
+
+.dark .project-card:hover img {
+  transform: translateY(-4px); /* Simpler transform */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Project Card Text */
+/* ------------------------------------ */
+.dark .project-card h3 {
+  color: #E8E8E8; /* Off-white for readability */
+  font-size: clamp(1.3rem, 2vw, 1.5rem);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  transition: color 0.2s ease; /* Faster transition */
+}
+
+.dark .project-card:hover h3 {
+  color: #26C6DA; /* Cyan for hover */
+}
+
+.dark .project-card p {
+  color: #B0B0B0; /* Muted silver for eye comfort */
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  transition: color 0.2s ease; /* Faster transition */
+}
+
+.dark .project-card:hover p {
+  color: #E8E8E8; /* Off-white on hover */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Button Container */
+/* ------------------------------------ */
+.dark .button-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Base Button Styles */
+/* ------------------------------------ */
+.dark .project-card a.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.7rem 1.8rem;
+  border-radius: 25px;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease; /* Faster, limited properties */
+  font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+}
+
+/* Primary Button (View Site) */
+.dark .button-primary {
+  color: #E8E8E8; /* Off-white text */
+  border: 2px solid #6B4E9B; /* Purple border */
+  background: transparent; /* Simplified background */
+}
+
+.dark .button-primary:hover {
+  background: linear-gradient(135deg, #6B4E9B, #D4AF37); /* Purple to gold */
+  color: #121212; /* Dark text for contrast */
+  transform: translateY(-2px); /* Reduced lift */
+}
+
+/* Secondary Button (Live Demo) */
+.dark .button-secondary {
+  color: #E8E8E8; /* Off-white text */
+  border: 2px solid #26C6DA; /* Cyan border */
+  background: transparent; /* Simplified background */
+}
+
+.dark .button-secondary:hover {
+  background: linear-gradient(135deg, #26C6DA, #6B4E9B); /* Cyan to purple */
+  color: #121212; /* Dark text */
+  transform: translateY(-2px); /* Reduced lift */
+}
+
+/* Tertiary Button (Source Code) */
+.dark .button-tertiary {
+  color: #E8E8E8; /* Off-white text */
+  border: 2px solid #D4AF37; /* Gold border */
+  background: transparent; /* Simplified background */
+}
+
+.dark .button-tertiary:hover {
+  background: linear-gradient(135deg, #D4AF37, #26C6DA); /* Gold to cyan */
+  color: #121212; /* Dark text */
+  transform: translateY(-2px); /* Reduced lift */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Swiper Styles */
+/* ------------------------------------ */
+.dark .swiper {
+  padding-bottom: 3.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.dark .swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.dark .swiper-pagination-bullet {
+  background: #B0B0B0; /* Muted silver for eye comfort */
+  opacity: 0.6;
+  width: 10px;
+  height: 10px;
+  transition: background 0.2s ease, opacity 0.2s ease; /* Faster transition */
+}
+
+.dark .swiper-pagination-bullet-active {
+  background: #26C6DA; /* Cyan for active bullet */
+  opacity: 1;
+}
+
+.dark .swiper-button-next,
+.dark .swiper-button-prev {
+  color: #6B4E9B; /* Greenish purple */
+  transition: color 0.2s ease; /* Faster transition */
+  padding: 1rem;
+}
+
+.dark .swiper-button-next:hover,
+.dark .swiper-button-prev:hover {
+  color: #D4AF37; /* Gold on hover */
+}
+
+/* ------------------------------------ */
+/* Responsive Design (Both Themes) */
+/* ------------------------------------ */
 @media (max-width: 1024px) {
-  .works-carousel-container {
+  .works-carousel-container,
+  .dark .works-carousel-container {
     padding: 3rem 6vw;
   }
 
-  .carousel-title {
+  .carousel-title,
+  .dark .carousel-title {
     font-size: clamp(1.8rem, 4vw, 2.5rem);
   }
 
-  .project-card img {
+  .project-card,
+  .dark .project-card {
+    padding: 1.5rem;
+  }
+
+  .project-card img,
+  .dark .project-card img {
     height: clamp(180px, 28vw, 220px);
   }
 
-  .project-card h3 {
+  .project-card h3,
+  .dark .project-card h3 {
     font-size: clamp(1.2rem, 1.8vw, 1.4rem);
   }
 
-  .project-card p {
+  .project-card p,
+  .dark .project-card p {
     font-size: clamp(0.85rem, 1.4vw, 0.95rem);
   }
 
-  .button-container {
+  .button-container,
+  .dark .button-container {
     flex-direction: column;
     gap: 0.8rem;
   }
 
-  .project-card a.button {
+  .project-card a.button,
+  .dark .project-card a.button {
     padding: 0.6rem 1.5rem;
   }
 }
 
 @media (max-width: 768px) {
-  .works-carousel-container {
+  .works-carousel-container,
+  .dark .works-carousel-container {
     padding: 2.5rem 5vw;
   }
 
-  .carousel-title {
+  .carousel-title,
+  .dark .carousel-title {
     font-size: clamp(1.6rem, 3.5vw, 2rem);
   }
 
-  .project-card {
+  .project-card,
+  .dark .project-card {
     padding: 1.5rem;
   }
 
-  .project-card img {
+  .project-card img,
+  .dark .project-card img {
     height: clamp(160px, 26vw, 200px);
   }
 
-  .project-card h3 {
+  .project-card h3,
+  .dark .project-card h3 {
     font-size: clamp(1.1rem, 1.7vw, 1.3rem);
   }
 
-  .project-card p {
+  .project-card p,
+  .dark .project-card p {
     font-size: clamp(0.8rem, 1.3vw, 0.9rem);
   }
 
-  .project-card a.button {
+  .project-card a.button,
+  .dark .project-card a.button {
     padding: 0.5rem 1.2rem;
     font-size: 0.9rem;
   }
 }
 
 @media (max-width: 480px) {
-  .works-carousel-container {
+  .works-carousel-container,
+  .dark .works-carousel-container {
     padding: 2rem 4vw;
   }
 
-  .carousel-title {
+  .carousel-title,
+  .dark .carousel-title {
     font-size: clamp(1.4rem, 3vw, 1.8rem);
   }
 
-  .project-card {
+  .project-card,
+  .dark .project-card {
     padding: 1.2rem;
   }
 
-  .project-card img {
+  .project-card img,
+  .dark .project-card img {
     height: clamp(140px, 24vw, 180px);
   }
 
-  .project-card h3 {
+  .project-card h3,
+  .dark .project-card h3 {
     font-size: clamp(1rem, 1.6vw, 1.2rem);
   }
 
-  .project-card p {
+  .project-card p,
+  .dark .project-card p {
     font-size: clamp(0.75rem, 1.2vw, 0.85rem);
   }
 
-  .project-card a.button {
+  .project-card a.button,
+  .dark .project-card a.button {
     padding: 0.4rem 1rem;
     font-size: 0.85rem;
   }

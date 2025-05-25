@@ -1,26 +1,35 @@
-/* Define CSS custom properties for maintainability */
+/* ================================================== */
+/* About Section - Light and Dark Mode Styles */
+/* Light theme uses softer purple, blue accent, and light gray palette */
+/* Dark theme uses greenish luxury purple (#6B4E9B), rich cyan (#26C6DA), and antique gold (#D4AF37) palette for an eye-comfy, luxurious look */
+/* ================================================== */
+
+/* ------------------------------------ */
+/* Color Variables (Light Theme) */
+/* ------------------------------------ */
 :root {
-  --primary-color: #8b5cf6; /* Softer purple for modern look (unchanged) */
-  --text-color: #333333; /* Dark gray for better readability */
+  --primary-color: #8b5cf6; /* Softer purple for modern look */
+  --text-color: #333333; /* Dark gray for readability */
   --background-color: #F8F8F8; /* Very light gray background */
-  --accent-color: #3b82f6; /* Blue accent for contrast (unchanged) */
+  --accent-color: #3b82f6; /* Blue accent for contrast */
   --shadow-color: rgba(0, 0, 0, 0.1); /* Lighter shadow for light theme */
   --transition: all 0.3s ease-in-out;
   --border-radius: 12px;
   --max-width: 1280px;
 }
 
-/* Base container styles */
+/* ------------------------------------ */
+/* Light Theme - Features Container */
+/* ------------------------------------ */
 .about-me-container .features {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  /* Updated background gradient for light theme */
   background: linear-gradient(135deg, var(--background-color), #f0f0f0);
-  color: var(--text-color); /* Updated text color */
+  color: var(--text-color);
   border-radius: var(--border-radius);
-  box-shadow: 0 6px 12px var(--shadow-color); /* Uses lighter shadow */
+  box-shadow: 0 6px 12px var(--shadow-color);
   max-width: var(--max-width);
   margin: 2rem auto;
   transition: var(--transition);
@@ -31,22 +40,26 @@
 /* Hover effect for container */
 .about-me-container .features:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 16px var(--shadow-color); /* Uses lighter shadow */
+  box-shadow: 0 8px 16px var(--shadow-color);
 }
 
-/* Text column */
+/* ------------------------------------ */
+/* Light Theme - Text Column */
+/* ------------------------------------ */
 .about-me-container .text-column {
   width: 100%;
   padding: 1.5rem;
   animation: fadeIn 0.5s ease-in;
 }
 
-/* Heading styles */
+/* ------------------------------------ */
+/* Light Theme - Heading Styles */
+/* ------------------------------------ */
 .about-me-container h2 {
   font-size: clamp(1.8rem, 5vw, 2.2rem);
   font-weight: 700;
   margin-bottom: 1rem;
-  color: var(--primary-color); /* Primary color remains */
+  color: var(--primary-color);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -56,7 +69,7 @@
 /* Subheading styles */
 .about-me-container .subheading {
   font-size: clamp(0.85rem, 2.5vw, 0.95rem);
-  color: #6b7280; /* Darker gray for subheading on light theme */
+  color: #6b7280;
   margin-top: 0.25rem;
   letter-spacing: 0.02em;
 }
@@ -66,11 +79,13 @@
   font-size: clamp(1rem, 3vw, 1.15rem);
   line-height: 1.7;
   margin-bottom: 1.75rem;
-  color: var(--text-color); /* Main text color */
+  color: var(--text-color);
   max-width: 90ch;
 }
 
-/* Image/icon column */
+/* ------------------------------------ */
+/* Light Theme - Image/Icon Column */
+/* ------------------------------------ */
 .about-me-container .image-column {
   display: flex;
   justify-content: center;
@@ -81,7 +96,7 @@
 /* Icon styles with animation */
 .about-me-container .about-icon {
   font-size: clamp(6rem, 15vw, 7.5rem);
-  color: var(--primary-color); /* Primary color remains */
+  color: var(--primary-color);
   opacity: 0.85;
   transition: var(--transition);
   will-change: transform, opacity;
@@ -90,10 +105,12 @@
 .about-me-container .about-icon:hover {
   transform: scale(1.1) rotate(5deg);
   opacity: 1;
-  filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.4)); /* Lighter shadow for glow */
+  filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.4));
 }
 
-/* Button container */
+/* ------------------------------------ */
+/* Light Theme - Button Container */
+/* ------------------------------------ */
 .about-me-container .button-container {
   margin-top: 2rem;
   display: flex;
@@ -116,17 +133,17 @@
 
 /* Primary button */
 .about-me-container .button-primary {
-  background: linear-gradient(90deg, var(--primary-color), var(--accent-color)); /* Gradient remains */
-  color: #ffffff; /* White text on colored button */
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  color: #ffffff;
   border: 2px solid transparent;
 }
 
 .about-me-container .button-primary:hover {
   background: transparent;
-  color: var(--primary-color); /* Primary color text on hover */
-  border-color: var(--primary-color); /* Primary color border on hover */
+  color: var(--primary-color);
+  border-color: var(--primary-color);
   transform: translateY(-3px);
-  box-shadow: 0 4px 8px var(--shadow-color); /* Uses lighter shadow */
+  box-shadow: 0 4px 8px var(--shadow-color);
 }
 
 /* Button ripple effect */
@@ -137,7 +154,7 @@
   left: 50%;
   width: 0;
   height: 0;
-  background: rgba(255, 255, 255, 0.3); /* Slightly more opaque ripple for light theme */
+  background: rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   transition: width 0.4s ease, height 0.4s ease;
@@ -148,7 +165,176 @@
   height: 200%;
 }
 
-/* Fade-in animation */
+/* ------------------------------------ */
+/* Dark Theme - Features Container */
+/* ------------------------------------ */
+
+
+.dark .about-me-container .features {
+  /* Layout & Background */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #1E1E1E, #2A2A2A); /* Dark gray to slightly lighter gray */
+  color: #E8E8E8; /* Soft off-white for readability */
+  border-radius: var(--border-radius);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Softer shadow for dark theme */
+  max-width: var(--max-width);
+  margin: 2rem auto;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.dark .about-me-container .features:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Enhanced shadow */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Text Column */
+/* ------------------------------------ */
+.dark .about-me-container .text-column {
+  width: 100%;
+  padding: 1.5rem;
+  animation: fadeIn 0.5s ease-in;
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Heading Styles */
+/* ------------------------------------ */
+.dark .about-me-container h2 {
+  font-size: clamp(1.8rem, 5vw, 2.2rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #6B4E9B; /* Greenish luxury purple */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+}
+
+/* Subheading styles */
+.dark .about-me-container .subheading {
+  font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+  color: #B0B0B0; /* Muted silver for eye comfort */
+  margin-top: 0.25rem;
+  letter-spacing: 0.02em;
+}
+
+/* Lead text */
+.dark .about-me-container .lead {
+  font-size: clamp(1rem, 3vw, 1.15rem);
+  line-height: 1.7;
+  margin-bottom: 1.75rem;
+  color: #E8E8E8; /* Off-white for readability */
+  max-width: 90ch;
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Image/Icon Column */
+/* ------------------------------------ */
+.dark .about-me-container .image-column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+/* Icon styles with animation */
+.dark .about-me-container .about-icon {
+  font-size: clamp(6rem, 15vw, 7.5rem);
+  color: #26C6DA; /* Rich cyan for visibility */
+  opacity: 0.85;
+  transition: var(--transition);
+  will-change: transform, opacity;
+}
+
+.dark .about-me-container .about-icon:hover {
+  transform: scale(1.1) rotate(5deg);
+  opacity: 1;
+  filter: drop-shadow(0 0 10px rgba(38, 198, 218, 0.3)); /* Subtle cyan glow */
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Button Container */
+/* ------------------------------------ */
+.dark .about-me-container .button-container {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+/* Button styles */
+.dark .about-me-container .button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.9rem 1.8rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Primary button */
+.dark .about-me-container .button-primary {
+  background: linear-gradient(90deg, #6B4E9B, #bfcfd2); /* Purple to cyan gradient */
+  color: #E8E8E8; /* Off-white text */
+  border: 2px solid transparent;
+}
+
+.dark .about-me-container .button-primary:hover {
+  background: transparent;
+  color: #3fd437; /* Gold text on hover */
+  border-color: #37d4aa; /* Gold border on hover */
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Softer shadow */
+}
+
+/* Button ripple effect */
+.dark .about-me-container .button-primary::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2); /* Subtle ripple for dark theme */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+}
+
+.dark .about-me-container .button-primary:hover::after {
+  width: 200%;
+  height: 200%;
+}
+
+/* ------------------------------------ */
+/* Dark Theme - Featurette Divider */
+/* ------------------------------------ */
+.dark .featurette-divider {
+  margin: 5rem 0;
+  border: 0;
+  height: 1px;
+  background-color: #B0B0B0; /* Muted silver for divider */
+  opacity: 0.5;
+  transition: opacity 0.3s ease, height 0.3s ease;
+}
+
+.dark .featurette-divider:hover {
+  opacity: 1;
+  height: 2px;
+  background-color: #D4AF37; /* Gold on hover */
+}
+
+/* ------------------------------------ */
+/* Shared - Fade-in Animation */
+/* ------------------------------------ */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -160,96 +346,122 @@
   }
 }
 
-/* Responsive adjustments */
+/* ------------------------------------ */
+/* Responsive Adjustments (Both Themes) */
+/* ------------------------------------ */
 @media (min-width: 768px) {
-  .about-me-container .features {
+  .about-me-container .features,
+  .dark .about-me-container .features {
     flex-direction: row;
     padding: 3rem;
     gap: 2rem;
   }
 
-  .about-me-container .text-column {
+  .about-me-container .text-column,
+  .dark .about-me-container .text-column {
     width: 60%;
     padding-right: 2.5rem;
   }
 
-  .about-me-container .image-column {
+  .about-me-container .image-column,
+  .dark .about-me-container .image-column {
     width: 40%;
   }
 
-  .about-me-container h2 {
+  .about-me-container h2,
+  .dark .about-me-container h2 {
     flex-direction: row;
     align-items: center;
     gap: 0.75rem;
   }
 
-  .about-me-container .subheading {
+  .about-me-container .subheading,
+  .dark .about-me-container .subheading {
     margin-top: 0;
   }
 }
 
 @media (min-width: 1024px) {
-  .about-me-container .features {
+  .about-me-container .features,
+  .dark .about-me-container .features {
     padding: 4rem;
   }
 
-  .about-me-container .text-column {
+  .about-me-container .text-column,
+  .dark .about-me-container .text-column {
     padding-right: 3rem;
   }
 }
 
 @media (max-width: 640px) {
-  .about-me-container .features {
+  .about-me-container .features,
+  .dark .about-me-container .features {
     padding: 1.5rem;
     margin: 1.5rem;
   }
 
-  .about-me-container .about-icon {
+  .about-me-container .about-icon,
+  .dark .about-me-container .about-icon {
     font-size: clamp(5rem, 12vw, 6rem);
   }
 
-  .about-me-container .lead {
+  .about-me-container .lead,
+  .dark .about-me-container .lead {
     font-size: clamp(0.95rem, 2.5vw, 1.05rem);
   }
 
-  .about-me-container .button-container {
+  .about-me-container .button-container,
+  .dark .about-me-container .button-container {
     flex-direction: column;
     align-items: center;
   }
 
-  .about-me-container .button {
+  .about-me-container .button,
+  .dark .about-me-container .button {
     width: 100%;
     text-align: center;
   }
 }
 
 @media (max-width: 480px) {
-  .about-me-container .features {
+  .about-me-container .features,
+  .dark .about-me-container .features {
     padding: 1rem;
     margin: 1rem;
   }
 
-  .about-me-container h2 {
+  .about-me-container h2,
+  .dark .about-me-container h2 {
     font-size: clamp(1.6rem, 4.5vw, 1.9rem);
   }
 
-  .about-me-container .about-icon {
+  .about-me-container .about-icon,
+  .dark .about-me-container .about-icon {
     font-size: clamp(4.5rem, 10vw, 5.5rem);
   }
 }
 
-/* Accessibility enhancements */
+/* ------------------------------------ */
+/* Accessibility Enhancements */
+/* ------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   .about-me-container .features,
+  .dark .about-me-container .features,
   .about-me-container .about-icon,
+  .dark .about-me-container .about-icon,
   .about-me-container .button-primary,
-  .about-me-container .button-primary::after {
+  .dark .about-me-container .button-primary,
+  .about-me-container .button-primary::after,
+  .dark .about-me-container .button-primary::after {
     transition: none;
   }
 
   .about-me-container .features:hover,
+  .dark .about-me-container .features:hover,
   .about-me-container .about-icon:hover,
-  .about-me-container .button-primary:hover {
+  .dark .about-me-container .about-icon:hover,
+  .about-me-container .button-primary:hover,
+  .dark .about-me-container .button-primary:hover {
     transform: none;
   }
 }
@@ -273,20 +485,22 @@
     color: #ffffff;
     border-color: #ffffff;
   }
-}
 
-/* Solid Line Version */
-.featurette-divider {
-  margin: 5rem 0;
-  border: 0;
-  height: 1px;
-  background-color: var(--gray); /* Use your --gray variable */
-  opacity: 0.5;
-  transition: all 0.3s ease;
-}
+  .dark .about-me-container .features {
+    background: #000000;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+  }
 
-.featurette-divider:hover {
-  opacity: 1;
-  height: 2px;
-  background-color: var(--primary-color);
+  .dark .about-me-container .button-primary {
+    background: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
+  }
+
+  .dark .about-me-container .button-primary:hover {
+    background: #000000;
+    color: #ffffff;
+    border-color: #ffffff;
+  }
 }

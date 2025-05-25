@@ -7,6 +7,7 @@ import "aos/dist/aos.css";
 
 function AboutMe() {
   return (
+    <div className="aboutMe-container">
     <section className="about-me-container" aria-labelledby="aboutme-title">
       <div className="features">
         <div className="text-column">
@@ -30,6 +31,7 @@ function AboutMe() {
         </div>   
       </div>
     </section>
+    </div>
   );
 }
 
