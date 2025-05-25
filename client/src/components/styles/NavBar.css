@@ -195,8 +195,14 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .logo {
+    display: none; /* Hides the logo on mobile */
+  }
+
   .menu-toggle {
-    display: flex;
+    display: flex; /* Shows the burger icon on mobile */
+    order: -1; /* Places the burger icon to the far left */
+    margin-left: 0; /* Adjusts margin if needed */
   }
 
   .nav-links {
