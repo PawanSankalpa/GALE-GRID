@@ -1,0 +1,138 @@
+/* Modern Light Theme BackToTop Button */
+:root {
+  /* Using your color variables */
+  --backtop-primary: var(--bright-teal); /* #21E0B2 */
+  --backtop-secondary: var(--accent-violet); /* #A78BFA */
+  --backtop-text: var(--dark-text); /* #333333 */
+  --backtop-bg: var(--light-bg-secondary); /* #F8F8F8 */
+  --backtop-border: var(--light-border); /* rgba(0, 0, 0, 0.08) */
+  --backtop-shadow: var(--light-shadow); /* rgba(0, 0, 0, 0.1) */
+  --backtop-size: 60px;
+  --transition-fast: all 0.2s ease-out;
+  --transition-medium: all 0.3s ease-in-out;
+}
+
+/* Core Button Styles */
+.back-to-top {
+  position: fixed;
+  bottom: calc(2rem + 80px);
+  right: 2rem;
+  width: var(--backtop-size);
+  height: var(--backtop-size);
+  border-radius: 50%;
+  background: var(--light-bg-secondary);
+  color: var(--backtop-primary);
+  border: 2px solid var(--backtop-primary);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+  font-weight: 900;
+  box-shadow: 0 4px 20px var(--backtop-shadow);
+  z-index: 999;
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  transition: var(--transition-medium);
+  outline: none;
+  overflow: hidden;
+  padding: 0;
+}
+
+/* Visibility States */
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Hover Effects */
+.back-to-top:hover {
+  background: linear-gradient(135deg, var(--backtop-primary) 0%, var(--backtop-secondary) 100%);
+  color: var(--light-bg-secondary);
+  border-color: transparent;
+  box-shadow: 0 8px 32px rgba(33, 224, 178, 0.3);
+  transform: translateY(-5px) scale(1.05);
+  animation: float 2s ease-in-out infinite;
+}
+
+/* Active State */
+.back-to-top:active {
+  transform: translateY(0) scale(0.95);
+  box-shadow: 0 2px 10px var(--backtop-shadow);
+}
+
+/* Icon Styling */
+.back-to-top-icon {
+  display: block;
+  position: relative;
+  z-index: 2;
+  transition: var(--transition-fast);
+}
+
+.back-to-top:hover .back-to-top-icon {
+  transform: scale(1.2) translateY(-3px);
+}
+
+/* Animated Elements */
+/* Hover Effects - Updated for modern, clean style */
+.back-to-top:hover {
+  background: #25d3b3b3; /* solid clean teal */
+  color: rgb(255, 255, 255);
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(33, 224, 178, 0.35);
+  transform: translateY(-4px) scale(1.05);
+}
+
+.back-to-top:hover .back-to-top-icon {
+  transform: scale(1.1) translateY(-2px);
+}
+
+.back-to-top:hover .back-to-top-glow {
+  opacity: 0.2;
+}
+
+.back-to-top:hover .back-to-top-pulse {
+  opacity: 0.4;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.5;
+  }
+  70% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(-5px) scale(1.05);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.05);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .back-to-top {
+    --backtop-size: 54px;
+    font-size: 1.6rem;
+    bottom: calc(1.5rem + 70px);
+    right: 1.5rem;
+  }
+}
+
+/* Mobile devices (hidden) */
+@media (max-width: 768px) {
+  .back-to-top {
+    display: none !important;
+  }
+}

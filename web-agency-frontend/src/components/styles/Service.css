@@ -1,0 +1,263 @@
+/* Service.css - Scoped Styles with Your Color Palette */
+:root {
+  /* Existing vibrant colors */
+  --bright-teal: #21E0B2;
+  --accent-pink: #FF5C76; /* Soft pastel pink from the original request but slightly more vibrant */
+  --soft-purple: #9A7DFF; /* Soft pastel purple from the original request but slightly more vibrant */
+
+  /* New light theme colors */
+  --light-bg-primary: #FFFFFF; /* Pure white for main background */
+  --light-bg-secondary: #F8F8F8; /* Very light gray for card backgrounds */
+  --dark-text: #333333; /* Dark gray for main text */
+  --light-text-secondary: #666666; /* Slightly lighter gray for secondary text */
+  --light-shadow: rgba(0, 0, 0, 0.1); /* Lighter, subtle shadow */
+  --light-border: rgba(0, 0, 0, 0.08); /* Light border for elements */
+}
+
+
+.sp-services-section {
+  padding: 1rem 8vw 5rem;
+  background-color: var(--light-bg-primary); /* Changed to a very light background */
+  color: var(--dark-text); /* Changed to dark text */
+  font-family: 'Inter', system-ui, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.sp-services-section__bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Keep vibrant gradient, adjust opacity for light theme */
+  background:
+    radial-gradient(circle at 20% 30%, var(--bright-teal), transparent 70%),
+    radial-gradient(circle at 80% 70%, var(--soft-purple), transparent 70%);
+  opacity: 0.15; /* Increased opacity slightly for visibility on light background */
+  z-index: 0;
+}
+
+.sp-services__title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+  /* Text gradient remains */
+  background: linear-gradient(90deg, var(--bright-teal), var(--accent-pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; /* Text color remains transparent for gradient */
+}
+
+.sp-services__title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  /* Underline gradient remains */
+  background: linear-gradient(90deg, var(--bright-teal), var(--soft-purple));
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.sp-services__title:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.sp-services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.sp-service-card {
+  background: var(--light-bg-secondary); /* Changed to light gray for cards */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  border: 1px solid var(--light-border); /* Changed to a light border */
+  box-shadow:
+    0 8px 24px var(--light-shadow), /* Lighter shadow */
+    inset 0 1px 1px rgba(255, 255, 255, 0.02); /* Keep subtle inset for depth */
+  position: relative;
+  overflow: hidden;
+}
+
+.sp-service-card__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(33, 224, 178, 0.05), /* Very subtle teal */
+    rgba(154, 125, 255, 0.02) /* Very subtle purple */
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.sp-service-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 12px 36px rgba(33, 224, 178, 0.1), /* Lighter hover shadow */
+    0 4px 12px rgba(0, 163, 137, 0.08), /* Lighter secondary shadow */
+    inset 0 1px 1px rgba(255, 255, 255, 0.05); /* Keep subtle inset */
+  border-color: rgba(33, 224, 178, 0.2); /* Lighter border on hover */
+}
+
+.sp-service-card:hover .sp-service-card__bg {
+  opacity: 1;
+}
+
+.sp-service-card__icon {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.5s ease;
+  display: inline-block;
+  color: var(--bright-teal); /* Ensure icon is visible against light background */
+  text-shadow: none; /* Remove initial shadow for light theme */
+}
+
+.sp-service-card:hover .sp-service-card__icon {
+  transform: scale(1.15) rotate(5deg);
+  text-shadow: 0 0 12px var(--bright-teal); /* Keep hover shadow */
+}
+
+.sp-service-card__heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--dark-text); /* Changed to dark text */
+  transition: color 0.3s ease;
+}
+
+.sp-service-card:hover .sp-service-card__heading {
+  color: var(--bright-teal); /* Keep teal on hover */
+  text-shadow: 0 0 8px rgba(33, 224, 178, 0.1); /* Lighter text shadow on hover */
+}
+
+.sp-service-card__description {
+  color: var(--light-text-secondary); /* Changed to a lighter dark gray */
+  line-height: 1.6;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.sp-service-card:hover .sp-service-card__description {
+  color: var(--dark-text); /* Darker text on hover for contrast */
+}
+
+.sp-service-card__hover-effect {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(33, 224, 178, 0.05) 0%, /* Lighter gradient */
+    transparent 70%
+  );
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1),
+              opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.sp-service-card:hover .sp-service-card__hover-effect {
+  transform: scale(1);
+  opacity: 0.4; /* Slightly less opaque hover effect */
+}
+
+/* Status Indicator Pulse */
+.sp-service-card::before {
+  content: '';
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-pink); /* Pulse color remains */
+  opacity: 0.8; /* Slightly more opaque for visibility */
+  box-shadow: 0 0 0 0 rgba(255, 92, 118, 0.7);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 92, 118, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 92, 118, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 92, 118, 0);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .sp-services-section {
+    padding: 4rem 6vw;
+  }
+
+  .sp-services-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .sp-service-card::before {
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sp-services-section {
+    padding: 3rem 4vw;
+  }
+
+  .sp-service-card {
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* Solid Line Version */
+.featurette-divider {
+  margin: 5rem 0;
+  border: 0;
+  height: 1px;
+  background-color: var(--gray); /* Use your --gray variable */
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.featurette-divider:hover {
+  opacity: 1;
+  height: 2px;
+  background-color: var(--primary-color);
+}
+
+.highlight {
+  outline: 3px solid #00A389;
+  border-radius: 10px;
+  transition: outline 0.3s ease;
+}

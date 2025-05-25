@@ -1,0 +1,326 @@
+/* Footer.css - Updated for new JSX structure and consistent theme */
+
+/*
+   ------------------------------------------------------------
+   COLOR VARIABLES
+   Ensuring these match your existing theme for consistency.
+   ------------------------------------------------------------
+*/
+:root {
+  /* Inherited from your existing CSS files (Hero, Navbar, Pricing, Services) */
+  --bright-teal: #21E0B2;         /* Bright Teal */
+  --dark-cyan: #00A389;           /* Darker Cyan */
+  --accent-violet: #A78BFA;       /* From Pricing.css */
+  --accent-pink: #FF5C76;         /* From Services.css */
+
+  /* General Text & Backgrounds */
+  --dark-text: #333333;           /* Dark Gray for main text */
+  --light-bg-primary: #F8F8F8;    /* Very light gray background */
+  --light-bg-secondary: #FFFFFF;  /* Pure white for card backgrounds */
+  --light-text-secondary: #666666; /* Slightly lighter gray for secondary text */
+
+  /* Shadows & Borders */
+  --subtle-shadow: rgba(0, 0, 0, 0.08);
+  --light-shadow: rgba(0, 0, 0, 0.1);
+  --light-border: rgba(0, 0, 0, 0.08);
+
+  /* Footer Specific Colors & Effects */
+  --footer-bg: #1a1a1a; /* Very dark background to contrast with main content */
+  --footer-text-color: rgba(255, 255, 255, 0.85); /* Slightly muted white for text */
+  --footer-link-hover: var(--bright-teal); /* Bright teal for link hover */
+  --footer-border-subtle: rgba(255, 255, 255, 0.08); /* Very faint border */
+  --footer-gradient-light: rgba(33, 224, 178, 0.1); /* Subtle gradient for hover effects */
+  --footer-gradient-dark: rgba(0, 163, 137, 0.1); /* Subtle gradient for hover effects */
+}
+
+/*
+   ------------------------------------------------------------
+   BASE FOOTER STYLES
+   Main container for the footer.
+   ------------------------------------------------------------
+*/
+.footer { /* Changed from .main-footer to .footer as per JSX */
+  background-color: var(--footer-bg);
+  color: var(--footer-text-color);
+  font-family: 'Inter', system-ui, sans-serif;
+  padding: 5rem clamp(2rem, 6vw, 6rem); /* Responsive padding for spacious feel */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/*
+   ------------------------------------------------------------
+   FOOTER CONTAINER GRID
+   The main layout grid for all footer sections.
+   ------------------------------------------------------------
+*/
+.footer-container { /* Changed from .footer-content to .footer-container as per JSX */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Flexible columns */
+  gap: 3rem; /* Space between grid items */
+  max-width: 1300px; /* Aligns with max-width in your other sections */
+  margin: 0 auto;
+  margin-bottom: 3rem; /* Space before the bottom copyright section */
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--footer-border-subtle); /* Very subtle divider */
+}
+
+/*
+   ------------------------------------------------------------
+   FOOTER SECTION HEADINGS
+   Prominent headings with a teal gradient.
+   ------------------------------------------------------------
+*/
+.footer-section h3 {
+  font-size: 1.45rem; /* Slightly larger and more impactful */
+  font-weight: 700;
+  margin-bottom: 1.8rem;
+  background: linear-gradient(90deg, var(--bright-teal), var(--dark-cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; /* Makes text transparent to show gradient */
+}
+
+/*
+   ------------------------------------------------------------
+   BRAND SECTION
+   Specific styles for the GALE GRID brand title and tagline.
+   ------------------------------------------------------------
+*/
+.footer-section.brand .brand-title {
+  font-size: 2rem; /* Larger font for the brand name */
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  background: linear-gradient(90deg, var(--bright-teal), var(--dark-cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; /* Text transparent to show gradient */
+}
+
+.footer-section.brand .brand-tagline {
+  font-size: 1.1rem;
+  color: var(--footer-text-color);
+  line-height: 1.6;
+}
+
+/*
+   ------------------------------------------------------------
+   CONTACT SECTION
+   Styles for contact information.
+   ------------------------------------------------------------
+*/
+.footer-section.contact p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--footer-text-color);
+  margin-bottom: 0.75rem; /* Space between contact lines */
+}
+
+.footer-section.contact p a {
+  color: var(--footer-text-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section.contact p a:hover {
+  color: var(--footer-link-hover);
+  text-decoration: underline;
+}
+
+/*
+   ------------------------------------------------------------
+   LINKS SECTION
+   Styling for navigation links.
+   ------------------------------------------------------------
+*/
+.footer-section.links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section.links li {
+  margin-bottom: 1rem; /* Spacing between links */
+}
+
+.footer-section.links a {
+  color: var(--footer-text-color);
+  text-decoration: none;
+  font-size: 1rem;
+  display: inline-block;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-section.links a:hover {
+  color: var(--footer-link-hover); /* Bright teal on hover */
+  transform: translateX(8px); /* More pronounced slide effect */
+}
+
+/*
+   ------------------------------------------------------------
+   SOCIAL SECTION
+   Styling for social media icons, with subtle, matched hover effects.
+   ------------------------------------------------------------
+*/
+.footer-section.social .social-icons { /* Targeting the specific container */
+  display: flex;
+  gap: 1.2rem; /* Space between icons */
+  margin-top: 1.5rem;
+}
+
+.footer-section.social .social-icons a {
+  color: var(--footer-text-color); /* White/muted white icon color */
+  padding: 0.7rem; /* Generous padding for clickable area */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+  border-radius: 50%; /* Circular shape */
+  display: flex; /* For centering icon */
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease, transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.footer-section.social .social-icons a:hover {
+  color: var(--footer-link-hover); /* Bright teal icon on hover */
+  transform: translateY(-5px) scale(1.08); /* Lift and slight scale */
+  border-color: var(--bright-teal); /* Teal border on hover */
+  background-color: var(--footer-gradient-light); /* Subtle background tint */
+  box-shadow: 0 0 15px rgba(33, 224, 178, 0.3); /* Soft glow similar to buttons */
+}
+
+/* Ensure SVG icons inherit color correctly */
+.footer-section.social .social-icons a svg {
+  display: block; /* Helps in consistent centering */
+  color: inherit; /* Crucial for icon color to follow parent <a> */
+  /* react-icons `size` prop sets initial size, but you can override here if needed */
+  font-size: 1.6rem; /* Ensures consistent size for all icons */
+}
+
+/*
+   ------------------------------------------------------------
+   FOOTER BOTTOM (COPYRIGHT & LEGAL LINKS)
+   Clean and centered information.
+   ------------------------------------------------------------
+*/
+.footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.4); /* Very soft white for copyright */
+}
+
+.footer-bottom .legal-links { /* Targeting the specific container */
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem; /* Space between links and separator */
+}
+
+.footer-bottom .legal-links a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom .legal-links a:hover {
+  color: var(--footer-link-hover);
+  text-decoration: underline;
+}
+
+.footer-bottom .legal-links span {
+  color: rgba(255, 255, 255, 0.2); /* Muted separator color */
+}
+
+/*
+   ------------------------------------------------------------
+   RESPONSIVE ADJUSTMENTS
+   Ensuring the footer looks great on all screen sizes.
+   ------------------------------------------------------------
+*/
+@media (max-width: 992px) {
+  .footer-container {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr; /* Stack sections vertically on smaller screens */
+    text-align: center; /* Center content in stacked sections */
+    gap: 2rem;
+  }
+
+  .footer-section h3 {
+    margin-bottom: 1.2rem;
+    font-size: 1.3rem;
+  }
+
+  .footer-section.brand .brand-title {
+    font-size: 1.8rem;
+  }
+
+  .footer-section.brand .brand-tagline {
+    font-size: 1rem;
+  }
+
+  .footer-section.contact p {
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-section.links ul {
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-section.links li {
+    margin-bottom: 0.8rem;
+  }
+
+  .footer-section.social .social-icons {
+    justify-content: center; /* Center social icons when stacked */
+    margin-top: 1rem;
+  }
+
+  .footer {
+    padding: 4rem clamp(1.5rem, 5vw, 4rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 3rem clamp(1rem, 4vw, 3rem);
+  }
+
+  .footer-section h3 {
+    font-size: 1.2rem;
+  }
+
+  .footer-section p,
+  .footer-section.links a,
+  .footer-bottom p {
+    font-size: 0.9rem;
+  }
+
+  .footer-section.brand .brand-title {
+    font-size: 1.6rem;
+  }
+
+  .footer-section.brand .brand-tagline {
+    font-size: 0.9rem;
+  }
+
+  .footer-section.social .social-icons a {
+    font-size: 1.4rem;
+    padding: 0.5rem;
+  }
+
+  .footer-bottom .legal-links {
+    flex-direction: column; /* Stack legal links vertically */
+    gap: 0.2rem;
+  }
+
+  .footer-bottom .legal-links span {
+    display: none; /* Hide separator when stacked */
+  }
+}

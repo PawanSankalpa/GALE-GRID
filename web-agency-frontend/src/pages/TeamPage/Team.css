@@ -1,0 +1,365 @@
+/* Team.css - Styled to match GALE GRID's aesthetic */
+
+/*
+   ------------------------------------------------------------
+   COLOR VARIABLES
+   Ensuring these match your existing theme for consistency.
+   ------------------------------------------------------------
+*/
+:root {
+  --bright-teal: #21E0B2;         /* Bright Teal */
+  --dark-cyan: #00A389;           /* Darker Cyan */
+  --accent-violet: #A78BFA;       /* From Pricing.css */
+  --accent-pink: #FF5C76;         /* From Services.css */
+
+  /* General Text & Backgrounds */
+  --dark-text: #333333;           /* Dark Gray for main text */
+  --light-bg-primary: #F8F8F8;    /* Very light gray background */
+  --light-bg-secondary: #FFFFFF;  /* Pure white for card backgrounds */
+  --light-text-secondary: #666666; /* Slightly lighter gray for secondary text */
+
+  /* Shadows & Borders */
+  --subtle-shadow: rgba(0, 0, 0, 0.08);
+  --light-shadow: rgba(0, 0, 0, 0.1);
+  --light-border: rgba(0, 0, 0, 0.08);
+
+  /* Transitions */
+  --transition-fast: all 0.2s ease-out;
+  --transition-medium: all 0.3s ease-in-out;
+  --transition-slow: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); /* From Services.css */
+}
+
+/*
+   ------------------------------------------------------------
+   PAGE CONTAINER
+   Base styling for the entire team page content.
+   ------------------------------------------------------------
+*/
+.team-page {
+  padding: 4rem 8vw; /* Consistent padding with other sections */
+  background-color: var(--light-bg-primary);
+  color: var(--dark-text);
+  font-family: 'Inter', system-ui, sans-serif;
+  text-align: center; /* Center aligns title and sections */
+}
+
+/*
+   ------------------------------------------------------------
+   PAGE TITLE
+   Styling for the main "Meet Our Team" heading.
+   ------------------------------------------------------------
+*/
+.team-title {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  margin-bottom: 3.5rem; /* More space below the title */
+  background: linear-gradient(90deg, var(--accent-violet), var(--bright-teal));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; /* Makes text transparent to show gradient */
+  display: inline-block; /* To apply gradient correctly */
+  position: relative; /* For potential underline effect */
+}
+
+/* You could add an underline similar to the Services title if desired: */
+/*
+.team-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--bright-teal), var(--accent-pink));
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.team-title:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+*/
+
+/*
+   ------------------------------------------------------------
+   OWNER SECTION
+   Styling for the founder's information.
+   ------------------------------------------------------------
+*/
+.owner-section {
+  background-color: var(--light-bg-secondary);
+  border-radius: 18px;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 10px 25px var(--light-shadow);
+  border: 1px solid var(--light-border);
+  max-width: 800px; /* Constrain width for readability */
+  margin: 0 auto 4rem auto; /* Center and add space below */
+  text-align: left; /* Align text within section */
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition-slow);
+}
+
+.owner-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  border-color: var(--bright-teal);
+}
+
+.owner-name {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(90deg, var(--bright-teal), var(--dark-cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.owner-title {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 500;
+  color: rgb(68, 0, 128); /* Use accent pink for contrast */
+  margin-bottom: 1.5rem;
+}
+
+.owner-bio {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--light-text-secondary);
+  margin-bottom: 2rem;
+}
+
+.owner-skills h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--dark-text);
+  margin-bottom: 1rem;
+}
+
+.owner-skills ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  flex-wrap: wrap; /* Allows skills to wrap */
+  gap: 0.75rem; /* Space between skill items */
+}
+
+.skill-item {
+  background-color: var(--gray); /* Use a soft gray or primary light */
+  color: var(--dark-text);
+  padding: 0.5rem 1rem;
+  border-radius: 8px; /* Slightly rounded pills */
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: var(--transition-fast);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.skill-item:hover {
+  background-color: var(--bright-teal);
+  color: var(--white); /* Assuming --white is defined from Navbar/Footer */
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(33, 224, 178, 0.2);
+}
+
+.read-more-btn {
+  background-color: var(--dark-cyan); /* Use a darker accent for the button */
+  color: var(--white);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-medium);
+  box-shadow: 0 4px 10px rgba(0, 163, 137, 0.2);
+}
+
+.read-more-btn:hover {
+  background: linear-gradient(90deg, var(--bright-teal), var(--dark-cyan));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(33, 224, 178, 0.3);
+}
+
+.read-more-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0, 163, 137, 0.2);
+}
+
+/*
+   ------------------------------------------------------------
+   TEAM MEMBERS SECTION
+   Grid layout for individual team member cards.
+   ------------------------------------------------------------
+*/
+.team-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem; /* Space between cards */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.team-member-card {
+  background-color: var(--light-bg-secondary);
+  border-radius: 18px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 8px 20px var(--light-shadow);
+  border: 1px solid var(--light-border);
+  transition: var(--transition-medium);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.team-member-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 0%, rgba(167, 139, 250, 0.03), transparent 60%); /* Subtle violet gradient */
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.team-member-card:hover::before {
+  opacity: 1;
+}
+
+.team-member-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  border-color: var(--accent-violet); /* Violet border on hover */
+}
+
+.member-role {
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--dark-text);
+  transition: var(--transition-fast);
+}
+
+.team-member-card:hover .member-role {
+  color: var(--accent-violet); /* Violet on hover */
+  text-shadow: 0 0 5px rgba(167, 139, 250, 0.2);
+}
+
+.member-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--light-text-secondary);
+  flex-grow: 1; /* Allows description to take available space */
+}
+
+/*
+   ------------------------------------------------------------
+   RESPONSIVE ADJUSTMENTS
+   Ensuring the team page looks great on all screen sizes.
+   ------------------------------------------------------------
+*/
+@media (max-width: 992px) {
+  .owner-section {
+    padding: 2.5rem 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-page {
+    padding: 3rem 6vw;
+  }
+
+  .team-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 2.5rem;
+  }
+
+  .owner-section {
+    padding: 2rem 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .owner-name {
+    font-size: clamp(1.8rem, 3.5vw, 2.2rem);
+  }
+
+  .owner-title {
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+  }
+
+  .owner-bio {
+    font-size: 0.95rem;
+  }
+
+  .owner-skills ul {
+    justify-content: center; /* Center skills on smaller screens */
+  }
+
+  .read-more-btn {
+    width: 100%;
+    padding: 0.7rem 1.2rem;
+  }
+
+  .team-list {
+    grid-template-columns: 1fr; /* Stack cards on smaller screens */
+    max-width: 500px; /* Constrain width for stacked cards */
+    margin: 0 auto;
+    gap: 1.5rem;
+  }
+
+  .team-member-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .member-role {
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+  }
+
+  .member-description {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .team-page {
+    padding: 2.5rem 4vw;
+  }
+
+  .team-title {
+    font-size: clamp(1.8rem, 4.5vw, 2.5rem);
+    margin-bottom: 2rem;
+  }
+
+  .owner-section {
+    padding: 1.5rem 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .owner-name {
+    font-size: clamp(1.6rem, 3vw, 2rem);
+  }
+
+  .owner-skills ul {
+    gap: 0.5rem;
+  }
+
+  .skill-item {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .team-member-card {
+    padding: 1.5rem 1rem;
+  }
+}

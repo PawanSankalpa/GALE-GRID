@@ -1,0 +1,145 @@
+/* ContactPage.css */
+
+:root {
+  /* Soft Color Palette */
+  --soft-blue: #e6f2ff;
+  --light-gray: #f8f9fa;
+  --medium-gray: #e9ecef;
+  --dark-gray: #495057;
+  --soft-teal: #99e2b4;
+  --light-teal: #d8f3dc;
+  --accent-blue: #48cae4;
+  --white: #ffffff;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --border-radius: 8px;
+  --transition: all 0.3s ease;
+}
+
+.contact-page {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--dark-gray);
+}
+
+.contact-page h2 {
+  text-align: center;
+  color: var(--dark-gray);
+  margin-bottom: 2rem;
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--medium-gray);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  transition: var(--transition);
+  background-color: var(--light-gray);
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 2px rgba(72, 202, 228, 0.2);
+  background-color: var(--white);
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-form button {
+  background-color: var(--soft-teal);
+  color: var(--dark-gray);
+  padding: 1rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.contact-form button:hover {
+  background-color: var(--accent-blue);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.contact-form button:active {
+  transform: translateY(0);
+}
+
+/* Placeholder styling */
+::placeholder {
+  color: #adb5bd;
+  opacity: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .contact-page {
+    padding: 1rem;
+    margin: 1rem auto;
+  }
+  
+  .contact-form {
+    padding: 1.5rem;
+  }
+  
+  .contact-page h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-form {
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    padding: 0.7rem;
+  }
+  
+  .contact-form button {
+    padding: 0.8rem;
+  }
+}
+
+/* Animation for form elements */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea,
+.contact-form button {
+  animation: fadeIn 0.5s ease-out forwards;
+}

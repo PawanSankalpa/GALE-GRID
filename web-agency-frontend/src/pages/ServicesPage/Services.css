@@ -1,0 +1,555 @@
+/* Services.css */
+
+/* Color Variables (matching your light theme) */
+:root {
+  --primary: #21E0B2; /* Bright Teal */
+  --primary-dark: #00A389; /* Darker Cyan */
+  --text: #333333; /* Dark Gray for main text */
+  --text-light: #6B7280; /* Lighter gray for secondary text */
+  --white: #FFFFFF; /* Pure white */
+  --gray-light: #F3F4F6; /* Very light gray background */
+  --gray: #E5E7EB; /* Light gray for borders/dividers */
+  --shadow-color-light: rgba(0, 0, 0, 0.08); /* Subtle shadow for light theme */
+  --shadow-color-medium: rgba(0, 0, 0, 0.15); /* Medium shadow for hover */
+  --transition-speed: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smooth ease-out-back */
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+}
+
+/* Base page container */
+.services-page {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--gray-light);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Intro Section */
+.services-intro {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding: 0 1rem;
+}
+
+.services-intro h1 {
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.services-intro p {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--text-light);
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeIn 1s ease-out 0.2s both;
+}
+
+/* Core and Additional Services Sections */
+.services-section {
+  margin-bottom: 5rem;
+}
+
+.services-section h2 {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--text);
+  position: relative;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.services-section h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+  margin: 0.75rem auto 0;
+  border-radius: 2px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+}
+
+.service-card {
+  background-color: var(--white);
+  border-radius: var(--border-radius-lg);
+  padding: 2.5rem;
+  box-shadow: 0 8px 20px var(--shadow-color-light);
+  border: 1px solid var(--gray);
+  transition: var(--transition-speed);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 0%, rgba(33, 224, 178, 0.05), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.service-card:hover::before {
+  opacity: 1;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px var(--shadow-color-medium);
+  border-color: var(--primary);
+}
+
+.service-icon {
+  margin-bottom: 1.5rem;
+  transition: transform var(--transition-speed), color var(--transition-speed);
+  display: inline-block; /* Ensures transform works */
+}
+
+.service-card:hover .service-icon {
+  transform: scale(1.15) rotate(5deg);
+  color: var(--primary-dark); /* Darker teal on hover */
+}
+
+.service-card h3 {
+  font-size: clamp(1.4rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--text);
+  transition: color var(--transition-speed);
+}
+
+.service-card:hover h3 {
+  color: var(--primary); /* Teal on hover */
+}
+
+.service-card p {
+  font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+  color: var(--text-light);
+  line-height: 1.6;
+  flex-grow: 1; /* Allows description to take available space */
+}
+
+/* Why Choose Us Section */
+.services-highlight {
+  background-color: var(--white);
+  border-radius: var(--border-radius-lg);
+  padding: 3rem;
+  box-shadow: 0 8px 20px var(--shadow-color-light);
+  margin-bottom: 5rem;
+  animation: fadeIn 1s ease-out 0.4s both;
+}
+
+.services-highlight h2 {
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--primary-dark);
+}
+
+.services-highlight ul {
+  list-style: none;
+  padding: 0;
+  max-width: 800px;
+  margin: 0 auto;
+  /* NEW: Grid container for icon-li pairs */
+  display: grid;
+  grid-template-columns: auto 1fr; /* First column for icon, second for text */
+  gap: 0.5rem 1rem; /* Row gap, column gap */
+  align-items: flex-start; /* Align icon and text to the top of their row */
+}
+
+/* Styling for the directly placed SVG icons within the ul */
+.services-highlight ul > svg {
+  color: var(--primary); /* Apply the primary color to the icons */
+  font-size: 25px; /* Ensure consistent icon size as per JSX */
+  margin-top: 0.2rem; /* Slight adjustment to align with text baseline */
+  flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+.services-highlight li {
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 0; /* Reset margin-bottom as gap handles it */
+  padding-left: 0; /* Remove padding-left as icon is now a sibling */
+  position: static; /* Reset position */
+  /* No need for display: flex here unless content within li needs it */
+}
+
+.services-highlight li::before {
+  /* REMOVED: All content and positioning for the checkmark emoji, as icons are now directly in JSX */
+  content: none;
+  position: static;
+  transform: none;
+}
+
+/* Call to Action Section */
+.services-cta {
+  text-align: center;
+  padding: 2rem 1rem;
+  background-color: var(--primary);
+  border-radius: var(--border-radius-lg);
+  color: var(--white);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.services-cta h2 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--white);
+}
+
+.services-cta p {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 0.9rem 2.5rem;
+  background-color: var(--white);
+  color: var(--primary-dark);
+  text-decoration: none;
+  border-radius: 50px; /* Pill shape */
+  font-weight: 700;
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  transition: var(--transition-speed);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cta-button:hover {
+  background-color: var(--gray-light);
+  color: var(--primary);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .services-page {
+    padding: 3rem 1.5rem;
+  }
+
+  .services-intro h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+
+  .services-intro p {
+    font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  }
+
+  .services-section h2 {
+    font-size: clamp(1.8rem, 4.5vw, 2.5rem);
+  }
+
+  .service-card {
+    padding: 2rem;
+  }
+
+  .service-card h3 {
+    font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+  }
+
+  .service-card p {
+    font-size: clamp(0.9rem, 1.6vw, 1rem);
+  }
+
+  .services-highlight {
+    padding: 2.5rem;
+  }
+
+  .services-highlight h2 {
+    font-size: clamp(1.8rem, 4.5vw, 2.2rem);
+  }
+
+  .services-highlight li {
+    font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+  }
+
+  .services-cta h2 {
+    font-size: clamp(1.8rem, 4.5vw, 2.5rem);
+  }
+
+  .services-cta p {
+    font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  }
+
+  .cta-button {
+    padding: 0.8rem 2rem;
+    font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .services-page {
+    padding: 2rem 1rem;
+  }
+
+  .services-intro {
+    margin-bottom: 3rem;
+  }
+
+  .services-section {
+    margin-bottom: 4rem;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr; /* Stack cards on smaller screens */
+    gap: 2rem;
+  }
+
+  .service-card {
+    padding: 1.5rem;
+  }
+
+  .services-highlight {
+    padding: 2rem;
+  }
+
+  .services-highlight ul {
+    grid-template-columns: auto 1fr; /* Maintain grid for icon-li alignment */
+    gap: 0.5rem 0.8rem;
+  }
+
+  .services-highlight li {
+    padding-left: 0; /* Ensure no extra padding */
+  }
+
+  .services-cta {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .services-intro h1 {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+  }
+
+  .services-intro p {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+  }
+
+  .services-section h2 {
+    font-size: clamp(1.6rem, 4vw, 2rem);
+    margin-bottom: 2rem;
+  }
+
+  .service-card {
+    padding: 1.25rem;
+  }
+
+  .service-card h3 {
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  }
+
+  .service-card p {
+    font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+  }
+
+  .services-highlight h2 {
+    font-size: clamp(1.6rem, 4vw, 2rem);
+  }
+
+  .services-highlight ul {
+    gap: 0.4rem 0.6rem;
+  }
+
+  .services-highlight li {
+    font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+  }
+
+  .services-cta h2 {
+    font-size: clamp(1.6rem, 4vw, 2rem);
+  }
+
+  .services-cta p {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+  }
+
+  .cta-button {
+    padding: 0.7rem 1.8rem;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+  }
+}
+
+/* Services.css additions */
+
+.company-philosophy {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #f9f9f9; /* Light background for separation */
+    margin: 40px auto;
+    border-radius: 8px;
+    max-width: 900px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.company-philosophy h2 {
+    color: #00A389; /* Your primary color */
+    margin-bottom: 20px;
+    font-size: 2.2em;
+}
+
+.company-philosophy p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.company-philosophy ul {
+    list-style: none;
+    padding: 0;
+    margin: 25px 0;
+    text-align: left; /* Align list items left */
+}
+
+.company-philosophy ul li {
+    background-color: #e6f7f5; /* Lighter background for list items */
+    padding: 15px;
+    border-left: 5px solid #00A389;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 1em;
+    line-height: 1.5;
+    color: #333;
+}
+
+.company-philosophy ul li strong {
+    color: #007B6B; /* Slightly darker shade for emphasis */
+    font-size: 1.1em;
+}
+
+/* Existing styles below this */
+
+/* New Contact Action Section Styles */
+/* New Contact Action Section Styles */
+.contact-action-section {
+    text-align: center;
+    padding: 60px 20px; /* Generous padding */
+    background: linear-gradient(135deg, #00A389 0%, #007B6B 100%); /* Gradient background */
+    color: #ffffff; /* White text for contrast */
+    /* Changed to span full width */
+    margin: 60px 0; /* 60px top/bottom margin, 0 left/right margin */
+    /* max-width: 900px;  REMOVE THIS LINE */
+    border-radius: 0; /* Remove border-radius for full width, or adjust as desired */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Stronger shadow for pop */
+    transition: transform 0.3s ease-in-out;
+}
+
+.contact-action-section:hover {
+    transform: translateY(-5px); /* Subtle lift on hover */
+}
+
+.contact-action-section h2 {
+    font-size: 2.8em; /* Larger, more impactful heading */
+    margin-bottom: 15px;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Text shadow for depth */
+}
+
+.contact-action-section p {
+    font-size: 1.4em; /* Clear, inviting paragraph */
+    line-height: 1.6;
+    margin-bottom: 35px;
+    font-weight: 300; /* Lighter font weight for readability */
+}
+
+.contact-button {
+    display: inline-flex; /* Use flexbox for button content (text + icon) */
+    align-items: center; /* Vertically align text and icon */
+    gap: 10px; /* Space between text and icon */
+    background-color: #ffffff; /* White button for contrast */
+    color: #007B6B; /* Your primary green for button text */
+    padding: 18px 40px; /* Larger padding for a more substantial button */
+    font-size: 1.3em;
+    font-weight: bold;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border: 2px solid transparent; /* Start with transparent border */
+}
+
+.contact-button:hover {
+    background-color: #e6f7f5; /* Light green on hover */
+    color: #005f52; /* Darker green for text on hover */
+    transform: translateY(-5px) scale(1.02); /* More pronounced lift and slight scale */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+    border-color: #00A389; /* Border appears on hover */
+}
+
+.contact-button .button-icon {
+    font-size: 1.1em; /* Adjust icon size */
+    transition: transform 0.3s ease;
+}
+
+.contact-button:hover .button-icon {
+    transform: translateX(5px); /* Move icon slightly right on hover */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .contact-action-section {
+        padding: 40px 15px;
+        /* margin: 40px auto; REMOVED as it will be full width */
+        margin: 40px 0; /* Maintain top/bottom margin, full width */
+    }
+    .contact-action-section h2 {
+        font-size: 2em;
+    }
+    .contact-action-section p {
+        font-size: 1.1em;
+    }
+    .contact-button {
+        padding: 15px 30px;
+        font-size: 1.1em;
+    }
+}

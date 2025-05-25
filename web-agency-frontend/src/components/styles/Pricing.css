@@ -1,0 +1,234 @@
+/* Pricing.css */
+
+/* Color Variables (ensure these match your light theme global variables) */
+:root {
+  --light-bg-primary: #F8F8F8; /* Very light gray background */
+  --light-bg-secondary: #FFFFFF; /* Pure white for card backgrounds */
+  --dark-text: #333333; /* Dark gray for main text */
+  --light-text-secondary: #666666; /* Slightly lighter gray for secondary text */
+  --bright-teal: #21E0B2;
+  --dark-cyan: #00A389;
+  --accent-violet: #A78BFA;
+  --accent-pink: #FF5C76;
+  --light-shadow: rgba(0, 0, 0, 0.1); /* Lighter, subtle shadow */
+  --light-border: rgba(0, 0, 0, 0.08); /* Light border for elements */
+  --transition-fast: all 0.2s ease-out;
+  --transition-medium: all 0.3s ease-in-out;
+}
+
+.gale-home-container {
+  padding: 4rem 8vw;
+  background-color: var(--light-bg-primary);
+  color: var(--dark-text);
+  font-family: 'Inter', system-ui, sans-serif;
+  text-align: center;
+}
+
+.gale-home-title {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, var(--accent-violet), var(--bright-teal));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gale-home-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--light-text-secondary);
+  margin-bottom: 3rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.gale-home-packages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gale-home-package-card {
+  background-color: var(--light-bg-secondary);
+  border-radius: 18px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 8px 20px var(--light-shadow);
+  border: 1px solid var(--light-border);
+  transition: var(--transition-medium);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.gale-home-package-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 0%, rgba(167, 139, 250, 0.05), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.gale-home-package-card:hover::before {
+  opacity: 1;
+}
+
+
+.gale-home-package-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  border-color: var(--accent-violet);
+}
+
+.gale-home-package-name {
+  font-size: clamp(1.8rem, 3vw, 2.25rem);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--dark-text);
+  transition: var(--transition-fast);
+}
+
+.gale-home-package-card:hover .gale-home-package-name {
+  color: var(--accent-violet);
+  text-shadow: 0 0 5px rgba(167, 139, 250, 0.3);
+}
+
+.gale-home-package-price {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: var(--bright-teal);
+  margin-bottom: 0.5rem;
+  transition: var(--transition-fast);
+}
+
+.gale-home-package-card:hover .gale-home-package-price {
+  color: var(--dark-cyan);
+}
+
+.gale-home-package-pages {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--light-text-secondary);
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.gale-home-package-features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2.5rem;
+  flex-grow: 1; /* Allows features list to take available space */
+}
+
+.gale-home-package-features li {
+  font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+  color: var(--dark-text);
+  margin-bottom: 0.75rem;
+  position: relative;
+  padding-left: 1.5rem;
+  text-align: left; /* Align text within list item */
+  transition: var(--transition-fast);
+}
+
+.gale-home-package-features li::before {
+  content: '✔'; /* Checkmark icon */
+  color: var(--bright-teal);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.gale-home-package-card:hover .gale-home-package-features li {
+  color: var(--dark-text);
+}
+
+
+.gale-home-explore-button {
+  display: inline-block;
+  padding: 0.9rem 2.2rem;
+  background: linear-gradient(90deg, var(--bright-teal), var(--dark-cyan));
+  color: #FFFFFF;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+  transition: var(--transition-medium);
+  box-shadow: 0 4px 10px rgba(33, 224, 178, 0.2);
+  border: 1px solid transparent; /* Added for hover effect */
+}
+
+.gale-home-explore-button:hover {
+  background: var(--light-bg-secondary); /* White background on hover */
+  color: var(--bright-teal);
+  box-shadow: 0 6px 15px rgba(33, 224, 178, 0.3);
+  transform: translateY(-2px);
+  border-color: var(--bright-teal); /* Teal border on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .gale-home-container {
+    padding: 3rem 6vw;
+  }
+
+  .gale-home-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+
+  .gale-home-subtitle {
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+  }
+
+  .gale-home-packages-grid {
+    grid-template-columns: 1fr; /* Stack cards on smaller screens */
+    gap: 2rem;
+  }
+
+  .gale-home-package-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .gale-home-package-name {
+    font-size: clamp(1.6rem, 2.5vw, 2rem);
+  }
+
+  .gale-home-package-price {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+  }
+
+  .gale-home-package-pages {
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+  }
+
+  .gale-home-package-features li {
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .gale-home-container {
+    padding: 2rem 4vw;
+  }
+
+  .gale-home-title {
+    font-size: clamp(1.8rem, 4.5vw, 2.5rem);
+  }
+
+  .gale-home-subtitle {
+    margin-bottom: 2rem;
+  }
+
+  .gale-home-package-card {
+    padding: 1.5rem 1rem;
+  }
+}

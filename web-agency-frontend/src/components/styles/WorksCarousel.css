@@ -1,0 +1,400 @@
+/* Color Variables */
+:root {
+  --galaxy-black: #F8F8F8; /* Changed to very light gray for background */
+  --text-white: #333333; /* Changed to dark gray for primary text */
+  --bright-teal: #21E0B2;
+  --dark-cyan: #00A389;
+  --accent-pink: #FF5C76;
+  --carousel-bg: #FFFFFF; /* Changed to pure white for carousel background */
+  --card-bg: #F0F0F0; /* Changed to a light gray for card backgrounds */
+  --text-secondary: #666666; /* Changed to a medium gray for secondary text */
+  --accent-violet: #A78BFA;
+  --muted-gold: #D4A017;
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Lighter shadow for light theme */
+  --glow-violet: rgba(167, 139, 250, 0.3); /* Lighter glow for light theme */
+  --glow-gold: rgba(212, 160, 23, 0.3); /* Lighter glow for light theme */
+  --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother easing */
+}
+
+/* Carousel Container */
+.MainContainer-carousel {
+  background: var(--carousel-bg); /* Uses the new light carousel background */
+}
+.works-carousel-container {
+  padding: 4rem 4rem;
+  background-color: var(--carousel-bg); /* Uses the new light carousel background */
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+/* Background overlay for depth */
+.works-carousel-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Using lighter colors for the overlay background */
+  background: radial-gradient(circle at 20% 30%, rgba(167, 139, 250, 0.05), transparent 70%),
+              radial-gradient(circle at 80% 70%, rgba(212, 160, 23, 0.05), transparent 70%);
+  opacity: 0.2; /* Slightly increased opacity for visibility on light background */
+  z-index: 0;
+  transition: opacity 0.6s ease;
+}
+
+/* Carousel Title */
+.carousel-title {
+  color: var(--text-white); /* Will be transparent due to background-clip */
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(90deg, var(--accent-violet), var(--muted-gold)); /* Gradient remains */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.carousel-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  width: 60%;
+  height: 3px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, var(--accent-violet), var(--muted-gold)); /* Gradient remains */
+  transition: width 0.5s ease, background 0.5s ease;
+}
+
+.carousel-title:hover::after {
+  width: 80%;
+  background: linear-gradient(90deg, var(--muted-gold), var(--accent-violet)); /* Gradient remains */
+}
+
+/* Project Card */
+.project-card {
+  background: var(--card-bg); /* Changed to light gray card background */
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(167, 139, 250, 0.1); /* Lighter border */
+  box-shadow: var(--shadow); /* Uses the new lighter shadow */
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+  text-align: center;
+  padding: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 14px 32px rgba(167, 139, 250, 0.15); /* Lighter hover shadow */
+  border-color: rgba(167, 139, 250, 0.3); /* Lighter hover border */
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.05), transparent 70%); /* Lighter radial gradient */
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.project-card:hover::before {
+  opacity: 0.6; /* Reduced opacity for hover effect on light theme */
+}
+
+/* Project Card Image */
+.project-card img {
+  width: 100%;
+  height: clamp(200px, 30vw, 240px);
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  transition: transform 0.5s ease, filter 0.5s ease;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2)); /* Lighter image shadow */
+}
+
+.project-card:hover img {
+  transform: scale(1.05);
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3)); /* Lighter hover image shadow */
+}
+
+/* Project Card Text */
+.project-card h3 {
+  color: var(--text-white); /* Changed to dark gray for headings */
+  font-size: clamp(1.3rem, 2vw, 1.5rem);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.project-card:hover h3 {
+  color: var(--accent-violet); /* Remains violet on hover */
+  text-shadow: 0 0 8px var(--glow-violet); /* Uses lighter glow */
+}
+
+.project-card p {
+  color: var(--text-secondary); /* Changed to medium gray for descriptions */
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  transition: color 0.3s ease;
+}
+
+.project-card:hover p {
+  color: var(--text-white); /* Changes to primary dark text on hover */
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* Base Button Styles */
+.project-card a.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.7rem 1.8rem;
+  border-radius: 25px;
+  transition: var(--transition);
+  font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+}
+
+/* Primary Button (View Site) */
+.button-primary {
+  color: var(--text-white); /* Text is dark gray */
+  border: 2px solid var(--accent-violet);
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.08), transparent); /* Lighter background gradient */
+  position: relative;
+  overflow: hidden;
+}
+
+.button-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--glow-violet), transparent); /* Uses lighter glow */
+  transition: left 0.5s ease;
+}
+
+.button-primary:hover::before {
+  left: 100%;
+}
+
+.button-primary:hover {
+  background: linear-gradient(135deg, var(--accent-violet), var(--muted-gold));
+  color: var(--carousel-bg); /* Text becomes light on hover */
+  border-color: var(--muted-gold);
+  box-shadow: 0 4px 15px var(--glow-violet); /* Uses lighter glow */
+  transform: translateY(-3px);
+}
+
+/* Secondary Button (Live Demo) */
+.button-secondary {
+  color: var(--text-white); /* Text is dark gray */
+  border: 2px solid var(--bright-teal);
+  background: linear-gradient(135deg, rgba(33, 224, 178, 0.08), transparent); /* Lighter background gradient */
+  position: relative;
+}
+
+/* Removed the ::after pseudo-element for the underline */
+.button-secondary:hover {
+  background: linear-gradient(135deg, var(--bright-teal), var(--dark-cyan));
+  color: var(--carousel-bg); /* Text becomes light on hover */
+  border-color: var(--dark-cyan);
+  box-shadow: 0 4px 15px rgba(33, 224, 178, 0.3); /* Lighter shadow */
+  transform: translateY(-3px);
+}
+
+/* Tertiary Button (Source Code) */
+.button-tertiary {
+  color: var(--text-white); /* Text is dark gray */
+  border: 2px solid var(--accent-pink);
+  background: linear-gradient(135deg, rgba(255, 92, 118, 0.08), transparent); /* Lighter background gradient */
+  position: relative;
+  overflow: hidden;
+}
+
+.button-tertiary::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 92, 118, 0.15); /* Lighter background on hover */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.5s ease, height 0.5s ease;
+}
+
+.button-tertiary:hover::before {
+  width: 200%;
+  height: 200%;
+}
+
+.button-tertiary:hover {
+  background: linear-gradient(135deg, var(--accent-pink), var(--muted-gold));
+  color: var(--carousel-bg); /* Text becomes light on hover */
+  border-color: var(--muted-gold);
+  box-shadow: 0 4px 15px rgba(255, 92, 118, 0.3); /* Lighter shadow */
+  transform: translateY(-3px);
+}
+
+/* Swiper Styles */
+.swiper {
+  padding-bottom: 3.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.swiper-pagination-bullet {
+  background: var(--text-secondary); /* Uses medium gray for bullets */
+  opacity: 0.6;
+  width: 10px;
+  height: 10px;
+  transition: background 0.3s ease, opacity 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--accent-violet); /* Remains violet when active */
+  opacity: 1;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--accent-violet); /* Remains violet */
+  transition: color 0.3s ease, transform 0.3s ease;
+  padding: 1rem;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: var(--muted-gold); /* Remains gold on hover */
+  transform: scale(1.15);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .works-carousel-container {
+    padding: 3rem 6vw;
+  }
+
+  .carousel-title {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+  }
+
+  .project-card img {
+    height: clamp(180px, 28vw, 220px);
+  }
+
+  .project-card h3 {
+    font-size: clamp(1.2rem, 1.8vw, 1.4rem);
+  }
+
+  .project-card p {
+    font-size: clamp(0.85rem, 1.4vw, 0.95rem);
+  }
+
+  .button-container {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .project-card a.button {
+    padding: 0.6rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .works-carousel-container {
+    padding: 2.5rem 5vw;
+  }
+
+  .carousel-title {
+    font-size: clamp(1.6rem, 3.5vw, 2rem);
+  }
+
+  .project-card {
+    padding: 1.5rem;
+  }
+
+  .project-card img {
+    height: clamp(160px, 26vw, 200px);
+  }
+
+  .project-card h3 {
+    font-size: clamp(1.1rem, 1.7vw, 1.3rem);
+  }
+
+  .project-card p {
+    font-size: clamp(0.8rem, 1.3vw, 0.9rem);
+  }
+
+  .project-card a.button {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .works-carousel-container {
+    padding: 2rem 4vw;
+  }
+
+  .carousel-title {
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+  }
+
+  .project-card {
+    padding: 1.2rem;
+  }
+
+  .project-card img {
+    height: clamp(140px, 24vw, 180px);
+  }
+
+  .project-card h3 {
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+  }
+
+  .project-card p {
+    font-size: clamp(0.75rem, 1.2vw, 0.85rem);
+  }
+
+  .project-card a.button {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+  }
+}

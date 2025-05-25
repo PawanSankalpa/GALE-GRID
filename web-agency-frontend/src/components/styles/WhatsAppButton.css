@@ -1,0 +1,86 @@
+/* WhatsAppButton.css */
+
+/* Color Variables (referencing your existing theme and adding WhatsApp green) */
+:root {
+  --whatsapp-green: #25D366;
+  --whatsapp-green-dark: #128C7E;
+  --white: #FFFFFF; /* Pure white for the icon */
+  --shadow-color-dark: rgba(0, 0, 0, 0.3); /* Darker shadow for floating elements */
+  --transition-speed: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smooth ease-out-back */
+}
+
+.whatsapp-button {
+  position: fixed; /* Stays in place when scrolling */
+  bottom: 2rem; /* Distance from bottom */
+  right: 2rem; /* Distance from right */
+  background-color: var(--whatsapp-green);
+  /* The color property here affects the text/icon if it inherits.
+     Since FaWhatsapp is an SVG and its color is set via prop, we'll
+     target the SVG directly below. */
+  width: 60px; /* Circular button size */
+  height: 60px;
+  border-radius: 50%; /* Makes it perfectly circular */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none; /* Remove underline for anchor tag */
+  box-shadow: 0 8px 20px var(--shadow-color-dark); /* Prominent shadow for floating effect */
+  z-index: 1000; /* Ensure it's above most other content */
+  transition: all var(--transition-speed); /* Smooth transitions for all properties */
+  border: 2px solid transparent; /* Initial transparent border */
+}
+
+.whatsapp-button:hover {
+  background-color: var(--whatsapp-green-dark); /* Darker green on hover */
+  transform: translateY(-5px) scale(1.05); /* Lifts and slightly scales up */
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4); /* More pronounced shadow on hover */
+  border-color: var(--white); /* Subtle white border on hover */
+}
+
+.whatsapp-button:active {
+  transform: translateY(0) scale(0.98); /* Slight press effect when clicked */
+  box-shadow: 0 4px 10px var(--shadow-color-dark); /* Resets shadow on active */
+  transition: all 0.1s ease-out; /* Quicker transition for active state */
+}
+
+/* IMPORTANT: This targets the SVG icon inside the button */
+.whatsapp-button svg {
+  color: var(--white) !important; /* Force the icon to be white */
+  transition: transform var(--transition-speed); /* Smooth transition for icon */
+}
+
+.whatsapp-button:hover svg {
+  transform: rotate(5deg) scale(1.1); /* Slight rotation and scale on icon hover */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .whatsapp-button {
+    width: 55px; /* Slightly smaller on tablets/larger mobiles */
+    height: 55px;
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+
+  .whatsapp-button svg {
+    font-size: 28px; /* Adjust icon size */
+  }
+}
+
+@media (max-width: 480px) {
+  .whatsapp-button {
+    width: 50px; /* Even smaller on small mobile devices */
+    height: 50px;
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .whatsapp-button svg {
+    font-size: 26px; /* Adjust icon size */
+  }
+
+  .whatsapp-button:hover {
+    transform: translateY(-3px) scale(1.03); /* Less pronounced lift on small screens */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  }
+}
