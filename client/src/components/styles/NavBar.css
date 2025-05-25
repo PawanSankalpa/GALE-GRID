@@ -88,6 +88,8 @@ body {
   flex-direction: column;
   cursor: pointer;
   gap: 6px;
+  position: relative;
+  margin-left: 1.5rem;
 }
 
 .menu-toggle span {
@@ -130,7 +132,7 @@ body {
   color: white;
   border: 2px solid white;
   position: relative;
-  margin-right: 1rem;
+  margin-right: 0.2rem;
 }
 
 .nav-register {
