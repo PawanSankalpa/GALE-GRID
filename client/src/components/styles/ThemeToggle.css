@@ -51,7 +51,7 @@
 }
 
 .dark-icon {
-  color: #0a000e; /* Moon/night sky color */
+  color: #b4b123; /* Moon/night sky color */
   /* Initially less prominent */
   opacity: 0.6;
 }
@@ -70,7 +70,7 @@
   position: absolute;
   width: 28px;
   height: 28px;
-  background-color: #151414;
+  background-color: #9a986b;
   border-radius: 50%;
   top: 3px;
   left: 3px;
