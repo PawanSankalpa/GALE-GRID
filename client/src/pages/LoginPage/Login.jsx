@@ -19,7 +19,7 @@ function Login() {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const API_URL = "https://gale-grid-1.onrender.com"
+    const API_URL = "https://www.galegrid.com"
 
     function goToHome(){
         navigate("/")
