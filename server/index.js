@@ -15,7 +15,7 @@ const saltRounds = 14
 
 app.use(express.json()); // to parse JSON bodies
 app.use(cors({
-  origin: "http://localhost:3000", // your frontend origin
+  origin: "https://www.galegrid.com", // your frontend origin
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true, // if your frontend sends cookies or auth headers
 }));
