@@ -321,7 +321,7 @@
   }
 
   .login-left {
-    padding: 1rem;
+    padding: 1rem 1rem 0rem 1rem;
     min-height: auto;
     justify-content: flex-start;
     background-color: var(--gray-light);
@@ -342,7 +342,9 @@
 
   .login-right {
     width: 100%;
-    padding: 2rem 1rem;
+    padding: 2rem 0rem;
+    margin: -7rem auto 2rem auto;
+    z-index: 6;
   }
 
   .login-form {
