@@ -343,7 +343,7 @@
   .login-right {
     width: 100%;
     padding: 2rem 0rem;
-    margin: -7rem auto 2rem auto;
+    margin: -1rem auto 0rem auto;
     z-index: 6;
   }
 
@@ -370,7 +370,7 @@
 
   .signup-button-google,
   .signup-button-facebook {
-    padding: 0.75rem;
+    padding: 0.75rem 1.5rem;
     font-size: 0.9rem;
   }
 }
