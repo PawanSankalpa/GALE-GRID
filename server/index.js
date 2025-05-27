@@ -33,7 +33,7 @@ app.use(cors({
 }));
 
 
-//sregister route
+//register route
 app.post("/api/register", async (req, res) => {
     const { first_name, last_name, username, email, password } = req.body;
 
