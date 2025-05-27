@@ -12,16 +12,16 @@ import "aos/dist/aos.css";
 const projects = [
   {
     title: 'School Website',
-    image: '/images/schoolWeb/HomePage.png',
-    description: 'A modern website for a local cafe with an online menu and booking system.',
+    image: '/images/KeeperApp.png',
+    description: "On this page, you'll find a simple React-based app that helps you organize your thoughts, tasks, and reminders in one place.",
     links: {
-      site: 'https://cafedelights.com',
-      demo: 'https://cafedelights.com/demo',
-      source: 'https://github.com/cafedelights',
+      site: 'https://keeper-app-woad-kappa.vercel.app/',
+      demo: 'https://keeper-app-woad-kappa.vercel.app/',
+      source: 'https://github.com/PawanSankalpa/keeper-app',
     },
   },
   {
-    title: 'Class Website',
+    title: 'School WebPage',
     image: '/images/classWeb/HomePage.png',
     description: 'Personal trainer portfolio with custom video workout sections.',
     links: {
