@@ -2,47 +2,69 @@
 /* Carousel Section - Light and Dark Mode Styles */
 /* Light theme uses bright teal, dark cyan, violet, and pink palette */
 /* Dark theme uses greenish luxury purple (#6B4E9B), rich cyan (#26C6DA), and gold (#D4AF37) palette */
-/* Optimized for speed with simplified animations and reduced GPU load */
+/* Optimized for speed with refined aesthetics and improved UX */
 /* ================================================== */
 
 /* ------------------------------------ */
-/* Color Variables (Light Theme) */
+/* Color Variables (Light Theme) - Refined */
 /* ------------------------------------ */
 :root {
   --galaxy-black: #F8F8F8; /* Very light gray for background */
-  --text-white: #333333; /* Dark gray for primary text */
+  --text-primary-light: #333333; /* Dark gray for primary text */
   --bright-teal: #21E0B2;
   --dark-cyan: #00A389;
   --accent-pink: #FF5C76;
-  --carousel-bg: #FFFFFF; /* Pure white for carousel background */
-  --card-bg: #F0F0F0; /* Light gray for card backgrounds */
-  --text-secondary: #666666; /* Medium gray for secondary text */
-  --accent-violet: #A78BFA;
-  --muted-gold: #D4A017;
-  --shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Lighter shadow for light theme */
-  --glow-violet: rgba(167, 139, 250, 0.3); /* Lighter glow for light theme */
-  --glow-gold: rgba(212, 160, 23, 0.3); /* Lighter glow for light theme */
-  --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother easing */
+  --carousel-bg-light: #FFFFFF; /* Pure white for carousel background */
+  --card-bg-light: #F8F8F8; /* Slightly off-white for card backgrounds for more depth */
+  --text-secondary-light: #666666; /* Medium gray for secondary text */
+  --accent-violet-light: #A78BFA;
+  --muted-gold-light: #D4A017;
+  --shadow-light: 0 8px 30px rgba(0, 0, 0, 0.08); /* More diffused shadow */
+  --inner-shadow-light: inset 0 0 0 1px rgba(0, 0, 0, 0.03); /* Very subtle inner border */
+  --glow-violet-light: rgba(167, 139, 250, 0.25); /* Lighter glow for light theme */
+  --glow-gold-light: rgba(212, 160, 23, 0.25); /* Lighter glow for light theme */
+  --transition-fast: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Quick ease-out */
+  --transition-slow: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Slower ease-out */
 }
 
 /* ------------------------------------ */
-/* Light Theme - Carousel Container */
+/* Dark Theme Variables - Refined */
+/* ------------------------------------ */
+.dark {
+  --text-primary-dark: #E8E8E8; /* Off-white for readability */
+  --carousel-bg-dark: #0D0D0D; /* Even deeper charcoal for true dark */
+  --card-bg-dark: #1A1A1A; /* Slightly lighter charcoal for depth */
+  --text-secondary-dark: #B0B0B0; /* Muted silver for eye comfort */
+  --accent-purple-dark: #6B4E9B;
+  --accent-cyan-dark: #26C6DA;
+  --accent-gold-dark: #D4AF37;
+  --shadow-dark: 0 8px 30px rgba(0, 0, 0, 0.5); /* Stronger shadow for dark theme */
+  --inner-shadow-dark: inset 0 0 0 1px rgba(255, 255, 255, 0.05); /* Subtle inner border */
+  --glow-purple-dark: rgba(107, 78, 155, 0.4);
+  --glow-cyan-dark: rgba(38, 198, 218, 0.4);
+  --glow-gold-dark: rgba(212, 175, 55, 0.4);
+}
+
+/* ------------------------------------ */
+/* Base Carousel Container (Both Themes) */
 /* ------------------------------------ */
 .MainContainer-carousel {
-  background: var(--carousel-bg);
+  background: var(--carousel-bg-light);
+  transition: background var(--transition-slow);
 }
 
 .works-carousel-container {
-  padding: 4rem 4rem;
-  background-color: var(--carousel-bg);
+  padding: 5rem 4rem; /* Increased padding for more breathing room */
   max-width: 1400px;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
   font-family: 'Inter', 'Segoe UI', sans-serif;
+  background-color: var(--carousel-bg-light); /* Ensure background is set */
+  transition: background-color var(--transition-slow);
 }
 
-/* Background overlay for depth */
+/* Background overlay for depth - More sophisticated */
 .works-carousel-container::before {
   content: '';
   position: absolute;
@@ -50,75 +72,77 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 20% 30%, rgba(167, 139, 250, 0.05), transparent 70%),
-              radial-gradient(circle at 80% 70%, rgba(212, 160, 23, 0.05), transparent 70%);
-  opacity: 0.2;
+  background: radial-gradient(circle at 15% 25%, var(--glow-violet-light), transparent 70%),
+              radial-gradient(circle at 85% 75%, var(--glow-gold-light), transparent 70%);
+  opacity: 0.15; /* Slightly less opaque for subtlety */
   z-index: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity var(--transition-slow), background var(--transition-slow);
 }
 
 /* ------------------------------------ */
-/* Light Theme - Carousel Title */
+/* Carousel Title (Both Themes) */
 /* ------------------------------------ */
 .carousel-title {
-  color: var(--text-white);
-  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-size: clamp(2.2rem, 5.5vw, 3rem); /* Slightly larger, more impactful */
   font-weight: 700;
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem; /* More space below title */
   position: relative;
   z-index: 1;
-  background: linear-gradient(90deg, var(--accent-violet), var(--muted-gold));
+  background: linear-gradient(90deg, var(--accent-violet-light), var(--muted-gold-light));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  transition: background var(--transition-slow);
 }
 
 .carousel-title::after {
   content: '';
   position: absolute;
-  bottom: -8px;
+  bottom: -12px; /* Slightly lower for better visual separation */
   left: 50%;
-  width: 60%;
-  height: 3px;
+  width: 50%; /* Slightly narrower for elegance */
+  height: 4px; /* Thicker for impact */
   transform: translateX(-50%);
-  background: linear-gradient(90deg, var(--accent-violet), var(--muted-gold));
-  transition: width 0.5s ease, background 0.5s ease;
+  background: linear-gradient(90deg, var(--accent-violet-light), var(--muted-gold-light));
+  border-radius: 2px; /* Soft edges */
+  transition: width 0.4s ease, background 0.4s ease;
 }
 
 .carousel-title:hover::after {
-  width: 80%;
-  background: linear-gradient(90deg, var(--muted-gold), var(--accent-violet));
+  width: 70%; /* Hover effect slightly less aggressive */
+  background: linear-gradient(90deg, var(--muted-gold-light), var(--accent-violet-light));
 }
 
 /* ------------------------------------ */
-/* Light Theme - Project Card */
+/* Project Card (Both Themes) - Enhanced */
 /* ------------------------------------ */
 .project-card {
-  background: var(--card-bg);
-  border-radius: 16px;
+  background: var(--card-bg-light);
+  border-radius: 18px; /* Slightly more rounded */
   overflow: hidden;
-  border: 1px solid rgba(167, 139, 250, 0.1);
-  box-shadow: var(--shadow);
-  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+  border: 1px solid rgba(167, 139, 250, 0.08); /* More subtle border */
+  box-shadow: var(--shadow-light), var(--inner-shadow-light); /* Combined shadows */
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow), border-color var(--transition-slow), background var(--transition-slow);
   text-align: center;
-  padding: 2rem;
-  height: 100%;
+  padding: 2.5rem; /* Increased padding */
+  height: 100%; /* Make all cards the same height */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   position: relative;
   z-index: 1;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px); /* Slightly stronger blur for depth */
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .project-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 14px 32px rgba(167, 139, 250, 0.15);
-  border-color: rgba(167, 139, 250, 0.3);
+  transform: translateY(-10px) scale(1.02); /* More pronounced lift and slight scale */
+  box-shadow: 0 18px 40px rgba(167, 139, 250, 0.2), var(--inner-shadow-light); /* Enhanced hover shadow */
+  border-color: rgba(167, 139, 250, 0.4);
 }
 
+/* Subtle gradient overlay on hover for a luxurious feel */
 .project-card::before {
   content: '';
   position: absolute;
@@ -126,91 +150,96 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle, rgba(167, 139, 250, 0.05), transparent 70%);
+  background: radial-gradient(circle at center, var(--glow-violet-light), transparent 70%);
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.6s ease; /* Slower, smoother fade */
+  border-radius: 18px; /* Match card border-radius */
+  z-index: -1; /* Keep behind content */
 }
 
 .project-card:hover::before {
-  opacity: 0.6;
+  opacity: 0.8; /* More visible on hover */
 }
 
 /* ------------------------------------ */
-/* Light Theme - Project Card Image */
+/* Project Card Image (Both Themes) - Enhanced Clarity */
 /* ------------------------------------ */
 .project-card img {
   width: 100%;
-  height: clamp(200px, 30vw, 240px);
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 1.5rem;
-  transition: transform 0.5s ease, filter 0.5s ease;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
+  height: clamp(220px, 30vw, 260px); /* Slightly taller images */
+  object-fit: cover; /* Ensures image covers area cleanly */
+  border-radius: 14px; /* Matches card roundedness */
+  margin-bottom: 2rem; /* More space below image */
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.1); /* Subtle 3D effect */
+  background-color: #f0f0f0; /* Fallback for transparency */
 }
 
 .project-card:hover img {
-  transform: scale(1.05);
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
+  transform: scale(1.03) translateY(-3px); /* Subtle lift and scale */
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25), inset 0 0 0 2px rgba(167, 139, 250, 0.2); /* Enhanced hover shadow with inner border */
 }
 
 /* ------------------------------------ */
-/* Light Theme - Project Card Text */
+/* Project Card Text (Both Themes) - Refined Typography */
 /* ------------------------------------ */
 .project-card h3 {
-  color: var(--text-white);
-  font-size: clamp(1.3rem, 2vw, 1.5rem);
-  font-weight: 600;
+  color: var(--text-primary-light);
+  font-size: clamp(1.4rem, 2.2vw, 1.6rem); /* Slightly larger and bolder */
+  font-weight: 700; /* Bolder for impact */
   margin-bottom: 1rem;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
+  transition: color var(--transition-fast), text-shadow var(--transition-fast);
 }
 
 .project-card:hover h3 {
-  color: var(--accent-violet);
-  text-shadow: 0 0 8px var(--glow-violet);
+  color: var(--accent-violet-light);
+  text-shadow: 0 0 10px var(--glow-violet-light); /* More pronounced glow */
 }
 
 .project-card p {
-  color: var(--text-secondary);
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-  transition: color 0.3s ease;
+  color: var(--text-secondary-light);
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem); /* Slightly larger for readability */
+  margin-bottom: 2rem; /* More space before buttons */
+  line-height: 1.7; /* Increased line height for better readability */
+  transition: color var(--transition-fast);
+  flex-grow: 1; /* Ensures description takes available space and helps equalize card height */
 }
 
 .project-card:hover p {
-  color: var(--text-white);
+  color: var(--text-primary-light);
 }
 
 /* ------------------------------------ */
-/* Light Theme - Button Container */
+/* Button Container (Both Themes) */
 /* ------------------------------------ */
 .button-container {
   display: flex;
-  gap: 1rem;
+  gap: 1.2rem; /* Increased gap */
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 1.5rem; /* More space above buttons */
 }
 
 /* ------------------------------------ */
-/* Light Theme - Base Button Styles */
+/* Base Button Styles (Both Themes) - Modern & Luxurious */
 /* ------------------------------------ */
 .project-card a.button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  font-weight: 500;
-  padding: 0.7rem 1.8rem;
-  border-radius: 25px;
-  transition: var(--transition);
-  font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+  font-weight: 600; /* Bolder text */
+  padding: 0.7rem 1.6rem; /* Adjusted for smaller size */
+  border-radius: 30px; /* More rounded, pill-like */
+  transition: var(--transition-slow);
+  font-size: 0.95rem; /* Specific size for desktop screens */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle button shadow */
 }
 
-/* Primary Button (View Site) */
+/* Primary Button (View Site) - Enhanced */
 .button-primary {
-  color: var(--text-white);
-  border: 2px solid var(--accent-violet);
-  background: linear-gradient(135deg, rgba(167, 139, 250, 0.08), transparent);
+  color: var(--text-primary-light);
+  border: 2px solid var(--accent-violet-light);
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.05), transparent); /* Lighter base gradient */
   position: relative;
   overflow: hidden;
 }
@@ -222,8 +251,8 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, var(--glow-violet), transparent);
-  transition: left 0.5s ease;
+  background: linear-gradient(90deg, transparent, var(--glow-violet-light), transparent);
+  transition: left 0.6s ease; /* Slower, more elegant swipe */
 }
 
 .button-primary:hover::before {
@@ -231,34 +260,18 @@
 }
 
 .button-primary:hover {
-  background: linear-gradient(135deg, var(--accent-violet), var(--muted-gold));
-  color: var(--carousel-bg);
-  border-color: var(--muted-gold);
-  box-shadow: 0 4px 15px var(--glow-violet);
-  transform: translateY(-3px);
+  background: linear-gradient(135deg, var(--accent-violet-light), var(--muted-gold-light));
+  color: var(--carousel-bg-light); /* Text adapts to background */
+  border-color: var(--muted-gold-light);
+  box-shadow: 0 6px 20px var(--glow-violet-light);
+  transform: translateY(-4px); /* More lift */
 }
 
-/* Secondary Button (Live Demo) */
-.button-secondary {
-  color: var(--text-white);
-  border: 2px solid var(--bright-teal);
-  background: linear-gradient(135deg, rgba(33, 224, 178, 0.08), transparent);
-  position: relative;
-}
-
-.button-secondary:hover {
-  background: linear-gradient(135deg, var(--bright-teal), var(--dark-cyan));
-  color: var(--carousel-bg);
-  border-color: var(--dark-cyan);
-  box-shadow: 0 4px 15px rgba(33, 224, 178, 0.3);
-  transform: translateY(-3px);
-}
-
-/* Tertiary Button (Source Code) */
+/* Tertiary Button (Source Code) - Enhanced */
 .button-tertiary {
-  color: var(--text-white);
+  color: var(--text-primary-light);
   border: 2px solid var(--accent-pink);
-  background: linear-gradient(135deg, rgba(255, 92, 118, 0.08), transparent);
+  background: linear-gradient(135deg, rgba(255, 92, 118, 0.05), transparent); /* Lighter base gradient */
   position: relative;
   overflow: hidden;
 }
@@ -270,30 +283,30 @@
   left: 50%;
   width: 0;
   height: 0;
-  background: rgba(255, 92, 118, 0.15);
+  background: rgba(255, 92, 118, 0.1); /* More subtle ripple */
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: width 0.5s ease, height 0.5s ease;
+  transition: width 0.6s ease, height 0.6s ease; /* Slower, larger ripple */
 }
 
 .button-tertiary:hover::before {
-  width: 200%;
-  height: 200%;
+  width: 250%; /* Larger ripple effect */
+  height: 250%;
 }
 
 .button-tertiary:hover {
-  background: linear-gradient(135deg, var(--accent-pink), var(--muted-gold));
-  color: var(--carousel-bg);
-  border-color: var(--muted-gold);
-  box-shadow: 0 4px 15px rgba(255, 92, 118, 0.3);
-  transform: translateY(-3px);
+  background: linear-gradient(135deg, var(--accent-pink), var(--muted-gold-light));
+  color: var(--carousel-bg-light);
+  border-color: var(--muted-gold-light);
+  box-shadow: 0 6px 20px rgba(255, 92, 118, 0.25);
+  transform: translateY(-4px);
 }
 
 /* ------------------------------------ */
-/* Light Theme - Swiper Styles */
+/* Swiper Styles (Both Themes) - Improved UX */
 /* ------------------------------------ */
 .swiper {
-  padding-bottom: 3.5rem;
+  padding-bottom: 4.5rem; /* More space for pagination */
   position: relative;
   z-index: 1;
 }
@@ -301,276 +314,194 @@
 .swiper-slide {
   display: flex;
   justify-content: center;
+  align-items: stretch; /* Crucial for equal card heights */
 }
 
+/* Pagination bullets - Enhanced */
 .swiper-pagination-bullet {
-  background: var(--text-secondary);
-  opacity: 0.6;
-  width: 10px;
-  height: 10px;
-  transition: background 0.3s ease, opacity 0.3s ease;
+  background: var(--text-secondary-light);
+  opacity: 0.5;
+  width: 12px; /* Slightly larger */
+  height: 12px; /* Slightly larger */
+  transition: background 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
 }
 
 .swiper-pagination-bullet-active {
-  background: var(--accent-violet);
+  background: var(--accent-violet-light);
   opacity: 1;
+  transform: scale(1.2); /* Active bullet stands out more */
 }
 
+/* Navigation buttons - Positioned to not block content */
 .swiper-button-next,
 .swiper-button-prev {
-  color: var(--accent-violet);
+  color: var(--accent-violet-light);
   transition: color 0.3s ease, transform 0.3s ease;
   padding: 1rem;
+  top: 45%; /* Slightly higher, still out of the way */
+  width: 50px; /* Consistent size */
+  height: 50px; /* Consistent size */
+  background-color: rgba(255, 255, 255, 0.6); /* Semi-transparent background */
+  border-radius: 50%; /* Circular buttons */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  opacity: 0.8;
+  z-index: 10; /* Ensure they are above cards */
 }
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 1.5rem; /* Larger arrows */
+}
+
+.swiper-button-next {
+  right: 1.5rem; /* Pushed slightly more to the right */
+}
+
+.swiper-button-prev {
+  left: 1.5rem; /* Pushed slightly more to the left */
+}
+
 
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
-  color: var(--muted-gold);
-  transform: scale(1.15);
+  color: var(--muted-gold-light);
+  transform: scale(1.2) translateY(-2px); /* Slightly larger and subtle lift */
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
+
 /* ------------------------------------ */
-/* Dark Theme - Carousel Container */
+/* Dark Theme Overrides - Refined */
 /* ------------------------------------ */
 .dark .MainContainer-carousel {
-  background: #121212; /* Deep charcoal for eye comfort */
+  background: var(--carousel-bg-dark);
 }
 
 .dark .works-carousel-container {
-  /* Layout & Background */
-  padding: 4rem 4rem;
-  background-color: #121212; /* Deep charcoal for soothing backdrop */
-  max-width: 1400px;
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
-  font-family: 'Inter', 'Segoe UI', sans-serif;
+  background-color: var(--carousel-bg-dark);
 }
 
-/* ------------------------------------ */
-/* Dark Theme - Carousel Title */
-/* ------------------------------------ */
+.dark .works-carousel-container::before {
+  background: radial-gradient(circle at 15% 25%, var(--glow-purple-dark), transparent 70%),
+              radial-gradient(circle at 85% 75%, var(--glow-cyan-dark), transparent 70%);
+  opacity: 0.2; /* Slightly more prominent in dark theme */
+}
+
 .dark .carousel-title {
-  /* Typography */
-  font-size: clamp(2rem, 5vw, 2.8rem);
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 3rem;
-  position: relative;
-  z-index: 1;
-  
-  /* Gradient for Luxury */
-  background: linear-gradient(90deg, #6B4E9B, #26C6DA, #D4AF37); /* Purple to cyan to gold */
+  background: linear-gradient(90deg, var(--accent-purple-dark), var(--accent-cyan-dark), var(--accent-gold-dark));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .dark .carousel-title::after {
-  /* Decorative Underline */
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  width: 60%;
-  height: 2px; /* Thinner for performance */
-  transform: translateX(-50%);
-  background: linear-gradient(90deg, #6B4E9B, #26C6DA); /* Purple to cyan */
-  transition: width 0.3s ease; /* Faster transition */
+  background: linear-gradient(90deg, var(--accent-purple-dark), var(--accent-cyan-dark));
 }
 
 .dark .carousel-title:hover::after {
-  width: 80%;
+  background: linear-gradient(90deg, var(--accent-gold-dark), var(--accent-purple-dark));
 }
 
-/* ------------------------------------ */
-/* Dark Theme - Project Card */
-/* ------------------------------------ */
 .dark .project-card {
-  /* Layout & Background */
-  background: #1C1C1C; /* Slightly lighter charcoal for depth */
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid rgba(107, 78, 155, 0.2); /* Subtle purple border */
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); /* Simpler shadow */
-  transition: transform 0.2s ease; /* Faster, transform-only */
-  text-align: center;
-  padding: 2rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  z-index: 1;
+  background: var(--card-bg-dark);
+  border: 1px solid rgba(107, 78, 155, 0.15); /* More visible border */
+  box-shadow: var(--shadow-dark), var(--inner-shadow-dark);
 }
 
 .dark .project-card:hover {
-  transform: translateY(-6px); /* Reduced lift for speed */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); /* Simpler hover shadow */
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6), var(--inner-shadow-dark); /* Enhanced dark hover shadow */
+  border-color: rgba(107, 78, 155, 0.4);
 }
 
 .dark .project-card::before {
-  /* Simplified Gradient */
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(rgba(107, 78, 155, 0.1), transparent); /* Simpler gradient */
+  background: radial-gradient(circle at center, var(--glow-purple-dark), transparent 70%);
   opacity: 0;
-  transition: opacity 0.2s ease; /* Faster transition */
 }
 
 .dark .project-card:hover::before {
-  opacity: 0.4; /* Lower opacity for performance */
+  opacity: 0.6; /* Slightly less opaque than light mode hover for dark aesthetic */
 }
 
-/* ------------------------------------ */
-/* Dark Theme - Project Card Image */
-/* ------------------------------------ */
 .dark .project-card img {
-  width: 100%;
-  height: clamp(200px, 30vw, 240px);
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 1.5rem;
-  transition: transform 0.3s ease; /* Transform-only for speed */
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3)); /* Lighter shadow */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 .dark .project-card:hover img {
-  transform: translateY(-4px); /* Simpler transform */
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6), inset 0 0 0 2px rgba(107, 78, 155, 0.2);
 }
 
-/* ------------------------------------ */
-/* Dark Theme - Project Card Text */
-/* ------------------------------------ */
 .dark .project-card h3 {
-  color: #E8E8E8; /* Off-white for readability */
-  font-size: clamp(1.3rem, 2vw, 1.5rem);
-  font-weight: 600;
-  margin-bottom: 1rem;
-  transition: color 0.2s ease; /* Faster transition */
+  color: var(--text-primary-dark);
 }
 
 .dark .project-card:hover h3 {
-  color: #26C6DA; /* Cyan for hover */
+  color: var(--accent-cyan-dark);
+  text-shadow: 0 0 10px var(--glow-cyan-dark);
 }
 
 .dark .project-card p {
-  color: #B0B0B0; /* Muted silver for eye comfort */
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-  transition: color 0.2s ease; /* Faster transition */
+  color: var(--text-secondary-dark);
 }
 
 .dark .project-card:hover p {
-  color: #E8E8E8; /* Off-white on hover */
+  color: var(--text-primary-dark);
 }
 
-/* ------------------------------------ */
-/* Dark Theme - Button Container */
-/* ------------------------------------ */
-.dark .button-container {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 1rem;
-}
-
-/* ------------------------------------ */
-/* Dark Theme - Base Button Styles */
-/* ------------------------------------ */
-.dark .project-card a.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  font-weight: 500;
-  padding: 0.7rem 1.8rem;
-  border-radius: 25px;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease; /* Faster, limited properties */
-  font-size: clamp(0.85rem, 1.2vw, 0.95rem);
-}
-
-/* Primary Button (View Site) */
 .dark .button-primary {
-  color: #E8E8E8; /* Off-white text */
-  border: 2px solid #6B4E9B; /* Purple border */
-  background: transparent; /* Simplified background */
+  color: var(--text-primary-dark);
+  border-color: var(--accent-purple-dark);
+  background: transparent;
+}
+
+.dark .button-primary::before {
+  background: linear-gradient(90deg, transparent, var(--glow-purple-dark), transparent);
 }
 
 .dark .button-primary:hover {
-  background: linear-gradient(135deg, #6B4E9B, #D4AF37); /* Purple to gold */
-  color: #121212; /* Dark text for contrast */
-  transform: translateY(-2px); /* Reduced lift */
+  background: linear-gradient(135deg, var(--accent-purple-dark), var(--accent-gold-dark));
+  color: var(--carousel-bg-dark);
+  border-color: var(--accent-gold-dark);
+  box-shadow: 0 6px 20px var(--glow-purple-dark);
 }
 
-/* Secondary Button (Live Demo) */
-.dark .button-secondary {
-  color: #E8E8E8; /* Off-white text */
-  border: 2px solid #26C6DA; /* Cyan border */
-  background: transparent; /* Simplified background */
-}
-
-.dark .button-secondary:hover {
-  background: linear-gradient(135deg, #26C6DA, #6B4E9B); /* Cyan to purple */
-  color: #121212; /* Dark text */
-  transform: translateY(-2px); /* Reduced lift */
-}
-
-/* Tertiary Button (Source Code) */
 .dark .button-tertiary {
-  color: #E8E8E8; /* Off-white text */
-  border: 2px solid #D4AF37; /* Gold border */
-  background: transparent; /* Simplified background */
+  color: var(--text-primary-dark);
+  border-color: var(--accent-gold-dark); /* Changed to gold for dark theme contrast */
+  background: transparent;
+}
+
+.dark .button-tertiary::before {
+  background: rgba(212, 175, 55, 0.1); /* Gold ripple */
 }
 
 .dark .button-tertiary:hover {
-  background: linear-gradient(135deg, #D4AF37, #26C6DA); /* Gold to cyan */
-  color: #121212; /* Dark text */
-  transform: translateY(-2px); /* Reduced lift */
-}
-
-/* ------------------------------------ */
-/* Dark Theme - Swiper Styles */
-/* ------------------------------------ */
-.dark .swiper {
-  padding-bottom: 3.5rem;
-  position: relative;
-  z-index: 1;
-}
-
-.dark .swiper-slide {
-  display: flex;
-  justify-content: center;
+  background: linear-gradient(135deg, var(--accent-gold-dark), var(--accent-cyan-dark));
+  color: var(--carousel-bg-dark);
+  border-color: var(--accent-cyan-dark);
+  box-shadow: 0 6px 20px var(--glow-gold-dark);
 }
 
 .dark .swiper-pagination-bullet {
-  background: #B0B0B0; /* Muted silver for eye comfort */
-  opacity: 0.6;
-  width: 10px;
-  height: 10px;
-  transition: background 0.2s ease, opacity 0.2s ease; /* Faster transition */
+  background: var(--text-secondary-dark);
 }
 
 .dark .swiper-pagination-bullet-active {
-  background: #26C6DA; /* Cyan for active bullet */
-  opacity: 1;
+  background: var(--accent-cyan-dark);
 }
 
 .dark .swiper-button-next,
 .dark .swiper-button-prev {
-  color: #6B4E9B; /* Greenish purple */
-  transition: color 0.2s ease; /* Faster transition */
-  padding: 1rem;
+  color: var(--accent-purple-dark);
+  background-color: rgba(0, 0, 0, 0.6); /* Darker semi-transparent background */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .dark .swiper-button-next:hover,
 .dark .swiper-button-prev:hover {
-  color: #D4AF37; /* Gold on hover */
+  color: var(--accent-gold-dark);
+  background-color: rgba(0, 0, 0, 0.9);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 /* ------------------------------------ */
@@ -579,22 +510,66 @@
 @media (max-width: 1024px) {
   .works-carousel-container,
   .dark .works-carousel-container {
-    padding: 3rem 6vw;
+    padding: 4rem 6vw; /* Adjusted padding */
   }
 
   .carousel-title,
   .dark .carousel-title {
-    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-size: clamp(2rem, 4.5vw, 2.8rem);
   }
 
   .project-card,
   .dark .project-card {
-    padding: 1.5rem;
+    padding: 2rem; /* Adjusted padding */
   }
 
   .project-card img,
   .dark .project-card img {
-    height: clamp(180px, 28vw, 220px);
+    height: clamp(200px, 28vw, 240px); /* Adjusted height */
+  }
+
+  .project-card h3,
+  .dark .project-card h3 {
+    font-size: clamp(1.3rem, 2vw, 1.5rem);
+  }
+
+  .project-card p,
+  .dark .project-card p {
+    font-size: clamp(0.9rem, 1.4vw, 1rem);
+  }
+
+  .button-container,
+  .dark .button-container {
+    flex-direction: row; /* Keep buttons in a row for medium screens */
+    gap: 1rem;
+  }
+
+  .project-card a.button,
+  .dark .project-card a.button {
+    padding: 0.6rem 1.4rem; /* Adjusted for smaller size on smaller screens */
+    font-size: 0.9rem; /* Adjusted font size */
+  }
+}
+
+@media (max-width: 768px) {
+  .works-carousel-container,
+  .dark .works-carousel-container {
+    padding: 3rem 5vw; /* Adjusted padding */
+  }
+
+  .carousel-title,
+  .dark .carousel-title {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+  }
+
+  .project-card,
+  .dark .project-card {
+    padding: 1.8rem; /* Adjusted padding */
+  }
+
+  .project-card img,
+  .dark .project-card img {
+    height: clamp(180px, 26vw, 220px); /* Adjusted height */
   }
 
   .project-card h3,
@@ -604,50 +579,13 @@
 
   .project-card p,
   .dark .project-card p {
-    font-size: clamp(0.85rem, 1.4vw, 0.95rem);
+    font-size: clamp(0.85rem, 1.3vw, 0.95rem);
   }
 
   .button-container,
   .dark .button-container {
-    flex-direction: column;
+    flex-direction: column; /* Stack buttons on smaller screens */
     gap: 0.8rem;
-  }
-
-  .project-card a.button,
-  .dark .project-card a.button {
-    padding: 0.6rem 1.5rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .works-carousel-container,
-  .dark .works-carousel-container {
-    padding: 2.5rem 5vw;
-  }
-
-  .carousel-title,
-  .dark .carousel-title {
-    font-size: clamp(1.6rem, 3.5vw, 2rem);
-  }
-
-  .project-card,
-  .dark .project-card {
-    padding: 1.5rem;
-  }
-
-  .project-card img,
-  .dark .project-card img {
-    height: clamp(160px, 26vw, 200px);
-  }
-
-  .project-card h3,
-  .dark .project-card h3 {
-    font-size: clamp(1.1rem, 1.7vw, 1.3rem);
-  }
-
-  .project-card p,
-  .dark .project-card p {
-    font-size: clamp(0.8rem, 1.3vw, 0.9rem);
   }
 
   .project-card a.button,
@@ -655,12 +593,39 @@
     padding: 0.5rem 1.2rem;
     font-size: 0.9rem;
   }
+
+  .swiper-button-next,
+  .swiper-button-prev,
+  .dark .swiper-button-next,
+  .dark .swiper-button-prev {
+    top: 50%; /* Centered vertically */
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+  }
+
+  .swiper-button-next::after,
+  .swiper-button-prev::after,
+  .dark .swiper-button-next::after,
+  .dark .swiper-button-prev::after {
+    font-size: 1.2rem;
+  }
+
+  .swiper-button-next,
+  .dark .swiper-button-next {
+    right: 0.5rem; /* Closer to the edge */
+  }
+
+  .swiper-button-prev,
+  .dark .swiper-button-prev {
+    left: 0.5rem; /* Closer to the edge */
+  }
 }
 
 @media (max-width: 480px) {
   .works-carousel-container,
   .dark .works-carousel-container {
-    padding: 2rem 4vw;
+    padding: 2.5rem 4vw; /* Adjusted padding */
   }
 
   .carousel-title,
@@ -670,27 +635,34 @@
 
   .project-card,
   .dark .project-card {
-    padding: 1.2rem;
+    padding: 1.5rem; /* Adjusted padding */
   }
 
   .project-card img,
   .dark .project-card img {
-    height: clamp(140px, 24vw, 180px);
+    height: clamp(160px, 24vw, 200px); /* Adjusted height */
   }
 
   .project-card h3,
   .dark .project-card h3 {
-    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    font-size: clamp(1.1rem, 1.7vw, 1.3rem);
   }
 
   .project-card p,
   .dark .project-card p {
-    font-size: clamp(0.75rem, 1.2vw, 0.85rem);
+    font-size: clamp(0.8rem, 1.2vw, 0.9rem);
   }
 
   .project-card a.button,
   .dark .project-card a.button {
     padding: 0.4rem 1rem;
     font-size: 0.85rem;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev,
+  .dark .swiper-button-next,
+  .dark .swiper-button-prev {
+    display: none; /* Hide navigation arrows on very small screens if they still obstruct */
   }
 }

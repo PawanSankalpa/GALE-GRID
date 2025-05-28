@@ -11,35 +11,34 @@ import "aos/dist/aos.css";
 
 const projects = [
   {
-    title: 'School Website',
+    title: 'Connect & Post: Share Your Thoughts',
+    image: '/images/blogHomePage.png',
+    description: "Connect & Post: Your platform to register, log in, and easily publish your blog posts. Share your thoughts publicly with titles and descriptions, knowing only you can edit or delete your content from your private user page. It's the perfect tool for showcasing your ideas.",
+    links: {
+      site: 'https://blogproject-xm1p.onrender.com/',
+      source: 'https://github.com/PawanSankalpa/blogProject',
+    },
+  },
+  {
+    title: 'Travel Tracker: Map Your Adventures',
+    image: '/images/travelTracker.png',
+    description: "Travel Tracker lets you easily log the countries you've visited and see them marked directly on an interactive world map. It's the perfect way to visualize your global journeys and keep a digital record of all your adventures.",
+    links: {
+      site: 'https://travel-tracker-z3kz.onrender.com/',
+      source: 'https://github.com/PawanSankalpa/travel_tracker',
+    },
+  },
+  {
+    title: 'Keeper App: Your Smart Notebook',
     image: '/images/KeeperApp.png',
-    description: "On this page, you'll find a simple React-based app that helps you organize your thoughts, tasks, and reminders in one place.",
+    description: "Keeper App is a sleek, intuitive tool designed to save your ideas effortlessly. You can customize your experience with both dark and light themes, and even adjust the font size to your preference. It's the perfect place to jot down and organize all your thoughts, ensuring your brilliant ideas are always at your fingertips.",
     links: {
       site: 'https://keeper-app-woad-kappa.vercel.app/',
-      demo: 'https://keeper-app-woad-kappa.vercel.app/',
       source: 'https://github.com/PawanSankalpa/keeper-app',
     },
   },
-  {
-    title: 'School WebPage',
-    image: '/images/classWeb/HomePage.png',
-    description: 'Personal trainer portfolio with custom video workout sections.',
-    links: {
-      site: 'https://fitnesspro.com',
-      demo: 'https://fitnesspro.com/demo',
-      source: 'https://github.com/fitnesspro',
-    },
-  },
-  {
-    title: 'Blog',
-    image: '/images/blogHomePage.png',
-    description: 'E-commerce site for a bookstore with easy navigation and search.',
-    links: {
-      site: 'https://bookhaven.com',
-      demo: 'https://bookhaven.com/demo',
-      source: 'https://github.com/bookhaven',
-    },
-  },
+  
+  
 ];
 
 const WorksCarousel = () => {
@@ -109,15 +108,6 @@ const WorksCarousel = () => {
                       aria-label={`Visit the live site of ${project.title}`}
                     >
                       View Site
-                    </a>
-                    <a
-                      href={project.links.demo}
-                      className="button button-secondary"
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`View live demo of ${project.title}`}
-                    >
-                      Live Demo
                     </a>
                     <a
                       href={project.links.source}
