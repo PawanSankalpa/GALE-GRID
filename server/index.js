@@ -190,8 +190,8 @@ app.get("/auth/google", passport.authenticate("google", { scope: ["email", "prof
 app.get(
   "/auth/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "/login",
-    successRedirect: "/", // Update to frontend dashboard if needed
+    failureRedirect: "https://www.galegrid.com/login",
+    successRedirect: "https://www.galegrid.com/", // Update to frontend dashboard if needed
   })
 );
 
