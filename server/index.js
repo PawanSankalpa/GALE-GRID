@@ -40,10 +40,10 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-      secure: process.env.NODE_ENV === "production",
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+      secure: true,
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: "none",
     },
   })
 );
@@ -55,21 +55,26 @@ app.use(passport.session());
 
 // Local strategy
 passport.use(
-  new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
-    try {
-      const normalizedEmail = email.toLowerCase();
-      const result = await db.query("SELECT * FROM users WHERE email = $1", [normalizedEmail]);
+  new LocalStrategy(
+    { usernameField: "email" },
+    async (email, password, done) => {
+      try {
+        const normalizedEmail = email.toLowerCase();
+        const result = await db.query("SELECT * FROM users WHERE email = $1", [
+          normalizedEmail,
+        ]);
 
-      if (result.rows.length === 0) return done(null, false);
+        if (result.rows.length === 0) return done(null, false);
 
-      const user = result.rows[0];
-      const isValid = await bcrypt.compare(password, user.password);
-      return isValid ? done(null, user) : done(null, false);
-    } catch (err) {
-      console.error("Local strategy error:", err);
-      return done(err);
+        const user = result.rows[0];
+        const isValid = await bcrypt.compare(password, user.password);
+        return isValid ? done(null, user) : done(null, false);
+      } catch (err) {
+        console.error("Local strategy error:", err);
+        return done(err);
+      }
     }
-  })
+  )
 );
 
 // Google strategy
@@ -84,14 +89,19 @@ passport.use(
     async (req, accessToken, refreshToken, profile, done) => {
       try {
         const email = profile.email.toLowerCase();
-        const existingUser = await db.query("SELECT * FROM users WHERE email = $1", [email]);
+        const existingUser = await db.query(
+          "SELECT * FROM users WHERE email = $1",
+          [email]
+        );
 
         if (existingUser.rows.length > 0) {
           return done(null, existingUser.rows[0]);
         }
 
-        const firstName = profile.given_name || profile.displayName.split(" ")[0];
-        const lastName = profile.family_name || profile.displayName.split(" ")[1] || "";
+        const firstName =
+          profile.given_name || profile.displayName.split(" ")[0];
+        const lastName =
+          profile.family_name || profile.displayName.split(" ")[1] || "";
         const username = profile.displayName.replace(/\s+/g, "").toLowerCase();
 
         const newUser = await db.query(
@@ -119,7 +129,9 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const result = await db.query("SELECT * FROM users WHERE user_id = $1", [id]);
+    const result = await db.query("SELECT * FROM users WHERE user_id = $1", [
+      id,
+    ]);
     if (result.rows.length === 0) return done(new Error("User not found"));
     done(null, result.rows[0]);
   } catch (err) {
@@ -135,7 +147,10 @@ app.post("/register/user", async (req, res) => {
   const normalizedEmail = email.toLowerCase();
 
   try {
-    const existingUser = await db.query("SELECT * FROM users WHERE email = $1", [normalizedEmail]);
+    const existingUser = await db.query(
+      "SELECT * FROM users WHERE email = $1",
+      [normalizedEmail]
+    );
     if (existingUser.rows.length > 0) {
       return res.status(400).json({ message: "User already exists!" });
     }
@@ -185,13 +200,16 @@ app.get("/api/current_user", (req, res) => {
 });
 
 // Google OAuth
-app.get("/auth/google", passport.authenticate("google", { scope: ["email", "profile"] }));
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
 
 app.get(
   "/auth/google/callback",
   passport.authenticate("google", {
     failureRedirect: "https://www.galegrid.com/login",
-    successRedirect: "https://www.galegrid.com/", // Update to frontend dashboard if needed
+    successRedirect: "https://www.galegrid.com", // Update to frontend dashboard if needed
   })
 );
 
