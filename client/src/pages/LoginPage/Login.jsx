@@ -16,7 +16,7 @@ function Login() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const API_URL = "http://localhost:8000";
+  const API_URL = "https://gale-grid-1.onrender.com";
 
   function goToHome() {
     navigate("/");
@@ -76,7 +76,7 @@ function Login() {
         <button
           className="signup-button-google"
           onClick={() => {
-            window.location.href = "http://localhost:8000/auth/google";
+            window.location.href = "https://gale-grid-1.onrender.com/auth/google";
           }}
         >
           {" "}

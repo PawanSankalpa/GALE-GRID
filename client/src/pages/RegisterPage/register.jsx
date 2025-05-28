@@ -19,7 +19,7 @@ function Register() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const API_URL = "http://localhost:8000";
+  const API_URL = "https://gale-grid-1.onrender.com";
 
   function goToHome() {
     navigate("/");
@@ -81,12 +81,12 @@ function Register() {
       </div>
 
       <div className="register-right">
-        
+
         <button
           className="signup-button-google"
           type="submit"
           onClick={() => {
-            window.location.href = "http://localhost:8000/auth/google";
+            window.location.href = "https://gale-grid-1.onrender.com/auth/google";
           }}
         >
           {" "}
