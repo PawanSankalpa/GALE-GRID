@@ -1,10 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; // add useEffect here
 import { NavLink } from "react-router-dom";
-import "./styles/NavBar.css"; 
+import "./styles/NavBar.css";
 import ThemeToggle from "./ThemeToggle";
+import useAuth from "../useAuth";
+import axios from "axios";
 
 function NavBar() {
   const [isActive, setIsActive] = useState(false);
+
+  const { user, loading } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "http://localhost:8000/logout",
+        {},
+        { withCredentials: true }
+      );
+      window.location.reload(); // reload to refresh auth state
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
 
   const closeMenu = () => {
     setIsActive(false);
@@ -62,24 +79,45 @@ function NavBar() {
             Contact
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/dashboard" onClick={closeMenu}>
+            Dashboard
+          </NavLink>
+        </li>
       </ul>
 
       <div className="ThemeToggle">
         <ThemeToggle />
       </div>
-      
-      <div className="login-register-box">
-        <NavLink to="/login" className="nav-login" onClick={closeMenu}>
-          Log in
-        </NavLink>
-        <NavLink to="/register" className="nav-register" onClick={closeMenu}>
-          Register
-        </NavLink>
-      </div>
+
+      {!loading && (
+        <div className="login-register-box">
+          {user ? (
+            <>
+              <span className="nav-welcome">Welcome, {user.first_name}!</span>
+              {/* Add logout button (you’ll wire it up later) */}
+              <button onClick={handleLogout} className="nav-logout">
+                Log out
+              </button>
+            </>
+          ) : (
+            <>
+              <NavLink to="/login" className="nav-login" onClick={closeMenu}>
+                Log in
+              </NavLink>
+              <NavLink
+                to="/register"
+                className="nav-register"
+                onClick={closeMenu}
+              >
+                Register
+              </NavLink>
+            </>
+          )}
+        </div>
+      )}
     </nav>
   );
 }
 
 export default NavBar;
-
-

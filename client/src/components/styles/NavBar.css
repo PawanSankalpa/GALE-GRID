@@ -1,4 +1,4 @@
-/* NavBar.css - Updated with Login/Register Buttons */
+/* NavBar.css - Final Enhanced Version */
 
 :root {
   /* Updated Light Theme Colors */
@@ -11,6 +11,16 @@
   --border-line: rgba(0, 0, 0, 0.1); /* A subtle dark border */
 }
 
+/* Dark Theme Colors */
+[data-theme='dark'] {
+  --galaxy-black: #101010; /* Dark background */
+  --grid-gray: #1a1a1a; /* Darker background for elements */
+  --text-white: #f0f0f0; /* Light text */
+  --subtle-shadow: rgba(0, 0, 0, 0.4); /* Stronger shadow for dark mode */
+  --border-line: rgba(255, 255, 255, 0.1); /* Light border for dark mode */
+}
+
+
 * {
   margin: 0;
   padding: 0;
@@ -21,12 +31,13 @@ body {
   background-color: var(--galaxy-black);
   color: var(--text-white);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .navbar {
   width: 100%;
   padding: 1rem 2rem;
-  background-color: rgba(16, 16, 16, 0.825);
+  background-color: rgba(16, 16, 16, 0.825); /* Fixed translucent dark background */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -35,6 +46,7 @@ body {
   z-index: 100;
   border-bottom: 1px solid var(--border-line);
   box-shadow: 0 2px 10px var(--subtle-shadow);
+  backdrop-filter: blur(8px); /* Apply blur directly to navbar */
 }
 
 .logo img {
@@ -45,7 +57,7 @@ body {
   display: flex;
   gap: 2rem;
   list-style: none;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Add opacity for smooth transition */
   margin: 0 auto;
   position: absolute;
   left: 50%;
@@ -54,7 +66,7 @@ body {
 
 .nav-links li a {
   text-decoration: none;
-  color: white;
+  color: white; /* Keep link color white for better contrast on dark navbar */
   font-weight: 500;
   font-size: 1rem;
   position: relative;
@@ -79,7 +91,7 @@ body {
 
 .nav-links li a:hover,
 .nav-links li a.active {
-  color: var(--dark-cyan);
+  color: var(--bright-teal); /* Highlight active/hover links with bright teal */
 }
 
 /* Hamburger menu */
@@ -90,107 +102,151 @@ body {
   gap: 6px;
   position: relative;
   margin-left: 1.5rem;
+  z-index: 101; /* Ensure hamburger is above nav-links for clickability */
 }
 
 .menu-toggle span {
   width: 25px;
   height: 3px;
-  background-color: white;
+  background-color: white; /* Always white for hamburger icon */
   border-radius: 2px;
   transition: all 0.3s ease;
 }
 
-/* New Login/Register Buttons Container */
+/* Enhanced Login/Register Buttons Container */
 .login-register-box {
   display: flex;
   gap: 0.75rem;
   align-items: center;
+  margin-left: auto; /* Pushes container to the right */
 }
 
-/* Button Styles */
-.nav-login,
-.nav-register {
-  padding: 0.6rem 1.2rem;
+/* User Welcome Text */
+.nav-welcome {
+  background: linear-gradient(to right, rgb(217, 143, 15), rgb(214, 207, 222), rgb(216, 211, 227)); 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1rem;
+  font-weight: bolder;
+  margin-right: 0.5rem;
+  white-space: nowrap;
+}
+
+/* Dashboard link for logged-in users */
+.nav-dashboard {
+  padding: 0.65rem 1.3rem;
   border-radius: 5%;
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   position: relative;
   overflow: hidden;
   z-index: 1;
   border: none;
   outline: none;
   white-space: nowrap;
-  text-decoration: none;
+  will-change: transform, box-shadow;
+  text-decoration: none; /* Ensure it looks like a button */
+  background: linear-gradient(90deg, var(--bright-teal), var(--dark-cyan)); /* Use theme colors for gradient */
+  color: white; /* Always white text on gradient buttons */
 }
 
-
-
-.nav-login {
-  background-color: transparent;
-  color: white;
-  border: 2px solid white;
-  position: relative;
-  margin-right: 0.2rem;
-}
-
-.nav-register {
-  background: linear-gradient(90deg, var(--bright-teal), var(--dark-cyan));
-  color: white;
-}
-
-/* Button Hover Effects */
-.nav-login:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.nav-register:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(33, 224, 178, 0.3);
+.nav-dashboard:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(33, 224, 178, 0.35);
   background: linear-gradient(90deg, var(--dark-cyan), var(--bright-teal));
 }
 
-/* Button Active States */
+
+/* Refined Button Styles */
+.nav-login,
+.nav-register,
+.nav-logout { /* Apply styles to logout button as well */
+  padding: 0.65rem 1.3rem;
+  border-radius: 5%;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  border: none;
+  outline: none;
+  white-space: nowrap;
+  will-change: transform, box-shadow;
+  text-decoration: none; /* Remove underline from NavLink */
+}
+
+.nav-login {
+  background-color: rgba(128, 128, 128, 0.284); /* Translucent gray */
+  color: white;
+  backdrop-filter: blur(4px); /* Apply blur to button background */
+}
+
+.nav-register {
+  background: linear-gradient(135deg, rgba(0, 128, 128, 0.443), rgba(0, 255, 255, 0.493)); /* Translucent gradient */
+  color: white;
+}
+
+.nav-logout {
+  background-color: rgba(220, 20, 60, 0.5); /* Semi-transparent crimson */
+  color: white;
+  backdrop-filter: blur(4px);
+}
+
+
+/* Enhanced Hover Effects */
+.nav-login:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.nav-register:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(33, 224, 178, 0.35);
+  background: linear-gradient(135deg, var(--dark-cyan), var(--bright-teal)); /* Solid gradient on hover */
+}
+
+.nav-logout:hover {
+  background-color: crimson; /* Solid crimson on hover */
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(220, 20, 60, 0.3);
+}
+
+/* Pressed State */
 .nav-login:active,
-.nav-register:active {
-  transform: translateY(0);
-  transition: all 0.2s ease;
+.nav-register:active,
+.nav-dashboard:active,
+.nav-logout:active {
+  transform: translateY(1px) scale(0.98);
+  transition: all 0.15s ease;
 }
 
-/* Button Ripple Effect */
-.nav-login::after,
-.nav-register::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 5px;
-  height: 5px;
-  background: rgba(255, 255, 255, 0.4);
-  opacity: 0;
-  border-radius: 100%;
-  transform: scale(1, 1) translate(-50%, -50%);
-  transform-origin: 50% 50%;
-  z-index: -1;
+/* Glow Effect on Focus */
+.nav-login:focus-visible,
+.nav-register:focus-visible,
+.nav-dashboard:focus-visible,
+.nav-logout:focus-visible {
+  box-shadow: 0 0 0 3px rgba(33, 224, 178, 0.5);
 }
 
-.nav-login:hover::after,
-.nav-register:hover::after {
-  animation: ripple 1s ease-out;
+/* Micro-interaction for Button Text */
+.nav-login span,
+.nav-register span,
+.nav-dashboard span,
+.nav-logout span {
+  display: inline-block;
+  transition: transform 0.3s ease;
 }
 
-@keyframes ripple {
-  0% {
-    transform: scale(0, 0);
-    opacity: 0.5;
-  }
-  100% {
-    transform: scale(20, 20);
-    opacity: 0;
-  }
+.nav-login:hover span,
+.nav-register:hover span,
+.nav-dashboard:hover span,
+.nav-logout:hover span {
+  transform: translateX(2px);
 }
 
 /* Responsive Design */
@@ -207,9 +263,9 @@ body {
 
   .nav-links {
     position: absolute;
-    top: 70px;
+    top: 70px; /* Aligns with navbar height */
     right: 0;
-    background-color: rgba(0, 0, 0, 0.848);
+    background-color: rgba(0, 0, 0, 0.848); /* Dark background for mobile menu */
     flex-direction: column;
     width: 100%;
     max-height: 0;
@@ -219,30 +275,40 @@ body {
     left: 0;
     text-align: center;
     opacity: 0;
-    pointer-events: none;
+    pointer-events: none; /* Disable pointer events when hidden */
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    border-top: 1px solid var(--border-line); /* Add a border for separation */
   }
 
   .nav-links.active {
-    max-height: 300px;
-    padding: 1rem 2rem;
+    max-height: 300px; /* Adjust as needed based on content */
+    padding: 0.2rem 2rem;
     opacity: 1;
-    pointer-events: auto;
+    pointer-events: auto; /* Enable pointer events when active */
   }
 
   .nav-links li {
     margin-bottom: 1rem;
   }
+  
+  .nav-links li:last-child {
+    margin-bottom: 1rem; /* No bottom margin for the last item */
+  }
 
   /* Mobile button adjustments */
   .login-register-box {
-    margin-left: auto;
-    margin-right: 1rem;
+    margin-left: auto; /* Keep it pushed to the right */
+    margin-right: 0.5rem; /* Small margin */
+    gap: 0.5rem; /* Smaller gap between buttons */
   }
 
+  
   .nav-login,
-  .nav-register {
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
+  .nav-register,
+  .nav-dashboard,
+  .nav-logout {
+    padding: 0.55rem 1rem;
+    font-size: 0.9rem;
   }
 }
 
@@ -252,9 +318,11 @@ body {
   }
 
   .nav-login,
-  .nav-register {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.8rem;
+  .nav-register,
+  .nav-dashboard,
+  .nav-logout {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.85rem;
   }
 }
 
@@ -271,104 +339,9 @@ body {
   transform: rotate(-45deg) translate(6px, -6px);
 }
 
-/* NavBar.css - Final Enhanced Version */
-
-/* ... (keep all your existing root variables and base styles) ... */
-
-/* Enhanced Login/Register Buttons Container */
-.login-register-box {
-  display: flex;
-  gap: 0.75rem;
-  align-items: center;
-  margin-left: auto; /* Pushes container to the right */
-}
-
-/* Refined Button Styles */
-.nav-login,
-.nav-register {
-  padding: 0.65rem 1.3rem;
-  border-radius: 5%;
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-  border: none;
-  outline: none;
-  white-space: nowrap;
-  will-change: transform, box-shadow;
-}
-
-.nav-login {
-  background-color: rgba(128, 128, 128, 0.284);
-  color: white;
-  backdrop-filter: blur(4px);
-}
-
-.nav-register {
-  background: linear-gradient(135deg, rgba(0, 128, 128, 0.443), rgba(0, 255, 255, 0.493));
-  color: white;
-}
-
-/* Enhanced Hover Effects */
-.nav-login:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  border-color: white;
-}
-
-.nav-register:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(33, 224, 178, 0.35);
-  background: linear-gradient(135deg, var(--dark-cyan), var(--bright-teal));
-}
-
-/* Pressed State */
-.nav-login:active,
-.nav-register:active {
-  transform: translateY(1px) scale(0.98);
-  transition: all 0.15s ease;
-}
-
-/* Glow Effect on Focus */
-.nav-login:focus-visible,
-.nav-register:focus-visible {
-  box-shadow: 0 0 0 3px rgba(33, 224, 178, 0.5);
-}
-
-/* Micro-interaction for Button Text */
-.nav-login span,
-.nav-register span {
-  display: inline-block;
-  transition: transform 0.3s ease;
-}
-
-.nav-login:hover span,
-.nav-register:hover span {
-  transform: translateX(2px);
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .login-register-box {
-    gap: 0.5rem;
-    margin-right: 0.5rem;
-  }
-  
-  .nav-login,
-  .nav-register {
-    padding: 0.55rem 1rem;
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .nav-login,
-  .nav-register {
-    padding: 0.5rem 0.9rem;
-    font-size: 0.85rem;
-  }
+/* ThemeToggle positioning */
+.ThemeToggle {
+  /* You might need to adjust its position based on how it's rendered */
+  /* For example, if it's outside the login-register-box, ensure it's aligned */
+  margin-left: 1rem; /* Example: give it some space from other elements */
 }

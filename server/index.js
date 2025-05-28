@@ -1,144 +1,211 @@
+// ======================== Imports ========================
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import db, { connectDB } from "./db.js";
+import session from "express-session";
+import passport from "passport";
+import pgSession from "connect-pg-simple";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import passport from "passport";
-import { Strategy } from "passport-local";
-import GoogleStrategy from "passport-google-oauth2";
-import session from "express-session";
+import { Strategy as LocalStrategy } from "passport-local";
+import { Strategy as GoogleStrategy } from "passport-google-oauth2";
+import db, { connectDB } from "./db.js";
 
-
+// ======================== Config ========================
 dotenv.config();
-
 const app = express();
-const port = 8000;
+const port = process.env.PORT || 8000;
+const PgSession = pgSession(session);
+const saltRounds = 12;
 
-const saltRounds = 14
+// ======================== Middleware ========================
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
   })
 );
 
-app.use(express.json()); // to parse JSON bodies
-app.use(cors({
-  origin: "https://www.galegrid.com", // your frontend origin
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  credentials: true, // if your frontend sends cookies or auth headers
-}));
+app.use(
+  session({
+    store: new PgSession({
+      pool: db,
+      tableName: "session",
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      sameSite: "lax",
+    },
+  })
+);
 
+app.use(passport.initialize());
+app.use(passport.session());
 
-//register route
-app.post("/api/register", async (req, res) => {
-    const { first_name, last_name, username, email, password } = req.body;
+// ======================== Passport Strategies ========================
 
+// Local strategy
+passport.use(
+  new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
     try {
-        const userExists = await db.query("SELECT * FROM users WHERE email = $1", [
-            email
-        ]);
-        if (userExists.rows.length > 0) {
-            return res.status(400).json({ message: "User already exists!"});
-        }
+      const normalizedEmail = email.toLowerCase();
+      const result = await db.query("SELECT * FROM users WHERE email = $1", [normalizedEmail]);
 
-        // hashing the password
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
-        await db.query("INSERT INTO users (first_name, last_name, username, email, password) VALUES ($1, $2, $3, $4, $5)", [
-            first_name, last_name, username, email, hashedPassword
-        ]);
+      if (result.rows.length === 0) return done(null, false);
 
-        res.status(201).json({ message: "User created successfully!" });
-
-    } catch (error) {
-        console.log("signUp error:", error); 
-        res.status(500).json({ message: "Server error "});
+      const user = result.rows[0];
+      const isValid = await bcrypt.compare(password, user.password);
+      return isValid ? done(null, user) : done(null, false);
+    } catch (err) {
+      console.error("Local strategy error:", err);
+      return done(err);
     }
+  })
+);
 
-});
+// Google strategy
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:8000/auth/google/callback",
+      passReqToCallback: true,
+    },
+    async (req, accessToken, refreshToken, profile, done) => {
+      try {
+        const email = profile.email.toLowerCase();
+        const existingUser = await db.query("SELECT * FROM users WHERE email = $1", [email]);
 
-
-//logIn route
-app.post("/api/login", async (req, res) => {
-    const { email, password } = req.body;
-    try {
-        const userResult = await db.query("SELECT * FROM users WHERE email = $1", [
-            email
-        ]);
-
-        if (userResult.rows.length === 0){
-            return res.status(400).json({ message: "Invalid email or password" });
+        if (existingUser.rows.length > 0) {
+          return done(null, existingUser.rows[0]);
         }
 
-        const user = userResult.rows[0];
-        
-        // compare the password
-        const isMatch = await bcrypt.compare(password, user.password);
+        const firstName = profile.given_name || profile.displayName.split(" ")[0];
+        const lastName = profile.family_name || profile.displayName.split(" ")[1] || "";
+        const username = profile.displayName.replace(/\s+/g, "").toLowerCase();
 
-        if (!isMatch) {
-            return res.status(400).json({ message: "Invalid email or password" });    
-        }
-
-        // if password works
-
-        const token = jwt.sign(
-            {
-                id: user.id,
-                email: user.email,
-            },
-            process.env.JWT_SECRET,
-            { expiresIn: "1h" } 
+        const newUser = await db.query(
+          "INSERT INTO users (first_name, last_name, username, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+          [firstName, lastName, username, email, null]
         );
 
-        res.status(200).json({ message: "Login successfull!",
-            token,
-            user: { 
-                id: user.id, 
-                username: user.username,
-                email: user.email,
-            } 
-        });
+        return done(null, newUser.rows[0]);
+      } catch (err) {
+        console.error("Google strategy error:", err);
+        return done(err, false);
+      }
+    }
+  )
+);
 
+// ======================== Passport Serialization ========================
+passport.serializeUser((user, done) => {
+  if (!user || !user.user_id) {
+    console.error("serializeUser: Invalid user object", user);
+    return done(new Error("User ID is missing for session serialization"));
+  }
+  done(null, user.user_id);
+});
 
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Server error" })
+passport.deserializeUser(async (id, done) => {
+  try {
+    const result = await db.query("SELECT * FROM users WHERE user_id = $1", [id]);
+    if (result.rows.length === 0) return done(new Error("User not found"));
+    done(null, result.rows[0]);
+  } catch (err) {
+    done(err);
+  }
+});
+
+// ======================== Routes ========================
+
+// Register user
+app.post("/register/user", async (req, res) => {
+  const { first_name, last_name, username, email, password } = req.body;
+  const normalizedEmail = email.toLowerCase();
+
+  try {
+    const existingUser = await db.query("SELECT * FROM users WHERE email = $1", [normalizedEmail]);
+    if (existingUser.rows.length > 0) {
+      return res.status(400).json({ message: "User already exists!" });
     }
 
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    await db.query(
+      "INSERT INTO users (first_name, last_name, username, email, password) VALUES ($1, $2, $3, $4, $5)",
+      [first_name, last_name, username, normalizedEmail, hashedPassword]
+    );
+
+    res.status(201).json({ message: "User created successfully!" });
+  } catch (error) {
+    console.error("Register error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
 });
-// // just for testing
-// app.get("/", (req, res) => {
-//     res.send("API is running");
-// });
 
-// app.get("/test-users", async (req, res) => {
-//     try {
-//         const result = await db.query(
-//             "INSERT INTO contacts (name, email, phone, message) VALUES ($1, $2, $3, $4)", [
-//                 'John Doe', 'john@example.com', '1234567890', 'Hello there!'
-//             ]);
+// Login user
+app.post("/login/user", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) return res.status(400).json({ message: "Invalid credentials" });
 
-//         res.json(result.rows[0]);
-//     } catch (error) {
-//         console.error("DB error :", error);
-//         res.status(500).send("Error inserting data");
-//     }
-// });
+    req.logIn(user, (err) => {
+      if (err) return next(err);
+      return res.status(200).json({ message: "Login successful", user });
+    });
+  })(req, res, next);
+});
 
+// Logout
+app.post("/logout", (req, res) => {
+  req.logout((err) => {
+    if (err) return res.status(500).json({ message: "Logout failed" });
+    res.clearCookie("connect.sid");
+    res.json({ message: "Logged out successfully" });
+  });
+});
+
+// Get current user
+app.get("/api/current_user", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json({ user: req.user });
+  } else {
+    res.json({ user: null });
+  }
+});
+
+// Google OAuth
+app.get("/auth/google", passport.authenticate("google", { scope: ["email", "profile"] }));
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/login",
+    successRedirect: "/", // Update to frontend dashboard if needed
+  })
+);
+
+// ======================== Server Start ========================
 async function startServer() {
   try {
-    await connectDB();  // wait for DB to connect
+    await connectDB();
     app.listen(port, () => {
-      console.log(`server is running on port: ${port}`);
+      console.log(`Server is running on port: ${port}`);
     });
   } catch (error) {
     console.error("Failed to connect to DB:", error);
-    process.exit(1); // stop the app if DB connection fails
+    process.exit(1);
   }
 }
 
 startServer();
-

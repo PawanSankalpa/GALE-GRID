@@ -46,7 +46,7 @@ function Footer() {
           <h3>Follow</h3>
           <div className="social-icons">
             <a
-              href="https://github.com/your-github"
+              href="https://github.com/PawanSankalpa"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"

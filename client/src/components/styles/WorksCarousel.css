@@ -126,7 +126,7 @@
   transition: transform var(--transition-slow), box-shadow var(--transition-slow), border-color var(--transition-slow), background var(--transition-slow);
   text-align: center;
   padding: 2.5rem; /* Increased padding */
-  height: 100%; /* Make all cards the same height */
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -202,7 +202,7 @@
   margin-bottom: 2rem; /* More space before buttons */
   line-height: 1.7; /* Increased line height for better readability */
   transition: color var(--transition-fast);
-  flex-grow: 1; /* Ensures description takes available space and helps equalize card height */
+  flex-grow: 1; /* Ensures description takes available space */
 }
 
 .project-card:hover p {
@@ -228,10 +228,12 @@
   justify-content: center;
   text-decoration: none;
   font-weight: 600; /* Bolder text */
-  padding: 0.7rem 1.6rem; /* Adjusted for smaller size */
+  /* Adjusted for "normal" size on PC */
+  padding: 0.7rem 1.8rem;
+  font-size: clamp(0.9rem, 1.3vw, 0.95rem); /* Slightly reduced max font size */
+  /* End of adjustment */
   border-radius: 30px; /* More rounded, pill-like */
   transition: var(--transition-slow);
-  font-size: 0.95rem; /* Specific size for desktop screens */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle button shadow */
 }
 
@@ -314,7 +316,7 @@
 .swiper-slide {
   display: flex;
   justify-content: center;
-  align-items: stretch; /* Crucial for equal card heights */
+  align-items: stretch; /* Ensure cards stretch to fill height */
 }
 
 /* Pagination bullets - Enhanced */
@@ -546,8 +548,7 @@
 
   .project-card a.button,
   .dark .project-card a.button {
-    padding: 0.6rem 1.4rem; /* Adjusted for smaller size on smaller screens */
-    font-size: 0.9rem; /* Adjusted font size */
+    padding: 0.7rem 1.8rem;
   }
 }
 
@@ -590,7 +591,7 @@
 
   .project-card a.button,
   .dark .project-card a.button {
-    padding: 0.5rem 1.2rem;
+    padding: 0.6rem 1.5rem;
     font-size: 0.9rem;
   }
 
@@ -630,7 +631,7 @@
 
   .carousel-title,
   .dark .carousel-title {
-    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    font-size: clamp(1.6rem, 3.5vw, 2rem);
   }
 
   .project-card,
@@ -655,7 +656,7 @@
 
   .project-card a.button,
   .dark .project-card a.button {
-    padding: 0.4rem 1rem;
+    padding: 0.5rem 1.2rem;
     font-size: 0.85rem;
   }
 
