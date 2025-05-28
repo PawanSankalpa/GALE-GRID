@@ -30,7 +30,7 @@ const projects = [
   },
   {
     title: 'Keeper App: Your Smart Notebook',
-    image: '/images/KeeperApp.png',
+    image: '/images/keeperApp.png',
     description: "Keeper App is a sleek, intuitive tool designed to save your ideas effortlessly. You can customize your experience with both dark and light themes, and even adjust the font size to your preference. It's the perfect place to jot down and organize all your thoughts, ensuring your brilliant ideas are always at your fingertips.",
     links: {
       site: 'https://keeper-app-woad-kappa.vercel.app/',
