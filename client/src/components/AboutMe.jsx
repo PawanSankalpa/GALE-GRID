@@ -21,7 +21,13 @@ function AboutMe() {
             Hi! I'm Pawan — a developer passionate about crafting modern, responsive websites. I handle both front-end visuals and back-end functionality to ensure fast, seamless experiences. From hosting to domains, I make getting online hassle-free. Currently, I'm exploring AI and machine learning to push my skills further.
           </p>
           <div className="button-container">
-            <a href="#contact" className="button button-primary" data-aos="zoom-in" aria-label="Contact Pawan">
+            <a 
+            href={`https://wa.me/${94776868537}?text=${encodeURIComponent("Hi Pawan, I just visited galgegrid.com and I'm interested in discussing a web design project. I'd love to learn more about your services!")}`} 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="button button-primary" 
+            data-aos="zoom-in" 
+            aria-label="Contact Pawan">
               Contact Me
             </a>
           </div>
