@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import emailjs from "emailjs-com";  // make sure to install emailjs-com via npm or yarn
+import emailjs from "emailjs-com"; 
 import "./ContactPage.css";
 import NavBar from "../../components/NavBar";
 
