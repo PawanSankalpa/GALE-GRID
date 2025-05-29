@@ -158,7 +158,7 @@
 }
 
 .dark .contact-form button:hover {
-  background-color: #24750bf2; /* Gold on hover */
+  background-color: #78c9e7fd; /* Gold on hover */
   color: #1E1E1E; /* Dark gray for contrast */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); /* Darker shadow */
 }
@@ -167,7 +167,8 @@
 /* Dark Theme - Placeholder Styling */
 /* ------------------------------------ */
 .dark ::placeholder {
-  color: #fdfdfc; /* Gold for placeholders */
+  /* Changed to a more contrasting color for visibility */
+  color: #999999; /* A darker gray for contrast against #E8E8E8 input text */
 }
 
 /* ------------------------------------ */
