@@ -78,7 +78,7 @@ function NavBar() {
         <ThemeToggle />
       </div>
 
-      <div className="login-register-box">
+      {/* <div className="login-register-box">
         {loading ? (
           <div className="nav-loading-placeholder" />
         ) : user ? (
@@ -92,7 +92,7 @@ function NavBar() {
             <NavLink to="/register" className="nav-register" onClick={closeMenu}>Register</NavLink>
           </>
         )}
-      </div>
+      </div> */}
     </nav>
   );
 }
