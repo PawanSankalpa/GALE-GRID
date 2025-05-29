@@ -1,25 +1,35 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+const API_BASE_URL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:8000"
+    : "https://gale-grid-1.onrender.com";
+
 function useAuth() {
-  const [user, setUser] = useState(null); // will store user object or null
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/current_user", { withCredentials: true })
-      .then((res) => {
-        setUser(res.data.user);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Auth check failed:", err);
-        setUser(null);
-        setLoading(false);
+  const fetchUser = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${API_BASE_URL}/api/current_user`, {
+        withCredentials: true,
       });
+      setUser(res.data.user);
+    } catch (err) {
+      console.error("Auth check failed:", err);
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
   }, []);
 
-  return { user, loading };
+  return { user, loading, refreshUser: fetchUser };
 }
 
 export default useAuth;
