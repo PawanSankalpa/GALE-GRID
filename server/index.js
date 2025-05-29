@@ -212,10 +212,12 @@ app.get(
     session: true,
   }),
   (req, res) => {
-    // You can redirect with a query param, or just go back to the frontend and let it fetch the user
-    res.redirect("https://www.galegrid.com"); // Dashboard or homepage
+    // The cookie is already set by the session middleware.
+    // Just redirect to the base app — the frontend will fetch /api/user or similar
+    res.redirect("https://www.galegrid.com/redirect");
   }
 );
+
 
 
 // ======================== Server Start ========================

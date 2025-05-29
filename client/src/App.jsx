@@ -8,6 +8,7 @@ import Services from "./pages/ServicesPage/Services";
 import Contact from "./pages/ContactPage/ContactPage";
 import Team from "./pages/TeamPage/Team";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import RedirectHandler from "./redirectHandler";
 
 import { AuthProvider } from "./context/AuthContext";
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/team" element={<Team />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/redirect" element={<RedirectHandler />} />
           
         </Routes>
       </AuthProvider>
