@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: "https://www.galegrid.com/",
+    origin: "https://www.galegrid.com",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
@@ -209,9 +209,14 @@ app.get(
   "/auth/google/callback",
   passport.authenticate("google", {
     failureRedirect: "https://www.galegrid.com/login",
-    successRedirect: "https://www.galegrid.com", // Update to frontend dashboard if needed
-  })
+    session: true,
+  }),
+  (req, res) => {
+    // You can redirect with a query param, or just go back to the frontend and let it fetch the user
+    res.redirect("https://www.galegrid.com"); // Dashboard or homepage
+  }
 );
+
 
 // ======================== Server Start ========================
 async function startServer() {
