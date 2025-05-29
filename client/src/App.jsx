@@ -9,20 +9,24 @@ import Contact from "./pages/ContactPage/ContactPage";
 import Team from "./pages/TeamPage/Team";
 import Dashboard from "./pages/Dashboard/Dashboard";
 
+import { AuthProvider } from "./context/AuthContext";
+
 
 function App() {
   return (
     <>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/team" element={<Team />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/team" element={<Team />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          
+        </Routes>
+      </AuthProvider>
     </>
   );
 }
