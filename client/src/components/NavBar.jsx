@@ -1,26 +1,20 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./styles/NavBar.css";
 import ThemeToggle from "./ThemeToggle";
-import { AuthContext } from "../context/AuthContext"; // double-check this path
-import axios from "axios";
-
-const API_BASE_URL = "https://gale-grid-1.onrender.com";
+import { useAuthContext } from "../context/AuthContext";
 
 function NavBar() {
   const [isActive, setIsActive] = useState(false);
-  const { user, loading, refreshUser } = useContext(AuthContext);
+  const { user, loading, logout } = useAuthContext();
 
-  const handleLogout = async () => {
-    try {
-      await axios.post(`${API_BASE_URL}/logout`, {}, { withCredentials: true });
-      refreshUser();
-    } catch (err) {
-      console.error("Logout failed:", err);
-    }
+  const handleLogout = () => {
+    logout();
+    closeMenu();
   };
 
   const closeMenu = () => setIsActive(false);
+  
   const handleMenuKeyDown = (event) => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();

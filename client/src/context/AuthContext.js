@@ -1,19 +1,13 @@
-import React, { createContext } from "react";
-import useAuth from "../useAuth";
+import React, { createContext, useContext } from 'react';
+import useAuth from '../useAuth.jsx';
 
-// Create AuthContext
-export const AuthContext = createContext({
-  user: null,
-  loading: true,
-  refreshUser: () => {},
-});
+const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const { user, loading, refreshUser } = useAuth();
+  const auth = useAuth();
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+}
 
-  return (
-    <AuthContext.Provider value={{ user, loading, refreshUser }}>
-      {children}
-    </AuthContext.Provider>
-  );
+export function useAuthContext() {
+  return useContext(AuthContext);
 }
