@@ -1,72 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { NavLink } from "react-router-dom";
-import "./styles/NavBar.css";
-import ThemeToggle from "./ThemeToggle";
-import { useAuthContext } from "../context/AuthContext";
 
 function NavBar() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [isActive, setIsActive] = useState(false);
-  const { user, loading, logout } = useAuthContext();
 
-  const handleLogout = () => {
-    logout();
-    closeMenu();
-  };
+  useEffect(() => {
+    axios.get("https://gale-grid-1.onrender.com/api/current_user", { withCredentials: true })
+      .then(res => {
+        setUser(res.data.user);
+      })
+      .catch(err => {
+        console.error("Error fetching current user:", err);
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   const closeMenu = () => setIsActive(false);
-  
-  const handleMenuKeyDown = (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      setIsActive(!isActive);
-    }
+
+  const handleLogout = () => {
+    axios.post("https://gale-grid-1.onrender.com/logout", {}, { withCredentials: true })
+      .then(() => {
+        setUser(null);
+        closeMenu();
+      })
+      .catch(err => {
+        console.error("Logout failed", err);
+      });
   };
 
   return (
     <nav className="navbar" aria-label="Primary navigation">
-      <div className="logo">
-        <NavLink to="/" onClick={closeMenu}>
-          <img src="/images/logo5.png" alt="GaleGrid logo" />
-        </NavLink>
-      </div>
-
-      <div
-        className={`menu-toggle ${isActive ? "active" : ""}`}
-        onClick={() => setIsActive(!isActive)}
-        onKeyDown={handleMenuKeyDown}
-        aria-label="Toggle navigation menu"
-        role="button"
-        tabIndex={0}
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+      {/* Your logo and menu toggle here */}
 
       <ul className={`nav-links ${isActive ? "active" : ""}`}>
         <li><NavLink to="/" onClick={closeMenu}>Home</NavLink></li>
-        <li><NavLink to="/services" onClick={closeMenu}>Services</NavLink></li>
-        <li><NavLink to="/team" onClick={closeMenu}>Our Team</NavLink></li>
-        <li><NavLink to="/contact" onClick={closeMenu}>Contact</NavLink></li>
-        <li><NavLink to="/dashboard" onClick={closeMenu}>Dashboard</NavLink></li>
+        {/* ... other links */}
       </ul>
-
-      <div className="ThemeToggle">
-        <ThemeToggle />
-      </div>
 
       <div className="login-register-box">
         {loading ? (
-          <div className="nav-loading-placeholder" />
+          <div>Loading...</div>
         ) : user ? (
           <>
-            <span className="nav-welcome">Welcome, {user.first_name}!</span>
-            <button onClick={handleLogout} className="nav-logout">Log out</button>
+            <span>Welcome, {user.first_name}!</span>
+            <button onClick={handleLogout}>Log out</button>
           </>
         ) : (
           <>
-            <NavLink to="/login" className="nav-login" onClick={closeMenu}>Log in</NavLink>
-            <NavLink to="/register" className="nav-register" onClick={closeMenu}>Register</NavLink>
+            <NavLink to="/login" onClick={closeMenu}>Log in</NavLink>
+            <NavLink to="/register" onClick={closeMenu}>Register</NavLink>
           </>
         )}
       </div>
