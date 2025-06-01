@@ -25,7 +25,7 @@ function NavBar() {
     try {
       await axios.post("https://gale-grid-1.onrender.com/logout", {}, { withCredentials: true });
       setLoggedIn(null);
-      closeMenu();
+      setUsername("");
     } catch (error) {
       console.error("Logout failed", error);
     }

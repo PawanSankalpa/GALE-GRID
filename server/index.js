@@ -1,47 +1,55 @@
+// ──────────────────────────────────────────────────────
+// 1. IMPORTS & CONFIGURATION
+// ──────────────────────────────────────────────────────
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import db, { connectDB } from "./db.js";
-import bcrypt from "bcrypt";
-import passport from "passport";
-import { Strategy } from "passport-local";
-import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
 import session from "express-session";
 import pgSession from "connect-pg-simple";
+import bcrypt from "bcrypt";
+import passport from "passport";
+import { Strategy as LocalStrategy } from "passport-local";
+import { Strategy as GoogleStrategy } from "passport-google-oauth2";
+import db, { connectDB } from "./db.js";
 
 dotenv.config();
 
 const app = express();
 const port = 8000;
-
+const saltRounds = 12;
 const PgSession = pgSession(session);
 
-const saltRounds = 12;
+
+// ──────────────────────────────────────────────────────
+// 2. MIDDLEWARE
+// ──────────────────────────────────────────────────────
+app.set('trust proxy', 1); // if behind a proxy (e.g., Render or Vercel)
 
 app.use(
   cors({
-    origin: "https://www.galegrid.com/", // your frontend origin
+    origin: "https://www.galegrid.com",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true, // if your frontend sends cookies or auth headers
+    credentials: true,
   })
 );
 
-app.use(express.json()); // to parse JSON bodies
-app.use(express.urlencoded({ extended: true })); 
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
     store: new PgSession({
-      pool: db, // your existing PostgreSQL pool
-      tableName: "session", // name of table to store sessions
+      pool: db,
+      tableName: "session",
     }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7 , // 7 days
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
       httpOnly: true,
+      secure: true,
+      sameSite: "none",
     },
   })
 );
@@ -50,215 +58,183 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+// ──────────────────────────────────────────────────────
+// 3. PASSPORT STRATEGIES
+// ──────────────────────────────────────────────────────
 
-
-//register route
-app.post("/register/user", async (req, res) => {
-  const { first_name, last_name, username, email, password } = req.body;
-  const normalizedEmail = email.toLowerCase();
-
-  try {
-    const userExists = await db.query("SELECT * FROM users WHERE email = $1", [
-      normalizedEmail,
-    ]);
-    if (userExists.rows.length > 0) {
-      return res.status(400).json({ message: "User already exists!" });
-    }
-
-    // hashing the password
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-    await db.query(
-      "INSERT INTO users (first_name, last_name, username, email, password) VALUES ($1, $2, $3, $4, $5)",
-      [first_name, last_name, username, normalizedEmail, hashedPassword]
-    );
-
-    res.status(201).json({ message: "User created successfully!" });
-  } catch (error) {
-    console.log("signUp error:", error);
-    res.status(500).json({ message: "Server error " });
-  }
-});
-
-/* ----------------------------login------------------------- */
-app.post("/login/user", (req, res, next) => {
-  const username = req.body.username;
-
-  passport.authenticate("local", (err, user, info) => {
-    
-    if (err) return next(err);
-    if (!user) return res.status(400).json({ message: "Invalid username or password!" });
-
-    
-    req.logIn(user, (err) => {
-      if (err) return next(err);
-      req.session.user = { username } ; // save to session
-      return res.status(200).json({ message: "Login successful", user });
-    });
-  })(req, res, next);
-});
-
-/* --------------------------check if the useris logged in----------------*/
-app.get("/user", ( req, res ) => {
-  if (req.session.user) {
-    res.json({ loggedIn: true, user: req.session.user });
-
-  } else {
-    res.json({ loggedIn: false });
-
-  }
-});
-
-
-//------------------------------------------------------------------------
-// Redirect user to Google for authentication
-app.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['email', 'profile'] })
-);
-
-// Google OAuth callback URL
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', {
-    failureRedirect: '/login', // redirect if failed
-    successRedirect: '/',      // redirect if success
-  })
-);
-
-
-
-
-/* ------------------------------Local strategy--------------------------- */
-/** ----------- Passport strategy section ------------ */
-//Local passport strategy
+// LOCAL STRATEGY
 passport.use(
-  new Strategy(
-    { usernameField: "email" },
-    async function verify(email, password, cb) {
-      const normalizedEmail = email.toLowerCase();
+  new LocalStrategy({ usernameField: "email" }, async (email, password, cb) => {
+    const normalizedEmail = email.toLowerCase();
     try {
-      const result = await db.query("SELECT * FROM users WHERE email = $1 ", [
-        normalizedEmail,
-      ]);
-      if (result.rows.length > 0) {
-        const user = result.rows[0];
-        const storedHashedPassword = user.password;
-        bcrypt.compare(password, storedHashedPassword, (err, valid) => {
-          if (err) {
-            //Error with password check
-            console.error("Error comparing passwords:", err);
-            return cb(err);
-          } else {
-            if (valid) {
-              //Passed password check
-              return cb(null, user);
-            } else {
-              //Did not pass password check
-              return cb(null, false);
-            }
-          }
-        });
-      } else {
-        return cb(null, false);
-      }
+      const result = await db.query("SELECT * FROM users WHERE email = $1", [normalizedEmail]);
+      if (result.rows.length === 0) return cb(null, false);
+
+      const user = result.rows[0];
+      const match = await bcrypt.compare(password, user.password);
+      if (match) return cb(null, user);
+      else return cb(null, false);
     } catch (err) {
-      console.log(err);
+      return cb(err);
     }
   })
 );
-//-----------------------------------------------------------------------
-passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "https://gale-grid-1.onrender.com/auth/google/callback",
-  passReqToCallback: true,
-}, async (request, accessToken, refreshToken, profile, done) => {
-  try {
-    // Check if user with Google email already exists
-    const email = profile.email.toLowerCase();
 
-    const result = await db.query("SELECT * FROM users WHERE email = $1", [email]);
+// GOOGLE STRATEGY
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "https://gale-grid-1.onrender.com/auth/google/callback",
+      passReqToCallback: true,
+    },
+    async (req, accessToken, refreshToken, profile, done) => {
+      try {
+        const email = profile.email.toLowerCase();
+        const result = await db.query("SELECT * FROM users WHERE email = $1", [email]);
 
-    if (result.rows.length > 0) {
-      // User exists, return user object
-      return done(null, result.rows[0]);
-    } else {
-      // User does NOT exist, create new user
-      const firstName = profile.given_name || profile.displayName.split(' ')[0];
-      const lastName = profile.family_name || profile.displayName.split(' ')[1] || '';
-      const username = profile.displayName.replace(/\s+/g, '').toLowerCase();
+        if (result.rows.length > 0) return done(null, result.rows[0]);
 
-      // Insert user to DB (you might want to generate a random password or leave null)
-      const insertResult = await db.query(
-        "INSERT INTO users (first_name, last_name, username, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-        [firstName, lastName, username, email, null]
-      );
+        const firstName = profile.given_name || profile.displayName.split(' ')[0];
+        const lastName = profile.family_name || profile.displayName.split(' ')[1] || '';
+        const username = profile.displayName.replace(/\s+/g, '').toLowerCase();
 
-      return done(null, insertResult.rows[0]);
+        const newUser = await db.query(
+          "INSERT INTO users (first_name, last_name, username, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+          [firstName, lastName, username, email, null]
+        );
+        return done(null, newUser.rows[0]);
+      } catch (err) {
+        return done(err, false);
+      }
     }
-  } catch (err) {
-    return done(err, false);
-  }
-}));
+  )
+);
 
 
-
-/* ------------------------------serialization--------------------------- */
-
+// ──────────────────────────────────────────────────────
+// 4. SESSION HANDLERS
+// ──────────────────────────────────────────────────────
 passport.serializeUser((user, cb) => {
-  if (!user || !user.user_id) {
-    console.error("serializeUser: Invalid user object", user);
-    return cb(new Error("User id is missing for session serialization"));
-  }
-  cb(null, user.user_id); // <-- use user.user_id, not user.id
+  if (!user?.user_id) return cb(new Error("Missing user ID"));
+  cb(null, user.user_id);
 });
-
-
 
 passport.deserializeUser(async (id, cb) => {
   try {
     const result = await db.query("SELECT * FROM users WHERE user_id = $1", [id]);
-    if (result.rows.length > 0) {
-      cb(null, result.rows[0]);
-    } else {
-      cb(new Error("User not found"));
-    }
+    if (result.rows.length > 0) cb(null, result.rows[0]);
+    else cb(new Error("User not found"));
   } catch (err) {
     cb(err);
   }
 });
 
 
-/* --------------------------------------------------------- */
+// ──────────────────────────────────────────────────────
+// 5. AUTH ROUTES
+// ──────────────────────────────────────────────────────
+
+// REGISTER
+app.post("/register/user", async (req, res) => {
+  const { first_name, last_name, username, email, password } = req.body;
+  const normalizedEmail = email.toLowerCase();
+
+  try {
+    const userExists = await db.query("SELECT * FROM users WHERE email = $1", [normalizedEmail]);
+    if (userExists.rows.length > 0) return res.status(400).json({ message: "User already exists!" });
+
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    await db.query(
+      "INSERT INTO users (first_name, last_name, username, email, password) VALUES ($1, $2, $3, $4, $5)",
+      [first_name, last_name, username, normalizedEmail, hashedPassword]
+    );
+    res.status(201).json({ message: "User created successfully!" });
+  } catch (error) {
+    console.error("SignUp error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// LOGIN (LOCAL)
+app.post("/login/user", (req, res, next) => {
+  const username = req.body.username;
+
+  passport.authenticate("local", (err, user) => {
+    if (err) return next(err);
+    if (!user) return res.status(400).json({ message: "Invalid username or password!" });
+
+    req.logIn(user, (err) => {
+      if (err) return next(err);
+      req.session.user = { username };
+      return res.status(200).json({ message: "Login successful", user });
+    });
+  })(req, res, next);
+});
+
+// LOGOUT
 app.post("/logout", (req, res) => {
   req.logout((err) => {
     if (err) return res.status(500).json({ message: "Logout failed" });
-    res.clearCookie("connect.sid"); // clear session cookie
+    res.clearCookie("connect.sid");
     res.json({ message: "Logged out successfully" });
   });
 });
 
 
+// ──────────────────────────────────────────────────────
+// 6. GOOGLE OAUTH ROUTES
+// ──────────────────────────────────────────────────────
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "https://www.galegrid.com/login",
+    successRedirect: "https://www.galegrid.com/dashboard",
+  })
+);
+
+
+// ──────────────────────────────────────────────────────
+// 7. USER STATE ROUTES
+// ──────────────────────────────────────────────────────
+
+// Check if logged in
+app.get("/user", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json({ loggedIn: true, user: req.user });
+  } else {
+    res.json({ loggedIn: false });
+  }
+});
+
+// Get current user
 app.get("/api/current_user", (req, res) => {
   if (req.isAuthenticated()) {
-    res.json({ user: req.user }); // req.user was set by Passport
+    res.json({ user: req.user });
   } else {
     res.json({ user: null });
   }
 });
 
 
-
-
+// ──────────────────────────────────────────────────────
+// 8. START SERVER
+// ──────────────────────────────────────────────────────
 async function startServer() {
   try {
-    await connectDB(); // wait for DB to connect
+    await connectDB();
     app.listen(port, () => {
-      console.log(`server is running on port: ${port}`);
+      console.log(`🚀 Server running on port ${port}`);
     });
   } catch (error) {
-    console.error("Failed to connect to DB:", error);
-    process.exit(1); // stop the app if DB connection fails
+    console.error("❌ Failed to connect to DB:", error);
+    process.exit(1);
   }
 }
 
