@@ -5,11 +5,27 @@ import WhatsAppButton from "../../components/WhatsAppButton";
 import BackToTop from "../../components/BackToTop";
 
 const teamMembers = [
-  {
-    name: "Identity Hidden",
+    {
+    name: "Shashini Yapa",
     title: "( Cybersecurity Engineer )",
-    bio: "A cybersecurity engineer with a bachelor's degree.",
-    skills: ["Hidden"],
+    bio: "A cybersecurity engineer with a Bachelor's degree in Information Technology, specialized in Cybersecurity, from the Sri Lanka Institute of Information Technology (SLIIT).",
+    skills: [
+      "Vulnerability Assessment",
+      "Threat Analysis",
+      "PfSense Firewall",
+      "Wazuh",
+      "Nessus",
+      "GRC Principles",
+      "ISO 27001 Implementation",
+      "Sublist3r",
+      "Httrprobe",
+      "NMAP",
+      "OWASP ZAP",
+      "Netspaker",
+      "API Security Fundamentals",
+      "Ethical Hacking Essentials",
+      "Digital Forensics Essentials"
+    ]
   },
   {
     name: "Nimal",
