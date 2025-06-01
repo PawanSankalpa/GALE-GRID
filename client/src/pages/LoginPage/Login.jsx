@@ -3,9 +3,11 @@ import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FiArrowLeft } from "react-icons/fi";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
+  const { setUser, setLoggedIn } = useAuth(); // Access AuthContext functions
 
   const [formData, setFormData] = useState({
     email: "",
@@ -13,7 +15,6 @@ function Login() {
   });
 
   const [message, setMessage] = useState("");
-
   const [isLoading, setIsLoading] = useState(false);
 
   const API_URL = "https://gale-grid-1.onrender.com";
@@ -31,14 +32,14 @@ function Login() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-
     setIsLoading(true);
+    setMessage("");
 
     try {
       const response = await axios.post(
         `${API_URL}/login/user`,
         {
-          email: formData.email,
+          username: formData.email, // ✅ backend expects 'username' (not 'email')
           password: formData.password,
         },
         {
@@ -46,19 +47,19 @@ function Login() {
         }
       );
 
-      console.log("Signin successfully!", response.data);
-      goToHome();
+      const userData = response.data.user;
+      setUser(userData);
+      setLoggedIn(true);
+      navigate("/");
     } catch (error) {
       console.error(error);
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
+      if (error.response?.data?.message) {
         setMessage(error.response.data.message);
       } else {
         setMessage("Something went wrong");
       }
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -76,27 +77,22 @@ function Login() {
         <button
           className="signup-button-google"
           onClick={() => {
-            window.location.href = "https://gale-grid-1.onrender.com/auth/google";
+            window.location.href = `${API_URL}/auth/google`;
           }}
         >
-          {" "}
-          {/* Changed classname */}
           <img src="/images/google.png" alt="google logo" />
-          SignUp with google
+          SignUp with Google
         </button>
+
         <button className="signup-button-facebook">
-          {" "}
-          {/* Changed classname */}
           <img src="/images/facebook.png" alt="facebook logo" />
-          SignUp with facebook
+          SignUp with Facebook
         </button>
-        <br />
 
         <div className="or-divider">
           <span>OR</span>
         </div>
 
-        <br />
         <h2 className="login-LOGIN">Log in</h2>
 
         {message && (
@@ -104,7 +100,7 @@ function Login() {
             {message}
           </p>
         )}
-        <br />
+
         <form className="login-form" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -122,8 +118,8 @@ function Login() {
             autoComplete="off"
           />
 
-          <button className="login-loginButton" type="submit">
-            Login
+          <button className="login-loginButton" type="submit" disabled={isLoading}>
+            {isLoading ? "Logging in..." : "Login"}
           </button>
 
           <p className="login-toregister">

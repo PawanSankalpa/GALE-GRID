@@ -3,14 +3,17 @@ import { NavLink } from "react-router-dom";
 import "./styles/NavBar.css";
 import ThemeToggle from "./ThemeToggle";
 import axios from "axios"; // Make sure you have axios installed: npm install axios
+import { useContext } from "react";
+import { AuthContext } from "../AuthContext";
 
 function NavBar() {
   const [isActive, setIsActive] = useState(false);
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+
+  const { loggedIn, username } = useContext(AuthContext);
+  const { setLoggedIn, setUsername } = useContext(AuthContext);
 
   const closeMenu = () => setIsActive(false);
-  
+
   const handleMenuKeyDown = (event) => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
@@ -21,29 +24,12 @@ function NavBar() {
   const handleLogout = async () => {
     try {
       await axios.post("https://gale-grid-1.onrender.com/logout", {}, { withCredentials: true });
-      setUser(null);
+      setLoggedIn(null);
       closeMenu();
     } catch (error) {
       console.error("Logout failed", error);
     }
   };
-
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        const response = await axios.get("https://gale-grid-1.onrender.com/api/current_user", {
-          withCredentials: true, // very important for cookies
-        });
-        setUser(response.data.user);
-      } catch (error) {
-        console.error("Error fetching current user", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCurrentUser();
-  }, []);
 
   return (
     <nav className="navbar" aria-label="Primary navigation">
@@ -67,32 +53,61 @@ function NavBar() {
       </div>
 
       <ul className={`nav-links ${isActive ? "active" : ""}`}>
-        <li><NavLink to="/" onClick={closeMenu}>Home</NavLink></li>
-        <li><NavLink to="/services" onClick={closeMenu}>Services</NavLink></li>
-        <li><NavLink to="/team" onClick={closeMenu}>Our Team</NavLink></li>
-        <li><NavLink to="/contact" onClick={closeMenu}>Contact</NavLink></li>
-        <li><NavLink to="/dashboard" onClick={closeMenu}>Dashboard</NavLink></li>
+        <li>
+          <NavLink to="/" onClick={closeMenu}>
+            Home
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/services" onClick={closeMenu}>
+            Services
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/team" onClick={closeMenu}>
+            Our Team
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/contact" onClick={closeMenu}>
+            Contact
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/dashboard" onClick={closeMenu}>
+            Dashboard
+          </NavLink>
+        </li>
       </ul>
 
       <div className="ThemeToggle">
         <ThemeToggle />
       </div>
 
-      {/* <div className="login-register-box">
-        {loading ? (
-          <div className="nav-loading-placeholder" />
-        ) : user ? (
-          <>
-            <span className="nav-welcome">Welcome, {user.first_name}!</span>
-            <button onClick={handleLogout} className="nav-logout">Log out</button>
-          </>
+      <div className="login-register-box">
+        {loggedIn ? (
+          <div className="nav-logged-in">
+            <div className="nav-loading-placeholder" />
+            <span className="nav-welcome">Welcome, {username}!</span>
+            <button onClick={handleLogout} className="nav-logout">
+              Log out
+            </button>
+          </div>
         ) : (
           <>
-            <NavLink to="/login" className="nav-login" onClick={closeMenu}>Log in</NavLink>
-            <NavLink to="/register" className="nav-register" onClick={closeMenu}>Register</NavLink>
+            <NavLink to="/login" className="nav-login" onClick={closeMenu}>
+              Log in
+            </NavLink>
+            <NavLink
+              to="/register"
+              className="nav-register"
+              onClick={closeMenu}
+            >
+              Register
+            </NavLink>
           </>
         )}
-      </div> */}
+      </div>
     </nav>
   );
 }

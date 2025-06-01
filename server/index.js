@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import db, { connectDB } from "./db.js";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import passport from "passport";
 import { Strategy } from "passport-local";
 import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
@@ -20,6 +19,18 @@ const PgSession = pgSession(session);
 const saltRounds = 12;
 
 app.use(
+  cors({
+    origin: "https://www.galegrid.com/", // your frontend origin
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true, // if your frontend sends cookies or auth headers
+  })
+);
+
+app.use(express.json()); // to parse JSON bodies
+app.use(express.urlencoded({ extended: true })); 
+
+
+app.use(
   session({
     store: new PgSession({
       pool: db, // your existing PostgreSQL pool
@@ -30,6 +41,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 7 , // 7 days
+      httpOnly: true,
     },
   })
 );
@@ -37,16 +49,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.json()); // to parse JSON bodies
-app.use(express.urlencoded({ extended: true })); // Add this line
 
-app.use(
-  cors({
-    origin: "https://www.galegrid.com/", // your frontend origin
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true, // if your frontend sends cookies or auth headers
-  })
-);
+
 
 //register route
 app.post("/register/user", async (req, res) => {
@@ -77,16 +81,33 @@ app.post("/register/user", async (req, res) => {
 
 /* ----------------------------login------------------------- */
 app.post("/login/user", (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    if (err) return next(err);
-    if (!user) return res.status(400).json({ message: "Invalid credentials" });
+  const username = req.body.username;
 
+  passport.authenticate("local", (err, user, info) => {
+    
+    if (err) return next(err);
+    if (!user) return res.status(400).json({ message: "Invalid username or password!" });
+
+    
     req.logIn(user, (err) => {
       if (err) return next(err);
+      req.session.user = { username } ; // save to session
       return res.status(200).json({ message: "Login successful", user });
     });
   })(req, res, next);
 });
+
+/* --------------------------check if the useris logged in----------------*/
+app.get("/user", ( req, res ) => {
+  if (req.session.user) {
+    res.json({ loggedIn: true, user: req.session.user });
+
+  } else {
+    res.json({ loggedIn: false });
+
+  }
+});
+
 
 //------------------------------------------------------------------------
 // Redirect user to Google for authentication
