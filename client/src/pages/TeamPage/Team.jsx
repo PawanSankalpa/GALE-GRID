@@ -6,9 +6,9 @@ import BackToTop from "../../components/BackToTop";
 
 const teamMembers = [
     {
-    name: "Shashini Yapa",
+    name: "Yapa",
     title: "( Cybersecurity Engineer )",
-    bio: "A cybersecurity engineer with a Bachelor's degree in Information Technology, specialized in Cybersecurity, from the Sri Lanka Institute of Information Technology (SLIIT).",
+    bio: "A cybersecurity engineer with a Bachelor's degree in Information Technology, specialized in Cybersecurity, from (SLIIT).",
     skills: [
       "Vulnerability Assessment",
       "Threat Analysis",
