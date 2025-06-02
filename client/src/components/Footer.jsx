@@ -53,30 +53,30 @@ function Footer() {
             >
               <FaGithub />
             </a>
-            <a
+            {/* <a
               href="https://twitter.com/your-x"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="X Twitter"
             >
               <FaXTwitter />
-            </a>
+            </a> */}
             <a
-              href="https://facebook.com/your-facebook"
+              href="https://web.facebook.com/pawansankalpanew1123"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
             >
               <FaFacebookF />
             </a>
-            <a
+            {/* <a
               href="https://linkedin.com/in/your-linkedin"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
             >
-              <FaLinkedinIn />
-            </a>
+              <FaLinkedinIn /> */}
+            {/* </a> */}
           </div>
         </section>
 
