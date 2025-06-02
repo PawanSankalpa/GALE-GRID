@@ -23,7 +23,7 @@ function NavBar() {
 
   const handleLogout = async () => {
     try {
-      await axios.post("https://gale-grid-1.onrender.com/logout", {}, { withCredentials: true });
+      await axios.post("https://gale-grid-1.onrender.com/logout/logout", {}, { withCredentials: true }); //https://gale-grid-1.onrender.com/logout
       setLoggedIn(null);
       setUsername("");
     } catch (error) {
@@ -64,6 +64,11 @@ function NavBar() {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/ourWork" onClick={closeMenu}>
+            Portfolio
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/team" onClick={closeMenu}>
             Our Team
           </NavLink>
@@ -84,7 +89,7 @@ function NavBar() {
         <ThemeToggle />
       </div>
 
-      <div className="login-register-box">
+      {/* <div className="login-register-box">
         {loggedIn ? (
           <div className="nav-logged-in">
             <div className="nav-loading-placeholder" />
@@ -107,7 +112,7 @@ function NavBar() {
             </NavLink>
           </>
         )}
-      </div>
+      </div> */}
     </nav>
   );
 }

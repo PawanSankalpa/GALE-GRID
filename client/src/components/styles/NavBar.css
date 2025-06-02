@@ -345,3 +345,103 @@ body {
   /* For example, if it's outside the login-register-box, ensure it's aligned */
   margin-left: 1rem; /* Example: give it some space from other elements */
 }
+
+
+/* Ripple effect keyframes */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Add ripple container inside buttons */
+.nav-login, .nav-register {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ripple circle */
+.nav-login::after,
+.nav-register::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+}
+
+/* Trigger ripple on click */
+.nav-login:active::after,
+.nav-register:active::after {
+  opacity: 0.6;
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+}
+
+/* Ripple effect keyframes */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Buttons setup */
+.nav-login,
+.nav-register {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ripple pseudo-element */
+.nav-login::after,
+.nav-register::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transform-origin: center;
+  transition: opacity 0.3s ease;
+}
+
+/* Ripple animation on click */
+.nav-login:active::after,
+.nav-register:active::after {
+  animation: ripple 0.6s linear;
+  opacity: 0.6;
+}
+
+/* Ripple animation on hover (infinite) */
+.nav-login:hover::after,
+.nav-register:hover::after {
+  opacity: 0.4;
+  animation: ripple 1s linear infinite;
+}
+

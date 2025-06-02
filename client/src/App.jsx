@@ -8,7 +8,7 @@ import Services from "./pages/ServicesPage/Services";
 import Contact from "./pages/ContactPage/ContactPage";
 import Team from "./pages/TeamPage/Team";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import RedirectHandler from "./redirectHandler";
+import OurWork from "./pages/OurWorkPage/OurWork";
 
 
 
@@ -20,10 +20,10 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/ourWork" element={<OurWork />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/team" element={<Team />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/redirect" element={<RedirectHandler />} />
           
         </Routes>
     </>

@@ -1,70 +1,56 @@
 import React, { useState } from "react";
-import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FiArrowLeft } from "react-icons/fi";
-import { useAuth } from "../context/AuthContext";
+import "./Login.css";
 
 function Login() {
   const navigate = useNavigate();
-  const { setUser, setLoggedIn } = useAuth(); // Access AuthContext functions
+  const API_URL = "http://localhost:8000"; ////https://gale-grid-1.onrender.com
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const API_URL = "https://gale-grid-1.onrender.com";
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-  function goToHome() {
-    navigate("/");
-  }
-
-  function handleChange(event) {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
-  }
-
-  async function handleSubmit(event) {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setIsLoading(true);
     setMessage("");
 
     try {
-      const response = await axios.post(
+      const res = await axios.post(
         `${API_URL}/login/user`,
         {
-          username: formData.email, // ✅ backend expects 'username' (not 'email')
+          username: formData.email,
           password: formData.password,
         },
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
 
-      const userData = response.data.user;
-      setUser(userData);
-      setLoggedIn(true);
+      console.log("User logged in:", res.data.user);
       navigate("/");
-    } catch (error) {
-      console.error(error);
-      if (error.response?.data?.message) {
-        setMessage(error.response.data.message);
-      } else {
-        setMessage("Something went wrong");
-      }
+    } catch (err) {
+      console.error(err);
+      setMessage(err.response?.data?.message || "Something went wrong");
     } finally {
       setIsLoading(false);
     }
-  }
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href = `${API_URL}/auth/google`;
+  };
+
+  const goToHome = () => navigate("/");
 
   return (
     <div className="login-container">
+      {/* Left Side */}
       <div className="login-left">
         <h1 className="login-home" onClick={goToHome}>
           <FiArrowLeft color="#00A389" />
@@ -73,46 +59,42 @@ function Login() {
         <img src="/images/login.jpg" alt="login" className="login-img" />
       </div>
 
+      {/* Right Side */}
       <div className="login-right">
-        <button
-          className="signup-button-google"
-          onClick={() => {
-            window.location.href = `${API_URL}/auth/google`;
-          }}
-        >
-          <img src="/images/google.png" alt="google logo" />
-          SignUp with Google
+        {/* OAuth Buttons */}
+        <button className="signup-button-google" onClick={handleGoogleLogin}>
+          <img src="/images/google.png" alt="Google" />
+          Sign Up with Google
         </button>
 
         <button className="signup-button-facebook">
-          <img src="/images/facebook.png" alt="facebook logo" />
-          SignUp with Facebook
+          <img src="/images/facebook.png" alt="Facebook" />
+          Sign Up with Facebook
         </button>
 
-        <div className="or-divider">
-          <span>OR</span>
-        </div>
+        <div className="or-divider"><span>OR</span></div>
 
         <h2 className="login-LOGIN">Log in</h2>
 
-        {message && (
-          <p className="error-message" style={{ color: "red" }}>
-            {message}
-          </p>
-        )}
+        {/* Error Message */}
+        {message && <p className="error-message" style={{ color: "red" }}>{message}</p>}
 
+        {/* Login Form */}
         <form className="login-form" onSubmit={handleSubmit}>
           <input
             type="text"
             name="email"
             placeholder="Email"
+            value={formData.email}
             onChange={handleChange}
             required
           />
+
           <input
             type="password"
             name="password"
             placeholder="Password"
+            value={formData.password}
             onChange={handleChange}
             required
             autoComplete="off"
@@ -123,10 +105,8 @@ function Login() {
           </button>
 
           <p className="login-toregister">
-            New Here?{" "}
-            <a href="/register" className="login-anchor1">
-              Register
-            </a>
+            New here?{" "}
+            <a href="/register" className="login-anchor1">Register</a>
           </p>
         </form>
       </div>

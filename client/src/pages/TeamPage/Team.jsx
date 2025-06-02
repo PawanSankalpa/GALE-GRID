@@ -6,9 +6,9 @@ import BackToTop from "../../components/BackToTop";
 
 const teamMembers = [
     {
-    name: "Yapa",
-    title: "( Cybersecurity Engineer )",
-    bio: "A cybersecurity engineer with a Bachelor's degree in Information Technology, specialized in Cybersecurity, from (SLIIT).",
+    name: "Shashini",
+    title: "( Cybersecurity Engineer – Web Solutions Security Specialist )",
+    bio: "Shashini is a cybersecurity engineer with a Bachelor’s degree in Information Technology, specializing in Cybersecurity from SLIIT. Within our web design agency, Shashini ensures all client websites and web applications are secure from vulnerabilities and cyber threats, safeguarding our digital projects with proactive security measures.",
     skills: [
       "Vulnerability Assessment",
       "Threat Analysis",
@@ -40,14 +40,14 @@ const teamMembers = [
     skills: [
       "Marketing",
       "Statistics",
-      "Python",
       "Java",
+      "Python",
       "JavaScript",
       "HTML",
       "CSS",
       "Node.js",
-      "Express",
-      "PostgreSQL",
+      "Laraval",
+      "MongoDB",
       "API",
       "Axios",
       "React",
