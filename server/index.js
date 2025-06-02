@@ -27,7 +27,7 @@ app.set('trust proxy', 1); // if behind a proxy (e.g., Render or Vercel)
 
 app.use(
   cors({
-    origin: "https://www.galegrid.com",
+    origin: "http://localhost:3000/", //"https://www.galegrid.com"
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
@@ -86,7 +86,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://gale-grid-1.onrender.com/auth/google/callback",
+      callbackURL: "http://localhost:8000/", //https://gale-grid-1.onrender.com/auth/google/callback
       passReqToCallback: true,
     },
     async (req, accessToken, refreshToken, profile, done) => {
@@ -194,8 +194,8 @@ app.get(
 app.get(
   "/auth/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "https://www.galegrid.com/login",
-    successRedirect: "https://www.galegrid.com/dashboard",
+    failureRedirect: "http://localhost:3000/login", //"https://www.galegrid.com/login
+    successRedirect: "http://localhost:3000/", //https://www.galegrid.com/
   })
 );
 
@@ -213,14 +213,6 @@ app.get("/user", (req, res) => {
   }
 });
 
-// Get current user
-app.get("/api/current_user", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.json({ user: req.user });
-  } else {
-    res.json({ user: null });
-  }
-});
 
 
 // ──────────────────────────────────────────────────────
