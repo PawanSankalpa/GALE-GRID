@@ -42,6 +42,7 @@ const teamMembers = [
       "Statistics",
       "Java",
       "Python",
+      "C",
       "JavaScript",
       "HTML",
       "CSS",
@@ -56,12 +57,6 @@ const teamMembers = [
       "OAuth",
       "bcrypt & Salt Rounds",
     ],
-  },
-  {
-    name: "Santhushi",
-    title: "( Developer )",
-    bio: "A fourth year student of SLIT (Faculty of Computer Science).",
-    skills: ["Web development", "Java", "Python"],
   },
   {
     name: "Thushal",
