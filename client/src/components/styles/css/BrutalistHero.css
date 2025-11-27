@@ -1,0 +1,24 @@
+/* BrutalistHero.css - Bold & Memorable */
+.hero-section.brutalist-hero {
+  min-height: 100vh;
+  background: #000000;
+  border: 8px solid #ff6b6b;
+  position: relative;
+  font-family: 'Courier New', monospace;
+}
+
+.brutalist-hero .hero-title {
+  background: #ff6b6b;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.brutalist-hero .psychology-btn {
+  border-radius: 0;
+  border: 3px solid #ff6b6b;
+  background: black;
+  color: #ff6b6b;
+  font-weight: 700;
+}

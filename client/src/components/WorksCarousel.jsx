@@ -11,30 +11,30 @@ import "aos/dist/aos.css";
 
 const projects = [
   {
-    title: 'Connect & Post: Share Your Thoughts',
-    image: '/images/blogHomePage.png',
-    description: "Connect & Post: Your platform to register, log in, and easily publish your blog posts. Share your thoughts publicly with titles and descriptions, knowing only you can edit or delete your content from your private user page. It's the perfect tool for showcasing your ideas.",
+    title: 'Sun Max Energy (Pvt.) Ltd. official website',
+    image: '/images/sunmax-energy.png',
+    description: "The official website of the Sun Max Energy (Pvt.) Ltd. solar company located in Matara Sri Lanka ",
     links: {
-      site: 'https://blogproject-xm1p.onrender.com/',
-      source: 'https://github.com/PawanSankalpa/blogProject',
+      site: 'https://www.sunmaxenergy.lk/',
+      source: 'https://github.com/PawanSankalpa?tab=repositories',
     },
   },
   {
-    title: 'Travel Tracker: Map Your Adventures',
-    image: '/images/travelTracker.png',
-    description: "Travel Tracker lets you easily log the countries you've visited and see them marked directly on an interactive world map. It's the perfect way to visualize your global journeys and keep a digital record of all your adventures.",
+    title: 'Luxia',
+    image: '/images/luxia-clothing.png',
+    description: "A official website of the luxia clothing brand",
     links: {
       site: 'https://travel-tracker-z3kz.onrender.com/',
-      source: 'https://github.com/PawanSankalpa/travel_tracker',
+      source: 'https://github.com/PawanSankalpa?tab=repositories',
     },
   },
   {
     title: 'Keeper App: Your Smart Notebook',
-    image: '/images/keeperApp.png',
-    description: "Keeper App is a sleek, intuitive tool designed to save your ideas effortlessly. You can customize your experience with both dark and light themes, and even adjust the font size to your preference. It's the perfect place to jot down and organize all your thoughts, ensuring your brilliant ideas are always at your fingertips.",
+    image: '/images/gym.png',
+    description: "The official website of the 'Premium Fitness' Gym Located in Kirinda Puhulwella, Matara.",
     links: {
-      site: 'https://keeper-app-woad-kappa.vercel.app/',
-      source: 'https://github.com/PawanSankalpa/keeper-app',
+      site: 'https://gym-premium-fitness.vercel.app/',
+      source: 'https://github.com/PawanSankalpa?tab=repositories',
     },
   },
   
