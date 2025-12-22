@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import modernHouse from "../assets/HeroSliderPics/modernhouse.png";
+import modernHouse from "../assets/HeroSliderPics/luxia.png";
 import "./styles/PortfolioSection.css";
 
 const PortfolioSection = ({
@@ -12,6 +12,12 @@ const PortfolioSection = ({
   ],
 }) => {
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const [displayValues, setDisplayValues] = useState(metrics.map(() => 0));
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const sectionRef = useRef(null);
+  const scrollIdleTimerRef = useRef(null);
+  const scrollProgressRef = useRef(0);
+  const snapFinalRef = useRef(false);
 
   const toggleMetric = (idx) => {
     setExpandedIndex((prev) => (prev === idx ? null : idx));
@@ -23,8 +29,64 @@ const PortfolioSection = ({
       toggleMetric(idx);
     }
   };
+
+  // IntersectionObserver-driven progress: updates with visibility ratio while scrolling
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+
+    const thresholds = Array.from({ length: 101 }, (_, i) => i / 100);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        const ratio = Math.max(0, Math.min(1, entry.intersectionRatio || 0));
+        // Bidirectional progress: numbers increase/decrease with visibility
+        setScrollProgress(ratio);
+      },
+      { threshold: thresholds }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  // Map scroll progress to counts with easing
+  useEffect(() => {
+    // If we've snapped to final values (scroll idle), don't overwrite
+    if (snapFinalRef.current) return;
+    const endValues = metrics.map((m) => Number(m.value) || 0);
+    // Linear mapping: counts move smoothly up/down with scroll
+    const eased = Math.max(0, Math.min(1, scrollProgress));
+    setDisplayValues(endValues.map((end) => Math.round(end * eased)));
+  }, [scrollProgress, metrics]);
+
+  // Keep a ref of latest progress for idle detection
+  useEffect(() => {
+    scrollProgressRef.current = scrollProgress;
+  }, [scrollProgress]);
+
+  // When scrolling stops, snap to real counts (always)
+  useEffect(() => {
+    const onScroll = () => {
+      if (scrollIdleTimerRef.current) clearTimeout(scrollIdleTimerRef.current);
+      // Scrolling started/continued: allow dynamic updates
+      snapFinalRef.current = false;
+      scrollIdleTimerRef.current = setTimeout(() => {
+        const endValues = metrics.map((m) => Number(m.value) || 0);
+        // Scrolling is idle: snap and lock to final values
+        snapFinalRef.current = true;
+        setDisplayValues(endValues);
+      }, 200);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (scrollIdleTimerRef.current) clearTimeout(scrollIdleTimerRef.current);
+    };
+  }, [metrics]);
   return (
-    <section className="portfolio-section" id="portfolio">
+    <section className="portfolio-section" id="portfolio" ref={sectionRef}>
       <div className="portfolio-grid">
         {/* Left image */}
         <figure className="portfolio-image left">
@@ -51,7 +113,7 @@ const PortfolioSection = ({
                   onClick={() => toggleMetric(idx)}
                   onKeyDown={(e) => onRowKeyDown(e, idx)}
                 >
-                  <div className="metric-number">{m.value}</div>
+                  <div className="metric-number">{displayValues[idx] ?? m.value}</div>
                   <div className="metric-text">
                     <div className="metric-title">
                       {m.title}
