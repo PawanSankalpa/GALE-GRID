@@ -3,6 +3,7 @@ import './styles/Hero.css';
 import firstSideImage from "../assets/HeroSliderPics/imgCGPT.png";
 import secondSideImage from "../assets/HeroSliderPics/cloud-forest-landscape.jpg";
 import thirdSideImage from "../assets/HeroSliderPics/high-tech-futuristic-urban-travel-people.jpg";
+import fourthSideImage from "../assets/HeroSliderPics/beautiful-bright-empire-state-building-nighttime.jpg";
 
 const slides = [
   {
@@ -19,30 +20,58 @@ const slides = [
     subtext: "75% OF PEOPLE JUDGE A BUSINESS BY ITS WEBSITE.",
     cta: "Elevate Your Brand",
     image: firstSideImage,
-    shade: false
+    shade: true
   },
   {
     id: 3,
-    fact: "Trust",
-    subtext: "75% OF PEOPLE JUDGE A BUSINESS BY ITS WEBSITE.",
+    fact: "Innovation",
+    subtext: "STAND OUT WITH A WEBSITE THAT DRIVES RESULTS.",
     cta: "Get Started",
     image: thirdSideImage,
+    shade: true
+  },
+  {
+    id: 4,
+    fact: "Vision",
+    subtext: "YOUR DIGITAL PRESENCE MATTERS MORE THAN EVER.",
+    cta: "Explore Solutions",
+    image: fourthSideImage,
     shade: true
   }
 ];
 
+// Two reviews per slide
+const reviews = [
+  { name: "Sarah Mitchell", review: "Transformed our online presence completely. Revenue increased by 240%.", project: "#portfolio" },
+  { name: "James Chen", review: "Exceptional attention to detail. The team delivered beyond our expectations.", project: "#portfolio" },
+  { name: "Maria Rodriguez", review: "Professional, creative, and reliable. Our traffic doubled in 3 months.", project: "#portfolio" },
+  { name: "David Park", review: "Best investment we made. The design speaks for itself.", project: "#portfolio" },
+  { name: "Emma Thompson", review: "Stunning work that perfectly captures our brand vision.", project: "#portfolio" },
+  { name: "Alex Kumar", review: "Fast turnaround without compromising quality. Highly recommend.", project: "#portfolio" }
+];
+
 const Hero = () => {
   const [current, setCurrent] = useState(0);
+  const [reviewIndex, setReviewIndex] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const hamburgerRef = useRef(null);
   const mobileNavRef = useRef(null);
   const activeSlide = slides[current];
+  const activeReview = reviews[reviewIndex];
 
-  // Auto-slide
+  // Auto-slide (8 seconds per slide)
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent(prev => (prev === slides.length - 1 ? 0 : prev + 1));
     }, 8000);
+    return () => clearInterval(timer);
+  }, [current]); // Reset timer when current changes
+
+  // Review cycle: changes every 4 seconds (2 reviews per 8-second slide)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setReviewIndex(prev => (prev === reviews.length - 1 ? 0 : prev + 1));
+    }, 4000);
     return () => clearInterval(timer);
   }, []);
 
@@ -290,13 +319,15 @@ const Hero = () => {
       </div>
 
       {/* Bottom-right liquid glass info card */}
-      <aside className="hero-info-card" aria-label="Projects highlight">
+      <aside className="hero-info-card" aria-label="Client testimonial" key={reviewIndex}>
         <div className="info-content">
-          <h3 className="info-title">{activeSlide?.fact || 'Projects'}</h3>
-          <p className="info-desc">
-            {activeSlide?.subtext || 'Explore our latest work and case studies.'}
-          </p>
-          <a href="#portfolio" className="info-cta" aria-label="Discover our projects">Discover More</a>
+          <div className="info-text">
+            <h3 className="info-title">{activeReview.name}</h3>
+            <p className="info-desc">
+              {activeReview.review}
+            </p>
+          </div>
+          <a href={activeReview.project} className="info-cta" aria-label={`View ${activeReview.name}'s project`}>Discover More</a>
         </div>
       </aside>
 
