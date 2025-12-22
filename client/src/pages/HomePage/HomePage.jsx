@@ -9,6 +9,8 @@ import Pricing from "../../components/Pricing.jsx";
 import WhatsAppButton from "../../components/WhatsAppButton.jsx";
 import BackToTop from "../../components/BackToTop.jsx";
 import Footer from "../../components/Footer.jsx";
+import IntroText from "../../components/IntroText.jsx";
+import PortfolioSection from "../../components/PortfolioSection.jsx";
 
 function HomePage() {
     return (
@@ -17,6 +19,8 @@ function HomePage() {
                 {/* <NavBar /> */}
                 <WhatsAppButton />
                 <Hero />
+                <IntroText />
+                <PortfolioSection />
                 <BackToTop />
                 <Services />
                 <WorksCarousel />

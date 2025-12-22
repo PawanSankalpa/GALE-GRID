@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&display=swap');
+.portfolio-section {
+  padding: clamp(32px, 6vw, 64px) 16px;
+  background: #fff;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* Little gap between the two split images */
+  column-gap: clamp(60px, 2vw, 16px);
+  row-gap: clamp(12px, 3vw, 20px);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.portfolio-image {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.portfolio-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.portfolio-right {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.portfolio-image-bg {
+  position: relative;
+  z-index: 0;
+}
+.portfolio-image-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.95);
+}
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4);
+  pointer-events: none; /* never block clicks on content */
+}
+
+
+.portfolio-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 32px);
+  color: #111;
+  z-index: 1; /* ensure above bg and overlay */
+}
+
+.portfolio-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin-bottom: 24px;
+}
+
+.metric-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 12px; /* a bit closer like reference */
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 6px 8px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.metric-row:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 2px;
+}
+
+.metric-number {
+  font-size: clamp(3.6rem, 9vw, 6rem);
+  font-weight: 800;
+  line-height: 1;
+   color: #000;
+  font-family: 'Oswald', sans-serif;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  min-width: 2ch; /* keep alignment but a bit closer to text */
+}
+
+.metric-text { color: #222; }
+.metric-title {
+  font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.metric-sub {
+  margin-top: 6px;
+  font-size: clamp(1rem, 2.1vw, 1.2rem);
+  line-height: 1.6;
+   color: #444;
+  opacity: 0.95;
+}
+
+.metric-chevron {
+  font-size: 1rem;
+  margin-left: 12px;
+  transform: rotate(0deg);
+  transition: transform 0.2s ease;
+}
+.metric-row.expanded .metric-chevron { transform: rotate(180deg); }
+
+.portfolio-copy {
+  margin-top: 32px;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  line-height: 1.6;
+  max-width: 620px;
+  opacity: 0.95;
+}
+
+.portfolio-cta {
+  align-self: flex-start;
+  margin-top: 22px;
+  color: #fff;
+  text-decoration: none;
+  background: #0b0b0b;
+  padding: 14px 26px;
+  border-radius: 18px;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.portfolio-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 28px rgba(0,0,0,0.4);
+  background: #111;
+}
+
+/* Center-split reveal reused from IntroText */
+.center-split { display: inline-block; clip-path: inset(0 50% 0 50%); opacity: 0; }
+@keyframes reveal-center { 0% { clip-path: inset(0 50% 0 50%); opacity: 0; } 60% { opacity: 1; } 100% { clip-path: inset(0 0 0 0); opacity: 1; } }
+.center-split.in-view { animation: reveal-center 900ms cubic-bezier(.22,.61,.36,1) forwards; }
+.portfolio-cta .arrow { margin-left: 8px; }
+
+@media (max-width: 900px) {
+  .portfolio-grid { grid-template-columns: 1fr; }
+  /* Keep content glued over the image on mobile */
+  .portfolio-content {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .image-overlay { display: block; }
+  .portfolio-right { overflow: hidden; }
+  .portfolio-copy { color: #222; }
+
+  /* Mobile accordion behavior for metrics */
+  .metric-sub {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.25s ease;
+  }
+  .metric-row.expanded .metric-sub {
+    max-height: 260px; /* enough room for text */
+    opacity: 1;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .portfolio-section { background: #0f0f0f; }
+}
