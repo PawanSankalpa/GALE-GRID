@@ -1,6 +1,6 @@
 import React from "react";
 import "./HomePage.css";
-import NavBar from "../../components/NavBar.jsx";
+// import NavBar from "../../components/NavBar.jsx";
 import Hero from "../../components/Hero.jsx";
 import Services from "../../components/Service.jsx";
 import WorksCarousel from "../../components/WorksCarousel.jsx";
@@ -14,7 +14,7 @@ function HomePage() {
     return (
         <div className="HomePage">
             <div className="home-container">
-                <NavBar />
+                {/* <NavBar /> */}
                 <WhatsAppButton />
                 <Hero />
                 <BackToTop />
