@@ -15,7 +15,7 @@ function HomePage() {
         <div className="HomePage">
             <div className="home-container">
                 {/* <NavBar /> */}
-                <WhatsAppButton />
+                {/* <WhatsAppButton /> */}
                 <Hero />
                 <BackToTop />
                 <Services />
