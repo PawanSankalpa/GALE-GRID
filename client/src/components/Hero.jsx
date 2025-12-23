@@ -5,15 +5,8 @@ import secondSideImage from "../assets/HeroSliderPics/cloud-forest-landscape.jpg
 import thirdSideImage from "../assets/HeroSliderPics/high-tech-futuristic-urban-travel-people.jpg";
 import fourthSideImage from "../assets/HeroSliderPics/beautiful-bright-empire-state-building-nighttime.jpg";
 
+// Reordered: move first to last, shift others forward
 const slides = [
-  {
-    id: 1,
-    fact: "Growth",
-    subtext: "75% OF PEOPLE JUDGE A BUSINESS BY ITS WEBSITE.",
-    cta: "View Our Work",
-    image: secondSideImage,
-    shade: false
-  },
   {
     id: 2,
     fact: "Trust",
@@ -37,6 +30,14 @@ const slides = [
     cta: "Explore Solutions",
     image: fourthSideImage,
     shade: true
+  },
+  {
+    id: 1,
+    fact: "Growth",
+    subtext: "75% OF PEOPLE JUDGE A BUSINESS BY ITS WEBSITE.",
+    cta: "View Our Work",
+    image: secondSideImage,
+    shade: false
   }
 ];
 
@@ -53,28 +54,48 @@ const reviews = [
 const Hero = () => {
   const [current, setCurrent] = useState(0);
   const [reviewIndex, setReviewIndex] = useState(0);
+  const [progress, setProgress] = useState(100);
   const [menuOpen, setMenuOpen] = useState(false);
   const hamburgerRef = useRef(null);
   const mobileNavRef = useRef(null);
   const activeSlide = slides[current];
   const activeReview = reviews[reviewIndex];
+  const SLIDE_DURATION = 6000; // 6 seconds per slide
 
-  // Auto-slide (8 seconds per slide)
+  // Auto-slide (6 seconds per slide)
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent(prev => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, 8000);
-    return () => clearInterval(timer);
+      setProgress(100);
+    }, SLIDE_DURATION);
+    
+    // Progress bar animation
+    const progressInterval = setInterval(() => {
+      setProgress(prev => {
+        const nextProgress = prev - (100 / (SLIDE_DURATION / 50));
+        return nextProgress > 0 ? nextProgress : 0;
+      });
+    }, 50);
+    
+    return () => {
+      clearInterval(timer);
+      clearInterval(progressInterval);
+    };
   }, [current]); // Reset timer when current changes
 
-  // Review cycle: changes every 4 seconds (2 reviews per 8-second slide)
+  // Review cycle: changes every 3 seconds (2 reviews per 6-second slide)
   useEffect(() => {
     const timer = setInterval(() => {
       setReviewIndex(prev => (prev === reviews.length - 1 ? 0 : prev + 1));
-    }, 4000);
+    }, 3000);
     return () => clearInterval(timer);
   }, []);
 
+  // Initialize progress
+  useEffect(() => {
+    setProgress(100);
+  }, [current]);
+  
   // 3D Parallax
   useEffect(() => {
     let raf = null;
@@ -157,6 +178,26 @@ const Hero = () => {
       document.body.style.overflow = '';
       document.body.style.paddingRight = '';
     };
+  }, [menuOpen]);
+
+  // Keyboard navigation: ArrowLeft/ArrowRight to move slides
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      // avoid interfering while mobile drawer is open
+      if (menuOpen) return;
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+        setProgress(100);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+        setProgress(100);
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
   }, [menuOpen]);
 
   const splitInTwo = (text) => {
@@ -331,7 +372,22 @@ const Hero = () => {
         </div>
       </aside>
 
-      <div className="scroll-indicator"></div>
+      {/* Premium time-ring indicator (SVG stroke-dashoffset) */}
+      <div
+        className="scroll-indicator"
+        key={current}
+        role="progressbar"
+        aria-valuenow={Math.round(100 - progress)}
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-label="Time until next slide"
+        style={{ '--ring-duration': `${SLIDE_DURATION}ms` }}
+      >
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <circle className="ring-base" cx="16" cy="16" r="14" />
+          <circle className="ring-progress" cx="16" cy="16" r="14" />
+        </svg>
+      </div>
 
       <div className="dots">
         {slides.map((_, i) => (
