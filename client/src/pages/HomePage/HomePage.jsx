@@ -11,6 +11,7 @@ import Footer from "../../components/Footer.jsx";
 import IntroText from "../../components/IntroText.jsx";
 import PortfolioSection from "../../components/PortfolioSection.jsx";
 import OurTeam from "../../components/OurTeam.jsx";
+import RobotServices from "../../components/RobotServices.jsx";
 
 function HomePage() {
     return (
@@ -22,6 +23,7 @@ function HomePage() {
                 <IntroText />
                 <PortfolioSection />
                 <OurTeam />
+                <RobotServices />
                 <BackToTop />
                 <WorksCarousel />
                 <AboutMe />
