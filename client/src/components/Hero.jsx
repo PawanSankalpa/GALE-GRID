@@ -1,45 +1,63 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './styles/Hero.css';
 import firstSideImage from "../assets/HeroSliderPics/imgCGPT.png";
-import secondSideImage from "../assets/HeroSliderPics/cloud-forest-landscape.jpg";
-import thirdSideImage from "../assets/HeroSliderPics/high-tech-futuristic-urban-travel-people.jpg";
+import secondSideImage from "../assets/portfolioPics/5060.jpg";
+import thirdSideImage from "../assets/portfolioPics/money-fantasy-scene.jpg";
 import fourthSideImage from "../assets/HeroSliderPics/beautiful-bright-empire-state-building-nighttime.jpg";
 
+const SLIDE_DURATION = 4800; // 20% faster than 6s (was 6000ms)
+const REVIEW_DURATION = SLIDE_DURATION / 2; // exactly 2 reviews per slide, equal time each
+
+const nextIndex = (index, length) => (index + 1) % length;
+
 // Reordered: move first to last, shift others forward
-const slides = [
+const rawSlides = [
   {
     id: 2,
-    fact: "Trust",
-    subtext: "75% OF PEOPLE JUDGE A BUSINESS BY ITS WEBSITE.",
+    fact: "Performance",
+    subLines: [
+      "STOP LOSING CLIENTS TO SLOW, MESSY WEBSITES.",
+      "WE BUILD HIGH SPEED WEBSITES THAT HELP YOU GROW."
+    ],
     cta: "Elevate Your Brand",
     image: firstSideImage,
     shade: true
   },
   {
     id: 3,
-    fact: "Innovation",
-    subtext: "STAND OUT WITH A WEBSITE THAT DRIVES RESULTS.",
+    fact: "Revenue",
+    subLines: [
+      "A BEAUTIFUL WEBSITE IS USELESS IF IT DOESN'T SELL.",
+      "WE DESIGN SYSTEMS THAT TURN VISITORS INTO PAYING CUSTOMERS."
+    ],
     cta: "Get Started",
     image: thirdSideImage,
     shade: true
   },
   {
     id: 4,
-    fact: "Vision",
-    subtext: "YOUR DIGITAL PRESENCE MATTERS MORE THAN EVER.",
+    fact: "Dominance",
+    subLines: [
+      "DON'T JUST COMPETE, WIN.",
+      "WE DESIGN POWERFUL WEBSITES THAT PUT YOU AHEAD OF EVERY COMPETITOR."
+    ],
     cta: "Explore Solutions",
     image: fourthSideImage,
     shade: true
   },
   {
     id: 1,
-    fact: "Growth",
-    subtext: "75% OF PEOPLE JUDGE A BUSINESS BY ITS WEBSITE.",
+    fact: "Foundation",
+    subLines: [
+      "A WEAK WEBSITE BREAKS YOUR BUSINESS.",
+      "WE BUILD THE SOLID DIGITAL FOUNDATION YOU NEED TO SCALE SAFELY."
+    ],
     cta: "View Our Work",
     image: secondSideImage,
-    shade: false
+    shade: true
   }
 ];
+const slides = rawSlides;
 
 // Two reviews per slide
 const reviews = [
@@ -54,100 +72,43 @@ const reviews = [
 const Hero = () => {
   const [current, setCurrent] = useState(0);
   const [reviewIndex, setReviewIndex] = useState(0);
-  const [progress, setProgress] = useState(100);
+  const [wipeNonce, setWipeNonce] = useState(0); // ensures wipe re-triggers even on wrap
   const [menuOpen, setMenuOpen] = useState(false);
   const hamburgerRef = useRef(null);
   const mobileNavRef = useRef(null);
-  const activeSlide = slides[current];
+  const isFirstSlideRef = useRef(true);
   const activeReview = reviews[reviewIndex];
-  const SLIDE_DURATION = 6000; // 6 seconds per slide
 
-  // Auto-slide (6 seconds per slide)
+  // Auto-slide (4.8 seconds per slide) — reset timer on each slide change
   useEffect(() => {
-    const timer = setInterval(() => {
+    const timer = setTimeout(() => {
       setCurrent(prev => (prev === slides.length - 1 ? 0 : prev + 1));
-      setProgress(100);
     }, SLIDE_DURATION);
-    
-    // Progress bar animation
-    const progressInterval = setInterval(() => {
-      setProgress(prev => {
-        const nextProgress = prev - (100 / (SLIDE_DURATION / 50));
-        return nextProgress > 0 ? nextProgress : 0;
-      });
-    }, 50);
-    
-    return () => {
-      clearInterval(timer);
-      clearInterval(progressInterval);
-    };
-  }, [current]); // Reset timer when current changes
-
-  // Review cycle: changes every 3 seconds (2 reviews per 6-second slide)
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setReviewIndex(prev => (prev === reviews.length - 1 ? 0 : prev + 1));
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
-
-  // Initialize progress
-  useEffect(() => {
-    setProgress(100);
+    return () => clearTimeout(timer);
   }, [current]);
-  
-  // 3D Parallax
+
+  // Reviews: exactly 2 per slide, equally split across the slide duration.
+  // Anchored to the slide index to avoid timer drift.
   useEffect(() => {
-    let raf = null;
-    const state = { mouseX: 0, mouseY: 0 };
+    // When the slide changes (auto or manual), immediately show the next review.
+    if (!isFirstSlideRef.current) {
+      setReviewIndex((prev) => nextIndex(prev, reviews.length));
+    } else {
+      isFirstSlideRef.current = false;
+    }
 
-    const resetAllSlideTransforms = () => {
-      document.querySelectorAll('.slide').forEach(sl => {
-        const t = sl.querySelector('.fact-title');
-        const p = sl.querySelector('.fact-pretext');
-        const b = sl.querySelector('.portfolio-btn');
-        if (t) t.style.transform = '';
-        if (p) p.style.transform = '';
-        if (b) b.style.transform = '';
-      });
-    };
+    // Halfway through the slide, show the second review for this slide.
+    const halfTimer = window.setTimeout(() => {
+      setReviewIndex((prev) => nextIndex(prev, reviews.length));
+    }, REVIEW_DURATION);
 
-    const onMove = (e) => {
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      state.mouseX = (clientX / window.innerWidth - 0.5) * 20;
-      state.mouseY = (clientY / window.innerHeight - 0.5) * 20;
-
-      if (!raf) {
-        raf = requestAnimationFrame(() => {
-          const activeSlide = document.querySelector('.slide.active');
-          if (activeSlide) {
-            const title = activeSlide.querySelector('.fact-title');
-            const pre = activeSlide.querySelector('.fact-pretext');
-            const btn = activeSlide.querySelector('.portfolio-btn');
-
-            if (title) title.style.transform = `translate3d(${state.mouseX * 1.2}px, ${state.mouseY * 1.2}px, 0)`;
-            // subtext moves less than title for 3D effect
-            if (pre) pre.style.transform = `translate3d(${state.mouseX * 0.5}px, ${state.mouseY * 0.5}px, 0)`;
-            if (btn) btn.style.transform = `translate3d(${state.mouseX * 0.4}px, ${state.mouseY * 0.4}px, 0)`;
-          }
-          raf = null;
-        });
-      }
-    };
-
-    // Clear any stale transforms (important if user toggles slides quickly)
-    resetAllSlideTransforms();
-
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('touchmove', onMove, { passive: true });
-
-    return () => {
-      window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('touchmove', onMove);
-      if (raf) cancelAnimationFrame(raf);
-    };
+    return () => window.clearTimeout(halfTimer);
   }, [current]);
+
+  // bump nonce whenever review changes (including last->first)
+  useEffect(() => {
+    setWipeNonce(n => n + 1);
+  }, [reviewIndex]);
 
   // Mobile nav accessibility and body scroll lock
   useEffect(() => {
@@ -180,6 +141,20 @@ const Hero = () => {
     };
   }, [menuOpen]);
 
+  // Safety: if the mobile drawer is open and the viewport becomes desktop,
+  // close it so body scroll isn't accidentally left locked.
+  useEffect(() => {
+    const closeIfDesktop = () => {
+      if (window.innerWidth > 768 && menuOpen) {
+        setMenuOpen(false);
+      }
+    };
+
+    closeIfDesktop();
+    window.addEventListener('resize', closeIfDesktop);
+    return () => window.removeEventListener('resize', closeIfDesktop);
+  }, [menuOpen]);
+
   // Keyboard navigation: ArrowLeft/ArrowRight to move slides
   useEffect(() => {
     const onKeyDown = (e) => {
@@ -188,11 +163,9 @@ const Hero = () => {
       if (e.key === 'ArrowRight') {
         e.preventDefault();
         setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-        setProgress(100);
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault();
         setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-        setProgress(100);
       }
     };
 
@@ -200,49 +173,10 @@ const Hero = () => {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [menuOpen]);
 
-  const splitInTwo = (text) => {
-    const words = text.split(' ');
-    if (words.length <= 2) return [text, ''];
-    let best = Math.ceil(words.length / 2);
-    let bestDiff = Infinity;
-    for (let i = 1; i < words.length; i++) {
-      const a = words.slice(0, i).join(' ');
-      const b = words.slice(i).join(' ');
-      const diff = Math.abs(a.length - b.length);
-      if (diff < bestDiff) {
-        bestDiff = diff;
-        best = i;
-      }
-    }
-    return [words.slice(0, best).join(' '), words.slice(best).join(' ')];
-  };
-
-  // Mobile nav accessibility and body scroll lock
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === 'Escape') setMenuOpen(false);
-    };
-
-    if (menuOpen) {
-      document.addEventListener('keydown', onKey);
-      document.body.style.overflow = 'hidden';
-      setTimeout(() => {
-        const first = mobileNavRef.current && mobileNavRef.current.querySelector('a');
-        if (first) first.focus();
-      }, 0);
-    } else {
-      document.body.style.overflow = '';
-      if (hamburgerRef.current) hamburgerRef.current.focus();
-    }
-
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
-    };
-  }, [menuOpen]);
-
   const prev = (current - 1 + slides.length) % slides.length;
   const next = (current + 1) % slides.length;
+
+  // Single universal progress color (keeps visuals consistent across slides)
 
   return (
     <div className="hero-container">
@@ -340,15 +274,10 @@ const Hero = () => {
               <h2 className="fact-title">{slide.fact}</h2>
 
               <div className="fact-pretext" aria-hidden={false}>
-                {(() => {
-                  const [l1, l2] = splitInTwo(slide.subtext);
-                  return (
-                    <>
-                      <span className="pre-line">{l1}</span>
-                      {l2 ? <span className="pre-line second">{l2}</span> : null}
-                    </>
-                  );
-                })()}
+                <>
+                  <span className="pre-line">{slide.subLines[0]}</span>
+                  {slide.subLines[1] ? <span className="pre-line second">{slide.subLines[1]}</span> : null}
+                </>
               </div>
 
               <button className="portfolio-btn">
@@ -360,33 +289,33 @@ const Hero = () => {
       </div>
 
       {/* Bottom-right liquid glass info card */}
-      <aside className="hero-info-card" aria-label="Client testimonial" key={reviewIndex}>
-        <div className="info-content">
-          <div className="info-text">
-            <h3 className="info-title">{activeReview.name}</h3>
-            <p className="info-desc">
-              {activeReview.review}
-            </p>
+      <aside className="hero-info-card" aria-label="Client testimonial">
+        {/* Minimal wrapper to isolate the wipe animation and re-trigger on change */}
+        <div className="wipe-reveal" key={wipeNonce}>
+          <div className="info-content">
+            <div className="info-text">
+              <h3 className="info-title">{activeReview.name}</h3>
+              <p className="info-desc">
+                {activeReview.review}
+              </p>
+            </div>
+            <a href={activeReview.project} className="info-cta" aria-label={`View ${activeReview.name}'s project`}>Discover More</a>
           </div>
-          <a href={activeReview.project} className="info-cta" aria-label={`View ${activeReview.name}'s project`}>Discover More</a>
         </div>
       </aside>
 
-      {/* Premium time-ring indicator (SVG stroke-dashoffset) */}
+      {/* Linear slide progress bar: fills left→right over slide duration */}
       <div
-        className="scroll-indicator"
+        className="slide-progress"
         key={current}
         role="progressbar"
-        aria-valuenow={Math.round(100 - progress)}
+        aria-valuenow={0}
         aria-valuemin="0"
         aria-valuemax="100"
         aria-label="Time until next slide"
-        style={{ '--ring-duration': `${SLIDE_DURATION}ms` }}
+        style={{ '--progress-duration': `${SLIDE_DURATION}ms` }}
       >
-        <svg viewBox="0 0 32 32" aria-hidden="true">
-          <circle className="ring-base" cx="16" cy="16" r="14" />
-          <circle className="ring-progress" cx="16" cy="16" r="14" />
-        </svg>
+        <div className="progress-fill" />
       </div>
 
       <div className="dots">

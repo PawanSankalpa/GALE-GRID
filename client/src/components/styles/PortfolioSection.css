@@ -1,6 +1,358 @@
+/*
+  Hi! These are easy settings you can change.
+  Think of them like dials for spacing, corners, shadows and speeds.
+*/
+/* Global design tokens for portfolio */
+:root{
+  --gap: 24px;
+  --card-radius: 20px;
+  --shadow-soft: 0 10px 30px rgba(0,0,0,0.10);
+  --shadow-hover: 0 18px 40px rgba(0,0,0,0.14);
+  /* Cohesive palette (color theory): off-white surface, slate text, azure accent */
+  --surface: #f8f9fb;
+  --text-primary: #0e0e10;
+  --text-secondary: #33363d;
+  --accent: #2f8cff;        /* azure blue (complements warm oranges in imagery) */
+  --accent-hover: #1f75ff;  /* darker for hover */
+  --muted: rgba(0,0,0,0.60);
+  --card-border: rgba(0,0,0,0.10);
+  --duration-fast: 220ms;
+  --duration-med: 420ms;
+  --duration-slow: 700ms;
+  --easing-sharp: cubic-bezier(.2,.9,.3,1);
+  --easing-soft: cubic-bezier(.22,1,.36,1);
+}
+@media (prefers-reduced-motion: reduce){
+  :root{
+    --duration-fast: 0ms;
+    --duration-med: 0ms;
+    --duration-slow: 0ms;
+  }
+}
+/* A nice headline font for big titles */
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&display=swap');
+
+/*
+  Make the whole website scroll only up/down (not left/right).
+  This keeps things steady like a poster.
+*/
+/* Global: lock horizontal scrolling site-wide */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+  touch-action: pan-y;
+  overscroll-behavior-x: none;
+}
+
+.pf-section {
+  padding: clamp(32px, 6vw, 72px) 16px;
+  background: #f8f9fb;
+  color: var(--text-primary);
+  --card-border: var(--card-border);
+}
+
+.pf-shell { max-width: 1240px; margin: 0 auto; }
+.pf-header { max-width: 980px; margin: clamp(24px, 5vw, 56px) auto clamp(40px, 7vw, 80px); text-align: center; opacity: 0; transform: translateY(10px); }
+.pf-header h2 { font-size: clamp(1.7rem, 3.6vw, 2.5rem); letter-spacing: .2px; font-weight: 800; line-height: 1.15; margin: 0; color: var(--text-primary); }
+.pf-sub { opacity: .85; line-height: 1.6; margin: 10px auto 0; max-width: 880px; font-size: clamp(0.9rem, 1.4vw, 1rem); color: var(--text-secondary); }
+.pf-header.in-view { animation: pfFadeUp 700ms cubic-bezier(.22,.61,.36,1) forwards; }
+
+/*
+  This is the 12-column grid.
+  Imagine 12 equal boxes in a row.
+  We leave some empty space on purpose to let it breathe.
+*/
+.pf-mosaic {
+  --gap: clamp(28px, 3vw, 44px); /* increased spacing between cards */
+  --card-radius: clamp(10px, 1.2vw, 14px); /* soft micro-corners for modern look */
+  --r1h: clamp(380px, 36vw, 560px); /* Row 1 total height guide */
+  --r2h: clamp(420px, 38vw, 560px); /* Row 2 total height guide */
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: auto;
+  column-gap: var(--gap); /* horizontal space between cards */
+  row-gap: var(--gap);    /* vertical space between cards */
+}
+
+.pf-card { position: relative; border-radius: var(--card-radius); overflow: hidden; isolation: isolate; background: #0b0d10; box-shadow: var(--shadow-soft); border: 1px solid var(--card-border); transition: transform var(--duration-fast) var(--easing-sharp), box-shadow var(--duration-fast) var(--easing-sharp); }
+.pf-card::before{ content:""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; 
+  /* liquid-glass edge glow that blends with the dark background */
+  background:
+    radial-gradient(120% 120% at 8% 6%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 36%, rgba(255,255,255,0.00) 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.015));
+  mix-blend-mode: screen; opacity: 0.9;
+}
+.pf-card::after{ content:""; position: absolute; inset: 0; border-radius: inherit; background: rgba(0,0,0,0.08); z-index: 1; pointer-events: none; }
+.pf-veil-light{ background: rgba(255,255,255,0.62); }
+.pf-card { content-visibility: auto; contain-intrinsic-size: 300px 240px; }
+.pf-card img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; display: block; filter: saturate(0.95) contrast(1.02); -webkit-user-drag: none; user-select: none; transform-origin: center center; }
+/* slight default zoom to allow small movement without exposing edges */
+.pf-card:not(.pf-no-tilt) img { transform: scale(1.04); }
+@media (pointer: fine){
+  .pf-card img { transition: transform 280ms var(--easing-soft); }
+}
+@media (hover: hover) and (pointer: fine){
+  /* keep boxes steady; only images move */
+  .pf-card:hover, .pf-card:focus-within { transform: none; box-shadow: var(--shadow-soft); }
+}
+@media (hover: none), (pointer: coarse){
+  .pf-card:hover, .pf-card:focus-within { transform: none; box-shadow: var(--shadow-soft); }
+}
+.pf-card:focus-visible{ outline: none; box-shadow: 0 0 0 3px rgba(160,216,255,0.22), var(--shadow-hover); }
+.pf-anchor { margin: 6px 0 var(--gap); font-size: clamp(0.95rem, 1.6vw, 1.1rem); opacity: .85; color: var(--text-secondary); }
+.pf-anchor strong { color: var(--text-primary); font-weight: 600; }
+.pf-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.5)); z-index: 1; }
+.pf-veil { position: absolute; inset: 0; background: rgba(12,12,14,.55); backdrop-filter: blur(6px) saturate(120%); z-index: 1; }
+.pf-veil-stat{ background:
+  linear-gradient(135deg, rgba(0,0,0,0.48), rgba(0,0,0,0.62)),
+  radial-gradient(circle at top right, rgba(47,140,255,0.06), transparent 60%);
+  backdrop-filter: blur(6px) saturate(110%);
+}
+
+/* Hover-revealed project info (liquid glass panel) */
+.pf-project-info{ position: absolute; left: clamp(20px, 3.2vw, 36px); right: clamp(20px, 3.2vw, 36px); bottom: clamp(16px, 2vw, 22px); top: auto; transform: scaleX(0) translateY(8px); transform-origin: center; opacity: 0; z-index: 3; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: clamp(12px, 2vw, 18px); padding: clamp(10px, 1.6vw, 14px) clamp(14px, 2.2vw, 20px); text-align: left; color: #fff; border-radius: clamp(12px, 1.3vw, 16px);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)),
+    linear-gradient(180deg, rgba(20,22,26,0.75), rgba(20,22,26,0.88));
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow: 
+    0 16px 28px rgba(0,0,0,0.40),
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    inset 0 0 40px rgba(255,255,255,0.02);
+  backdrop-filter: blur(20px) saturate(140%);
+  will-change: transform, opacity;
+  /* Blending edges effect */
+  -webkit-mask-image: radial-gradient(ellipse 100% 100% at center, black 70%, transparent 100%);
+  mask-image: radial-gradient(ellipse 100% 100% at center, black 70%, transparent 100%);
+}
+.pf-info-tags{ display: none; }
+.pf-tag{ display: none; }
+.pf-info-title{ display: none; }
+.pf-info-desc{ font-size: clamp(0.8rem, 1.3vw, 0.9rem); opacity: 0.92; color: rgba(255,255,255,0.9); line-height: 1.35; margin: 0; flex: 1; font-weight: 400; letter-spacing: 0.2px; }
+.pf-info-btn{ display: inline-block; margin: 0; padding: clamp(9px, 1.5vw, 12px) clamp(16px, 2.4vw, 20px); border-radius: clamp(8px, 1vw, 11px); text-decoration: none; font-weight: 500; font-size: clamp(0.75rem, 1.2vw, 0.85rem); letter-spacing: 0.3px; color: var(--text-primary); background: linear-gradient(135deg, #ffffff, #f5f6f8); border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.8); transition: all 240ms var(--easing-soft); white-space: nowrap; backdrop-filter: blur(10px); }
+.pf-info-btn:hover{ background: linear-gradient(135deg, #f8f9fa, #e8eaed); transform: translateY(-1px) scale(1.02); box-shadow: 0 8px 20px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.9); }
+
+/* Show the glass panel on hover for large screens and fine pointers */
+@media (hover: hover) and (pointer: fine) and (min-width: 981px){
+  .pf-card:hover .pf-project-info{ opacity: 1; transform: scaleX(1) translateY(0); transition: transform var(--duration-med) var(--easing-soft), opacity var(--duration-med) var(--easing-soft); }
+}
+
+/* On touch devices/small screens, keep info visible for usability */
+@media (hover: none) and (max-width: 980px), (pointer: coarse) and (max-width: 980px){
+  .pf-project-info{ opacity: 1; transform: scaleX(1) translateY(0); }
+}
+
+.pf-r1-left { grid-column: 1 / span 4; grid-row: 1; aspect-ratio: 1 / 1; }
+.pf-r1-center { grid-column: 5 / span 4; grid-row: 1; aspect-ratio: 1 / 1; display: grid; place-items: center; }
+.pf-r1-right { grid-column: 9 / span 4; grid-row: 1; aspect-ratio: 1 / 1; }
+.pf-r2-left-large { grid-column: 1 / span 6; grid-row: 2 / span 2; min-height: var(--r2h); }
+.pf-r2-right-top { grid-column: 7 / span 6; grid-row: 2; min-height: calc((var(--r2h) - var(--gap)) * 0.58); margin-top: calc(var(--gap) * 0.5); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06); }
+.pf-r2-right-top img { object-position: 50% 30%; }
+/* Dark banner overlay (bottom) */
+.pf-banner { position: absolute; left: clamp(18px, 2.2vw, 28px); right: clamp(18px, 2.2vw, 28px); bottom: clamp(18px, 2.2vw, 24px); z-index: 2; padding: clamp(14px, 1.8vw, 20px) clamp(16px, 2vw, 24px); border-radius: 0; background: linear-gradient(180deg, rgba(10,10,12,0.85), rgba(10,10,12,0.9)); box-shadow: 0 14px 22px rgba(0,0,0,0.35); }
+.pf-banner-title { font-size: clamp(1.1rem, 2.2vw, 1.6rem); font-family: 'Oswald', sans-serif; margin: 0; }
+.pf-banner-sub { margin-top: 6px; opacity: 0.9; font-size: clamp(0.9rem, 1.6vw, 1.05rem); }
+.pf-r2-right-bottom { grid-column: 7 / span 6; grid-row: 3; min-height: calc((var(--r2h) - var(--gap)) * 0.42); position: relative; }
+.pf-finance-content { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; z-index: 2; gap: clamp(6px, 1.2vw, 10px); padding: clamp(16px, 2.4vw, 24px); }
+.pf-finance-label{ font-size: clamp(0.85rem, 1.4vw, 1rem); opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; color: #fff; }
+.pf-rate { font-size: clamp(2.8rem, 8vw, 5.2rem); font-family: 'Oswald', sans-serif; letter-spacing: .4px; font-weight: 700; color: #fff; line-height: 1; }
+.pf-finance-sub{ font-size: clamp(0.9rem, 1.6vw, 1.1rem); opacity: 0.85; color: rgba(255,255,255,0.9); margin: 0; }
+.pf-finance-btn{ margin-top: clamp(8px, 1.6vw, 12px); padding: clamp(10px, 1.8vw, 13px) clamp(18px, 2.6vw, 24px); border-radius: 10px; text-decoration: none; font-weight: 600; font-size: clamp(0.85rem, 1.4vw, 0.95rem); color: #fff; background: var(--accent); box-shadow: 0 10px 20px rgba(47,140,255,0.35); transition: all 220ms var(--easing-soft); display: inline-block; }
+.pf-finance-btn:hover{ background: var(--accent-hover); transform: translateY(-2px) scale(1.03); box-shadow: 0 14px 28px rgba(47,140,255,0.45); }
+.pf-r2-a.reveal { transition-delay: 40ms; }
+.pf-r2-b.reveal { transition-delay: 120ms; }
+.pf-r2-c.reveal { transition-delay: 200ms; }
+
+/* Centered portrait mobile screenshot (used in r2-left) */
+.pf-mobile-frame { width: clamp(160px, 48%, 260px); aspect-ratio: 9 / 16; border-radius: 18px; overflow: hidden; box-shadow: 0 10px 24px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.06) inset; background: #0e0f12; }
+.pf-mobile-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Center stat overlay styles for middle tile */
+.pf-stat-overlay{ position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: clamp(12px, 2.4vw, 20px); padding: clamp(16px, 2.6vw, 24px); opacity: 1; transform: none; }
+.pf-stat-percent{ font-family: 'Oswald', sans-serif; font-size: clamp(3.6rem, 11vw, 7.2rem); line-height: 0.95; color: #f8f9fa; font-weight: 700; letter-spacing: -1px; text-shadow: 0 4px 12px rgba(0,0,0,0.25); }
+.pf-stat-line{ font-size: clamp(1rem, 2.4vw, 1.5rem); color: #e8eaed; opacity: 0.95; max-width: 88%; line-height: 1.4; font-weight: 400; letter-spacing: 0.3px; }
+.pf-stat-btn{ margin-top: clamp(16px, 3vw, 22px); padding: clamp(13px, 2.8vw, 17px) clamp(26px, 3.6vw, 36px); border-radius: clamp(12px, 1.4vw, 16px); text-decoration: none; font-weight: 600; font-size: clamp(0.9rem, 1.6vw, 1.05rem); letter-spacing: 0.5px; color: #0e0e10; background: linear-gradient(135deg, #ffffff, #f0f2f5); box-shadow: 0 12px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.3); transition: all 240ms var(--easing-soft); }
+.pf-stat-btn:hover{ transform: translateY(-2px) scale(1.02); background: linear-gradient(135deg, #f8f9fa, #e8eaed); box-shadow: 0 16px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.9); }
+
+/* Center stat always visible (no hover gate) */
+
+.pf-text { position: absolute; z-index: 2; bottom: 20px; left: 20px; right: 20px; }
+.pf-right-text { text-align: right; left: auto; right: 20px; }
+.pf-r2-bottom-text { text-align: left; bottom: 20px; left: 20px; right: auto; }
+.pf-kicker { font-size: .9rem; opacity: .9; }
+.pf-title-lg { font-size: clamp(1.4rem, 3vw, 2.2rem); margin: 4px 0; font-family: 'Oswald', sans-serif; }
+.pf-title-md { font-size: clamp(1.1rem, 2.3vw, 1.6rem); margin-top: 2px; font-family: 'Oswald', sans-serif; }
+.pf-meta { font-size: .95rem; opacity: .9; }
+
+.pf-stat-content, .pf-finance-content, .pf-r1-center-content { position: absolute; z-index: 2; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
+.pf-r1-title { font-size: clamp(2rem, 6vw, 3.2rem); font-family: 'Oswald', sans-serif; letter-spacing: .4px; }
+.pf-r1-sub { margin-top: 8px; opacity: .9; }
+.pf-percent { font-size: clamp(3.6rem, 10vw, 6.2rem); font-family: 'Oswald', sans-serif; letter-spacing: .5px; }
+.pf-rate { font-size: clamp(2.4rem, 8vw, 4.4rem); font-family: 'Oswald', sans-serif; }
+.pf-caption { margin-top: 10px; opacity: .95; }
+
+.pf-cta { margin-top: 16px; padding: 12px 18px; border-radius: 10px; text-decoration: none; color: #0e1016; background: #ffffff; transition: background 180ms ease, color 160ms ease; }
+.pf-cta:hover { background: #e6e6e6; }
+.pf-cta-light { background: #f5f5f5; }
+
+/*
+  Soft reveal animation when cards appear in view.
+  They slide up a little and fade in. Calm, not flashy.
+*/
+/* Subtle entrance reveal (opacity + translateY) */
+.reveal{ opacity: 0; transform: translateY(20px); will-change: transform, opacity; transition: transform var(--duration-med) var(--easing-soft), opacity var(--duration-med) var(--easing-soft); }
+.reveal.is-visible{ opacity: 1; transform: translateY(0); }
+@keyframes pfIn { to { transform: translateY(0); opacity: 1; } }
+@keyframes pfFadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/*
+  Responsive rules:
+  On phones, we stack everything in one column so it's easy to see.
+*/
+/* Responsive */
+@media (max-width: 980px) {
+  .pf-section { padding: clamp(32px, 6vw, 64px) clamp(14px, 4vw, 20px); }
+  .pf-header { margin: clamp(20px, 5vw, 40px) auto clamp(32px, 6vw, 64px); }
+  .pf-header h2 { font-size: clamp(1.6rem, 5.5vw, 2rem); line-height: 1.2; }
+  .pf-sub { font-size: clamp(0.88rem, 2.2vw, 0.98rem); opacity: 0.88; line-height: 1.55; }
+  .pf-anchor { font-size: clamp(0.9rem, 2vw, 1rem); margin-bottom: clamp(18px, 3.5vw, 26px); }
+  
+  .pf-mosaic { 
+    grid-template-columns: 1fr; 
+    --gap: clamp(18px, 4vw, 28px);
+    --card-radius: clamp(12px, 2vw, 16px);
+  }
+  
+  .pf-r1-left, .pf-r1-center, .pf-r1-right { 
+    grid-column: 1; 
+    aspect-ratio: 4/3; 
+    min-height: clamp(260px, 60vw, 340px); 
+  }
+  
+  .pf-r2-left-large { 
+    grid-column: 1; 
+    grid-row: auto; 
+    aspect-ratio: 4/3;
+    min-height: clamp(280px, 65vw, 360px); 
+  }
+  
+  .pf-r2-right-top, .pf-r2-right-bottom { 
+    grid-column: 1; 
+    aspect-ratio: 4/3;
+    min-height: clamp(240px, 55vw, 300px); 
+    margin-top: 0; 
+  }
+  
+  /* Mobile info panels - always visible, vertical layout */
+  .pf-project-info { 
+    opacity: 1; 
+    transform: scaleX(1) translateY(0);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(10px, 2.5vw, 14px);
+    padding: clamp(12px, 3vw, 16px) clamp(14px, 3.5vw, 18px);
+    left: clamp(14px, 3.5vw, 20px);
+    right: clamp(14px, 3.5vw, 20px);
+    bottom: clamp(14px, 3.5vw, 20px);
+  }
+  
+  .pf-info-desc { 
+    font-size: clamp(0.82rem, 2.2vw, 0.92rem); 
+    line-height: 1.4; 
+    width: 100%;
+  }
+  
+  .pf-info-btn { 
+    padding: clamp(10px, 2.5vw, 13px) clamp(18px, 4vw, 22px);
+    font-size: clamp(0.8rem, 2vw, 0.88rem);
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Mobile stat overlay */
+  .pf-stat-overlay { 
+    gap: clamp(12px, 3vw, 18px); 
+    padding: clamp(18px, 4vw, 24px); 
+  }
+  
+  .pf-stat-percent { 
+    font-size: clamp(3rem, 12vw, 5rem); 
+  }
+  
+  .pf-stat-line { 
+    font-size: clamp(0.95rem, 2.8vw, 1.25rem); 
+    max-width: 95%; 
+  }
+  
+  .pf-stat-btn { 
+    margin-top: clamp(14px, 3.5vw, 20px); 
+    padding: clamp(13px, 3vw, 16px) clamp(24px, 5vw, 32px);
+    font-size: clamp(0.88rem, 2.2vw, 1rem);
+  }
+  
+  /* Mobile finance card */
+  .pf-finance-content { 
+    gap: clamp(8px, 2vw, 12px); 
+    padding: clamp(18px, 4vw, 24px); 
+  }
+  
+  .pf-finance-label { 
+    font-size: clamp(0.75rem, 2vw, 0.88rem); 
+  }
+  
+  .pf-rate { 
+    font-size: clamp(2.4rem, 8vw, 4rem); 
+  }
+  
+  .pf-finance-sub { 
+    font-size: clamp(0.85rem, 2.2vw, 1rem); 
+  }
+  
+  .pf-finance-btn { 
+    margin-top: clamp(10px, 2.5vw, 14px); 
+    padding: clamp(11px, 2.8vw, 14px) clamp(20px, 4.5vw, 26px);
+    font-size: clamp(0.82rem, 2vw, 0.92rem);
+  }
+  
+  .pf-mobile-frame { width: clamp(160px, 60%, 300px); }
+}
+
+@media (min-width: 1367px){
+  :root{ --gap: 28px; --card-radius: 22px; }
+}
+
+/* Ultra-wide displays (TV, large monitors) */
+@media (min-width: 1600px) {
+  .pf-shell { max-width: 1400px; }
+  .pf-mosaic { gap: clamp(14px, 1.2vw, 24px); grid-template-columns: 1.5fr 1fr 1.3fr; }
+  .pf-mosaic { --r1h: clamp(460px, 44vw, 680px); }
+  .pf-r2-left-large { min-height: calc(var(--r2h) * 1.05); }
+  .pf-r2-right-top { min-height: calc((var(--r2h) - var(--gap)) * 0.58); }
+  .pf-r2-right-bottom { min-height: calc((var(--r2h) - var(--gap)) * 0.42); }
+}
+
+/* Very small devices */
+@media (max-width: 360px) {
+  .pf-header h2 { font-size: clamp(1.3rem, 6vw, 1.6rem); }
+  .pf-sub { font-size: 0.85rem; }
+}
+
+@media (prefers-color-scheme: light) {
+  :root { --card-border: rgba(0,0,0,0.08); }
+  .pf-section { background: #fafafa; color: #0e0e10; }
+  .pf-overlay { background: linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.25)); }
+  .pf-veil { background: rgba(255,255,255,.65); }
+  .pf-cta { color: #0e1016; }
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .pf-header, .pf-card { animation: none !important; transform: none !important; }
+  .pf-card img { transition: none !important; }
+}
+
+/* ================= Legacy metrics layout (kept) ================ */
 .portfolio-section {
-  /* Slightly tighter vertical padding to help fit on desktop */
   padding: clamp(24px, 4vw, 48px) 16px;
   background: #fff;
 }
@@ -8,203 +360,54 @@
 .portfolio-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  /* Little gap between the two split images */
   column-gap: clamp(60px, 2vw, 16px);
   row-gap: clamp(12px, 3vw, 20px);
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.portfolio-image {
-  border-radius: 12px;
-  overflow: hidden;
-}
-.portfolio-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+.portfolio-image { border-radius: 12px; overflow: hidden; }
+.portfolio-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-.portfolio-right {
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-}
+.portfolio-right { position: relative; border-radius: 12px; overflow: hidden; }
+.portfolio-image-bg { position: relative; z-index: 0; }
+.portfolio-image-bg img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.95); }
+.image-overlay { position: absolute; inset: 0; background: rgba(255,255,255,0.78); backdrop-filter: blur(6px); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4); pointer-events: none; }
 
-.portfolio-image-bg {
-  position: relative;
-  z-index: 0;
-}
-.portfolio-image-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: saturate(0.95);
-}
-.image-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(6px);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4);
-  pointer-events: none; /* never block clicks on content */
-}
-
-
-.portfolio-content {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(16px, 4vw, 32px);
-  color: #111;
-  z-index: 1; /* ensure above bg and overlay */
-}
-
-.portfolio-metrics {
-  display: flex;
-  flex-direction: column;
-  gap: 26px;
-  margin-bottom: 24px;
-}
-
-.metric-row {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: start;
-  gap: 12px; /* a bit closer like reference */
-  cursor: pointer;
-  border-radius: 12px;
-  padding: 6px 8px;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-.metric-row:focus-visible {
-  outline: 2px solid #111;
-  outline-offset: 2px;
-}
-
-.metric-number {
-  font-size: clamp(3.6rem, 9vw, 6rem);
-  font-weight: 800;
-  line-height: 1;
-   color: #000;
-  font-family: 'Oswald', sans-serif;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0;
-  min-width: 2ch; /* keep alignment but a bit closer to text */
-}
-
+.portfolio-content { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; padding: clamp(16px, 4vw, 32px); color: #111; z-index: 1; }
+.portfolio-metrics { display: flex; flex-direction: column; gap: 26px; margin-bottom: 24px; }
+.metric-row { display: grid; grid-template-columns: auto 1fr; align-items: start; gap: 12px; cursor: pointer; border-radius: 12px; padding: 6px 8px; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.metric-row:focus-visible { outline: 2px solid #111; outline-offset: 2px; }
+.metric-number { font-size: clamp(3.6rem, 9vw, 6rem); font-weight: 800; line-height: 1; color: #000; font-family: 'Oswald', sans-serif; font-variant-numeric: tabular-nums; letter-spacing: 0; min-width: 2ch; }
 .metric-text { color: #222; }
-.metric-title {
-  font-size: clamp(1.2rem, 2.4vw, 1.6rem);
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.metric-sub {
-  margin-top: 6px;
-  font-size: clamp(1rem, 2.1vw, 1.2rem);
-  line-height: 1.6;
-   color: #444;
-  opacity: 0.95;
-}
-
-.metric-chevron {
-  font-size: 1rem;
-  margin-left: 12px;
-  transform: rotate(0deg);
-  transition: transform 0.2s ease;
-}
+.metric-title { font-size: clamp(1.2rem, 2.4vw, 1.6rem); font-weight: 500; letter-spacing: 0.3px; display: flex; align-items: center; justify-content: space-between; }
+.metric-sub { margin-top: 6px; font-size: clamp(1rem, 2.1vw, 1.2rem); line-height: 1.6; color: #444; opacity: 0.95; }
+.metric-chevron { font-size: 1rem; margin-left: 12px; transform: rotate(0deg); transition: transform 0.2s ease; }
 .metric-row.expanded .metric-chevron { transform: rotate(180deg); }
 
-.portfolio-copy {
-  margin-top: 32px;
-  font-size: clamp(0.95rem, 2vw, 1.1rem);
-  line-height: 1.6;
-  max-width: 620px;
-  opacity: 0.95;
-}
-
-.portfolio-cta {
-  align-self: flex-start;
-  margin-top: 22px;
-  color: #fff;
-  text-decoration: none;
-  background: #0b0b0b;
-  padding: 14px 26px;
-  border-radius: 18px;
-  box-shadow: 0 12px 24px rgba(0,0,0,0.35);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-}
-.portfolio-cta:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 16px 28px rgba(0,0,0,0.4);
-  background: #111;
-}
-
-/* Center-split reveal reused from IntroText */
-.center-split { display: inline-block; clip-path: inset(0 50% 0 50%); opacity: 0; }
-@keyframes reveal-center { 0% { clip-path: inset(0 50% 0 50%); opacity: 0; } 60% { opacity: 1; } 100% { clip-path: inset(0 0 0 0); opacity: 1; } }
-.center-split.in-view { animation: reveal-center 900ms cubic-bezier(.22,.61,.36,1) forwards; }
-.portfolio-cta .arrow { margin-left: 8px; }
+.portfolio-copy { margin-top: 32px; font-size: clamp(0.95rem, 2vw, 1.1rem); line-height: 1.6; max-width: 620px; opacity: 0.95; }
+.portfolio-cta { align-self: flex-start; margin-top: 22px; color: #fff; text-decoration: none; background: #0b0b0b; padding: 14px 26px; border-radius: 18px; box-shadow: 0 12px 24px rgba(0,0,0,0.35); transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
+.portfolio-cta:hover { transform: translateY(-1px); box-shadow: 0 16px 28px rgba(0,0,0,0.4); background: #111; }
 
 @media (max-width: 900px) {
   .portfolio-grid { grid-template-columns: 1fr; }
-  /* Keep content glued over the image on mobile */
-  .portfolio-content {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+  .portfolio-content { position: absolute; inset: 0; z-index: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
   .image-overlay { display: block; }
   .portfolio-right { overflow: hidden; }
   .portfolio-copy { color: #222; }
-
-  /* Mobile accordion behavior for metrics */
-  .metric-sub {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.3s ease, opacity 0.25s ease;
-  }
-  .metric-row.expanded .metric-sub {
-    max-height: 260px; /* enough room for text */
-    opacity: 1;
-  }
+  .metric-sub { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.3s ease, opacity 0.25s ease; }
+  .metric-row.expanded .metric-sub { max-height: 260px; opacity: 1; }
 }
 
 @media (prefers-color-scheme: dark) {
   .portfolio-section { background: #0f0f0f; }
 }
 
-/* Desktop: keep panels within viewport height and scroll content if needed */
 @media (min-width: 901px) {
   .portfolio-grid { align-items: center; }
-  .portfolio-image,
-  .portfolio-right {
-    /* Slightly taller panels so content fits without scroll */
-    height: clamp(560px, 85vh, 900px);
-  }
-  .portfolio-image img,
-  .portfolio-image-bg img {
-    height: 100%;
-    object-fit: cover;
-  }
-  .portfolio-content {
-    /* No scrolling on desktop; keep content within height */
-    overflow: visible;
-    padding: clamp(16px, 3vw, 28px);
-  }
-
-  /* Desktop-only: slightly tighter typography and spacing to fit */
+  .portfolio-image, .portfolio-right { height: clamp(560px, 85vh, 900px); }
+  .portfolio-image img, .portfolio-image-bg img { height: 100%; object-fit: cover; }
+  .portfolio-content { overflow: visible; padding: clamp(16px, 3vw, 28px); }
   .portfolio-metrics { gap: 16px; }
   .metric-number { font-size: clamp(2.8rem, 7vw, 4.6rem); }
   .metric-title { font-size: clamp(1rem, 1.6vw, 1.3rem); }

@@ -1,139 +1,139 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import modernHouse from "../assets/HeroSliderPics/luxia.png";
+import leftImg from "../assets/portfolioPics/hotel11.png"; // third image in row 1
+import rightImg from "../assets/portfolioPics/luxia-item.png"; // right column images in row 2
+import proj4 from "../assets/portfolioPics/hotel-full.png"; // first image in row 2
+import modernHouse from "../assets/portfolioPics/lifecare.jpeg"; // first image in row 1
+import luxiaHero3 from "../assets/portfolioPics/luxia-hero3.png"; // center stat card in row 1
 import "./styles/PortfolioSection.css";
 
-const PortfolioSection = ({
-  // Static values as requested; edit to match real totals
-  metrics = [
-    { value: 12, title: "Websites launched", sub: "for small businesses building a strong digital presence and attracting more customers online" },
-    { value: 15, title: "Active projects", sub: "currently in design and build, focused on performance, usability, and modern UI" },
-    { value: 22, title: "Clients supported", sub: "with ongoing improvements, updates, and optimization to support continuous growth" },
-  ],
-}) => {
-  const [expandedIndex, setExpandedIndex] = useState(null);
-  const [displayValues, setDisplayValues] = useState(metrics.map(() => 0));
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const sectionRef = useRef(null);
-  const scrollIdleTimerRef = useRef(null);
-  const scrollProgressRef = useRef(0);
-  const snapFinalRef = useRef(false);
+// Legacy metrics moved to Stats.jsx for home page placement
 
-  const toggleMetric = (idx) => {
-    setExpandedIndex((prev) => (prev === idx ? null : idx));
-  };
+// Modern mosaic section (new)
+const PortfolioSection = () => {
+  const pfRef = useRef(null);
 
-  const onRowKeyDown = (e, idx) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      toggleMetric(idx);
-    }
-  };
-
-  // IntersectionObserver-driven progress: updates with visibility ratio while scrolling
+  // In-view animations for header and cards
   useEffect(() => {
-    const node = sectionRef.current;
-    if (!node) return;
-
-    const thresholds = Array.from({ length: 101 }, (_, i) => i / 100);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        const ratio = Math.max(0, Math.min(1, entry.intersectionRatio || 0));
-        // Bidirectional progress: numbers increase/decrease with visibility
-        setScrollProgress(ratio);
-      },
-      { threshold: thresholds }
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
+    const root = pfRef.current; if (!root) return;
+    const items = Array.from(root.querySelectorAll('.reveal'));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const idx = items.indexOf(entry.target);
+        setTimeout(() => entry.target.classList.add('is-visible'), Math.max(0, idx) * 80);
+      });
+    }, { threshold: 0.18 });
+    items.forEach((el) => io.observe(el));
+    return () => io.disconnect();
   }, []);
 
-  // Map scroll progress to counts with easing
+  // Pointer-tilt effect: move images slightly when hovering the entire section
+  // The card edges remain fixed; only the images rotate a bit.
   useEffect(() => {
-    // If we've snapped to final values (scroll idle), don't overwrite
-    if (snapFinalRef.current) return;
-    const endValues = metrics.map((m) => Number(m.value) || 0);
-    // Linear mapping: counts move smoothly up/down with scroll
-    const eased = Math.max(0, Math.min(1, scrollProgress));
-    setDisplayValues(endValues.map((end) => Math.round(end * eased)));
-  }, [scrollProgress, metrics]);
+    if (!window.matchMedia || !window.matchMedia('(pointer: fine)').matches) return;
+    const root = pfRef.current; if (!root) return;
 
-  // Keep a ref of latest progress for idle detection
-  useEffect(() => {
-    scrollProgressRef.current = scrollProgress;
-  }, [scrollProgress]);
-
-  // When scrolling stops, snap to real counts (always)
-  useEffect(() => {
-    const onScroll = () => {
-      if (scrollIdleTimerRef.current) clearTimeout(scrollIdleTimerRef.current);
-      // Scrolling started/continued: allow dynamic updates
-      snapFinalRef.current = false;
-      scrollIdleTimerRef.current = setTimeout(() => {
-        const endValues = metrics.map((m) => Number(m.value) || 0);
-        // Scrolling is idle: snap and lock to final values
-        snapFinalRef.current = true;
-        setDisplayValues(endValues);
-      }, 200);
+    const baseScale = 1.03; // very gentle zoom so edges never show
+    const maxShift = 4; // tiny movement for calm parallax
+    const onMove = (e) => {
+      const imgs = Array.from(root.querySelectorAll('.pf-card:not(.pf-no-tilt) img'));
+      imgs.forEach((img) => {
+        const r = img.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = (e.clientX - cx) / (r.width / 2);
+        const dy = (e.clientY - cy) / (r.height / 2);
+        const dist = Math.min(1, Math.hypot(dx, dy));
+        const emphasis = 1 - 0.4 * dist; // even softer weighting
+        const tx = dx * maxShift * emphasis;
+        const ty = dy * maxShift * emphasis;
+        img.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0) scale(${baseScale})`;
+        img.style.willChange = 'transform';
+      });
     };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
+    const onLeave = () => {
+      const imgs = root.querySelectorAll('.pf-card:not(.pf-no-tilt) img');
+      imgs.forEach((img) => {
+        img.style.transform = `scale(${baseScale})`;
+        img.style.willChange = '';
+      });
+    };
+    root.addEventListener('mousemove', onMove);
+    root.addEventListener('mouseleave', onLeave);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (scrollIdleTimerRef.current) clearTimeout(scrollIdleTimerRef.current);
+      root.removeEventListener('mousemove', onMove);
+      root.removeEventListener('mouseleave', onLeave);
     };
-  }, [metrics]);
+  }, []);
+
   return (
-    <section className="portfolio-section" id="portfolio" ref={sectionRef}>
-      <div className="portfolio-grid">
-        {/* Left image */}
-        <figure className="portfolio-image left">
-          <img src={modernHouse} alt="Modern house portfolio preview" />
-        </figure>
+    <section id="portfolio" className="pf-section" aria-labelledby="pf-title" ref={pfRef}>
+      <div className="pf-shell">
+        <header className="pf-header reveal">
+          <h2 id="pf-title">Our Digital Solutions</h2>
+          <p className="pf-sub">
+            From concept to launch, we craft high-performing websites that drive growth and elevate your brand. Each project reflects our commitment to excellence and results-driven design.
+          </p>
+        </header>
 
-        {/* Right image with overlay content */}
-        <div className="portfolio-right">
-          <div className="portfolio-image-bg">
-            <img src={modernHouse} alt="Modern house portfolio background" />
-            <div className="image-overlay" />
-          </div>
-
-          <div className="portfolio-content">
-            <div className="portfolio-metrics">
-              {metrics.map((m, idx) => (
-                <div
-                  className={`metric-row${expandedIndex === idx ? " expanded" : ""}`}
-                  key={idx}
-                  role="button"
-                  tabIndex={0}
-                  aria-expanded={expandedIndex === idx}
-                  aria-controls={`metric-sub-${idx}`}
-                  onClick={() => toggleMetric(idx)}
-                  onKeyDown={(e) => onRowKeyDown(e, idx)}
-                >
-                  <div className="metric-number">{displayValues[idx] ?? m.value}</div>
-                  <div className="metric-text">
-                    <div className="metric-title">
-                      {m.title}
-                      <span className="metric-chevron" aria-hidden="true">▼</span>
-                    </div>
-                    <div className="metric-sub" id={`metric-sub-${idx}`}>{m.sub}</div>
-                  </div>
-                </div>
-              ))}
+        <div className="pf-mosaic">
+          {/* ROW 1: three equal cards (4 cols each) */}
+          <article className="pf-card pf-r1-left reveal" aria-label="SunMax Energy" tabIndex={0}>
+            <img src={modernHouse} loading="lazy" decoding="async" alt="SunMax Energy project" />
+            <div className="pf-project-info" aria-hidden="true">
+              <p className="pf-info-desc">Healthcare platform with seamless booking and patient management</p>
+              <a href="https://example.com/sunmax" target="_blank" rel="noopener noreferrer" className="pf-info-btn">View Site</a>
             </div>
+          </article>
 
-            <p className="portfolio-copy">
-              We blend modern aesthetics with performance-focused builds. See how our sites turn visits into leads and help businesses grow.
-            </p>
+          <article className="pf-card pf-r1-center pf-no-tilt reveal" aria-label="Customer satisfaction" tabIndex={0}>
+            <img src={luxiaHero3} loading="lazy" decoding="async" alt="Luxury property architecture" />
+            <div className="pf-veil pf-veil-stat" />
+            <div className="pf-stat-overlay" aria-hidden="true">
+              <div className="pf-stat-percent">99%</div>
+              <p className="pf-stat-line">Clients recommend us to their network</p>
+              <Link to="/contact" className="pf-stat-btn" aria-label="Start your project">Start Your Project</Link>
+            </div>
+          </article>
 
-            <Link className="portfolio-cta" to="/ourWork" aria-label="View our full projects">
-              View Our Projects
-              <span className="arrow">→</span>
-            </Link>
-          </div>
+          <article className="pf-card pf-r1-right reveal" aria-label="Hotel project" tabIndex={0}>
+            <img src={leftImg} loading="lazy" decoding="async" alt="Hotel project screenshot" />
+            <div className="pf-project-info" aria-hidden="true">
+              <p className="pf-info-desc">Luxury hotel website with immersive gallery and direct booking</p>
+              <a href="https://example.com/hotel" target="_blank" rel="noopener noreferrer" className="pf-info-btn">View Site</a>
+            </div>
+          </article>
+
+          {/* ROW 2: Left large image, right stack with banner + rate */}
+          <article className="pf-card pf-r2-left-large reveal" aria-label="Luxury hotel" tabIndex={0}>
+            <img src={proj4} loading="lazy" decoding="async" alt="Hotel hero screenshot" />
+            <div className="pf-project-info" aria-hidden="true">
+              <p className="pf-info-desc">Premium hotel showcase with stunning visuals and smooth navigation</p>
+              <a href="https://example.com/luxia" target="_blank" rel="noopener noreferrer" className="pf-info-btn">View Site</a>
+            </div>
+          </article>
+
+          {/* Right top with dark banner overlay */}
+          <article className="pf-card pf-r2-right-top reveal" aria-label="Property listing" tabIndex={0}>
+            <img src={rightImg} loading="lazy" decoding="async" alt="Property listing page" />
+            <div className="pf-project-info" aria-hidden="true">
+              <p className="pf-info-desc">High-end property listing with interactive pricing details</p>
+              <a href="https://example.com/opera" target="_blank" rel="noopener noreferrer" className="pf-info-btn">View Site</a>
+            </div>
+          </article>
+
+          {/* Right bottom: finance/percentage card */}
+          <article className="pf-card pf-r2-right-bottom pf-no-tilt reveal" aria-label="Financing options" tabIndex={0}>
+            <img src={rightImg} loading="lazy" decoding="async" alt="Financing backdrop" />
+            <div className="pf-veil" />
+            <div className="pf-finance-content">
+              <span className="pf-finance-label">Starting from</span>
+              <div className="pf-rate">3.99%</div>
+              <p className="pf-finance-sub">Flexible financing available</p>
+              <Link to="/contact" className="pf-finance-btn">Get Quote</Link>
+            </div>
+          </article>
         </div>
       </div>
     </section>
