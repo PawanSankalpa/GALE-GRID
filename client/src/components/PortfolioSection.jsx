@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { FaGoogle, FaStar, FaClock } from "react-icons/fa";
 import leftImg from "../assets/portfolioPics/hotel11.png"; // third image in row 1
 import rightImg from "../assets/portfolioPics/luxia-item.png"; // right column images in row 2
 import proj4 from "../assets/portfolioPics/hotel-full.png"; // first image in row 2
@@ -28,63 +29,27 @@ const PortfolioSection = () => {
     return () => io.disconnect();
   }, []);
 
-  // Pointer-tilt effect: move images slightly when hovering the entire section
-  // The card edges remain fixed; only the images rotate a bit.
-  useEffect(() => {
-    if (!window.matchMedia || !window.matchMedia('(pointer: fine)').matches) return;
-    const root = pfRef.current; if (!root) return;
-
-    const baseScale = 1.03; // very gentle zoom so edges never show
-    const maxShift = 4; // tiny movement for calm parallax
-    const onMove = (e) => {
-      const imgs = Array.from(root.querySelectorAll('.pf-card:not(.pf-no-tilt) img'));
-      imgs.forEach((img) => {
-        const r = img.getBoundingClientRect();
-        const cx = r.left + r.width / 2;
-        const cy = r.top + r.height / 2;
-        const dx = (e.clientX - cx) / (r.width / 2);
-        const dy = (e.clientY - cy) / (r.height / 2);
-        const dist = Math.min(1, Math.hypot(dx, dy));
-        const emphasis = 1 - 0.4 * dist; // even softer weighting
-        const tx = dx * maxShift * emphasis;
-        const ty = dy * maxShift * emphasis;
-        img.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0) scale(${baseScale})`;
-        img.style.willChange = 'transform';
-      });
-    };
-    const onLeave = () => {
-      const imgs = root.querySelectorAll('.pf-card:not(.pf-no-tilt) img');
-      imgs.forEach((img) => {
-        img.style.transform = `scale(${baseScale})`;
-        img.style.willChange = '';
-      });
-    };
-    root.addEventListener('mousemove', onMove);
-    root.addEventListener('mouseleave', onLeave);
-    return () => {
-      root.removeEventListener('mousemove', onMove);
-      root.removeEventListener('mouseleave', onLeave);
-    };
-  }, []);
-
   return (
     <section id="portfolio" className="pf-section" aria-labelledby="pf-title" ref={pfRef}>
       <div className="pf-shell">
         <header className="pf-header reveal">
-          <h2 id="pf-title">Our Digital Solutions</h2>
+          <h2 id="pf-title">SOME OF OUR RECENT WORK</h2>
           <p className="pf-sub">
-            From concept to launch, we craft high-performing websites that drive growth and elevate your brand. Each project reflects our commitment to excellence and results-driven design.
+            A few recent projects we’ve designed and built. Feel free to explore the live sites.
           </p>
         </header>
 
         <div className="pf-mosaic">
           {/* ROW 1: three equal cards (4 cols each) */}
-          <article className="pf-card pf-r1-left reveal" aria-label="SunMax Energy" tabIndex={0}>
-            <img src={modernHouse} loading="lazy" decoding="async" alt="SunMax Energy project" />
-            <div className="pf-project-info" aria-hidden="true">
-              <p className="pf-info-desc">Healthcare platform with seamless booking and patient management</p>
-              <a href="https://example.com/sunmax" target="_blank" rel="noopener noreferrer" className="pf-info-btn">View Site</a>
+          <article className="pf-card pf-r1-left reveal pf-magnetic" aria-label="SunMax Energy" tabIndex={0}>
+            <div className="hover-scrim" />
+            <img src={modernHouse} loading="lazy" decoding="async" alt="SunMax Energy project" className="pf-img" />
+            <div className="pf-glass-overlay">
+              <div className="pf-glass-title">LIFECARE MEDICAL</div>
+              <div className="pf-glass-hook">+45% Conversion</div>
+              <div className="pf-glass-industry">Healthcare Platform</div>
             </div>
+            <div className="pf-arrow-fixed"><span className="arrow">↗</span></div>
           </article>
 
           <article className="pf-card pf-r1-center pf-no-tilt reveal" aria-label="Customer satisfaction" tabIndex={0}>
@@ -97,30 +62,39 @@ const PortfolioSection = () => {
             </div>
           </article>
 
-          <article className="pf-card pf-r1-right reveal" aria-label="Hotel project" tabIndex={0}>
-            <img src={leftImg} loading="lazy" decoding="async" alt="Hotel project screenshot" />
-            <div className="pf-project-info" aria-hidden="true">
-              <p className="pf-info-desc">Luxury hotel website with immersive gallery and direct booking</p>
-              <a href="https://example.com/hotel" target="_blank" rel="noopener noreferrer" className="pf-info-btn">View Site</a>
+          <article className="pf-card pf-r1-right reveal pf-magnetic" aria-label="Hotel project" tabIndex={0}>
+            <div className="hover-scrim" />
+            <img src={leftImg} loading="lazy" decoding="async" alt="Hotel project screenshot" className="pf-img" />
+            <div className="pf-glass-overlay">
+              <div className="pf-glass-title">GRAND HOTEL</div>
+              <div className="pf-glass-hook">+30% Bookings</div>
+              <div className="pf-glass-industry">Luxury Hospitality</div>
             </div>
+            <div className="pf-arrow-fixed"><span className="arrow">↗</span></div>
           </article>
 
           {/* ROW 2: Left large image, right stack with banner + rate */}
-          <article className="pf-card pf-r2-left-large reveal" aria-label="Luxury hotel" tabIndex={0}>
-            <img src={proj4} loading="lazy" decoding="async" alt="Hotel hero screenshot" />
-            <div className="pf-project-info" aria-hidden="true">
-              <p className="pf-info-desc">Premium hotel showcase with stunning visuals and smooth navigation</p>
-              <a href="https://example.com/luxia" target="_blank" rel="noopener noreferrer" className="pf-info-btn">View Site</a>
+          <article className="pf-card pf-r2-left-large reveal pf-magnetic" aria-label="Luxury hotel" tabIndex={0}>
+            <div className="hover-scrim" />
+            <img src={proj4} loading="lazy" decoding="async" alt="Emerald Estates project" className="pf-img" />
+            <div className="pf-glass-overlay">
+              <div className="pf-glass-title">EMERALD ESTATES</div>
+              <div className="pf-glass-hook">+35% Conversion Rate</div>
+              <div className="pf-glass-industry">Luxury Real Estate · Dubai</div>
             </div>
+            <div className="pf-arrow-fixed"><span className="arrow">↗</span></div>
           </article>
 
           {/* Right top with dark banner overlay */}
-          <article className="pf-card pf-r2-right-top reveal" aria-label="Property listing" tabIndex={0}>
-            <img src={rightImg} loading="lazy" decoding="async" alt="Property listing page" />
-            <div className="pf-project-info" aria-hidden="true">
-              <p className="pf-info-desc">High-end property listing with interactive pricing details</p>
-              <a href="https://example.com/opera" target="_blank" rel="noopener noreferrer" className="pf-info-btn">View Site</a>
+          <article className="pf-card pf-r2-right-top reveal pf-magnetic" aria-label="Property listing" tabIndex={0}>
+            <div className="hover-scrim" />
+            <img src={rightImg} loading="lazy" decoding="async" alt="Property listing page" className="pf-img" />
+            <div className="pf-glass-overlay">
+              <div className="pf-glass-title">OPERA LISTINGS</div>
+              <div className="pf-glass-hook">Virtual Tours</div>
+              <div className="pf-glass-industry">Real Estate</div>
             </div>
+            <div className="pf-arrow-fixed"><span className="arrow">↗</span></div>
           </article>
 
           {/* Right bottom: finance/percentage card */}
@@ -134,6 +108,36 @@ const PortfolioSection = () => {
               <Link to="/contact" className="pf-finance-btn">Get Quote</Link>
             </div>
           </article>
+        </div>
+      </div>
+      {/* Stats Footer: below portfolio images */}
+      <div className="stats-footer">
+        <div className="stat-item">
+          <div className="stat-icon">
+            <i className="fa fa-google"><FaGoogle /></i>
+          </div>
+          <div className="stat-info">
+            <div className="stat-number">4.9/5</div>
+            <div className="stat-label">Google Rating</div>
+          </div>
+        </div>
+        <div className="stat-item">
+          <div className="stat-icon">
+            <i className="fa fa-star"><FaStar /></i>
+          </div>
+          <div className="stat-info">
+            <div className="stat-number">200+</div>
+            <div className="stat-label">Projects</div>
+          </div>
+        </div>
+        <div className="stat-item">
+          <div className="stat-icon">
+            <i className="fa fa-clock"><FaClock /></i>
+          </div>
+          <div className="stat-info">
+            <div className="stat-number">2-8</div>
+            <div className="stat-label">Weeks Delivery</div>
+          </div>
         </div>
       </div>
     </section>

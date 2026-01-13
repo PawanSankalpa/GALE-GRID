@@ -26,10 +26,10 @@ function IntroText() {
     <section className="intro-section" ref={containerRef}>
       <div className="intro-container">
         <p className={`intro-headline center-split ${inView ? "in-view" : ""}`}>
-          We create custom websites for small businesses that combine beautiful design with smart strategy.
+          Quality work that saves money over time
         </p>
         <p className={`intro-lead fade-delay ${inView ? "in-view" : ""}`}>
-          Our goal is simple: build websites that look great, load fast, and turn visitors into customers.
+          You only pay for what your business actually needs.
         </p>
       </div>
     </section>

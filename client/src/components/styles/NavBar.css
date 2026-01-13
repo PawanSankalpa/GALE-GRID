@@ -1,0 +1,522 @@
+
+@import './Hero.css';
+
+:root {
+  --primary-white: #EDEFF3;
+}
+
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 900px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 18px;
+  z-index: 100;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.08),
+    rgba(0,0,0,0)
+  );
+  transition: backdrop-filter 260ms ease, padding 200ms ease, box-shadow 200ms ease;
+}
+
+.navbar.sticky {
+  /* Make the sticky navbar use fixed positioning so it reliably stays
+     at the top during page scroll (absolute -> fixed avoids layout
+     inconsistencies when toggling classes). */
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  max-width: 900px;
+  backdrop-filter: blur(6px) saturate(120%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  box-shadow: 0 6px 24px rgba(2,6,23,0.35);
+  padding: 12px 18px;
+}
+
+/* Floating navbar on larger screens: centered, rounded, and elevated so it
+   sits above the hero without spanning the full width. On small screens
+   we keep the full-width layout for better tap targets. */
+@media (min-width: 700px) {
+  .navbar,
+  .navbar.sticky {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    max-width: 900px;
+    border-radius: 14px;
+    padding: 14px 20px;
+    background: linear-gradient(180deg, rgba(12,12,16,0.62), rgba(8,8,10,0.45));
+    box-shadow: 0 18px 50px rgba(2,6,23,0.48);
+    z-index: 220;
+  }
+}
+
+/* nudge the navbar down a bit on larger screens so it doesn't sit
+   flush at the very top; keep small screens at the top for ergonomic
+   tap targets */
+@media (min-width: 700px) {
+  .navbar,
+  .navbar.sticky {
+    top: 10px;
+  }
+}
+
+@media (max-width: 699px) {
+  .navbar.sticky {
+    left: 0;
+    transform: none;
+    width: 100%;
+    border-radius: 0;
+    /* Force desktop glassy/gray background on mobile sticky navbar */
+    background: linear-gradient(180deg, rgba(12,12,16,0.62), rgba(8,8,10,0.45)) !important;
+    box-shadow: 0 18px 50px rgba(2,6,23,0.48);
+  }
+  .navbar {
+    /* Also force desktop glassy/gray background on mobile non-sticky navbar */
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.08),
+      rgba(0,0,0,0)
+    ) !important;
+  }
+}
+
+.logo {
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--primary-white)!important;
+}
+
+.logo span {
+  color: #555;
+}
+
+.nav-links a {
+  color: var(--primary-white);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: opacity 0.3s, transform 150ms ease;
+  padding: 6px 8px; /* standard tap/click area */
+  border-radius: 6px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px; /* standard spacing between items */
+}
+
+.nav-item.has-submenu {
+  position: relative;
+}
+
+.nav-item .submenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 220px;
+  /* make submenu visually consistent with navbar: semi-translucent,
+     subtle blur and soft shadow so it reads as part of the same surface */
+  background: linear-gradient(180deg, rgba(12,12,16,0.94), rgba(8,8,10,0.88));
+  backdrop-filter: blur(6px) saturate(110%);
+  border-radius: 10px;
+  padding: 8px 6px;
+  box-shadow: 0 8px 28px rgba(2,6,23,0.55);
+  display: none;
+  z-index: 200;
+}
+
+.nav-item.has-submenu:hover .submenu,
+.nav-item.has-submenu:focus-within .submenu {
+  display: block;
+}
+
+.nav-item .submenu li { list-style: none; }
+.nav-item .submenu a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  color: var(--primary-white);
+  font-weight: 700; /* match main nav links */
+  font-size: 0.95rem;
+  border-radius: 8px;
+  transition: background 180ms ease, transform 150ms ease;
+}
+.nav-item .submenu a:hover {
+  background: rgba(255,255,255,0.04);
+  transform: translateX(2px);
+}
+
+/* ensure the parent trigger looks consistent with other nav links */
+.nav-item.has-submenu > a {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+/* Make submenu toggle match other nav link spacing/padding */
+.nav-item.has-submenu .submenu-toggle {
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+/* Slightly larger gap on wide screens so items don't look cramped */
+@media (min-width: 1100px) {
+  .nav-links { gap: 28px; }
+}
+
+/* Services button style to match nav links but look like an interactive toggle */
+.submenu-toggle {
+  background: transparent;
+  border: none;
+  color: var(--primary-white);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 6px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.submenu-toggle:focus {
+  outline: 2px solid rgba(255,255,255,0.12);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* caret using pseudo element */
+.submenu-toggle::after {
+  content: '▾';
+  display: inline-block;
+  font-size: 0.8rem;
+  transform-origin: 50% 50%;
+  transition: transform 180ms ease;
+  opacity: 0.95;
+}
+.nav-item.has-submenu:hover .submenu-toggle::after,
+.nav-item.has-submenu:focus-within .submenu-toggle::after {
+  transform: rotate(-180deg);
+}
+
+/* ensure the submenu itself sits visually under the floating navbar */
+.nav-item .submenu {
+  margin-top: 6px;
+}
+
+.nav-links a:hover {
+  opacity: 0.7;
+}
+
+.nav-cta {
+  border-radius: 999px;
+  padding: 10px 22px;
+  min-width: 0;
+  width: auto;
+  border: 1px solid rgba(255,140,0,0.95);
+  background: rgba(255,159,0,0.06);
+  color: #ff8c00;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+  position: relative;
+  overflow: hidden;
+  will-change: color, box-shadow;
+  transition: color 300ms cubic-bezier(.16,.84,.33,1), box-shadow 300ms cubic-bezier(.16,.84,.33,1), background 240ms ease;
+  z-index: 1;
+}
+
+.nav-cta:focus {
+  outline: 2px solid rgba(255,159,0,0.16);
+  outline-offset: 3px;
+}
+
+/* keep the text above the pseudo elements so it's always readable */
+.nav-cta * { position: relative; z-index: 2; }
+
+/* Hover state: text turns white for contrast */
+.nav-cta:hover { color: #fff; box-shadow: 0 20px 48px rgba(255,140,0,0.12); border-color: transparent; }
+.nav-cta:active { transform: none; }
+
+/* primary fill: subtle opacity-based fill (no left->right scaling) */
+.nav-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0; /* fill entire interior including corners */
+  background: linear-gradient(90deg, #ff9f00, #ff8c00);
+  opacity: 0; /* start invisible */
+  pointer-events: none;
+  border-radius: inherit; /* match the button exactly */
+  z-index: 0; /* behind text content */
+  transition: opacity 420ms cubic-bezier(.22,.9,.35,1);
+}
+.nav-cta:hover::before { opacity: 0.16; }
+
+/* ripple: fast expanding radial highlight that fades as it grows */
+.nav-cta::after {
+  content: '';
+  position: absolute;
+  left: 22%;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.14) 30%, rgba(255,255,255,0) 60%);
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.9;
+  transition: transform 680ms cubic-bezier(.22,.9,.35,1), opacity 680ms ease;
+}
+.nav-cta:hover::after {
+  transform: translate(-50%, -50%) scale(20);
+  opacity: 0;
+  transition-delay: 40ms;
+}
+
+/* respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .nav-cta, .nav-cta::before, .nav-cta::after { transition: none !important; transform: none !important; }
+  .nav-cta:hover::before { transform: none; }
+  .nav-cta:hover::after { transform: none; opacity: 0; }
+}
+/* This file intentionally left blank to preserve all navbar styles from Hero.css. */
+.logo {
+	font-weight: 700;
+	font-size: 1.5rem;
+	letter-spacing: 2px;
+	color: var(--navbar-text-primary);
+	text-decoration: none;
+}
+
+.logo span {
+	color: var(--navbar-text-primary);
+}
+
+/* -------------------- Mobile Nav & Hamburger -------------------- */
+
+.hamburger {
+  width: 42px;
+  height: 36px;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.03);
+  border: none;
+  cursor: pointer;
+  z-index: 110;
+  transition: background 180ms ease, transform 180ms ease;
+}
+.hamburger:focus {
+  outline: 2px solid rgba(255,255,255,0.12);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 3px;
+  background: #fff;
+  border-radius: 3px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0.8); }
+.hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+.hamburger.open {
+  /* hide the navbar hamburger/X while the drawer shows its own close
+     button — keeps the UI cleaner on mobile when the drawer is open */
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(.98);
+}
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  /* default mobile-first width (nearly full width on small phones) */
+  width: min(420px, 88vw);
+  transform: translateX(100%);
+  /* modern glass morphism with subtle gradient */
+  background: linear-gradient(135deg, rgba(18,18,22,0.95), rgba(12,12,16,0.92));
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  box-shadow: -20px 40px 100px rgba(2,6,23,0.75), inset 0 1px 0 rgba(255,255,255,0.05);
+  border-left: 1px solid rgba(255,255,255,0.06);
+  z-index: 120;
+  display: flex;
+  flex-direction: column;
+  transition: transform 420ms var(--slide-ease), opacity 320ms ease, box-shadow 320ms ease;
+  opacity: 0;
+}
+.mobile-drawer.open { transform: translateX(0%); opacity: 1; }
+
+/* For slightly larger phones / small tablets, use a narrower panel so
+   the popup reads as a compact panel rather than full-screen. For
+   desktop / wide screens prefer a 35% panel that behaves like a side
+   panel used by many modern sites. */
+@media (min-width: 520px) and (max-width: 899px) {
+  .mobile-drawer { width: 60vw; }
+}
+@media (min-width: 900px) {
+  .mobile-drawer { width: 35vw; max-width: 520px; }
+}
+.drawer-header { 
+  display:flex; 
+  align-items:center; 
+  justify-content:space-between; 
+  padding:20px 20px; 
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+}
+.drawer-header .logo { font-size: 1.1rem; }
+.drawer-nav { padding: 14px 18px; overflow:auto; }
+.drawer-nav { padding: 20px 20px; overflow:auto; }
+.drawer-nav ul { list-style:none; padding: 0; margin: 0; display:flex; flex-direction:column; gap: 8px; align-items: stretch; }
+.drawer-nav a { 
+  color: rgba(255,255,255,0.92); 
+  font-size: 1.05rem; 
+  font-weight: 600;
+  padding: 14px 18px; 
+  display:block; 
+  border-radius:12px; 
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: all 260ms cubic-bezier(.16,.84,.33,1);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+}
+.drawer-nav li { width: 100%; }
+.drawer-nav a:hover { 
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+  border-color: rgba(255,255,255,0.1);
+  color: #fff;
+  transform: translateX(6px) scale(1.01);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25), 0 0 20px rgba(255,159,0,0.08);
+}
+.drawer-submenu summary { 
+  list-style: none; 
+  cursor: pointer; 
+  font-weight:700; 
+  padding: 14px 18px; 
+  border-radius:12px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: all 260ms cubic-bezier(.16,.84,.33,1);
+  color: rgba(255,255,255,0.92);
+}
+.drawer-submenu summary:hover {
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+  border-color: rgba(255,255,255,0.1);
+  color: #fff;
+  transform: translateX(6px);
+}
+.drawer-submenu[open] summary { 
+  background: linear-gradient(135deg, rgba(255,159,0,0.08), rgba(255,140,0,0.04));
+  border-color: rgba(255,159,0,0.2);
+  color: #fff;
+}
+.drawer-submenu ul { margin-top:8px; padding-left: 12px; display: flex; flex-direction: column; gap: 6px; }
+.drawer-submenu ul li a { 
+  font-size: 0.98rem; 
+  padding: 10px 16px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005));
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-decoration: none;
+}
+.mobile-close {
+  /* let the header's flexbox align this naturally with the logo */
+  position: static;
+  margin-left: 12px;
+  width: 56px;
+  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(8px) saturate(120%);
+  border-radius: 999px;
+  box-shadow: 0 10px 36px rgba(2,6,23,0.48);
+  cursor: pointer;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 180ms cubic-bezier(.16,.84,.33,1), box-shadow 180ms ease, background 180ms ease;
+  z-index: 2; /* keep inside header stacking context */
+  font-size: 28px; /* clear × character */
+  color: #fff;
+  line-height: 1;
+  font-weight: 800;
+}
+.mobile-close:focus {
+  outline: 3px solid rgba(255,159,0,0.16);
+  outline-offset: 6px;
+}
+
+/* Decorative cross pseudo-elements are hidden; rely on the visible character for clarity */
+.mobile-close::before,
+.mobile-close::after { display: none; }
+
+.mobile-close:hover { transform: translateY(-4px) scale(1.04); box-shadow: 0 18px 44px rgba(2,6,23,0.52); }
+.mobile-close:active { transform: translateY(0) scale(.995); }
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-close { transition: none !important; }
+}
+
+/* backdrop visible when drawer open - covers entire website */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  pointer-events: none;
+  transition: background 320ms ease, opacity 320ms ease, backdrop-filter 320ms ease;
+  z-index: 115; /* above navbar (100) and all hero content, below drawer (120) */
+  opacity: 0;
+}
+.drawer-backdrop.open {
+  background: rgba(0,0,0,0.65); /* stronger dark overlay */
+  pointer-events: auto;
+  opacity: 1;
+  /* blur the entire page content behind the backdrop */
+  backdrop-filter: blur(8px) saturate(100%);
+  -webkit-backdrop-filter: blur(8px) saturate(100%);
+}
+
+/* animated gradient sheen on drawer */
+.mobile-drawer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255,159,0,0.03) 0%, rgba(255,255,255,0.06) 30%, transparent 60%, rgba(255,140,0,0.02) 100%);
+  mix-blend-mode: overlay;
+  transform: translateX(-120%);
+  filter: blur(8px);
+  opacity: 0;
+  transition: transform 1200ms cubic-bezier(.16,.84,.33,1), opacity 600ms ease;
+}
+.mobile-drawer.open::before { 
+  transform: translateX(40%); 
+  opacity: 0.6;
+}

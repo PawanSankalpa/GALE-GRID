@@ -1,0 +1,8 @@
+/* Soft white background for all main content except hero */
+.main-content-bg {
+	background: #F8FAFC;
+	min-height: 100vh;
+	width: 100%;
+	position: relative;
+	z-index: 2;
+}

@@ -1,387 +1,642 @@
-/* ================================================== */
-/* Our Work Section - Light and Dark Mode Styles */
-/* ================================================== */
+/* ============================================
+   GLOBAL RESET & BASE
+   ============================================ */
 
-/* ------------------------------------ */
-/* Color Variables (Light Theme - Default) */
-/* ------------------------------------ */
-:root {
-  /* Core Accent Colors - Matching Service Section's Light Theme */
-  --light-accent-teal: #21E0B2; /* Bright Teal */
-  --light-accent-purple: #9A7DFF; /* Soft Pastel Purple */
-  --light-accent-pink: #FF5C76; /* Soft Pastel Pink */
-
-  /* Backgrounds & Text */
-  --light-bg-primary: #FFFFFF; /* Pure white for main background */
-  --light-bg-secondary: #F8F8F8; /* Very light gray for card backgrounds */
-  --light-text-primary: #333333; /* Dark gray for main text */
-  --light-text-secondary: #666666; /* Slightly lighter gray for secondary text */
-  --light-border-color: rgba(0, 0, 0, 0.08); /* Subtle border for elements */
-
-  /* Shadows & Effects */
-  --light-card-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* Lighter, subtle shadow */
-  --light-card-hover-shadow: 0 12px 36px rgba(33, 224, 178, 0.15); /* Teal-tinted shadow on hover */
-  --light-focus-outline: #21E0B2; /* Teal for focus outline */
-
-  /* Button Specifics */
-  --button-bg-color: #34dbc2; /* Blue for primary action */
-  --button-text-color: #ffffff;
-  --button-hover-bg-color: #e9556de7; /* Darker blue on hover */
-  --button-active-bg-color: #24a3a1; /* Even darker blue on active/press */
-  --button-border-color: #34db9548;
-  --button-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle initial shadow */
-  --button-hover-shadow: 0 8px 20px rgba(52, 152, 219, 0.4); /* Glowing blue shadow on hover */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* ------------------------------------ */
-/* Dark Theme Variables */
-/* ------------------------------------ */
-/* Apply when a parent element (e.g., <body> or a wrapper <div>) has the class 'dark' */
-.dark {
-  /* Core Accent Colors - Matching Service Section's Dark Theme */
-  --dark-accent-purple: #6B4E9B; /* Greenish Luxury Purple */
-  --dark-accent-cyan: #26C6DA; /* Rich Cyan */
-  --dark-accent-gold: #D4AF37; /* Antique Gold */
-
-  /* Backgrounds & Text */
-  --light-bg-primary: #1E1E1E; /* Deep dark gray for main background */
-  --light-bg-secondary: #2A2A2A; /* Slightly lighter dark for card backgrounds */
-  --light-text-primary: #E8E8E8; /* Soft off-white for main text */
-  --light-text-secondary: #B0B0B0; /* Muted silver for secondary text */
-  --light-border-color: rgba(107, 78, 155, 0.2); /* Subtle purple border */
-
-  /* Shadows & Effects */
-  --light-card-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); /* Deeper shadow for dark mode */
-  --light-card-hover-shadow: 0 12px 36px rgba(38, 198, 218, 0.25); /* Cyan-tinted shadow on hover */
-  --light-focus-outline: #26C6DA; /* Cyan for focus outline */
-
-  /* Button Specifics */
-  --button-bg-color: #26C6DA; /* Green for primary action in dark mode */
-  --button-text-color: #ffffff;
-  --button-hover-bg-color: #6B4E9B; /* Darker green on hover */
-  --button-active-bg-color: #3d818b73; /* Even darker green on active/press */
-  --button-border-color: #4caaaf0f;
-  --button-shadow: 0 4px 10px rgba(0, 0, 0, 0); /* Subtle initial shadow */
-  --button-hover-shadow: 0 8px 20px rgba(87, 76, 175, 0.089); /* Glowing green shadow on hover */
+.work-page {
+  min-height: 100vh;
+  background: linear-gradient(120deg, #f7f8fa 0%, #eaf1fb 100%);
+  font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  color: #23272f;
+  line-height: 1.7;
+  letter-spacing: -0.01em;
 }
 
-/* ------------------------------------ */
-/* Base Styles for Our Work Section */
-/* ------------------------------------ */
-.ourWorkPage-container {
-    padding: 5rem 8vw; /* Ample vertical padding, responsive horizontal padding */
-    background-color: var(--light-bg-primary);
-    color: var(--light-text-primary);
-    font-family: 'Inter', system-ui, sans-serif;
-    position: relative;
-    overflow: hidden;
-    transition: background-color 0.5s ease, color 0.5s ease; /* Smooth theme transition */
+/* ============================================
+   NAVIGATION (matching homepage)
+   ============================================ */
+
+.work-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e5e5e5;
 }
 
-/* ------------------------------------ */
-/* Header Section */
-/* ------------------------------------ */
-.ourwork-header-container {
-    text-align: center;
-    margin-bottom: 5rem; /* More white space for emphasis */
-    margin-top: -2rem;
+.work-nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.ourwork-header-container h1 {
-    font-size: clamp(2.5rem, 5vw, 3.5rem); /* Larger and more responsive font size */
-    font-weight: 800;
-    margin-bottom: 0.75rem; /* Space between title and description */
-    position: relative;
-    display: inline-block; /* For the underline effect */
-    background: linear-gradient(90deg, var(--light-accent-teal), var(--light-accent-pink));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent; /* Makes gradient visible */
-    transition: background 0.5s ease;
+.work-nav-logo {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #1a1a1a;
 }
 
-.ourwork-header-container h1::after {
-    content: '';
-    position: absolute;
-    bottom: -15px; /* Deeper placement for underline */
-    left: 0;
-    width: 100%;
-    height: 4px; /* Slightly thicker underline */
-    background: linear-gradient(90deg, var(--light-accent-teal), var(--light-accent-purple));
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+.work-nav-links {
+  display: flex;
+  gap: 40px;
 }
 
-.ourwork-header-container h1:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
+.work-nav-links a {
+  text-decoration: none;
+  color: #666;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  position: relative;
 }
 
-.ourwork-header-container p {
-    font-size: 1.15rem; /* Slightly larger for readability */
-    color: var(--light-text-secondary);
-    line-height: 1.6;
-    transition: color 0.3s ease;
-    max-width: 800px; /* Constrain width for better readability */
-    margin-left: auto;
-    margin-right: auto;
+.work-nav-links a:hover,
+.work-nav-links a.active {
+  color: #1a1a1a;
 }
 
-/* Dark theme specific header */
-.dark .ourwork-header-container h1 {
-    background: linear-gradient(90deg, var(--dark-accent-purple), var(--dark-accent-cyan));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+.work-nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #1a1a1a;
 }
 
-.dark .ourwork-header-container h1::after {
-    background: linear-gradient(90deg, var(--dark-accent-purple), var(--dark-accent-cyan));
+.work-nav-cta {
+  padding: 10px 24px;
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.dark .ourwork-header-container p {
-    color: var(--light-text-secondary); /* Using the dark theme's secondary text color */
+.work-nav-cta:hover {
+  background: #000;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* ------------------------------------ */
-/* Project Cards Container (Grid) */
-/* ------------------------------------ */
-.ourWork-cards-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Min width increased for better card size */
-    gap: 2.5rem; /* More spacing between cards */
-    position: relative;
-    z-index: 1; /* Ensures cards are above background overlay */
+/* ============================================
+   HERO SECTION (matching homepage)
+   ============================================ */
+
+.work-hero {
+  padding: 100px 40px 80px;
+  text-align: center;
+  background: linear-gradient(120deg, #f7f8fa 0%, #eaf1fb 100%);
+  border-radius: 0 0 2.5rem 2.5rem;
+  box-shadow: 0 4px 32px 0 rgba(59,130,246,0.04);
 }
 
-/* ------------------------------------ */
-/* Individual Project Card */
-/* ------------------------------------ */
-.ourWorks-projectCard-container {
-    background: var(--light-bg-secondary);
-    border-radius: 16px;
-    padding: 2.5rem 2rem; /* Consistent padding with service cards */
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); /* Smooth hover effects */
-    border: 1px solid var(--light-border-color);
-    box-shadow: var(--light-card-shadow);
-    display: flex; /* For flexible content alignment */
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+.work-hero-container {
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-.ourWorks-projectCard-container:hover {
-    transform: translateY(-8px); /* More pronounced lift on hover */
-    box-shadow: var(--light-card-hover-shadow);
-    border-color: rgba(33, 224, 178, 0.3); /* Teal border on hover */
+.work-hero-badge {
+  display: inline-block;
+  padding: 8px 22px;
+  background: rgba(59,130,246,0.08);
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border-radius: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px 0 rgba(59,130,246,0.04);
 }
 
-/* Dark theme specific card styles */
-.dark .ourWorks-projectCard-container {
-    background: var(--light-bg-secondary);
-    border: 1px solid var(--light-border-color);
-    box-shadow: var(--light-card-shadow);
+.work-hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #23272f;
+  margin-bottom: 20px;
+  letter-spacing: -1.5px;
+  line-height: 1.08;
+  font-family: 'Poppins', 'Inter', sans-serif;
 }
 
-.dark .ourWorks-projectCard-container:hover {
-    box-shadow: var(--light-card-hover-shadow);
-    border-color: rgba(38, 198, 218, 0.3); /* Cyan border on hover */
+.work-hero-subtitle {
+  font-size: 1.25rem;
+  color: #4b5563;
+  font-weight: 400;
+  line-height: 1.7;
+  max-width: 540px;
+  margin: 0 auto;
 }
 
-/* ------------------------------------ */
-/* Project Card Elements */
-/* ------------------------------------ */
-.ourWorks-project-title {
-    font-size: 1.7rem; /* Larger heading */
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    color: var(--light-text-primary);
-    transition: color 0.3s ease, text-shadow 0.3s ease;
+/* ============================================
+   FILTER SECTION
+   ============================================ */
+
+.work-filter-section {
+  padding: 40px 40px 60px;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
 }
 
-.ourWorks-projectCard-container:hover .ourWorks-project-title {
-    color: var(--light-accent-teal); /* Heading changes color on hover */
-    text-shadow: 0 0 8px rgba(33, 224, 178, 0.2);
+.work-filter-wrapper {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-/* Dark theme specific title */
-.dark .ourWorks-project-title {
-    color: var(--light-text-primary);
+.work-filter-pill {
+  padding: 10px 26px;
+  background: rgba(59,130,246,0.07);
+  color: #2563eb;
+  border: 1.5px solid #e0e7ef;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border 0.18s, transform 0.14s;
+  font-family: inherit;
+  box-shadow: 0 1px 6px 0 rgba(59,130,246,0.04);
 }
 
-.dark .ourWorks-projectCard-container:hover .ourWorks-project-title {
-    color: var(--dark-accent-cyan);
-    text-shadow: 0 0 8px rgba(38, 198, 218, 0.3);
+.work-filter-pill:hover {
+  background: #e0f2fe;
+  color: #0ea5e9;
+  border-color: #bae6fd;
+  transform: translateY(-2px) scale(1.04);
 }
 
-.ourWorks-project-description {
-    color: var(--light-text-secondary);
-    line-height: 1.7; /* Increased line-height for readability */
-    font-size: 1rem;
-    flex-grow: 1; /* Allows description to take up available space */
-    margin-bottom: 1.5rem; /* Space before image */
-    transition: color 0.3s ease;
+.work-filter-pill.active {
+  background: linear-gradient(90deg, #3B82F6 0%, #10B981 100%);
+  color: #fff;
+  border-color: #3B82F6;
+  box-shadow: 0 2px 12px 0 rgba(59,130,246,0.10);
 }
 
-.ourWorks-projectCard-container:hover .ourWorks-project-description {
-    color: var(--light-text-primary);
+/* ============================================
+   PROJECTS GRID
+   ============================================ */
+
+.work-projects {
+  padding: 40px 40px 120px;
+  background: none;
 }
 
-/* Dark theme specific description */
-.dark .ourWorks-project-description {
-    color: var(--light-text-secondary);
+.work-projects-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 48px;
 }
 
-.dark .ourWorks-projectCard-container:hover .ourWorks-project-description {
-    color: var(--light-text-primary);
+.work-project-item {
+  opacity: 0;
+  animation: fadeSlideUp 0.7s cubic-bezier(0.4,0,0.2,1) forwards;
+  background: rgba(255,255,255,0.85);
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 32px 0 rgba(59,130,246,0.06);
+  border: 1.5px solid #e0e7ef;
+  transition: box-shadow 0.18s, transform 0.18s;
 }
 
-.ourWorks-project-img {
-    width: 100%;
-    height: 12rem; /* Consistent height for images */
-    object-fit: cover;
-    border-radius: 0.5rem; /* Slightly more rounded corners for images */
-    margin-bottom: 1.5rem; /* Space below image */
-    border: 1px solid var(--light-border-color);
-    transition: border-color 0.3s ease;
+.work-project-item:hover {
+  box-shadow: 0 8px 32px 0 rgba(59,130,246,0.13);
+  transform: translateY(-4px) scale(1.025);
 }
 
-/* Dark theme specific image border */
-.dark .ourWorks-project-img {
-    border-color: var(--light-border-color);
-}
-
-/* ------------------------------------ */
-/* Visit Site Button - MODERN & SMOOTH ANIMATIONS */
-/* ------------------------------------ */
-.ourWork-visitSite-button {
-    display: inline-block;
-    background-color: var(--button-bg-color);
-    color: var(--button-text-color);
-    padding: 0.9rem 2rem; /* Slightly more padding for a better feel */
-    border-radius: 0.5rem; /* More rounded for a modern look */
-    text-decoration: none;
-    font-weight: 700; /* Bolder text for prominence */
-    margin-top: 1rem;
-    border: 2px solid var(--button-border-color);
-    cursor: pointer;
-    position: relative; /* Needed for pseudo-elements */
-    overflow: hidden; /* Ensures inner effects are contained */
-    z-index: 1; /* Ensure button content is above pseudo-elements */
-
-    /* Smooth transitions for all relevant properties */
-    transition:
-        background-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
-        transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
-        box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
-        border-color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
-        color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-
-    box-shadow: var(--button-shadow); /* Initial subtle shadow */
-}
-
-/* Inner overlay effect for smooth hover transition */
-.ourWork-visitSite-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1); /* Subtle white overlay */
-    transform: scaleX(0); /* Start scaled down horizontally */
-    transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    z-index: -1;
-}
-
-.ourWork-visitSite-button:hover {
-    transform: translateY(-5px); /* More noticeable lift on hover */
-    background-color: var(--button-hover-bg-color); /* Background changes */
-    border-color: var(--button-hover-bg-color); /* Border matches */
-    box-shadow: var(--button-hover-shadow); /* Glowing shadow */
-}
-
-.ourWork-visitSite-button:hover::before {
-    transform: scaleX(1); /* Overlay expands */
-}
-
-/* Click/Active State */
-.ourWork-visitSite-button:active {
-    transform: translateY(0); /* Returns to original position */
-    background-color: var(--button-active-bg-color); /* Darker on press */
-    border-color: var(--button-active-bg-color);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* A subtle "pressed in" shadow */
-    transition-duration: 0.1s; /* Faster transition for active state */
-}
-
-/* Focus state for accessibility (keyboard navigation) */
-.ourWork-visitSite-button:focus-visible {
-    outline: 3px solid var(--light-focus-outline);
-    outline-offset: 2px;
-}
-
-
-/* ------------------------------------ */
-/* Responsive Adjustments (Both Themes) */
-/* ------------------------------------ */
-@media (max-width: 992px) {
-  .ourWorkPage-container {
-    padding: 4rem 6vw;
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
   }
-  .ourwork-header-container {
-    margin-bottom: 4rem;
-  }
-  .ourWork-cards-container {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust min-width */
-    gap: 2rem;
-  }
-  .ourWorks-projectCard-container {
-    padding: 2rem;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
+
+.work-project-image-box {
+  margin-bottom: 24px;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  box-shadow: 0 2px 12px 0 rgba(59,130,246,0.06);
+}
+
+.work-project-img {
+  width: 100%;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(120deg, #f7f8fa 0%, #eaf1fb 100%);
+}
+
+.work-project-item:hover .work-project-img {
+  transform: scale(1.04) rotateZ(-0.5deg);
+}
+
+.work-project-hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(59,130,246,0.13);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+  backdrop-filter: blur(2.5px);
+  border-radius: 1.2rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.work-view-text {
+  color: #2563eb;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background: rgba(255,255,255,0.85);
+  padding: 0.7em 1.3em;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px 0 rgba(59,130,246,0.08);
+}
+
+.work-project-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 0 1.2rem 1.2rem 1.2rem;
+}
+
+.work-project-name {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #23272f;
+  letter-spacing: -0.5px;
+  font-family: 'Poppins', 'Inter', sans-serif;
+}
+
+.work-project-year {
+  font-size: 0.98rem;
+  color: #7b8794;
+  font-weight: 600;
+}
+
+.work-project-desc {
+  font-size: 1.08rem;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+.work-project-tags-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.work-project-tag {
+  padding: 6px 16px;
+  background: rgba(16,185,129,0.08);
+  color: #10b981;
+  font-size: 0.98rem;
+  font-weight: 600;
+  border-radius: 999px;
+  letter-spacing: 0.01em;
+}
+
+/* ============================================
+   CTA SECTION (matching homepage)
+   ============================================ */
+
+.work-cta {
+  padding: 100px 40px 90px;
+  background: #f7f8fa;
+  text-align: center;
+  border-radius: 2.5rem;
+  box-shadow: 0 4px 32px 0 rgba(59,130,246,0.04);
+  margin-top: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.work-cta::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 420px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(255,107,0,0.10) 0%, rgba(255,255,255,0) 80%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.work-cta::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  right: 10%;
+  width: 220px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(59,130,246,0.10) 0%, rgba(255,255,255,0) 80%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.work-cta-container {
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.work-cta-heading {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #23272f;
+  margin-bottom: 20px;
+  letter-spacing: -1.2px;
+  font-family: 'Poppins', 'Inter', sans-serif;
+}
+
+.work-cta-text {
+  font-size: 1.18rem;
+  color: #4b5563;
+  margin-bottom: 40px;
+  line-height: 1.7;
+}
+
+.work-cta-btn {
+  padding: 1.1em 2.5em;
+  background: #FF6B00;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-size: 1.08rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s, transform 0.14s;
+  font-family: inherit;
+  box-shadow: 0 2px 12px 0 rgba(255,107,0,0.13);
+  letter-spacing: 0.01em;
+}
+
+.work-cta-btn:hover, .work-cta-btn:focus {
+  background: #2563EB;
+  box-shadow: 0 4px 18px 0 rgba(59,130,246,0.16);
+  transform: translateY(-1px) scale(1.025);
+}
+
+/* ============================================
+   FOOTER (matching homepage)
+   ============================================ */
+
+.work-footer {
+  background: #1a1a1a;
+  color: white;
+  padding: 80px 40px 40px;
+}
+
+.work-footer-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.work-footer-main {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 80px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.work-footer-brand h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.work-footer-brand p {
+  color: #999;
+  font-size: 15px;
+}
+
+.work-footer-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.work-footer-col h4 {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.work-footer-col a {
+  display: block;
+  color: #999;
+  text-decoration: none;
+  font-size: 14px;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.work-footer-col a:hover {
+  color: white;
+}
+
+.work-footer-bottom {
+  padding-top: 30px;
+  text-align: center;
+}
+
+.work-footer-bottom p {
+  color: #666;
+  font-size: 14px;
+}
+
+/* ============================================
+   TABLET RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .work-nav-container {
+    padding: 16px 30px;
+  }
+
+  .work-hero {
+    padding: 80px 30px 60px;
+  }
+
+  .work-hero-title {
+    font-size: 48px;
+  }
+
+  .work-hero-subtitle {
+    font-size: 18px;
+  }
+
+  .work-projects-container {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 50px;
+  }
+
+  .work-project-img {
+    height: 350px;
+  }
+
+  .work-cta-heading {
+    font-size: 40px;
+  }
+
+  .work-footer-main {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
 
 @media (max-width: 768px) {
-  .ourWorkPage-container {
-    padding: 3rem 5vw;
+  .work-nav-container {
+    padding: 16px 20px;
   }
-  .ourwork-header-container h1 {
-    font-size: clamp(2rem, 6vw, 2.8rem);
-    margin-bottom: 3rem;
+
+  .work-nav-links {
+    display: none;
   }
-  .ourWork-cards-container {
-    grid-template-columns: 1fr; /* Single column on tablets and mobiles */
-    max-width: 400px; /* Constrain width for single column */
-    margin: 0 auto; /* Center the single column */
+
+  .work-hero {
+    padding: 60px 20px 50px;
   }
-  .ourWorks-projectCard-container {
-    padding: 1.5rem;
+
+  .work-hero-title {
+    font-size: 36px;
   }
-  .ourWorks-project-title {
-    font-size: 1.4rem;
+
+  .work-hero-subtitle {
+    font-size: 16px;
   }
-  .ourWorks-project-description {
-    font-size: 0.95rem;
+
+  .work-filter-section {
+    padding: 30px 20px 40px;
   }
-  .ourWorks-project-img {
-    height: 10rem; /* Smaller image height on smaller screens */
+
+  .work-filter-wrapper {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding-bottom: 10px;
+  }
+
+  .work-filter-pill {
+    white-space: nowrap;
+    font-size: 13px;
+    padding: 8px 20px;
+  }
+
+  .work-projects {
+    padding: 30px 20px 80px;
+  }
+
+  .work-projects-container {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .work-project-img {
+    height: 280px;
+  }
+
+  .work-project-name {
+    font-size: 24px;
+  }
+
+  .work-project-desc {
+    font-size: 15px;
+  }
+
+  .work-cta {
+    padding: 80px 20px;
+  }
+
+  .work-cta-heading {
+    font-size: 32px;
+  }
+
+  .work-cta-text {
+    font-size: 16px;
+  }
+
+  .work-cta-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .work-footer {
+    padding: 60px 20px 30px;
+  }
+
+  .work-footer-main {
+    gap: 40px;
+  }
+
+  .work-footer-links {
+    grid-template-columns: 1fr;
+    gap: 30px;
   }
 }
 
-@media (max-width: 480px) {
-  .ourWorkPage-container {
-    padding: 2.5rem 4vw;
+/* ============================================
+   LARGE DESKTOP
+   ============================================ */
+
+@media (min-width: 1600px) {
+  .work-hero-title {
+    font-size: 72px;
   }
-  .ourwork-header-container h1 {
-    font-size: clamp(1.8rem, 7vw, 2.5rem);
-    margin-bottom: 2.5rem;
+
+  .work-projects-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 80px;
   }
-  .ourWorks-projectCard-container {
-    padding: 1.2rem;
-  }
-  .ourWork-visitSite-button {
-      padding: 0.8rem 1.5rem; /* Adjust button padding for smaller screens */
-      font-size: 0.9rem;
+
+  .work-project-img {
+    height: 450px;
   }
 }

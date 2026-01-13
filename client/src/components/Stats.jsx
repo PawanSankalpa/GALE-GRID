@@ -1,153 +1,121 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import modernHouse from "../assets/portfolioPics/bwink_edu_05_single_05.jpg";
+import modernHouse from "../assets/statsPics/mahmudul-hasan-LIVNlRn1a0s-unsplash.jpg";
 import "./styles/Stats.css";
 
 const Stats = () => {
-  const metrics = [
-    { value: 12, title: "Websites launched", sub: "for small businesses building a strong digital presence and attracting more customers online" },
-    { value: 15, title: "Active projects", sub: "currently in design and build, focused on performance, usability, and modern UI" },
-    { value: 22, title: "Clients supported", sub: "with ongoing improvements, updates, and optimization to support continuous growth" },
-  ];
-
-  const [expandedIndex, setExpandedIndex] = useState(null);
-  const [displayValues, setDisplayValues] = useState(metrics.map(() => 0));
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const sectionRef = useRef(null);
   const introRef = useRef(null);
-  const rafRef = useRef(null);
-  const startTimeRef = useRef(null);
-  const [introInView, setIntroInView] = useState(false);
+  const gridRef = useRef(null);
+  const [inView, setInView] = useState(false);
+  const [gridInView, setGridInView] = useState(false);
 
-  const toggleMetric = (idx) => setExpandedIndex((p) => (p === idx ? null : idx));
-  const onRowKeyDown = (e, idx) => {
-    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleMetric(idx); }
-  };
-
-  // Easing function for smooth counter animations
-  const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
-
-  // One-time count-up animation when section enters viewport
   useEffect(() => {
-    const node = sectionRef.current;
-    if (!node || hasAnimated) return;
-
-    const animationDuration = 1800; // 1.8 seconds for smooth count-up
-
-    // RAF animation loop for counting from 0 to target
-    const animate = (currentTime) => {
-      if (!startTimeRef.current) {
-        startTimeRef.current = currentTime;
-      }
-
-      const elapsed = currentTime - startTimeRef.current;
-      const progress = Math.min(elapsed / animationDuration, 1);
-      const easedProgress = easeOutCubic(progress);
-
-      const newValues = metrics.map((m) => 
-        Math.round(Number(m.value) * easedProgress)
-      );
-      setDisplayValues(newValues);
-
-      if (progress < 1) {
-        rafRef.current = requestAnimationFrame(animate);
-      } else {
-        // Animation complete - set final values and mark as done
-        setDisplayValues(metrics.map((m) => Number(m.value)));
-        setHasAnimated(true);
-        startTimeRef.current = null;
-      }
-    };
-
-    // Intersection observer to trigger animation when visible
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated) {
-          rafRef.current = requestAnimationFrame(animate);
-        }
-      },
-      { threshold: 0.3 } // Trigger when 30% visible
-    );
-
-    observer.observe(node);
-
-    return () => {
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
-      observer.disconnect();
-    };
-  }, [hasAnimated]);
-
-  // Match IntroText transition (no delay)
-  useEffect(() => {
-    const node = introRef.current;
-    if (!node) return;
+    const el = introRef.current;
+    if (!el) return;
 
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIntroInView(true);
+          setInView(true);
           io.disconnect();
         }
       },
       { rootMargin: "0px 0px -20% 0px", threshold: 0.25 }
     );
-
-    io.observe(node);
+    io.observe(el);
     return () => io.disconnect();
   }, []);
 
+  useEffect(() => {
+    const el = gridRef.current;
+    if (!el) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setGridInView(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -15% 0px", threshold: 0.2 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const metrics = [
+    {
+      title: "Built-In CRM",
+      sub: (
+        <>
+          Manage leads, customers, and follow-ups directly from your website. 
+          <strong> No extra tools needed.</strong>
+        </>
+      ),
+    },
+    {
+      title: "You Get Full Control",
+      sub: (
+        <>
+          Admin access, client data, dashboards, and tools you can actually 
+          <strong> use and manage.</strong>
+        </>
+      ),
+    },
+    {
+      title: "We Set It Up and Keep It Running",
+      sub: (
+        <>
+          Website setup, hosting, security, updates, and fixes 
+          <strong> handled by us.</strong>
+        </>
+      ),
+    },
+  ];
+
   return (
-    <section className="stats-section" id="stats" ref={sectionRef}>
+    <section className="stats-section" id="stats">
       <div className="stats-intro" ref={introRef}>
-        <h2 className={`stats-intro-title stats-center-split ${introInView ? "in-view" : ""}`}>
-          We Build Websites That Bring Customers
+        <h2 className={`stats-intro-title center-split ${inView ? "in-view" : ""}`}>
+          More than just design
         </h2>
-        <p className={`stats-intro-sub stats-fade-up ${introInView ? "in-view" : ""}`}>
-          Easy to use. Easy to understand.
+        <p className={`stats-intro-sub fade-delay ${inView ? "in-view" : ""}`}>
+          We build complete websites 
           <br />
-          Made to turn visitors into customers.
+          with the systems your business needs to run smoothly.
         </p>
       </div>
-      <div className="stats-grid">
-        <figure className="stats-image left">
-          <img src={modernHouse} alt="Modern house portfolio preview" />
+
+      <div className="stats-grid" ref={gridRef}>
+        <figure className={`stats-image fade-in-left ${gridInView ? "in-view" : ""}`}>
+          <img
+            src={modernHouse}
+            alt="Professional web design showcase"
+            loading="lazy"
+          />
         </figure>
 
-        <div className="stats-right">
+        <div className={`stats-right fade-in-right ${gridInView ? "in-view" : ""}`}>
           <div className="stats-image-bg">
-            <img src={modernHouse} alt="Modern house portfolio background" />
+            <img
+              src={modernHouse}
+              alt="Website performance and results"
+              loading="lazy"
+            />
             <div className="stats-overlay" />
           </div>
+
           <div className="stats-content">
-            <div className="stats-metrics">
-              {metrics.map((m, idx) => (
-                <div
-                  className={`metric-row${expandedIndex === idx ? " expanded" : ""}`}
-                  key={idx}
-                  role="button"
-                  tabIndex={0}
-                  aria-expanded={expandedIndex === idx}
-                  aria-controls={`metric-sub-${idx}`}
-                  onClick={() => toggleMetric(idx)}
-                  onKeyDown={(e) => onRowKeyDown(e, idx)}
-                >
-                  <div className="metric-number">{displayValues[idx]}</div>
-                  <div className="metric-text">
-                    <div className="metric-title">
-                      {m.title}
-                      <span className="metric-chevron" aria-hidden="true">▼</span>
-                    </div>
-                    <div className="metric-sub" id={`metric-sub-${idx}`}>{m.sub}</div>
-                  </div>
-                </div>
+            <ul className="stats-metrics">
+              {metrics.map((m, i) => (
+                <li key={i}>
+                  <h3 className="metric-title">{m.title}</h3>
+                  <p className="metric-sub">{m.sub}</p>
+                </li>
               ))}
-            </div>
-            <p className="stats-copy">
-              We blend modern aesthetics with performance-focused builds. See how our sites turn visits into leads and help businesses grow.
-            </p>
-            <Link className="stats-cta" to="/ourWork" aria-label="View our full projects">
+            </ul>
+
+            <Link className="stats-cta" to="/ourWork">
               View Our Projects <span className="arrow">→</span>
             </Link>
           </div>

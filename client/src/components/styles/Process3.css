@@ -1,0 +1,752 @@
+/* ========================================
+   PROCESS SECTION - ROOT VARIABLES
+   ======================================== */
+:root {
+  /* Matching FloatingShowcase Colors */
+  --process-bg: #f7f8fa;
+  --process-glass-bg: rgb(253, 253, 253);
+  --process-glass-border: rgba(232, 232, 232, 0.703);
+  --process-glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --process-text-primary: #111827;
+  --process-text-secondary: #4B5563;
+  --process-text-tertiary: #6B7280;
+  --process-accent: #FF6B00;
+  --process-accent-light: rgba(255, 107, 0, 0.1);
+  --process-accent-glow: rgba(255, 107, 0, 0.15);
+  
+  /* Secondary Accents */
+  --electric-blue: #3B82F6;
+  --electric-blue-light: rgba(59, 130, 246, 0.1);
+  --emerald: #10B981;
+  --emerald-light: rgba(16, 185, 129, 0.1);
+  --purple: #8B5CF6;
+  --purple-light: rgba(139, 92, 246, 0.1);
+  
+  /* Glass Effect */
+  --glass-backdrop: blur(20px);
+  --glass-shine: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 50%);
+  
+  /* Transitions */
+  --transition-smooth: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-elastic: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ========================================
+   PROCESS SECTION - MAIN CONTAINER
+   ======================================== */
+.process-section {
+  width: 100%;
+  padding-top: 120px;
+  padding-bottom: 120px;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle background effects */
+.process-section::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  right: -5%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.04) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.process-section::after {
+  content: '';
+  position: absolute;
+  bottom: 10%;
+  left: -5%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(255, 107, 0, 0.04) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ========================================
+   SECTION HEADER
+   ======================================== */
+.process-header {
+  text-align: center;
+  margin-bottom: 80px;
+  position: relative;
+  z-index: 1;
+}
+
+.process-eyebrow {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--process-accent);
+  background: rgba(255, 107, 0, 0.08);
+  padding: 8px 20px;
+  border-radius: 24px;
+  margin-bottom: 20px;
+  transition: var(--transition-smooth);
+}
+
+.process-eyebrow:hover {
+  background: rgba(255, 107, 0, 0.12);
+  transform: translateY(-1px);
+}
+
+.process-title {
+  margin: 0 0 clamp(12px, 2vw, 20px);
+  font-size: clamp(1rem, 2.2vw, 1.35rem)!important;
+  line-height: 1.5;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color:#1f2933;
+}
+
+.process-subtitle {
+  margin: 0;
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  line-height: 1.6;
+  color: #6b7280;
+  max-width: 46rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ========================================
+   PROCESS STEPS CONTAINER
+   ======================================== */
+.process-steps-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2vw;
+  margin-bottom: 80px;
+  position: relative;
+  z-index: 1;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+/* ========================================
+   PROCESS STEP CARD - GLASS EFFECT
+   ======================================== */
+.process-step-card {
+  background: var(--process-glass-bg);
+  backdrop-filter: var(--glass-backdrop);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  border: 1px solid var(--process-glass-border);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-width: 100%;
+  /* Remove fixed width, let grid control sizing */
+}
+
+/* Glass shine effect */
+.process-step-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--glass-shine);
+  pointer-events: none;
+  transition: var(--transition-smooth);
+  z-index: 1;
+}
+
+.process-step-card:hover::before {
+  left: 100%;
+}
+
+.process-step-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+  border-color: var(--step-color, var(--process-accent));
+}
+
+/* ========================================
+   CARD HEADER - IMAGE SECTION
+   ======================================== */
+.process-card-header {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+
+.process-image-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.process-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition-smooth);
+}
+
+.process-step-card:hover .process-image {
+  transform: scale(1.05);
+}
+
+/* Image Overlay with Icon */
+.process-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: var(--transition-smooth);
+}
+
+.process-step-card:hover .process-image-overlay {
+  opacity: 1;
+}
+
+.process-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--step-color, var(--process-accent));
+  transform: scale(0.8);
+  transition: var(--transition-elastic);
+}
+
+.process-step-card:hover .process-icon-wrapper {
+  transform: scale(1);
+}
+
+/* ========================================
+   CARD CONTENT
+   ======================================== */
+.process-card-content {
+  padding: 28px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Step Header */
+.process-step-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.process-step-number {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--step-color, var(--process-accent));
+  line-height: 1;
+}
+
+.process-step-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--process-text-tertiary);
+}
+
+/* Card Title */
+.process-card-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--process-text-primary);
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+}
+
+/* Card Description */
+.process-card-description {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--process-text-secondary);
+  margin: 0 0 20px 0;
+  flex: 1;
+}
+
+/* Learn More Link */
+.process-learn-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--step-color, var(--process-accent));
+  text-decoration: none;
+  transition: var(--transition-smooth);
+  width: fit-content;
+}
+
+.process-learn-more:hover {
+  gap: 10px;
+}
+
+.process-learn-more svg {
+  transition: var(--transition-smooth);
+}
+
+.process-learn-more:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* ========================================
+   CONNECTING LINE BETWEEN CARDS
+   ======================================== */
+.process-connector-line {
+  position: absolute;
+  top: 50%;
+  right: -16px;
+  width: 32px;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    var(--step-color, var(--process-accent)) 0%,
+    transparent 100%
+  );
+  opacity: 0.3;
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+.connector-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--step-color, var(--process-accent));
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.connector-dot-start {
+  left: 0;
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+.connector-dot-end {
+  right: 0;
+  animation: dotPulse 2s ease-in-out infinite 1s;
+}
+
+@keyframes dotPulse {
+  0%, 100% {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-50%) scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+/* ========================================
+   BOTTOM CTA SECTION
+   ======================================== */
+.process-bottom-cta {
+  text-align: center;
+  padding: 48px 32px;
+  background: var(--process-glass-bg);
+  backdrop-filter: var(--glass-backdrop);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  border: 1px solid var(--process-glass-border);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.process-bottom-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--glass-shine);
+  pointer-events: none;
+  transition: var(--transition-smooth);
+}
+
+.process-bottom-cta:hover::before {
+  left: 100%;
+}
+
+.process-cta-text {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--process-text-primary);
+  margin: 0 0 24px 0;
+}
+
+.process-cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  background: var(--process-accent);
+  color: #FFFFFF;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 16px var(--process-accent-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+.process-cta-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.process-cta-button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.process-cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--process-accent-glow);
+}
+
+.process-cta-button svg {
+  transition: var(--transition-smooth);
+}
+
+.process-cta-button:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* ========================================
+   RESPONSIVE - LARGE DESKTOP
+   ======================================== */
+@media (max-width: 1600px) {
+  .process-section {
+    padding: 100px 12%;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - DESKTOP
+   ======================================== */
+@media (max-width: 1440px) {
+  .process-section {
+    padding: 100px 10%;
+  }
+  
+  .process-title {
+    font-size: 42px;
+  }
+  
+  .process-steps-container {
+    gap: 28px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - LAPTOP
+   ======================================== */
+@media (max-width: 1280px) {
+  .process-section {
+    padding: 90px 8%;
+  }
+  
+  .process-steps-container {
+    gap: 24px;
+  }
+  
+  .process-card-content {
+    padding: 24px 20px 28px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - TABLET
+   ======================================== */
+@media (max-width: 1024px) {
+  .process-section {
+    padding: 80px 5%;
+  }
+  
+  .process-header {
+    margin-bottom: 60px;
+  }
+  
+  .process-title {
+    font-size: 38px;
+  }
+  
+  .process-subtitle {
+    font-size: 17px;
+  }
+  
+  .process-steps-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    margin-bottom: 60px;
+  }
+  
+  .process-connector-line {
+    display: none;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - MOBILE LANDSCAPE
+   ======================================== */
+@media (max-width: 768px) {
+  .process-section {
+    padding: 70px 4%;
+  }
+  
+  .process-header {
+    margin-bottom: 50px;
+  }
+  
+  .process-title {
+    font-size: 34px;
+  }
+  
+  .process-subtitle {
+    font-size: 16px;
+  }
+  
+  .process-steps-container {
+    gap: 24px;
+  }
+  
+  .process-card-title {
+    font-size: 20px;
+  }
+  
+  .process-card-description {
+    font-size: 14px;
+  }
+  
+  .process-cta-text {
+    font-size: 18px;
+  }
+  
+  .process-cta-button {
+    padding: 14px 28px;
+    font-size: 15px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - MOBILE PORTRAIT
+   ======================================== */
+@media (max-width: 640px) {
+  .process-section {
+    padding: 60px 5%;
+  }
+  
+  .process-steps-container {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .process-title {
+    font-size: 30px;
+  }
+  
+  .process-subtitle {
+    font-size: 15px;
+  }
+  
+  .process-step-number {
+    font-size: 24px;
+  }
+  
+  .process-step-label {
+    font-size: 11px;
+  }
+  
+  .process-card-title {
+    font-size: 19px;
+  }
+  
+  .process-card-description {
+    font-size: 14px;
+  }
+  
+  .process-bottom-cta {
+    padding: 36px 24px;
+  }
+  
+  .process-cta-text {
+    font-size: 17px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - SMALL MOBILE
+   ======================================== */
+@media (max-width: 480px) {
+  .process-section {
+    padding: 50px 4%;
+  }
+  
+  .process-header {
+    margin-bottom: 40px;
+  }
+  
+  .process-eyebrow {
+    font-size: 12px;
+    padding: 6px 16px;
+  }
+  
+  .process-title {
+    font-size: 26px;
+  }
+  
+  .process-subtitle {
+    font-size: 14px;
+  }
+  
+  .process-card-content {
+    padding: 20px 18px 24px;
+  }
+  
+  .process-step-number {
+    font-size: 22px;
+  }
+  
+  .process-card-title {
+    font-size: 18px;
+  }
+  
+  .process-card-description {
+    font-size: 13px;
+  }
+  
+  .process-icon-wrapper {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .process-icon-wrapper svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .process-bottom-cta {
+    padding: 32px 20px;
+  }
+  
+  .process-cta-text {
+    font-size: 16px;
+  }
+  
+  .process-cta-button {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - EXTRA LARGE SCREENS
+   ======================================== */
+@media (min-width: 1920px) {
+  .process-section {
+    padding: 140px 15%;
+  }
+  
+  .process-title {
+    font-size: 54px;
+  }
+  
+  .process-subtitle {
+    font-size: 20px;
+  }
+  
+  .process-steps-container {
+    gap: 40px;
+  }
+  
+  .process-card-content {
+    padding: 32px 28px 36px;
+  }
+  
+  .process-card-title {
+    font-size: 24px;
+  }
+  
+  .process-card-description {
+    font-size: 16px;
+  }
+  
+  .process-cta-text {
+    font-size: 22px;
+  }
+  
+  .process-cta-button {
+    padding: 18px 36px;
+    font-size: 17px;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY & REDUCED MOTION
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .process-step-card:hover {
+    transform: none;
+  }
+  
+  .process-cta-button:hover {
+    transform: none;
+  }
+}
+
+/* Focus States for Accessibility */
+.process-learn-more:focus-visible,
+.process-cta-button:focus-visible {
+  outline: 3px solid var(--process-accent);
+  outline-offset: 3px;
+}

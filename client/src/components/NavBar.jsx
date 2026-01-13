@@ -1,83 +1,146 @@
-// import React, { useState, useEffect } from "react";
-// import { NavLink } from "react-router-dom";
-// import "./styles/NavBar.css";
-// import ThemeToggle from "./ThemeToggle";
-// import axios from "axios"; // Make sure you have axios installed: npm install axios
-// import { useContext } from "react";
-// import { AuthContext } from "../AuthContext";
+import React, { useEffect, useRef, useState } from 'react';
+import { Link } from "react-router-dom";
+import './styles/NavBar.css';
 
-// function NavBar() {
-//   const [isActive, setIsActive] = useState(false);
 
-//   const { loggedIn, username } = useContext(AuthContext);
-//   const { setLoggedIn, setUsername } = useContext(AuthContext);
+const NavBar = () => {
+	const [menuOpen, setMenuOpen] = useState(false);
+	const hamburgerRef = useRef(null);
+	const mobileNavRef = useRef(null);
 
-//   const closeMenu = () => setIsActive(false);
+	useEffect(() => {
+		const onKey = (e) => {
+			if (e.key === 'Escape') setMenuOpen(false);
+		};
 
-//   const handleMenuKeyDown = (event) => {
-//     if (event.key === "Enter" || event.key === " ") {
-//       event.preventDefault();
-//       setIsActive(!isActive);
-//     }
-//   };
+		if (menuOpen) {
+			document.addEventListener('keydown', onKey);
+			const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+			if (scrollbarWidth > 0) {
+				document.body.style.paddingRight = `${scrollbarWidth}px`;
+			}
+			document.body.style.overflow = 'hidden';
+			setTimeout(() => {
+				const first = mobileNavRef.current && mobileNavRef.current.querySelector('a');
+				if (first) first.focus();
+			}, 0);
+		} else {
+			document.body.style.overflow = '';
+			document.body.style.paddingRight = '';
+			if (hamburgerRef.current) hamburgerRef.current.focus();
+		}
 
-//   const handleLogout = async () => {
-//     try {
-//       await axios.post("https://gale-grid-1.onrender.com/logout/logout", {}, { withCredentials: true }); //https://gale-grid-1.onrender.com/logout
-//       setLoggedIn(null);
-//       setUsername("");
-//     } catch (error) {
-//       console.error("Logout failed", error);
-//     }
-//   };
+		return () => {
+			document.removeEventListener('keydown', onKey);
+			document.body.style.overflow = '';
+			document.body.style.paddingRight = '';
+		};
+	}, [menuOpen]);
 
-//   return (
-//     <nav className="navbar" aria-label="Primary navigation">
-//       <div className="logo">
-//         <NavLink to="/" onClick={closeMenu}>
-//           <img src="/images/logo5.png" alt="GaleGrid logo" />
-//         </NavLink>
-//       </div>
+	useEffect(() => {
+		const closeIfDesktop = () => {
+			if (window.innerWidth > 768 && menuOpen) {
+				setMenuOpen(false);
+			}
+		};
 
-//       <div
-//         className={`menu-toggle ${isActive ? "active" : ""}`}
-//         onClick={() => setIsActive(!isActive)}
-//         onKeyDown={handleMenuKeyDown}
-//         aria-label="Toggle navigation menu"
-//         role="button"
-//         tabIndex={0}
-//       >
-//         <span></span>
-//         <span></span>
-//         <span></span>
-//       </div>
+		closeIfDesktop();
+		window.addEventListener('resize', closeIfDesktop);
+		return () => window.removeEventListener('resize', closeIfDesktop);
+	}, [menuOpen]);
 
-//       <ul className={`nav-links ${isActive ? "active" : ""}`}>
-//         <li>
-//           <NavLink to="/" onClick={closeMenu}>
-//             Home
-//           </NavLink>
-//         </li>
-//         <li>
-//           <NavLink to="/services" onClick={closeMenu}>
-//             Services
-//           </NavLink>
-//         </li>
-//         <li>
-//           <NavLink to="/ourWork" onClick={closeMenu}>
-//             Portfolio
-//           </NavLink>
-//         </li>
-//         <li>
-//           <NavLink to="/team" onClick={closeMenu}>
-//             Our Team
-//           </NavLink>
-//         </li>
-//         <li>
-//           <NavLink to="/contact" onClick={closeMenu}>
-//             Contact
-//           </NavLink>
-//         </li>
+	return (
+		<nav className="navbar sticky">
+			{/* <Link to="/" style={{ color: 'var(--navbar-text-primary)', textDecoration: 'none' }}><div className="logo">GG</div></Link> */}
+
+			{/* Desktop Nav */}
+			<div className="nav-links desktop-only">
+				<Link to="/">Home</Link>
+				<Link to="/services">Services</Link>
+				<Link to="/pricing">Pricing</Link>
+				<Link to="/ourWork">Work</Link>
+				<Link to="/Team">Team</Link>
+				<Link to="/contact" className="nav-cta">Let's Talk</Link>
+			</div>
+
+			<button
+				ref={hamburgerRef}
+				className={`hamburger mobile-only ${menuOpen ? 'open' : ''}`}
+				aria-expanded={menuOpen}
+				aria-controls="mobileNav"
+				aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+				onClick={() => setMenuOpen(prev => !prev)}
+			>
+				<span />
+				<span />
+				<span />
+			</button>
+
+			{/* Mobile Drawer */}
+			<div
+				id="mobileNav"
+				ref={mobileNavRef}
+				className={`mobile-drawer ${menuOpen ? 'open' : ''}`}
+				aria-hidden={!menuOpen}
+				role="dialog"
+			>
+				<div className="drawer-header">
+					<div className="logo">GG</div>
+					<button
+						className="mobile-close"
+						onClick={() => setMenuOpen(false)}
+						aria-label="Close menu"
+					>
+						×
+					</button>
+				</div>
+
+				<nav className="drawer-nav">
+					<ul>
+						<li><a href="#services" onClick={() => setMenuOpen(false)}>Home</a></li>
+						<li><a href="#services" onClick={() => setMenuOpen(false)}>About</a></li>
+
+						<li>
+							<details className="drawer-submenu">
+								<summary>Services</summary>
+								<ul>
+									<li><a href="#web" onClick={() => setMenuOpen(false)}>Web Design</a></li>
+									<li><a href="#ecom" onClick={() => setMenuOpen(false)}>E-commerce</a></li>
+									<li><a href="#branding" onClick={() => setMenuOpen(false)}>Branding</a></li>
+								</ul>
+							</details>
+						</li>
+
+						<li><a href="#services" onClick={() => setMenuOpen(false)}>Projects</a></li>
+						<li><a href="#portfolio" onClick={() => setMenuOpen(false)}>Team</a></li>
+						<li><a href="#portfolio" onClick={() => setMenuOpen(false)}>Reviews</a></li>
+
+						{/* Pricing route in mobile */}
+						<li>
+							<Link to="/pricing" onClick={() => setMenuOpen(false)}>
+								Pricing
+							</Link>
+						</li>
+
+						<li>
+							<a href="#contact" className="nav-cta" onClick={() => setMenuOpen(false)}>
+								Let's Talk
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+
+			<div
+				className={`drawer-backdrop ${menuOpen ? 'open' : ''}`}
+				onClick={() => setMenuOpen(false)}
+				aria-hidden={!menuOpen}
+			/>
+		</nav>
+	);
+};
+
+export default NavBar;
 //         <li>
 //           <NavLink to="/dashboard" onClick={closeMenu}>
 //             Dashboard

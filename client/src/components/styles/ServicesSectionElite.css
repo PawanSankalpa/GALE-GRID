@@ -1,0 +1,200 @@
+/* Elite Editorial Split-Grid for Services Section */
+:root {
+  --paper-white: #F9F9FB;
+  --deep-charcoal: #0F1113;
+  --muted-grey: #636366;
+  --brand-orange: #FF6B00;
+  --divider: rgba(0,0,0,0.10);
+  --divider-active: rgba(255,107,0,0.20);
+}
+
+.services-elite-section {
+  display: flex;
+  align-items: flex-start;
+  background: var(--paper-white);
+  min-height: 100vh;
+  padding: 0 0 80px 0;
+}
+
+.services-elite-left {
+  width: 40%;
+  min-width: 320px;
+  max-width: 480px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 0 60px 0;
+  z-index: 2;
+}
+
+.services-elite-title {
+  font-size: clamp(2.8rem, 6vw, 5.2rem);
+  font-weight: 900;
+  color: var(--deep-charcoal);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0 0 0 48px;
+  text-transform: uppercase;
+}
+
+.services-elite-right {
+  width: 60%;
+  padding: 0 0 0 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.elite-service-tile {
+  background: var(--paper-white);
+  border-bottom: 0.5px solid var(--divider);
+  min-height: 120px;
+  height: 120px;
+  overflow: hidden;
+  position: relative;
+  transition: height 0.7s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  will-change: height, border-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.elite-service-tile.active {
+  height: 350px;
+  border-bottom: 0.5px solid var(--divider-active);
+  z-index: 1;
+}
+
+.elite-service-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 32px 40px 0 40px;
+  height: 88px;
+}
+
+.elite-service-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--deep-charcoal);
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.elite-service-index {
+  font-size: 1.1rem;
+  font-family: 'Menlo', 'Consolas', monospace;
+  color: var(--brand-orange);
+  font-weight: 700;
+  margin-left: 16px;
+  opacity: 0.92;
+  text-shadow: 0 0 8px rgba(255,107,0,0.18);
+  transition: text-shadow 0.3s, color 0.3s;
+}
+
+.elite-service-tile.active .elite-service-index {
+  color: var(--brand-orange);
+  text-shadow: 0 0 16px rgba(255,107,0,0.32);
+}
+
+.elite-service-details {
+  opacity: 0;
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.8fr;
+  gap: 0 32px;
+  align-items: flex-start;
+  padding: 0 40px 0 40px;
+  margin-top: 32px;
+  transition: opacity 0.5s 0.1s;
+}
+
+.elite-service-tile.active .elite-service-details {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.elite-service-specs {
+  font-family: 'Menlo', 'Consolas', monospace;
+  font-size: 12px;
+  color: var(--muted-grey);
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  margin: 0;
+  padding: 0;
+  list-style: disc inside;
+}
+
+.elite-service-result {
+  font-size: 1.02rem;
+  color: var(--deep-charcoal);
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 0;
+  letter-spacing: -0.01em;
+}
+
+.elite-service-cta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.elite-service-button {
+  display: none;
+  background: var(--brand-orange);
+  color: #fff;
+  font-size: 0.98rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 18px;
+  padding: 10px 28px;
+  margin-top: 12px;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  box-shadow: none;
+  transition: background 0.2s;
+}
+
+.elite-service-tile.active .elite-service-button {
+  display: inline-block;
+}
+
+.elite-service-ghost {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .services-elite-section {
+    flex-direction: column;
+  }
+  .services-elite-left, .services-elite-right {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 0 24px;
+    position: static;
+    height: auto;
+  }
+  .services-elite-title {
+    margin: 32px 0 24px 0;
+    font-size: 2.2rem;
+    text-align: left;
+  }
+  .elite-service-header, .elite-service-details {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}

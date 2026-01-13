@@ -1,0 +1,193 @@
+/* Kinetic Bento Grid for Services Section */
+:root {
+  --paper-white: #F9F9FB;
+  --deep-charcoal: #0F1113;
+  --muted-grey: #636366;
+  --brand-orange: #FF6B00;
+  --bento-border: rgba(0,0,0,0.10);
+  --bento-border-active: rgba(255,107,0,0.20);
+  --bento-dark: #18191B;
+}
+
+.services-bento-section {
+  display: flex;
+  align-items: flex-start;
+  background: var(--paper-white);
+  min-height: 100vh;
+  padding: 0 0 80px 0;
+}
+
+.services-bento-left {
+  width: 40%;
+  min-width: 320px;
+  max-width: 480px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 0 60px 0;
+  z-index: 2;
+}
+
+.services-bento-title {
+  font-size: clamp(2.8rem, 6vw, 5.2rem);
+  font-weight: 900;
+  color: var(--deep-charcoal);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0 0 0 48px;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  letter-spacing: 0.01em;
+}
+
+.services-bento-right {
+  width: 60%;
+  padding: 0 0 0 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 36px;
+  min-height: 600px;
+}
+
+.bento-box {
+  background: var(--paper-white);
+  border-radius: 18px;
+  border: 0.5px solid var(--bento-border);
+  min-height: 220px;
+  height: 220px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: background 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s;
+}
+
+.bento-box.active {
+  background: var(--bento-dark);
+  border-color: var(--bento-border-active);
+  box-shadow: 0 2px 24px 0 rgba(0,0,0,0.04);
+  z-index: 2;
+}
+
+.bento-box-number {
+  font-size: 2.2rem;
+  font-family: 'Oswald', 'Menlo', monospace;
+  font-weight: 900;
+  color: var(--brand-orange);
+  margin: 28px 0 0 28px;
+  letter-spacing: -0.03em;
+  text-shadow: 0 0 12px rgba(255,107,0,0.18);
+  transition: text-shadow 0.3s, color 0.3s;
+}
+
+.bento-box-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--deep-charcoal);
+  margin: 8px 0 0 28px;
+  letter-spacing: -0.02em;
+  transition: color 0.3s;
+}
+
+.bento-box.active .bento-box-title {
+  color: #fff;
+}
+
+.bento-box-details {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  left: 0; right: 0; bottom: 0; top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 0 0 28px 28px;
+  z-index: 1;
+  transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+
+.bento-box.active .bento-box-details {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bento-detail-row {
+  font-family: 'Menlo', 'Consolas', monospace;
+  font-size: 13px;
+  color: var(--brand-orange);
+  margin-bottom: 8px;
+  letter-spacing: 0.01em;
+  background: none;
+  border: none;
+  padding: 0;
+  font-weight: 600;
+}
+
+.bento-detail-row:last-child {
+  margin-bottom: 0;
+}
+
+.bento-action-btn {
+  display: inline-block;
+  background: var(--brand-orange);
+  color: #fff;
+  font-size: 0.98rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 16px;
+  padding: 7px 22px;
+  margin-top: 10px;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  box-shadow: none;
+  transition: background 0.2s;
+}
+
+.bento-box.active .bento-action-btn {
+  background: var(--brand-orange);
+}
+
+.bento-ghost-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .services-bento-section {
+    flex-direction: column;
+  }
+  .services-bento-left, .services-bento-right {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 0 24px;
+    position: static;
+    height: auto;
+  }
+  .services-bento-title {
+    margin: 32px 0 24px 0;
+    font-size: 2.2rem;
+    text-align: left;
+    writing-mode: horizontal-tb;
+  }
+  .services-bento-right {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    gap: 24px;
+  }
+}

@@ -1,0 +1,300 @@
+/* WhyUs Section - Modern, Calm, Premium */
+.whyus-section {
+  width: 100%;
+  background: #f7f8fa;
+  padding: 72px 0 64px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.whyus-shell {
+  display: flex;
+  flex-direction: row;
+  gap: 2.5rem;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 2vw;
+  padding-right: 2vw;
+}
+.whyus-img-col {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.whyus-main-img {
+  width: 100%;
+  max-width: 340px;
+  border-radius: 2rem;
+  box-shadow: 0 4px 32px 0 rgba(59,130,246,0.07);
+  object-fit: cover;
+}
+.whyus-main-img-animate {
+  transition: opacity 0.6s cubic-bezier(0.4,0.2,0.2,1), transform 0.6s cubic-bezier(0.68,-0.55,0.265,1.55), box-shadow 0.5s cubic-bezier(0.4,0.2,0.2,1);
+  opacity: 1;
+  transform: scale(1);
+  box-shadow: 0 8px 32px rgba(59,130,246,0.10), 0 0 0 0 rgba(59,130,246,0.18);
+  border-radius: 32px;
+}
+.whyus-step:hover ~ .whyus-img-col .whyus-main-img-animate,
+.whyus-step:focus ~ .whyus-img-col .whyus-main-img-animate {
+  box-shadow: 0 16px 48px rgba(59,130,246,0.18), 0 0 32px 8px rgba(59,130,246,0.12);
+  transform: scale(1.04) rotate(-1deg);
+  filter: brightness(1.08) saturate(1.1);
+}
+.whyus-content-flex {
+  flex: 2;
+  display: flex;
+  flex-direction: row;
+  gap: 2.2rem;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-width: 0;
+}
+.whyus-content-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 32px;
+}
+.whyus-content-main {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.8rem;
+  min-width: 0;
+}
+.whyus-eyebrow {
+  color: #1f2933;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+.whyus-title {
+   margin: 0 0 clamp(12px, 2vw, 20px);
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  line-height: 1.5;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #6b7280;
+  word-break: break-word;
+}
+.whyus-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  max-width: 600px;
+}
+.whyus-step {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+  background: none;
+  border-radius: 12px;
+  box-shadow: none;
+  padding: 0.6rem 0 0.6rem 0;
+  border-bottom: 1px dashed #e0e7ef;
+  transition: none;
+  z-index: 1;
+  overflow: visible;
+  border: 1.5px solid transparent;
+}
+.whyus-step:last-child {
+  border-bottom: none;
+}
+
+
+.whyus-content-flex {
+  flex: 2;
+  display: flex;
+  flex-direction: row;
+  gap: 2.2rem;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-width: 0;
+}
+.whyus-content-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 32px;
+}
+.whyus-content-main {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.8rem;
+  min-width: 0;
+}
+.whyus-eyebrow {
+  color: #1f2933;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+.whyus-title {
+   margin: 0 0 clamp(12px, 2vw, 20px);
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  line-height: 1.5;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #6b7280;
+  word-break: break-word;
+}
+.whyus-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  max-width: 600px;
+}
+.whyus-step {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+  background: none;
+  border-radius: 12px;
+  box-shadow: none;
+  padding: 0.6rem 0 0.6rem 0;
+  border-bottom: 1px dashed #e0e7ef;
+  transition: none;
+  z-index: 1;
+  overflow: visible;
+  border: 1.5px solid transparent;
+}
+.whyus-step:last-child {
+  border-bottom: none;
+}
+
+
+
+.whyus-step-num {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #FF6B00;
+  font-family: 'Poppins', 'Inter', sans-serif;
+  min-width: 60px;
+  text-align: right;
+  opacity: 0.92;
+  transition: transform 0.3s cubic-bezier(0.4,0.2,0.2,1), filter 0.3s;
+}
+.whyus-step-num-1 {
+  color: #3B82F6;
+}
+.whyus-step-num-2 {
+  color: #10B981;
+}
+.whyus-step-num-3 {
+  color: #FF6B00;
+}
+.whyus-step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.whyus-step-title {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: #1f2933;
+  margin-bottom: 2px;
+  letter-spacing: -0.5px;
+  transition: text-shadow 0.3s;
+}
+.whyus-step:hover .whyus-step-title, .whyus-step:focus .whyus-step-title {
+  text-shadow: 0 2px 8px rgba(59,130,246,0.08);
+}
+.whyus-step-desc {
+  font-size: 1rem;
+  color: #444;
+  margin-top: 0.1rem;
+  word-break: break-word;
+  transition: opacity 0.3s;
+}
+
+.whyus-side-img-col {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: auto;
+  margin-top: 0.2rem;
+}
+.whyus-side-img-box {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(108,99,255,0.08);
+  padding: 0.7rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+
+
+@media (max-width: 1100px) {
+  .whyus-shell {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    max-width: 98vw;
+    padding-left: 3vw;
+    padding-right: 3vw;
+  }
+  .whyus-content-flex {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    min-width: 0;
+  }
+  .whyus-title, .whyus-steps {
+    text-align: center;
+    max-width: 98vw;
+  }
+}
+@media (max-width: 900px) {
+  .whyus-section {
+    padding: 48px 0 32px 0;
+  }
+  .whyus-shell {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    max-width: 98vw;
+  }
+  .whyus-img-col, .whyus-side-img-col {
+    justify-content: center;
+  }
+  .whyus-main-img {
+    max-width: 180px;
+  }
+  .whyus-side-img-box {
+    width: 90px;
+    height: 90px;
+  }
+}
+@media (max-width: 700px) {
+  .whyus-title {
+    font-size: 1.2rem;
+    max-width: 98vw;
+  }
+  .whyus-main-img {
+    max-width: 220px;
+  }
+  .whyus-side-img {
+    max-width: 120px;
+  }
+  .whyus-steps {
+    max-width: 98vw;
+  }
+}

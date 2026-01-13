@@ -1,0 +1,644 @@
+/* ========================================
+   HOMEPAGE CTA - ROOT VARIABLES
+   ======================================== */
+:root {
+  /* Matching Colors from Previous Sections */
+  --cta-glass-bg: #f7f8fa ;
+  --cta-glass-border: rgba(232, 232, 232, 0.6);
+  --cta-text-primary: #111827;
+  --cta-text-secondary: #4B5563;
+  --cta-text-tertiary: #6B7280;
+  --cta-accent: #FF6B00;
+  --cta-accent-light: rgba(255, 107, 0, 0.1);
+  --cta-accent-glow: rgba(255, 107, 0, 0.15);
+  
+  /* Secondary Accents */
+  --electric-blue: #3B82F6;
+  --emerald: #10B981;
+  --purple: #8B5CF6;
+  --whatsapp-green: #25D366;
+  
+  /* Glass Effect */
+  --glass-backdrop: blur(20px);
+  --glass-shine: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 50%);
+  
+  /* Transitions */
+  --transition-smooth: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ========================================
+   HOMEPAGE CTA - MAIN SECTION
+   ======================================== */
+.homepage-cta-section {
+  width: 100%;
+  padding: 100px 15%;
+  background: #f7f8fa ;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle background effects */
+.homepage-cta-section::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255, 107, 0, 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.homepage-cta-section::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.04) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.homepage-cta-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ========================================
+   GLASS CARD
+   ======================================== */
+.homepage-cta-card {
+  background: var(--cta-glass-bg);
+  backdrop-filter: var(--glass-backdrop);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  border: 1px solid var(--cta-glass-border);
+  border-radius: 28px;
+  padding: 56px 48px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+}
+
+/* Glass shine effect */
+.homepage-cta-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--glass-shine);
+  pointer-events: none;
+  transition: var(--transition-smooth);
+}
+
+.homepage-cta-card:hover::before {
+  left: 100%;
+}
+
+.homepage-cta-card:hover {
+  box-shadow: 0 24px 72px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+}
+
+/* ========================================
+   HEADER SECTION
+   ======================================== */
+.cta-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.cta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, rgba(255, 107, 0, 0.1), rgba(255, 140, 0, 0.05));
+  border: 1px solid rgba(255, 107, 0, 0.2);
+  border-radius: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cta-accent);
+  margin-bottom: 24px;
+  transition: var(--transition-smooth);
+}
+
+.cta-badge:hover {
+  background: linear-gradient(135deg, rgba(255, 107, 0, 0.15), rgba(255, 140, 0, 0.08));
+  transform: translateY(-2px);
+}
+
+.cta-badge svg {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(10deg); }
+}
+
+.cta-title {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--cta-text-primary);
+  margin: 0 0 20px 0;
+  letter-spacing: -0.02em;
+}
+
+.cta-subtitle {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--cta-text-secondary);
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* ========================================
+   CONTACT OPTIONS GRID
+   ======================================== */
+.contact-options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+/* Contact Card */
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 28px 24px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(229, 231, 235, 0.8);
+  border-radius: 16px;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 100%);
+  opacity: 0;
+  transition: var(--transition-smooth);
+}
+
+.contact-card:hover::before {
+  opacity: 1;
+}
+
+.contact-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* WhatsApp Card */
+.whatsapp-card:hover {
+  border-color: var(--whatsapp-green);
+  box-shadow: 0 12px 32px rgba(37, 211, 102, 0.2);
+}
+
+.whatsapp-card .contact-card-icon {
+  background: rgba(37, 211, 102, 0.1);
+  color: var(--whatsapp-green);
+}
+
+/* Email Card */
+.email-card:hover {
+  border-color: var(--electric-blue);
+  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.2);
+}
+
+.email-card .contact-card-icon {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--electric-blue);
+}
+
+/* Call Card */
+.call-card:hover {
+  border-color: var(--cta-accent);
+  box-shadow: 0 12px 32px rgba(255, 107, 0, 0.2);
+}
+
+.call-card .contact-card-icon {
+  background: rgba(255, 107, 0, 0.1);
+  color: var(--cta-accent);
+}
+
+/* Contact Card Elements */
+.contact-card-icon {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+}
+
+.contact-card:hover .contact-card-icon {
+  transform: scale(1.08);
+}
+
+.contact-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.contact-card-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--cta-text-primary);
+  margin: 0 0 6px 0;
+  line-height: 1.3;
+}
+
+.contact-card-subtitle {
+  font-size: 13px;
+  color: var(--cta-text-tertiary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.contact-card-arrow {
+  flex-shrink: 0;
+  color: var(--cta-text-tertiary);
+  transition: var(--transition-smooth);
+}
+
+.contact-card:hover .contact-card-arrow {
+  transform: translate(4px, -4px);
+}
+
+.whatsapp-card:hover .contact-card-arrow {
+  color: var(--whatsapp-green);
+}
+
+.email-card:hover .contact-card-arrow {
+  color: var(--electric-blue);
+}
+
+.call-card:hover .contact-card-arrow {
+  color: var(--cta-accent);
+}
+
+/* ========================================
+   TRUST SECTION
+   ======================================== */
+.cta-trust-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 28px 32px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(229, 231, 235, 0.6);
+  border-radius: 16px;
+  flex-wrap: wrap;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cta-text-secondary);
+  white-space: nowrap;
+}
+
+.trust-item svg {
+  color: var(--emerald);
+  flex-shrink: 0;
+}
+
+.trust-divider {
+  width: 1px;
+  height: 20px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(229, 231, 235, 0.6) 20%,
+    rgba(229, 231, 235, 0.6) 80%,
+    transparent
+  );
+}
+
+/* ========================================
+   RESPONSIVE - LARGE DESKTOP
+   ======================================== */
+@media (max-width: 1600px) {
+  .homepage-cta-section {
+    padding: 90px 12%;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - DESKTOP
+   ======================================== */
+@media (max-width: 1440px) {
+  .homepage-cta-section {
+    padding: 80px 10%;
+  }
+  
+  .cta-title {
+    font-size: 38px;
+  }
+  
+  .homepage-cta-card {
+    padding: 48px 40px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - LAPTOP
+   ======================================== */
+@media (max-width: 1280px) {
+  .homepage-cta-section {
+    padding: 70px 8%;
+  }
+  
+  .homepage-cta-card {
+    padding: 44px 36px;
+  }
+  
+  .cta-title {
+    font-size: 36px;
+  }
+  
+  .contact-options-grid {
+    gap: 16px;
+  }
+  
+  .contact-card {
+    padding: 24px 20px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - TABLET
+   ======================================== */
+@media (max-width: 1024px) {
+  .homepage-cta-section {
+    padding: 60px 5%;
+  }
+  
+  .homepage-cta-card {
+    padding: 40px 32px;
+  }
+  
+  .cta-header {
+    margin-bottom: 40px;
+  }
+  
+  .cta-title {
+    font-size: 32px;
+  }
+  
+  .cta-subtitle {
+    font-size: 16px;
+  }
+  
+  .contact-options-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .cta-trust-section {
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px;
+  }
+  
+  .trust-divider {
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(229, 231, 235, 0.6) 20%,
+      rgba(229, 231, 235, 0.6) 80%,
+      transparent
+    );
+  }
+}
+
+/* ========================================
+   RESPONSIVE - MOBILE
+   ======================================== */
+@media (max-width: 768px) {
+  .homepage-cta-section {
+    padding: 50px 4%;
+  }
+  
+  .homepage-cta-card {
+    padding: 32px 24px;
+    border-radius: 24px;
+  }
+  
+  .cta-header {
+    margin-bottom: 32px;
+  }
+  
+  .cta-badge {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+  
+  .cta-title {
+    font-size: 28px;
+  }
+  
+  .cta-subtitle {
+    font-size: 15px;
+  }
+  
+  .contact-options-grid {
+    margin-bottom: 32px;
+  }
+  
+  .contact-card {
+    padding: 20px 18px;
+  }
+  
+  .contact-card-icon {
+    width: 52px;
+    height: 52px;
+  }
+  
+  .contact-card-title {
+    font-size: 16px;
+  }
+  
+  .contact-card-subtitle {
+    font-size: 12px;
+  }
+  
+  .cta-trust-section {
+    padding: 20px;
+  }
+  
+  .trust-item {
+    font-size: 13px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - SMALL MOBILE
+   ======================================== */
+@media (max-width: 480px) {
+  .homepage-cta-section {
+    padding: 40px 4%;
+  }
+  
+  .homepage-cta-card {
+    padding: 28px 20px;
+  }
+  
+  .cta-badge {
+    font-size: 11px;
+    padding: 7px 14px;
+  }
+  
+  .cta-title {
+    font-size: 24px;
+  }
+  
+  .cta-subtitle {
+    font-size: 14px;
+  }
+  
+  .contact-card {
+    padding: 18px 16px;
+  }
+  
+  .contact-card-icon {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .contact-card-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .contact-card-title {
+    font-size: 15px;
+  }
+  
+  .contact-card-subtitle {
+    font-size: 11px;
+  }
+  
+  .contact-card-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .cta-trust-section {
+    padding: 18px;
+  }
+  
+  .trust-item {
+    font-size: 12px;
+  }
+  
+  .trust-item svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - EXTRA LARGE SCREENS
+   ======================================== */
+@media (min-width: 1920px) {
+  .homepage-cta-section {
+    padding: 120px 15%;
+  }
+  
+  .homepage-cta-container {
+    max-width: 1200px;
+  }
+  
+  .homepage-cta-card {
+    padding: 64px 56px;
+  }
+  
+  .cta-title {
+    font-size: 48px;
+  }
+  
+  .cta-subtitle {
+    font-size: 19px;
+  }
+  
+  .contact-options-grid {
+    gap: 24px;
+  }
+  
+  .contact-card {
+    padding: 32px 28px;
+  }
+  
+  .contact-card-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .contact-card-title {
+    font-size: 19px;
+  }
+  
+  .contact-card-subtitle {
+    font-size: 14px;
+  }
+  
+  .cta-trust-section {
+    padding: 32px 40px;
+  }
+  
+  .trust-item {
+    font-size: 15px;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY & REDUCED MOTION
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .homepage-cta-card:hover,
+  .contact-card:hover {
+    transform: none;
+  }
+}
+
+/* Focus States for Accessibility */
+.contact-card:focus-visible {
+  outline: 3px solid var(--cta-accent);
+  outline-offset: 3px;
+}
