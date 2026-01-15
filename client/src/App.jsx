@@ -9,8 +9,9 @@ import Login from "./pages/LoginPage/Login";
 import Dashboard from "./pages/Dashboard/Dashboard";
 // import OurWork from "./pages/OurWorkPage/OurWork";
 // import PricingPage from "./pages/PricingPage/PricingPage";
-// import Services from "./pages/ServicesPage/Services";
+import Services from "./pages/ServicesPage/Services1";
 // import Team from "./pages/Team/Team";
+import Plan from "./pages/PlanPage/Plan1";
 
 
 
@@ -21,6 +22,8 @@ function App() {
     <>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/plan" element={<Plan />} />
           {/* <Route path="/pricing" element={<PricingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/services" element={<Services />} />

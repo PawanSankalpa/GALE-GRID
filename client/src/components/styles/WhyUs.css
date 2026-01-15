@@ -22,6 +22,28 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  position: relative;
+}
+
+/* Gradient overlay for mobile - hidden by default */
+.whyus-img-col::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65%;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.5) 40%,
+    transparent 100%
+  );
+  border-radius: 0 0 2rem 2rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
 }
 .whyus-main-img {
   width: 100%;
@@ -96,17 +118,31 @@
   display: flex;
   align-items: flex-start;
   gap: 1.1rem;
-  background: none;
+  background: transparent;
   border-radius: 12px;
-  box-shadow: none;
+  box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
   padding: 0.6rem 0 0.6rem 0;
   border-bottom: 1px dashed #e0e7ef;
-  transition: none;
+  transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
   overflow: visible;
   border: 1.5px solid transparent;
 }
+
+.whyus-step:hover {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1.5px solid rgba(59, 130, 246, 0.12);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+  transform: translateX(8px);
+  padding: 1rem 1.2rem;
+}
+
 .whyus-step:last-child {
+  border-bottom: none;
+}
+
+.whyus-step:last-child:hover {
   border-bottom: none;
 }
 
@@ -164,16 +200,50 @@
   display: flex;
   align-items: flex-start;
   gap: 1.1rem;
-  background: none;
+  background: transparent;
   border-radius: 12px;
   box-shadow: none;
   padding: 0.6rem 0 0.6rem 0;
   border-bottom: 1px dashed #e0e7ef;
-  transition: none;
+  transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
-  overflow: visible;
+  overflow: hidden;
   border: 1.5px solid transparent;
 }
+
+/* Premium Gaze/Ripple Effect - Left to Right */
+.whyus-step::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(59, 130, 246, 0.05) 25%,
+    rgba(59, 130, 246, 0.12) 50%,
+    rgba(59, 130, 246, 0.05) 75%,
+    transparent 100%
+  );
+  transition: left 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.whyus-step:hover::before {
+  left: 100%;
+}
+
+.whyus-step:hover {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1.5px solid rgba(59, 130, 246, 0.12);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+  padding: 1rem 1.2rem;
+}
+
 .whyus-step:last-child {
   border-bottom: none;
 }
@@ -188,7 +258,13 @@
   min-width: 60px;
   text-align: right;
   opacity: 0.92;
-  transition: transform 0.3s cubic-bezier(0.4,0.2,0.2,1), filter 0.3s;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), filter 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s ease;
+}
+
+.whyus-step:hover .whyus-step-num {
+  transform: scale(1.08);
+  opacity: 1;
+  filter: brightness(1.1);
 }
 .whyus-step-num-1 {
   color: #3B82F6;
@@ -210,15 +286,22 @@
   color: #1f2933;
   margin-bottom: 2px;
   letter-spacing: -0.5px;
-  transition: text-shadow 0.3s;
+  transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .whyus-step:hover .whyus-step-title, .whyus-step:focus .whyus-step-title {
-  text-shadow: 0 2px 8px rgba(59,130,246,0.08);
+  color: #3B82F6;
+  letter-spacing: 0px;
 }
 .whyus-step-desc {
   font-size: 1rem;
   color: #444;
-  margin-top: 0.1rem;
+  margin-top: color 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s ease;
+}
+
+.whyus-step:hover .whyus-step-desc {
+  color: #1f2933;
+  opacity: 0.95;
   word-break: break-word;
   transition: opacity 0.3s;
 }
@@ -243,58 +326,560 @@
 
 
 
-@media (max-width: 1100px) {
+/* ============================================
+   RESPONSIVE DESIGN - Mobile First Approach
+   ============================================ */
+
+/* 📱 Small Phones: 320px – 375px (iPhone SE, older Android) */
+@media (max-width: 375px) {
+  .whyus-section {
+    padding: 40px 0 32px 0;
+  }
+  
   .whyus-shell {
     flex-direction: column;
-    gap: 2rem;
-    align-items: center;
-    max-width: 98vw;
-    padding-left: 3vw;
-    padding-right: 3vw;
+    gap: 1.5rem;
+    padding-left: 16px;
+    padding-right: 16px;
   }
+  
+  .whyus-content-flex {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  
+  /* Show gradient overlay on image */
+  .whyus-img-col::after {
+    opacity: 1;
+  }
+  
+  /* Position image container */
+  .whyus-img-col {
+    order: -1;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  /* Position ONLY eyebrow and title at bottom of image */
+  .whyus-content-main {
+    position: relative;
+  }
+  
+  .whyus-content-main .whyus-eyebrow {
+    position: absolute;
+    top: -150px;
+    left: 20px;
+    right: 20px;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 6px;
+    font-size: 0.75rem;
+    letter-spacing: 1.2px;
+    z-index: 3;
+  }
+  
+  .whyus-content-main .whyus-title {
+    position: absolute;
+    top: -120px;
+    left: 20px;
+    right: 20px;
+    color: #ffffff;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    z-index: 3;
+  }
+  
+  /* Steps stay in normal flow */
+  .whyus-steps {
+    margin-top: 0;
+  }
+  
+  .whyus-steps {
+    gap: 0.85rem;
+    max-width: 100%;
+  }
+  
+  .whyus-step {
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-radius: 8px;
+  }
+  
+  .whyus-step:hover {
+    padding: 0.75rem 0.85rem;
+  }
+  
+  .whyus-step-num {
+    font-size: 1.5rem;
+    min-width: 45px;
+  }
+  
+  .whyus-step-title {
+    font-size: 0.95rem;
+  }
+  
+  .whyus-step-desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  
+  .whyus-main-img {
+    max-width: 280px;
+    border-radius: 1.5rem;
+  }
+  
+  .whyus-img-col {
+    justify-content: center;
+  }
+  
+  .whyus-side-img-col {
+    display: none; /* Hide side images on very small screens */
+  }
+}
+
+/* 📱 Standard Phones: 376px – 414px (iPhone 13/14, Pixel 6) */
+@media (min-width: 376px) and (max-width: 414px) {
+  .whyus-section {
+    padding: 44px 0 36px 0;
+  }
+  
+  .whyus-shell {
+    flex-direction: column;
+    gap: 1.75rem;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
   .whyus-content-flex {
     flex-direction: column;
     gap: 1.5rem;
-    align-items: center;
-    min-width: 0;
   }
-  .whyus-title, .whyus-steps {
-    text-align: center;
-    max-width: 98vw;
+  
+  /* Show gradient overlay */
+  .whyus-img-col::after {
+    opacity: 1;
   }
-}
-@media (max-width: 900px) {
-  .whyus-section {
-    padding: 48px 0 32px 0;
+  
+  .whyus-img-col {
+    order: -1;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 1rem;
   }
-  .whyus-shell {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    max-width: 98vw;
+  
+  .whyus-content-main {
+    position: relative;
   }
-  .whyus-img-col, .whyus-side-img-col {
+  
+  .whyus-content-main .whyus-eyebrow {
+    position: absolute;
+    top: -160px;
+    left: 22px;
+    right: 22px;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    z-index: 3;
+  }
+  
+  .whyus-content-main .whyus-title {
+    position: absolute;
+    top: -125px;
+    left: 22px;
+    right: 22px;
+    color: #ffffff;
+    margin: 0;
+    font-size: 1.05rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    z-index: 3;
+  }
+  
+  .whyus-steps {
+    margin-top: 0;
+  }
+  
+  .whyus-step-num {
+    font-size: 1.65rem;
+    min-width: 50px;
+  }
+  
+  .whyus-step-title {
+    font-size: 1rem;
+  }
+  
+  .whyus-step-desc {
+    font-size: 0.9rem;
+  }
+  
+  .whyus-main-img {
+    max-width: 320px;
+  }
+  
+  .whyus-img-col {
     justify-content: center;
   }
-  .whyus-main-img {
-    max-width: 180px;
+}
+
+/* 📱 Large Phones / Phablets: 415px – 480px */
+@media (min-width: 415px) and (max-width: 480px) {
+  .whyus-section {
+    padding: 48px 0 40px 0;
   }
-  .whyus-side-img-box {
-    width: 90px;
-    height: 90px;
+  
+  .whyus-shell {
+    flex-direction: column;
+    gap: 2rem;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  
+  .whyus-content-flex {
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+  
+  /* Show gradient overlay */
+  .whyus-img-col::after {
+    opacity: 1;
+  }
+  
+  .whyus-img-col {
+    order: -1;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 1.25rem;
+  }
+  
+  .whyus-content-main {
+    position: relative;
+  }
+  
+  .whyus-content-main .whyus-eyebrow {
+    position: absolute;
+    top: -175px;
+    left: 24px;
+    right: 24px;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 0.85rem;
+    z-index: 3;
+  }
+  
+  .whyus-content-main .whyus-title {
+    position: absolute;
+    top: -135px;
+    left: 24px;
+    right: 24px;
+    color: #ffffff;
+    margin: 0;
+    font-size: 1.15rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    z-index: 3;
+  }
+  
+  .whyus-steps {
+    margin-top: 0;
+  }
+  
+  .whyus-step-num {
+    font-size: 1.8rem;
+    min-width: 55px;
+  }
+  
+  .whyus-step-title {
+    font-size: 1.05rem;
+  }
+  
+  .whyus-step-desc {
+    font-size: 0.95rem;
+  }
+  
+  .whyus-main-img {
+    max-width: 360px;
+  }
+  
+  .whyus-img-col {
+    justify-content: center;
+  }
+  
+  .whyus-side-img-col {
+    justify-content: center;
   }
 }
-@media (max-width: 700px) {
-  .whyus-title {
-    font-size: 1.2rem;
-    max-width: 98vw;
+
+/* 📱 Tablets Portrait: 481px – 768px */
+@media (min-width: 481px) and (max-width: 768px) {
+  .whyus-section {
+    padding: 56px 0 48px 0;
   }
-  .whyus-main-img {
-    max-width: 220px;
+  
+  .whyus-shell {
+    flex-direction: column;
+    gap: 2.25rem;
+    padding-left: 32px;
+    padding-right: 32px;
+    align-items: center;
   }
-  .whyus-side-img {
-    max-width: 120px;
+  
+  .whyus-content-flex {
+    flex-direction: row;
+    gap: 2rem;
+    max-width: 680px;
   }
+  
+  /* Show gradient overlay */
+  .whyus-img-col::after {
+    opacity: 1;
+  }
+  
+  .whyus-img-col {
+    order: -1;
+    width: 100%;
+    max-width: 500px;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+  
+  .whyus-content-main {
+    position: relative;
+  }
+  
+  .whyus-content-main .whyus-eyebrow {
+    position: absolute;
+    top: -200px;
+    left: 28px;
+    right: 28px;
+    color: rgba(255, 255, 255, 0.98);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    z-index: 3;
+  }
+  
+  .whyus-content-main .whyus-title {
+    position: absolute;
+    top: -160px;
+    left: 28px;
+    right: 28px;
+    color: #ffffff;
+    margin: 0;
+    font-size: 1.25rem;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    z-index: 3;
+  }
+  
   .whyus-steps {
-    max-width: 98vw;
+    margin-top: 0;
+  }
+  
+  .whyus-steps {
+    max-width: 520px;
+  }
+  
+  .whyus-step {
+    gap: 1rem;
+  }
+  
+  .whyus-step-num {
+    font-size: 1.9rem;
+  }
+  
+  .whyus-step-title {
+    font-size: 1.1rem;
+  }
+  
+  .whyus-step-desc {
+    font-size: 0.98rem;
+  }
+  
+  .whyus-main-img {
+    max-width: 400px;
+  }
+  
+  .whyus-img-col {
+    justify-content: center;
+  }
+  
+  .whyus-side-img-box {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+/* 💻 Tablets Landscape: 769px – 1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .whyus-section {
+    padding: 64px 0 56px 0;
+  }
+  
+  .whyus-shell {
+    flex-direction: row;
+    gap: 2.5rem;
+    padding-left: 40px;
+    padding-right: 40px;
+    max-width: 960px;
+  }
+  
+  .whyus-content-flex {
+    gap: 2rem;
+  }
+  
+  .whyus-steps {
+    max-width: 540px;
+  }
+  
+  .whyus-main-img {
+    max-width: 300px;
+  }
+  
+  .whyus-side-img-box {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+/* 💻 Small Laptops: 1025px – 1366px */
+@media (min-width: 1025px) and (max-width: 1366px) {
+  .whyus-section {
+    padding: 68px 0 60px 0;
+  }
+  
+  .whyus-shell {
+    max-width: 1100px;
+    gap: 2.5rem;
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+  
+  .whyus-content-flex {
+    gap: 2.2rem;
+  }
+  
+  .whyus-main-img {
+    max-width: 320px;
+  }
+}
+
+/* 🖥️ Standard Desktops: 1367px – 1440px */
+@media (min-width: 1367px) and (max-width: 1440px) {
+  .whyus-section {
+    padding: 72px 0 64px 0;
+  }
+  
+  .whyus-shell {
+    max-width: 1200px;
+  }
+  
+  .whyus-main-img {
+    max-width: 340px;
+  }
+}
+
+/* 🖥️ Large Desktops: 1441px – 1920px */
+@media (min-width: 1441px) and (max-width: 1920px) {
+  .whyus-section {
+    padding: 80px 0 72px 0;
+  }
+  
+  .whyus-shell {
+    max-width: 1280px;
+    gap: 3rem;
+  }
+  
+  .whyus-content-flex {
+    gap: 2.5rem;
+  }
+  
+  .whyus-main-img {
+    max-width: 380px;
+  }
+  
+  .whyus-step {
+    padding: 0.7rem 0;
+  }
+  
+  .whyus-step:hover {
+    padding: 1.1rem 1.4rem;
+  }
+  
+  .whyus-step-num {
+    font-size: 2.2rem;
+  }
+  
+  .whyus-step-title {
+    font-size: 1.22rem;
+  }
+  
+  .whyus-step-desc {
+    font-size: 1.05rem;
+  }
+}
+
+/* 🖥️ Extra-Large / 4K: 1921px+ */
+@media (min-width: 1921px) {
+  .whyus-section {
+    padding: 96px 0 88px 0;
+  }
+  
+  .whyus-shell {
+    max-width: 1400px;
+    gap: 3.5rem;
+  }
+  
+  .whyus-content-flex {
+    gap: 3rem;
+  }
+  
+  .whyus-eyebrow {
+    font-size: 1.1rem;
+  }
+  
+  .whyus-title {
+    font-size: 1.5rem;
+  }
+  
+  .whyus-steps {
+    gap: 1.3rem;
+  }
+  
+  .whyus-step {
+    padding: 0.8rem 0;
+  }
+  
+  .whyus-step:hover {
+    padding: 1.2rem 1.6rem;
+  }
+  
+  .whyus-step-num {
+    font-size: 2.4rem;
+    min-width: 70px;
+  }
+  
+  .whyus-step-title {
+    font-size: 1.3rem;
+  }
+  
+  .whyus-step-desc {
+    font-size: 1.1rem;
+  }
+  
+  .whyus-main-img {
+    max-width: 420px;
+  }
+}
+
+/* 📱 Touch Target Optimization (All Mobile/Tablet) */
+@media (max-width: 1024px) {
+  .whyus-step {
+    min-height: 44px; /* Minimum touch target */
+  }
+  
+  .whyus-step:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
   }
 }

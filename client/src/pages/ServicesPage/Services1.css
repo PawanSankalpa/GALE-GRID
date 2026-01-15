@@ -976,8 +976,8 @@
   }
 
   .service-page-services-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 
   .service-page-calculator-tool {
@@ -1046,5 +1046,47 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}/* Bento grid responsive adjustments */
+@media (max-width: 767px) {
+  .service-page-services-grid {
+    auto-rows: 240px;
+  }
+
+  .service-page-service-card:nth-child(1) {
+    grid-column: span 2;
+  }
+
+  .service-page-service-card:nth-child(2) {
+    grid-column: span 2;
+  }
+
+  .service-page-service-card:nth-child(3) {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+
+  .service-page-service-card:nth-child(4) {
+    grid-column: span 1;
+  }
+
+  .service-page-service-card:nth-child(5) {
+    grid-column: span 1;
+  }
+
+  .service-page-service-card:nth-child(6) {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .service-page-services-grid {
+    grid-template-columns: 1fr;
+    auto-rows: auto;
+  }
+
+  .service-page-service-card:nth-child(n) {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
   }
 }

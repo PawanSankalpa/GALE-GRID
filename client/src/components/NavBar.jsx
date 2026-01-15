@@ -51,7 +51,7 @@ const NavBar = () => {
 
 	return (
 		<nav className="navbar sticky">
-			{/* <Link to="/" style={{ color: 'var(--navbar-text-primary)', textDecoration: 'none' }}><div className="logo">GG</div></Link> */}
+			<Link to="/" style={{ color: 'var(--navbar-text-primary)', textDecoration: 'none' }}><div className="logo">GAlE GRID</div></Link>
 
 			{/* Desktop Nav */}
 			<div className="nav-links desktop-only">
@@ -59,7 +59,7 @@ const NavBar = () => {
 				<Link to="/services">Services</Link>
 				<Link to="/pricing">Pricing</Link>
 				<Link to="/ourWork">Work</Link>
-				<Link to="/Team">Team</Link>
+				<Link to="/plan">Plan</Link>
 				<Link to="/contact" className="nav-cta">Let's Talk</Link>
 			</div>
 

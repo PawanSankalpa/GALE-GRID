@@ -8,15 +8,15 @@
 .navbar {
   position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 900px;
+  left: 0;
+  width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 12px 18px;
+  /* slightly larger padding so navbar content breathes */
+  padding: 20px 40px;
   z-index: 100;
+  /* transparent so navbar blends over hero (not a separate black bar) */
   background: linear-gradient(
     to bottom,
     rgba(0,0,0,0.08),
@@ -31,28 +31,29 @@
      inconsistencies when toggling classes). */
   position: fixed;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 70%;
-  max-width: 900px;
+  left: 0;
+  width: 100%;
+  /* subtle glassy overlay that blends with hero */
   backdrop-filter: blur(6px) saturate(120%);
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   box-shadow: 0 6px 24px rgba(2,6,23,0.35);
-  padding: 12px 18px;
+  padding: 12px 28px;
 }
 
 /* Floating navbar on larger screens: centered, rounded, and elevated so it
    sits above the hero without spanning the full width. On small screens
    we keep the full-width layout for better tap targets. */
 @media (min-width: 700px) {
-  .navbar,
   .navbar.sticky {
     left: 50%;
     transform: translateX(-50%);
-    width: 70%;
-    max-width: 900px;
+    /* make the floating navbar wider but keep comfortable page gutters
+       on very large screens. Using explicit width + max-width prevents
+       it from feeling 'chopped' while remaining responsive. */
+    width: calc(100% - 96px);
+    max-width: 1200px;
     border-radius: 14px;
-    padding: 14px 20px;
+    padding: 18px 32px;
     background: linear-gradient(180deg, rgba(12,12,16,0.62), rgba(8,8,10,0.45));
     box-shadow: 0 18px 50px rgba(2,6,23,0.48);
     z-index: 220;
@@ -221,21 +222,19 @@
 
 .nav-cta {
   border-radius: 999px;
-  padding: 10px 22px;
-  min-width: 0;
-  width: auto;
+  /* increase horizontal padding for a roomier CTA */
+  padding: 14px 40px;
   border: 1px solid rgba(255,140,0,0.95);
-  background: rgba(255,159,0,0.06);
-  color: #ff8c00;
-  font-weight: 700;
-  font-size: 1rem;
+  background: rgba(255,159,0,0.06); /* subtle orange-tinted glass */
+  color: #ff8c00; /* orange text */
+  font-weight: 800;
   letter-spacing: 0.6px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.16);
   position: relative;
   overflow: hidden;
   will-change: color, box-shadow;
   transition: color 300ms cubic-bezier(.16,.84,.33,1), box-shadow 300ms cubic-bezier(.16,.84,.33,1), background 240ms ease;
-  z-index: 1;
+  z-index: 1; /* keep text above pseudo-elements */
 }
 
 .nav-cta:focus {
