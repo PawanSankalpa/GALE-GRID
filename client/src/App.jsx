@@ -7,9 +7,9 @@ import Login from "./pages/LoginPage/Login";
 
 // import Contact from "./pages/ContactPage/ContactPage";
 import Dashboard from "./pages/Dashboard/Dashboard";
-// import OurWork from "./pages/OurWorkPage/OurWork";
-// import PricingPage from "./pages/PricingPage/PricingPage";
-import Services from "./pages/ServicesPage/Services1";
+import OurWork from "./pages/OurWorkPage/OurWork";
+import PricingPage from "./pages/PricingPage/PricingPage";
+import Services from "./pages/ServicesPage/Services";
 // import Team from "./pages/Team/Team";
 import Plan from "./pages/PlanPage/Plan1";
 
@@ -24,10 +24,12 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/services" element={<Services />} />
           <Route path="/plan" element={<Plan />} />
+          <Route path="/ourWork" element={<OurWork />} />
+          <Route path="pricing" element={<PricingPage />} />
           {/* <Route path="/pricing" element={<PricingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/services" element={<Services />} />
-          <Route path="/ourWork" element={<OurWork />} /> */}
+          */}
           {/* <Route path="/contact" element={<Contact />} /> */}
           {/* <Route path="/Team" element={<Team />} />
           <Route path="/dashboard" element={<Dashboard />} /> */}

@@ -95,28 +95,8 @@ const FAQ = () => {
     ? faqs 
     : faqs.filter(faq => faq.category === activeCategory);
 
-  // Handle hover expand
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (window.innerWidth > 768) { // Desktop only
-        const faqElements = document.querySelectorAll('.faq-item');
-        faqElements.forEach((faq, index) => {
-          const rect = faq.getBoundingClientRect();
-          if (
-            e.clientX >= rect.left &&
-            e.clientX <= rect.right &&
-            e.clientY >= rect.top &&
-            e.clientY <= rect.bottom
-          ) {
-            setHoveredIndex(index);
-          }
-        });
-      }
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    return () => document.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  // Handle hover expand - removed global mouse tracking
+  // Now using simple onMouseEnter/onMouseLeave on each item instead
 
   return (
     <section className="faq-clean" aria-labelledby="faq-heading">
@@ -250,7 +230,36 @@ const FAQ = () => {
               ))}
             </div>
 
-
+            {/* Stats Footer */}
+            <div className="stats-footer">
+              <div className="stat-item">
+                <div className="stat-icon">
+                  <FaGoogle />
+                </div>
+                <div className="stat-info">
+                  <div className="stat-number">4.9/5</div>
+                  <div className="stat-label">Google Rating</div>
+                </div>
+              </div>
+              <div className="stat-item">
+                <div className="stat-icon">
+                  <FaStar />
+                </div>
+                <div className="stat-info">
+                  <div className="stat-number">200+</div>
+                  <div className="stat-label">Projects</div>
+                </div>
+              </div>
+              <div className="stat-item">
+                <div className="stat-icon">
+                  <FaClock />
+                </div>
+                <div className="stat-info">
+                  <div className="stat-number">2-8</div>
+                  <div className="stat-label">Weeks Delivery</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -105,3 +105,92 @@
   .intro-headline { color: #1f2933; }
   .intro-lead { color: #6b7280; }
 }
+
+/* ============================================
+   MOBILE BREAKPOINT (max-width: 768px)
+============================================ */
+@media (max-width: 768px) {
+  .intro-section {
+    padding: 2rem 1rem;
+    margin-top: -1.5rem;
+    overflow-x: hidden;
+  }
+  
+  .intro-section::before,
+  .intro-section::after {
+    display: none;
+  }
+  
+  .intro-container {
+    width: 100%;
+    padding: 0 0.5rem;
+  }
+  
+  .intro-headline {
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
+    margin-top: -1rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+  }
+  
+  .intro-lead {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    max-width: 100%;
+  }
+}
+
+/* Mobile L (435px) */
+@media (max-width: 435px) {
+  .intro-section {
+    padding: 1.5rem 0.875rem;
+    margin-top: -1rem;
+  }
+  
+  .intro-headline {
+    font-size: 0.8125rem;
+    margin-top: -0.75rem;
+    margin-bottom: 0.625rem;
+  }
+  
+  .intro-lead {
+    font-size: 0.875rem;
+  }
+}
+
+/* Mobile M (375px) */
+@media (max-width: 375px) {
+  .intro-section {
+    padding: 1.25rem 0.75rem;
+    margin-top: -0.75rem;
+  }
+  
+  .intro-headline {
+    font-size: 0.75rem;
+    letter-spacing: 0.25px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .intro-lead {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+}
+
+/* Mobile S (320px) */
+@media (max-width: 320px) {
+  .intro-section {
+    padding: 1rem 0.625rem;
+    margin-top: -0.5rem;
+  }
+  
+  .intro-headline {
+    font-size: 0.6875rem;
+    margin-top: -0.5rem;
+  }
+  
+  .intro-lead {
+    font-size: 0.75rem;
+  }
+}

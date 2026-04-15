@@ -2544,7 +2544,7 @@ body {
 }
 
 .plan-phase-icon.indigo {
-  background: linear-gradient(135deg, var(--indigo-500, #6366F1) 0%, var(--indigo-700, #4338CA) 100%);
+  background: linear-gradient(135deg, var(--indigo-500, var(--color-secondary-500)) 0%, var(--indigo-700, #4338CA) 100%);
 }
 
 .plan-phase-line {

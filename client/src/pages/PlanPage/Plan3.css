@@ -14,7 +14,7 @@
   --green-soft: #10B981;
   --purple-soft: #8B5CF6;
   --pink-soft: #EC4899;
-  --yellow-soft: #F59E0B;
+  --yellow-soft: var(--color-accent-500);
   --cyan-soft: #06B6D4;
 
   --blue-light: rgba(59, 130, 246, 0.08);

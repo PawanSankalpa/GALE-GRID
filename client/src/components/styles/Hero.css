@@ -250,20 +250,147 @@
 /* Responsive adjustments */
 
 
+/* ============================================
+   MOBILE BREAKPOINT (max-width: 768px)
+   Premium Mobile Experience
+============================================ */
 @media (max-width: 768px) {
+  .hero-container {
+    overflow-x: hidden;
+  }
+  
   .hero-visual {
-    min-height: 90vh;
-    padding: clamp(1.25rem, 6vw, 2rem);
+    min-height: 85vh;
+    padding: 1.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hero-copy {
+    width: 100%;
+    padding: 0 0.5rem;
+    text-align: center;
+  }
+  
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
   }
 
   .hero-title {
-    font-size: clamp(1.05rem, 5vw, 1.4rem);
+    font-size: 1.25rem;
+    line-height: 1.35;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    white-space: normal;
+    word-break: break-word;
+    padding: 0 0.25rem;
   }
 
   .hero-subtext {
-    font-size: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 100%;
+    margin-bottom: 1.5rem;
   }
+  
+  .hero-actions {
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .hero-cta {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    min-height: 48px;
+    justify-content: center;
+  }
+  
+  .hero-cta.primary {
+    box-shadow: 0 4px 16px rgba(255, 140, 0, 0.25);
+  }
+  
+  .hero-cta.ghost {
+    border-width: 1.5px;
+  }
+}
 
+/* Mobile L (435px) */
+@media (max-width: 435px) {
+  .hero-visual {
+    min-height: 80vh;
+    padding: 1.25rem 0.875rem;
+  }
+  
+  .eyebrow {
+    font-size: 0.6875rem;
+  }
+  
+  .hero-title {
+    font-size: 1.125rem;
+  }
+  
+  .hero-subtext {
+    font-size: 0.85rem;
+  }
+  
+  .hero-cta {
+    padding: 0.8125rem 1.25rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Mobile M (375px) */
+@media (max-width: 375px) {
+  .hero-visual {
+    padding: 1rem 0.75rem;
+  }
+  
+  .hero-title {
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .hero-subtext {
+    font-size: 0.8125rem;
+  }
+  
+  .hero-cta {
+    padding: 0.75rem 1rem;
+    font-size: 0.8125rem;
+    min-height: 44px;
+  }
+}
+
+/* Mobile S (320px) */
+@media (max-width: 320px) {
+  .hero-visual {
+    min-height: 75vh;
+    padding: 0.875rem 0.625rem;
+  }
+  
+  .eyebrow {
+    font-size: 0.625rem;
+  }
+  
+  .hero-title {
+    font-size: 0.9375rem;
+  }
+  
+  .hero-subtext {
+    font-size: 0.75rem;
+  }
+  
+  .hero-cta {
+    padding: 0.6875rem 0.875rem;
+    font-size: 0.75rem;
+  }
 }
 
 /* -------------------- Navbar -------------------- */

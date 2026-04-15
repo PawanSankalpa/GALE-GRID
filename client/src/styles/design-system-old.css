@@ -1,0 +1,692 @@
+/* ============================================
+   PREMIUM DESIGN SYSTEM
+   $100,000+ Agency-Level Design Foundation
+   ============================================
+   
+   PHILOSOPHY:
+   • Calm confidence over aggressive selling
+   • Generous spacing creates luxury feel
+   • Soft contrasts reduce eye strain
+   • Every pixel serves a purpose
+   • Design should feel inevitable, not decorated
+   
+============================================ */
+
+/* ============================================
+   1. PREMIUM COLOR PALETTE
+   ============================================ */
+
+:root {
+  /* ─────────────────────────────────────────
+     PRIMARY: Warm Charcoal (Trust & Authority)
+     Used for: Headlines, important text, nav
+     ───────────────────────────────────────── */
+  --color-primary-950: #0A0A0B;
+  --color-primary-900: #141416;
+  --color-primary-800: #1E1E21;
+  --color-primary-700: #2D2D32;
+  --color-primary-600: #3D3D44;
+  --color-primary-500: #52525B;
+  --color-primary-400: #71717A;
+  --color-primary-300: #A1A1AA;
+  --color-primary-200: #D4D4D8;
+  --color-primary-100: #E4E4E7;
+  --color-primary-50: #FAFAFA;
+  
+  /* ─────────────────────────────────────────
+     ACCENT: Warm Amber/Orange (Energy & Action)
+     Used for: CTAs, highlights, links
+     ───────────────────────────────────────── */
+  --color-accent-600: #D97706;
+  --color-accent-500: #F59E0B;
+  --color-accent-400: #FBBF24;
+  --color-accent-300: #FCD34D;
+  --color-accent-200: #FDE68A;
+  --color-accent-100: #FEF3C7;
+  --color-accent-50: #FFFBEB;
+  
+  /* Premium Gradient Accent */
+  --gradient-accent: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  --gradient-accent-soft: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.05) 100%);
+  
+  /* ─────────────────────────────────────────
+     SECONDARY: Slate Blue (Sophistication)
+     Used for: Secondary actions, subtle accents
+     ───────────────────────────────────────── */
+  --color-secondary-600: #4F46E5;
+  --color-secondary-500: #6366F1;
+  --color-secondary-400: #818CF8;
+  --color-secondary-300: #A5B4FC;
+  --color-secondary-100: #E0E7FF;
+  --color-secondary-50: #EEF2FF;
+  
+  /* ─────────────────────────────────────────
+     SUCCESS: Emerald (Trust & Validation)
+     ───────────────────────────────────────── */
+  --color-success-600: #059669;
+  --color-success-500: #10B981;
+  --color-success-400: #34D399;
+  --color-success-100: #D1FAE5;
+  --color-success-50: #ECFDF5;
+  
+  /* ─────────────────────────────────────────
+     SURFACE COLORS (Backgrounds)
+     Carefully calibrated for eye comfort
+     ───────────────────────────────────────── */
+  --surface-base: #FFFFFF;
+  --surface-elevated: #FAFAFA;
+  --surface-subtle: #F4F4F5;
+  --surface-muted: #E4E4E7;
+  --surface-inverse: #18181B;
+  
+  /* Premium Warm White (reduces harshness) */
+  --surface-warm: #FDFCFB;
+  --surface-cream: #FAF9F7;
+  
+  /* ─────────────────────────────────────────
+     TEXT COLORS (Optimized Contrast)
+     ───────────────────────────────────────── */
+  --text-primary: #18181B;      /* Headlines, important */
+  --text-secondary: #3F3F46;    /* Body text */
+  --text-tertiary: #71717A;     /* Supporting text */
+  --text-muted: #A1A1AA;        /* Placeholders, hints */
+  --text-inverse: #FAFAFA;      /* On dark backgrounds */
+  --text-accent: #D97706;       /* Accent text */
+  
+  /* ─────────────────────────────────────────
+     BORDER COLORS
+     ───────────────────────────────────────── */
+  --border-subtle: rgba(0, 0, 0, 0.04);
+  --border-default: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.12);
+  --border-accent: rgba(245, 158, 11, 0.3);
+  
+  /* ─────────────────────────────────────────
+     SHADOW SYSTEM (Layered Depth)
+     ───────────────────────────────────────── */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.02);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.03);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 32px 64px rgba(0, 0, 0, 0.12), 0 16px 32px rgba(0, 0, 0, 0.06);
+  
+  /* Colored Shadows (for depth on accent elements) */
+  --shadow-accent: 0 8px 24px rgba(245, 158, 11, 0.15);
+  --shadow-accent-lg: 0 16px 40px rgba(245, 158, 11, 0.2);
+  
+  /* Glass Effect */
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================
+   2. TYPOGRAPHY SYSTEM
+   Premium, Readable, Authoritative
+   ============================================ */
+
+:root {
+  /* Font Families */
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  
+  /* Font Weights */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  
+  /* ─────────────────────────────────────────
+     TYPE SCALE (Perfect Fourth - 1.333)
+     Harmonious, readable hierarchy
+     ───────────────────────────────────────── */
+  
+  /* Display - Hero headlines */
+  --text-display-2xl: clamp(3rem, 6vw, 4.5rem);      /* 72px */
+  --text-display-xl: clamp(2.5rem, 5vw, 3.75rem);   /* 60px */
+  --text-display-lg: clamp(2rem, 4vw, 3rem);        /* 48px */
+  
+  /* Headings */
+  --text-h1: clamp(1.875rem, 3.5vw, 2.5rem);        /* 40px */
+  --text-h2: clamp(1.5rem, 2.5vw, 2rem);            /* 32px */
+  --text-h3: clamp(1.25rem, 2vw, 1.5rem);           /* 24px */
+  --text-h4: clamp(1.125rem, 1.5vw, 1.25rem);       /* 20px */
+  --text-h5: 1.125rem;                               /* 18px */
+  --text-h6: 1rem;                                   /* 16px */
+  
+  /* Body */
+  --text-xl: 1.25rem;      /* 20px - Large body */
+  --text-lg: 1.125rem;     /* 18px - Intro text */
+  --text-base: 1rem;       /* 16px - Body default */
+  --text-sm: 0.875rem;     /* 14px - Small text */
+  --text-xs: 0.75rem;      /* 12px - Labels, captions */
+  
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+  --leading-loose: 1.8;
+  
+  /* Letter Spacing */
+  --tracking-tighter: -0.03em;
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.02em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+}
+
+/* ============================================
+   3. SPACING SYSTEM
+   8px Base Grid - Generous & Luxurious
+   ============================================ */
+
+:root {
+  /* Base unit */
+  --space-unit: 8px;
+  
+  /* Spacing Scale */
+  --space-0: 0;
+  --space-1: 0.25rem;    /* 4px */
+  --space-2: 0.5rem;     /* 8px */
+  --space-3: 0.75rem;    /* 12px */
+  --space-4: 1rem;       /* 16px */
+  --space-5: 1.25rem;    /* 20px */
+  --space-6: 1.5rem;     /* 24px */
+  --space-8: 2rem;       /* 32px */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+  --space-20: 5rem;      /* 80px */
+  --space-24: 6rem;      /* 96px */
+  --space-32: 8rem;      /* 128px */
+  --space-40: 10rem;     /* 160px */
+  --space-48: 12rem;     /* 192px */
+  
+  /* Section Spacing (generous breathing room) */
+  --section-gap: clamp(5rem, 12vw, 10rem);
+  --section-padding-y: clamp(4rem, 10vw, 8rem);
+  --section-padding-x: clamp(1.5rem, 5vw, 4rem);
+  
+  /* Container */
+  --container-max: 1280px;
+  --container-narrow: 720px;
+  --container-wide: 1440px;
+  --container-padding: clamp(1.5rem, 5vw, 3rem);
+}
+
+/* ============================================
+   4. BORDER RADIUS
+   ============================================ */
+
+:root {
+  --radius-none: 0;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
+  --radius-full: 9999px;
+}
+
+/* ============================================
+   5. TRANSITIONS & ANIMATIONS
+   Smooth, Natural, Premium Feel
+   ============================================ */
+
+:root {
+  /* Durations */
+  --duration-instant: 0ms;
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+  
+  /* Easings */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Premium Easings */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+  
+  /* Combined Transitions */
+  --transition-fast: var(--duration-fast) var(--ease-out);
+  --transition-normal: var(--duration-normal) var(--ease-out);
+  --transition-slow: var(--duration-slow) var(--ease-smooth);
+  --transition-spring: var(--duration-slow) var(--ease-spring);
+}
+
+/* ============================================
+   6. Z-INDEX SCALE
+   ============================================ */
+
+:root {
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  --z-toast: 800;
+  --z-max: 9999;
+}
+
+/* ============================================
+   7. BREAKPOINTS (Reference)
+   ============================================ */
+
+/*
+  Mobile:  < 640px
+  Tablet:  640px - 1024px
+  Desktop: 1024px - 1280px
+  Wide:    > 1280px
+  
+  Usage:
+  @media (min-width: 640px)  { sm }
+  @media (min-width: 768px)  { md }
+  @media (min-width: 1024px) { lg }
+  @media (min-width: 1280px) { xl }
+  @media (min-width: 1536px) { 2xl }
+*/
+
+/* ============================================
+   8. BASE RESET & UTILITIES
+   ============================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+  background-color: var(--surface-warm);
+}
+
+/* Premium Text Selection */
+::selection {
+  background-color: rgba(245, 158, 11, 0.2);
+  color: var(--text-primary);
+}
+
+/* Focus Styles */
+:focus-visible {
+  outline: 2px solid var(--color-accent-500);
+  outline-offset: 3px;
+}
+
+/* ============================================
+   9. TYPOGRAPHY CLASSES
+   ============================================ */
+
+.text-display-2xl {
+  font-size: var(--text-display-2xl);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+}
+
+.text-display-xl {
+  font-size: var(--text-display-xl);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+}
+
+.text-display-lg {
+  font-size: var(--text-display-lg);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+}
+
+.text-h1 {
+  font-size: var(--text-h1);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-snug);
+  color: var(--text-primary);
+}
+
+.text-h2 {
+  font-size: var(--text-h2);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-snug);
+  color: var(--text-primary);
+}
+
+.text-h3 {
+  font-size: var(--text-h3);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-snug);
+  color: var(--text-primary);
+}
+
+.text-body-lg {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+}
+
+.text-body {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+}
+
+.text-small {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--text-tertiary);
+}
+
+/* ============================================
+   10. PREMIUM BUTTON SYSTEM
+   ============================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  line-height: 1;
+  text-decoration: none;
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  white-space: nowrap;
+}
+
+/* Primary Button - Confident, not loud */
+.btn-primary {
+  background: var(--gradient-accent);
+  color: white;
+  box-shadow: var(--shadow-sm), var(--shadow-accent);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md), var(--shadow-accent-lg);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary Button - Understated elegance */
+.btn-secondary {
+  background: var(--surface-base);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-xs);
+}
+
+.btn-secondary:hover {
+  background: var(--surface-subtle);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Ghost Button */
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+}
+
+.btn-ghost:hover {
+  background: var(--surface-subtle);
+  color: var(--text-primary);
+}
+
+/* Button Sizes */
+.btn-sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-xs);
+}
+
+.btn-lg {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--text-base);
+}
+
+.btn-xl {
+  padding: var(--space-5) var(--space-10);
+  font-size: var(--text-lg);
+}
+
+/* ============================================
+   11. CONTAINER UTILITIES
+   ============================================ */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.container-narrow {
+  max-width: var(--container-narrow);
+}
+
+.container-wide {
+  max-width: var(--container-wide);
+}
+
+/* ============================================
+   12. SECTION UTILITIES
+   ============================================ */
+
+.section {
+  padding: var(--section-padding-y) 0;
+  position: relative;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto var(--space-16);
+}
+
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  margin-bottom: var(--space-4);
+}
+
+.section-title {
+  font-size: var(--text-h1);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-snug);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.section-subtitle {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--text-tertiary);
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   13. CARD SYSTEM
+   ============================================ */
+
+.card {
+  background: var(--surface-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  transition: all var(--transition-normal);
+}
+
+.card:hover {
+  border-color: var(--border-default);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.card-elevated {
+  box-shadow: var(--shadow-md);
+}
+
+.card-glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--glass-border);
+}
+
+/* ============================================
+   14. PREMIUM ANIMATIONS
+   ============================================ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Animation Classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s var(--ease-premium) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s var(--ease-out) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.4s var(--ease-spring) forwards;
+}
+
+/* Stagger Delays */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+/* ============================================
+   15. REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+   16. DARK MODE SUPPORT (Optional)
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Force light mode for premium agency feel */
+    color-scheme: light;
+  }
+}

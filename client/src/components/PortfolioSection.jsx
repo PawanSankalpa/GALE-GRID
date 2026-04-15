@@ -97,15 +97,14 @@ const PortfolioSection = () => {
             <div className="pf-arrow-fixed"><span className="arrow">↗</span></div>
           </article>
 
-          {/* Right bottom: finance/percentage card */}
-          <article className="pf-card pf-r2-right-bottom pf-no-tilt reveal" aria-label="Financing options" tabIndex={0}>
-            <img src={rightImg} loading="lazy" decoding="async" alt="Financing backdrop" />
-            <div className="pf-veil" />
-            <div className="pf-finance-content">
-              <span className="pf-finance-label">Starting from</span>
-              <div className="pf-rate">3.99%</div>
-              <p className="pf-finance-sub">Flexible financing available</p>
-              <Link to="/contact" className="pf-finance-btn">Get Quote</Link>
+          {/* Right bottom: mirror center stat (99%) */}
+          <article className="pf-card pf-r2-right-bottom pf-no-tilt reveal" aria-label="Customer recommendation" tabIndex={0}>
+            <img src={luxiaHero3} loading="lazy" decoding="async" alt="Customer satisfaction" />
+            <div className="pf-veil pf-veil-stat" />
+            <div className="pf-stat-overlay" aria-hidden="true">
+              <div className="pf-stat-percent">99%</div>
+              <p className="pf-stat-line">Clients recommend us to their network</p>
+              <Link to="/contact" className="pf-stat-btn" aria-label="Start your project">Start Your Project</Link>
             </div>
           </article>
         </div>

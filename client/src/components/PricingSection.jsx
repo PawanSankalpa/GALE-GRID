@@ -1,264 +1,470 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { 
+  Sparkles, 
+  Zap, 
+  Rocket, 
+  Crown,
+  ArrowRight,
+  Shield,
+  Clock,
+  TrendingUp,
+  Users,
+  Star,
+  Check,
+  X,
+  MessageCircle,
+  Headphones,
+  Award,
+} from "lucide-react";
 import "./styles/PricingSection.css";
 
 const plans = [
   {
     id: "starter",
     name: "Starter",
-    price: "$1,499",
-    highlight: "Great for small businesses & startups",
-    bullets: ["Up to 5 pages", "Mobile-optimized", "1 month support"],
-    specs: ["Basic SEO", "Contact form", "Google Analytics", "2-3 week delivery", "Responsive design", "Basic analytics"],
+    tagline: "Perfect Start",
+    price: "1,499",
+    originalPrice: "1,999",
+    period: "one-time payment",
+    description: "Launch your professional online presence with everything you need to get started.",
+    icon: Zap,
+    color: "#10B981",
+    accentLight: "rgba(16, 185, 129, 0.1)",
+    deliveryTime: "2-3 weeks",
+    outcome: "Get online fast with instant credibility",
     features: [
-      { name: "Design & Pages", value: "Up to 5 pages", included: true },
-      { name: "Support", value: "1 month", included: true },
-      { name: "SEO", value: "Basic setup", included: true },
-      { name: "CMS", value: "Not included", included: false },
-      { name: "E-commerce", value: "Not included", included: false },
-      { name: "API Integrations", value: "Basic", included: false },
+      { text: "5 Custom Pages", included: true },
+      { text: "Mobile-First Design", included: true },
+      { text: "Basic SEO Setup", included: true },
+      { text: "Contact Form", included: true },
+      { text: "Analytics Dashboard", included: true },
+      { text: "1 Month Support", included: true },
+      { text: "CMS Access", included: false },
+      { text: "E-commerce", included: false },
     ],
-    cta: "Get Started",
     popular: false,
   },
   {
     id: "professional",
     name: "Professional",
-    price: "$2,999",
-    highlight: "Perfect for growing businesses",
-    bullets: ["Up to 10 pages", "Custom animations", "3 months support"],
-    specs: ["Advanced SEO", "CMS included", "Performance boost", "3-4 week delivery", "Custom animations", "Advanced analytics"],
+    tagline: "Most Popular",
+    price: "2,999",
+    originalPrice: "3,999",
+    period: "one-time payment",
+    description: "Scale your business with advanced features and conversion-focused design.",
+    icon: Rocket,
+    color: "#FF6B00",
+    accentLight: "rgba(255, 107, 0, 0.1)",
+    deliveryTime: "3-4 weeks",
+    outcome: "2x more conversions guaranteed",
     features: [
-      { name: "Design & Pages", value: "Up to 10 pages", included: true },
-      { name: "Support", value: "3 months", included: true },
-      { name: "SEO", value: "Advanced strategy", included: true },
-      { name: "CMS", value: "Included", included: true },
-      { name: "E-commerce", value: "Basic setup", included: true },
-      { name: "API Integrations", value: "Limited", included: true },
+      { text: "10 Custom Pages", included: true },
+      { text: "Premium Animations", included: true },
+      { text: "Advanced SEO", included: true },
+      { text: "CMS Dashboard", included: true },
+      { text: "Speed Optimization", included: true },
+      { text: "3 Months Support", included: true },
+      { text: "Basic E-commerce", included: true },
+      { text: "Custom Integrations", included: false },
     ],
-    cta: "Get Started",
     popular: true,
   },
   {
     id: "enterprise",
     name: "Enterprise",
-    price: "$5,999+",
-    highlight: "Ideal for large businesses & e-commerce",
-    bullets: ["Unlimited pages", "E-commerce ready", "6 months support"],
-    specs: ["Full SEO strategy", "API integrations", "Priority dev", "5-8 week delivery", "Custom features", "Enterprise analytics"],
+    tagline: "Full Power",
+    price: "5,999",
+    originalPrice: "7,999",
+    period: "starting price",
+    description: "Complete digital solution with unlimited potential and dedicated support.",
+    icon: Crown,
+    color: "#8B5CF6",
+    accentLight: "rgba(139, 92, 246, 0.1)",
+    deliveryTime: "5-8 weeks",
+    outcome: "Unlimited growth & full automation",
     features: [
-      { name: "Design & Pages", value: "Unlimited pages", included: true },
-      { name: "Support", value: "6 months", included: true },
-      { name: "SEO", value: "Full strategy", included: true },
-      { name: "CMS", value: "Advanced CMS", included: true },
-      { name: "E-commerce", value: "Full platform", included: true },
-      { name: "API Integrations", value: "Custom integrations", included: true },
+      { text: "Unlimited Pages", included: true },
+      { text: "Full E-commerce", included: true },
+      { text: "Custom APIs", included: true },
+      { text: "Advanced CMS", included: true },
+      { text: "AI Features", included: true },
+      { text: "6 Months Support", included: true },
+      { text: "Priority Queue", included: true },
+      { text: "White-Glove Setup", included: true },
     ],
-    cta: "Get Started",
     popular: false,
   },
 ];
 
-const featureComparison = [
-  { name: "Number of Pages", starter: "Up to 5", professional: "Up to 10", enterprise: "Unlimited" },
-  { name: "Support Period", starter: "1 month", professional: "3 months", enterprise: "6 months" },
-  { name: "SEO Strategy", starter: "Basic", professional: "Advanced", enterprise: "Full Strategy" },
-  { name: "Content Management", starter: "Not included", professional: "Basic CMS", enterprise: "Advanced CMS" },
-  { name: "E-commerce", starter: "Not included", professional: "Basic setup", enterprise: "Full platform" },
-  { name: "API Integrations", starter: "Limited", professional: "Custom APIs", enterprise: "Advanced integrations" },
-  { name: "Development Priority", starter: "Standard", professional: "Priority", enterprise: "Highest priority" },
-  { name: "Delivery Time", starter: "2-3 weeks", professional: "3-4 weeks", enterprise: "5-8 weeks" },
+const hireTeamOptions = [
+  {
+    id: "monthly-team",
+    name: "Monthly Team",
+    tagline: "Ongoing Support",
+    price: "3,999",
+    originalPrice: "5,999",
+    period: "per month",
+    description: "Get a dedicated web design team to handle all your digital needs continuously.",
+    icon: Users,
+    color: "#3B82F6",
+    accentLight: "rgba(59, 130, 246, 0.1)",
+    features: [
+      { text: "3-Person Design Team", included: true },
+      { text: "Unlimited Revisions", included: true },
+      { text: "Website Maintenance", included: true },
+      { text: "40 Project Hours/Month", included: true },
+      { text: "Priority Support 24/7", included: true },
+      { text: "Strategy Consulting", included: true },
+      { text: "Weekly Check-ins", included: true },
+      { text: "Custom Integrations", included: true },
+    ],
+    popular: true,
+  },
+  {
+    id: "quarterly-team",
+    name: "Quarterly Team",
+    tagline: "Quarterly Sprints",
+    price: "10,999",
+    originalPrice: "14,999",
+    period: "per quarter",
+    description: "Intensive quarterly projects with full team dedication and advanced features.",
+    icon: Rocket,
+    color: "#FF6B00",
+    accentLight: "rgba(255, 107, 0, 0.1)",
+    features: [
+      { text: "5-Person Expert Team", included: true },
+      { text: "Unlimited Revisions", included: true },
+      { text: "Full App Development", included: true },
+      { text: "120 Project Hours/Quarter", included: true },
+      { text: "24/7 Priority Support", included: true },
+      { text: "Quarterly Roadmap Planning", included: true },
+      { text: "Bi-weekly Strategy Meetings", included: true },
+      { text: "Advanced Analytics Setup", included: true },
+    ],
+    popular: false,
+  },
+  {
+    id: "annual-team",
+    name: "Annual Team",
+    tagline: "Best Value",
+    price: "39,999",
+    originalPrice: "54,999",
+    period: "per year",
+    description: "Year-long partnership with dedicated team, unlimited projects, and complete digital transformation.",
+    icon: Crown,
+    color: "#8B5CF6",
+    accentLight: "rgba(139, 92, 246, 0.1)",
+    features: [
+      { text: "Full-time Design Team", included: true },
+      { text: "Unlimited Projects", included: true },
+      { text: "Complete Digital Suite", included: true },
+      { text: "500+ Project Hours/Year", included: true },
+      { text: "24/7 White-Glove Support", included: true },
+      { text: "Monthly Strategy Sessions", included: true },
+      { text: "Performance Reviews", included: true },
+      { text: "Executive Reporting", included: true },
+    ],
+    popular: false,
+  },
+];
+
+const stats = [
+  { value: "150+", label: "Projects", icon: Award },
+  { value: "5.0", label: "Rating", icon: Star },
+  { value: "100%", label: "Satisfaction", icon: Shield },
+];
+
+const guarantees = [
+  { icon: Shield, text: "Money-back guarantee" },
+  { icon: Headphones, text: "24/7 support" },
+  { icon: Clock, text: "On-time delivery" },
+  { icon: MessageCircle, text: "Unlimited revisions" },
 ];
 
 const PricingSection = () => {
-  const [modal, setModal] = useState(null);
-  const [activePlan, setActivePlan] = useState("professional");
+  const [hoveredPlan, setHoveredPlan] = useState(null);
+  const [inView, setInView] = useState(false);
+  const [activeFeature, setActiveFeature] = useState(null);
+  const [pricingMode, setPricingMode] = useState("packages"); // "packages" or "hire"
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section className="pricing-section">
-      <header className="pricing-header">
-        <h2>Simple & Transparent Pricing</h2>
-        <p className="subtitle">No hidden fees. Choose the perfect plan for your business growth.</p>
-        <p className="comparison-note">Compare features to understand why each plan offers different value</p>
-      </header>
-
-      {/* Plan Selector Tabs */}
-      <div className="plan-selector">
-        {plans.map((plan) => (
-          <button
-            key={plan.id}
-            className={`plan-tab ${activePlan === plan.id ? "active" : ""}`}
-            onClick={() => setActivePlan(plan.id)}
-          >
-            {plan.name}
-            {plan.popular && <span className="popular-badge">Most Popular</span>}
-          </button>
-        ))}
+    <section className="pricing-v3" ref={sectionRef}>
+      {/* Ambient Background */}
+      <div className="pricing-v3-bg">
+        <div className="bg-gradient-orb bg-orb-1"></div>
+        <div className="bg-gradient-orb bg-orb-2"></div>
+        <div className="bg-grid"></div>
       </div>
 
-      {/* Active Plan Display */}
-      <div className="active-plan-display">
-        {plans
-          .filter((plan) => plan.id === activePlan)
-          .map((plan) => (
-            <div className="active-plan-card" key={plan.id}>
-              <div className="plan-header">
-                <div className="plan-title">
-                  <h3>{plan.name}</h3>
-                  <span className="price">{plan.price}</span>
-                  <p className="highlight">{plan.highlight}</p>
-                </div>
-                <div className="plan-features-grid">
-                  {plan.features.map((feature, idx) => (
-                    <div className="feature-item" key={idx}>
-                      <div className="feature-name">{feature.name}</div>
-                      <div className={`feature-value ${feature.included ? "included" : "not-included"}`}>
-                        {feature.value}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="plan-actions">
-                <button className="view-specs" onClick={() => setModal(plans.findIndex(p => p.id === plan.id))}>
-                  View All Specifications
-                </button>
-                <Link to="/contact" className="cta-btn">
-                  {plan.cta} - {plan.name}
-                </Link>
-              </div>
-            </div>
-          ))}
-      </div>
-
-      {/* All Plans Grid */}
-      <div className="all-plans-grid">
-        {plans.map((plan) => (
-          <div className={`plan-card ${plan.popular ? "popular" : ""}`} key={plan.id}>
-            {plan.popular && <div className="popular-ribbon">Most Popular</div>}
-            <div className="card-header">
-              <h3>{plan.name}</h3>
-              <span className="price">{plan.price}</span>
-              <p className="highlight">{plan.highlight}</p>
-            </div>
-
-            <ul className="card-bullets">
-              {plan.bullets.map((b, i) => (
-                <li key={i}>{b}</li>
-              ))}
-            </ul>
-
-            <div className="value-proposition">
-              <h4>Why choose {plan.name}?</h4>
-              <p>
-                {plan.id === "starter" && "Perfect for establishing your online presence with essential features."}
-                {plan.id === "professional" && "Includes advanced features for growing businesses with CMS and better SEO."}
-                {plan.id === "enterprise" && "Complete solution with unlimited pages, e-commerce, and custom integrations."}
-              </p>
-            </div>
-
-            <button className="view-specs" onClick={() => setModal(plans.indexOf(plan))}>
-              View Full Specs
-            </button>
-            <Link to="/contact" className="cta-btn">
-              {plan.cta}
-            </Link>
-          </div>
-        ))}
-      </div>
-
-      {/* Feature Comparison Table */}
-      <div className="comparison-section">
-        <h3>Feature Comparison</h3>
-        <p className="comparison-subtitle">See exactly what each plan offers to make an informed decision</p>
-        
-        <div className="comparison-table">
-          <div className="table-header">
-            <div className="feature-column">Feature</div>
-            <div className="plan-column">Starter</div>
-            <div className="plan-column">Professional</div>
-            <div className="plan-column">Enterprise</div>
+      <div className="pricing-v3-container">
+        {/* Header */}
+        <header className={`pricing-v3-header ${inView ? "animate-in" : ""}`}>
+          <div className="header-badge">
+            <Sparkles size={14} />
+            <span>Simple Pricing</span>
           </div>
           
-          {featureComparison.map((row, idx) => (
-            <div className="table-row" key={idx}>
-              <div className="feature-column">{row.name}</div>
-              <div className="plan-column">{row.starter}</div>
-              <div className="plan-column highlight">{row.professional}</div>
-              <div className="plan-column premium">{row.enterprise}</div>
+          <h2 className="header-title">
+            Choose Your <span className="gradient-text">Growth Plan</span>
+          </h2>
+          
+          <p className="header-subtitle">
+            No hidden fees. No surprises. Just results.
+          </p>
+
+          {/* Pricing Mode Toggle */}
+          <div className="pricing-mode-toggle">
+            <button 
+              className={`toggle-btn ${pricingMode === "packages" ? "active" : ""}`}
+              onClick={() => setPricingMode("packages")}
+            >
+              <Zap size={16} />
+              <span>Complete a Project</span>
+            </button>
+            <div className="toggle-divider"></div>
+            <button 
+              className={`toggle-btn ${pricingMode === "hire" ? "active" : ""}`}
+              onClick={() => setPricingMode("hire")}
+            >
+              <Users size={16} />
+              <span>Hire Our Team</span>
+            </button>
+          </div>
+        </header>
+
+        {/* ===== SECTION 1: PROJECT-BASED PRICING ===== */}
+        {pricingMode === "packages" && (
+          <div className="pricing-section-wrapper fade-in">
+            {/* Pricing Cards */}
+            <div className={`pricing-v3-cards ${inView ? "animate-in" : ""}`}>
+            {plans.map((plan, index) => {
+              const IconComponent = plan.icon;
+              const isHovered = hoveredPlan === plan.id;
+              const isPopular = plan.popular;
+              
+              return (
+                <div 
+                  className={`pricing-card-v3 ${isPopular ? "popular" : ""} ${isHovered ? "hovered" : ""}`}
+                  key={plan.id}
+                  style={{ 
+                    "--plan-color": plan.color,
+                    "--plan-accent": plan.accentLight,
+                    "--delay": `${index * 0.1}s`
+                  }}
+                  onMouseEnter={() => setHoveredPlan(plan.id)}
+                  onMouseLeave={() => setHoveredPlan(null)}
+                >
+                  {/* Popular Indicator */}
+                  {isPopular && (
+                    <div className="popular-ribbon">
+                      <Star size={12} fill="currentColor" />
+                      <span>Best Value</span>
+                    </div>
+                  )}
+
+                  {/* Card Top Section */}
+                  <div className="card-top">
+                    <div className="plan-icon-badge">
+                      <IconComponent size={22} strokeWidth={2} />
+                    </div>
+                    
+                    <div className="plan-header">
+                      <span className="plan-tagline">{plan.tagline}</span>
+                      <h3 className="plan-name">{plan.name}</h3>
+                    </div>
+                  </div>
+
+                  {/* Pricing */}
+                  <div className="plan-pricing-block">
+                    <div className="price-main">
+                      <span className="price-currency">$</span>
+                      <span className="price-amount">{plan.price}</span>
+                    </div>
+                    <div className="price-meta">
+                      <span className="price-original">${plan.originalPrice}</span>
+                      <span className="price-period">{plan.period}</span>
+                    </div>
+                  </div>
+
+                  {/* Outcome Badge */}
+                  <div className="outcome-badge">
+                    <TrendingUp size={14} />
+                    <span>{plan.outcome}</span>
+                  </div>
+
+                  {/* Features */}
+                  <ul className="features-list-v3">
+                    {plan.features.map((feature, idx) => (
+                      <li 
+                        key={idx} 
+                        className={`feature-item ${feature.included ? "included" : "excluded"}`}
+                        onMouseEnter={() => setActiveFeature(`${plan.id}-${idx}`)}
+                        onMouseLeave={() => setActiveFeature(null)}
+                      >
+                        <span className={`feature-check ${activeFeature === `${plan.id}-${idx}` ? "pulse" : ""}`}>
+                          {feature.included ? <Check size={12} strokeWidth={3} /> : <X size={10} strokeWidth={2.5} />}
+                        </span>
+                        <span className="feature-text">{feature.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Delivery */}
+                  <div className="delivery-info">
+                    <Clock size={14} />
+                    <span>{plan.deliveryTime}</span>
+                  </div>
+
+                  {/* CTA */}
+                  <Link 
+                    to="/contact" 
+                    className={`card-cta ${isPopular ? "cta-primary" : "cta-secondary"}`}
+                  >
+                    <span>Get Started</span>
+                    <ArrowRight size={16} className="cta-arrow" />
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        )}
+
+        {/* ===== SECTION 2: TEAM HIRE PRICING ===== */}
+        {pricingMode === "hire" && (
+        <div className="team-hire-section fade-in">
+          {/* Team Hire Cards */}
+          <div className={`pricing-v3-cards team-hire-cards ${inView ? "animate-in" : ""}`}>
+            {hireTeamOptions.map((plan, index) => {
+              const IconComponent = plan.icon;
+              const isHovered = hoveredPlan === plan.id;
+              const isPopular = plan.popular;
+              
+              return (
+                <div 
+                  className={`pricing-card-v3 ${isPopular ? "popular" : ""} ${isHovered ? "hovered" : ""}`}
+                  key={plan.id}
+                  style={{ 
+                    "--plan-color": plan.color,
+                    "--plan-accent": plan.accentLight,
+                    "--delay": `${index * 0.1}s`
+                  }}
+                  onMouseEnter={() => setHoveredPlan(plan.id)}
+                  onMouseLeave={() => setHoveredPlan(null)}
+                >
+                  {/* Popular Indicator */}
+                  {isPopular && (
+                    <div className="popular-ribbon">
+                      <Star size={12} fill="currentColor" />
+                      <span>Most Popular</span>
+                    </div>
+                  )}
+
+                  {/* Card Top Section */}
+                  <div className="card-top">
+                    <div className="plan-icon-badge">
+                      <IconComponent size={22} strokeWidth={2} />
+                    </div>
+                    
+                    <div className="plan-header">
+                      <span className="plan-tagline">{plan.tagline}</span>
+                      <h3 className="plan-name">{plan.name}</h3>
+                    </div>
+                  </div>
+
+                  {/* Pricing */}
+                  <div className="plan-pricing-block">
+                    <div className="price-main">
+                      <span className="price-currency">$</span>
+                      <span className="price-amount">{plan.price}</span>
+                    </div>
+                    <div className="price-meta">
+                      <span className="price-original">${plan.originalPrice}</span>
+                      <span className="price-period">{plan.period}</span>
+                    </div>
+                  </div>
+
+                  {/* Team Badge */}
+                  <div className="outcome-badge team-badge">
+                    <Users size={14} />
+                    <span>Dedicated Team Partnership</span>
+                  </div>
+
+                  {/* Features */}
+                  <ul className="features-list-v3">
+                    {plan.features.map((feature, idx) => (
+                      <li 
+                        key={idx} 
+                        className={`feature-item ${feature.included ? "included" : "excluded"}`}
+                        onMouseEnter={() => setActiveFeature(`${plan.id}-${idx}`)}
+                        onMouseLeave={() => setActiveFeature(null)}
+                      >
+                        <span className={`feature-check ${activeFeature === `${plan.id}-${idx}` ? "pulse" : ""}`}>
+                          {feature.included ? <Check size={12} strokeWidth={3} /> : <X size={10} strokeWidth={2.5} />}
+                        </span>
+                        <span className="feature-text">{feature.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA */}
+                  <Link 
+                    to="/contact" 
+                    className={`card-cta ${isPopular ? "cta-primary" : "cta-secondary"}`}
+                  >
+                    <span>Schedule Consultation</span>
+                    <ArrowRight size={16} className="cta-arrow" />
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        )}
+
+        {/* Guarantees Strip */}
+        <div className={`guarantees-strip ${inView ? "animate-in" : ""}`}>
+          {guarantees.map((item, i) => (
+            <div className="guarantee-chip" key={i}>
+              <item.icon size={16} />
+              <span>{item.text}</span>
             </div>
           ))}
         </div>
-      </div>
 
-      {/* Value Explanation */}
-      <div className="value-explanation">
-        <h3>Understanding the Value</h3>
-        <div className="value-points">
-          <div className="value-point">
-            <div className="value-icon">💰</div>
-            <h4>Why Professional costs more</h4>
-            <p>Includes CMS for easy content updates, advanced SEO for better rankings, and longer support period.</p>
-          </div>
-          <div className="value-point">
-            <div className="value-icon">⚡</div>
-            <h4>Why Enterprise costs more</h4>
-            <p>Unlimited pages, full e-commerce capabilities, custom API integrations, and highest priority support.</p>
-          </div>
-          <div className="value-point">
-            <div className="value-icon">🎯</div>
-            <h4>Right Plan for You</h4>
-            <p>Starter: New businesses. Professional: Growing businesses. Enterprise: Scaling businesses.</p>
+        {/* Bottom CTA */}
+        <div className={`pricing-v3-cta ${inView ? "animate-in" : ""}`}>
+          <div className="cta-box">
+            <div className="cta-content">
+              <h3>Need something custom?</h3>
+              <p>Let's discuss your specific requirements and create a tailored solution.</p>
+            </div>
+            <Link to="/contact" className="cta-button">
+              <MessageCircle size={18} />
+              <span>Book Free Call</span>
+              <ArrowRight size={16} />
+            </Link>
           </div>
         </div>
-      </div>
-
-      {/* Modal */}
-      {modal !== null && (
-        <div className="modal-overlay" onClick={() => setModal(null)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <h3>{plans[modal].name} – Complete Specifications</h3>
-              <p className="modal-subtitle">Everything included in your {plans[modal].name.toLowerCase()} plan</p>
-            </div>
-            <div className="modal-content">
-              <div className="modal-specs">
-                <h4>Core Features</h4>
-                <ul>
-                  {plans[modal].specs.map((s, i) => (
-                    <li key={i}>{s}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="modal-value">
-                <h4>Business Value</h4>
-                <p>
-                  {modal === 0 && "Get your business online quickly with essential features to establish credibility and reach customers."}
-                  {modal === 1 && "Scale your online presence with tools that support growth, content management, and improved visibility."}
-                  {modal === 2 && "Complete digital solution for enterprises needing custom features, e-commerce, and advanced integrations."}
-                </p>
-              </div>
-            </div>
-            <div className="modal-actions">
-              <Link to="/contact" className="cta-btn">
-                Get {plans[modal].name}
-              </Link>
-              <button className="close-btn" onClick={() => setModal(null)}>
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* CTA Section */}
-      <div className="final-cta">
-        <h3>Ready to Transform Your Online Presence?</h3>
-        <p>Schedule a free consultation to discuss which plan fits your business best.</p>
-        <Link to="/contact" className="final-cta-btn">
-          Schedule Free Consultation
-        </Link>
       </div>
     </section>
   );

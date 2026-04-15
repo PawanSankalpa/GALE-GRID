@@ -1,638 +1,353 @@
-
-
-
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import "./Services.css";
 import NavBar from "../../components/NavBar";
-import { 
-  Code2, Database, Layout, Zap, Shield, 
-  ArrowRight, Check, X, Play, Pause,
-  ChevronDown, ChevronRight, Layers, 
-  BarChart3, Lock, RefreshCw, MessageCircle, 
-  Mail, Phone, Sparkles, TrendingUp, Users
-} from 'lucide-react';
+import Footer from "../../components/Footer";
+import CTA from "../../components/CTA";
+import {
+  Code2, Database, Shield, ArrowUpRight, ArrowRight, Check,
+  BarChart3, RefreshCw, MessageCircle, Mail, Phone,
+  Sparkles, Globe, Palette, Hotel, CalendarCheck,
+  Users, BellRing, LayoutDashboard, Cpu, Workflow,
+  TrendingUp, Search, Rocket, Headphones, CheckCircle2,
+  Building2, Briefcase, ClipboardList
+} from "lucide-react";
 
-// Real images
-import heroImg from "../../assets/HeroSliderPics/beautiful-bright-empire-state-building-nighttime.jpg";
-import systemImg from "../../assets/portfolioPics/luxia-hero2.png";
-import fullstackImg from "../../assets/portfolioPics/carl-heyerdahl-KE0nC8-58MQ-unsplash.jpg";
-import dashboardImg from "../../assets/portfolioPics/visitor-management.jpeg";
-
-const services = [
+/* ─── SERVICE DATA ─── */
+const coreServices = [
   {
-    id: "custom-systems",
-    icon: <Layers size={28} />,
-    title: "Custom Website Systems",
-    subtitle: "Not templates. Not themes. Systems built for your business.",
-    problem: "Most websites are cobbled from templates that break, slow you down, and limit growth.",
-    solution: "We build custom systems designed around how your business actually works.",
-    outcomes: [
-      "Faster load times = better Google rankings",
-      "Built specifically for your workflow",
-      "No bloated plugins or maintenance nightmares",
-      "Scales with your business without breaking"
-    ],
-    includes: [
-      "Custom UI & UX design",
-      "Modern frontend development (React/Next.js)",
-      "Performance optimization from day one",
-      "SEO-ready architecture",
-      "Fully responsive on all devices",
-      "Mobile-first approach"
-    ],
-    image: systemImg,
-    notIncluded: ["Generic templates", "Outdated WordPress builds", "Plugin dependency"]
+    id: "web-dev",
+    icon: <Globe size={28} />,
+    title: "Website & Web Application Development",
+    problem: "Your business needs a strong online presence that works around the clock — not a brochure that sits idle.",
+    solution: "We build fast, responsive websites and web applications tailored to your operations, designed to convert visitors into customers.",
+    features: ["Custom design & development", "Mobile-first responsive layouts", "SEO-optimized from day one", "Fast loading under 2 seconds"],
+    color: "#3B82F6",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
   },
   {
-    id: "fullstack-dev",
-    icon: <Database size={28} />,
-    title: "Full-Stack Development & Databases",
-    subtitle: "We build the logic behind your website, not just the visuals.",
-    problem: "Designers make things look good. We make things work.",
-    solution: "Complete backend systems that handle data, users, and automation.",
-    outcomes: [
-      "User accounts that actually make sense",
-      "Admin panels you can actually use",
-      "Data managed securely and intelligently",
-      "Automation that saves you hours per week"
-    ],
-    includes: [
-      "Backend logic & API development",
-      "Database design & setup",
-      "User authentication & security",
-      "Secure data handling",
-      "Third-party integrations",
-      "Real-time features when needed"
-    ],
-    image: fullstackImg,
-    notIncluded: ["Frontend-only builds", "Quick template hacks", "Unsecured systems"]
+    id: "automation",
+    icon: <Workflow size={28} />,
+    title: "Business Automation Systems",
+    problem: "Manual tasks are eating your team's time — data entry, follow-ups, reporting, and repetitive workflows slow everything down.",
+    solution: "We automate your core business processes so your team can focus on what matters: serving customers and growing revenue.",
+    features: ["Workflow automation", "Data sync across systems", "Automated reporting", "Reduced human error"],
+    color: "#FF6B00",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
   },
   {
-    id: "admin-dashboards",
-    icon: <BarChart3 size={28} />,
-    title: "Admin Dashboards & Internal Tools",
-    subtitle: "Manage your business without technical headaches.",
-    problem: "Most websites leave you helpless without a developer on speed dial.",
-    solution: "Custom admin panels built for humans, not engineers.",
-    outcomes: [
-      "Update content without calling us",
-      "View leads and data in real-time",
-      "Control users and permissions safely",
-      "Make changes confidently without breaking things"
-    ],
-    includes: [
-      "Custom admin interface design",
-      "Content management system (your way)",
-      "User & role management",
-      "Analytics dashboard",
-      "Safe editing environments",
-      "Training & documentation"
-    ],
-    image: dashboardImg,
-    notIncluded: ["Generic WordPress admin", "Confusing interfaces", "Technical jargon"]
+    id: "hotel",
+    icon: <Hotel size={28} />,
+    title: "Hotel Management Systems",
+    problem: "Managing rooms, guests, staff, and operations across spreadsheets and disconnected tools creates chaos.",
+    solution: "We build unified hotel management platforms — from front desk to housekeeping — that keep everything running smoothly.",
+    features: ["Room & inventory management", "Guest profiles & history", "Staff scheduling", "Revenue analytics"],
+    color: "#10B981",
+    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"
   },
   {
-    id: "performance-seo",
-    icon: <Zap size={28} />,
-    title: "Performance, SEO & Stability",
-    subtitle: "Built for speed, reliability, and long-term success.",
-    problem: "Slow websites lose customers. Unstable sites lose trust.",
-    solution: "Engineered for performance from the first line of code.",
-    outcomes: [
-      "Sub-2-second page loads",
-      "Higher Google rankings naturally",
-      "Fewer crashes = fewer support tickets",
-      "Lower long-term maintenance costs"
-    ],
-    includes: [
-      "Performance optimization",
-      "Technical SEO implementation",
-      "Code splitting & lazy loading",
-      "Image optimization",
-      "Caching strategies",
-      "Core Web Vitals tuning"
-    ],
-    image: systemImg,
-    notIncluded: ["Quick SEO fixes", "Plugin-based optimization", "Hope-based strategies"]
+    id: "booking",
+    icon: <CalendarCheck size={28} />,
+    title: "Booking & Reservation Systems",
+    problem: "Phone-based bookings lead to double bookings, missed reservations, and frustrated customers.",
+    solution: "We build online booking systems that let customers reserve 24/7, with real-time availability and instant confirmation.",
+    features: ["Real-time availability", "Automated confirmations", "Payment integration", "Calendar sync"],
+    color: "#8B5CF6",
+    image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80"
   },
   {
-    id: "ongoing-support",
-    icon: <RefreshCw size={28} />,
-    title: "Ongoing Maintenance & Growth",
-    subtitle: "We don't disappear after launch.",
-    problem: "Websites decay. Technology changes. You need a partner, not a contractor.",
-    solution: "Proactive maintenance and strategic improvements over time.",
-    outcomes: [
-      "Sleep better knowing someone's watching",
-      "Issues caught before customers notice",
-      "Continuous small improvements",
-      "Your site grows with your business"
-    ],
-    includes: [
-      "Proactive monitoring & alerts",
-      "Security updates & patches",
-      "Performance optimization",
-      "Content updates (within scope)",
-      "Monthly reports",
-      "Priority support access"
-    ],
-    image: fullstackImg,
-    notIncluded: ["Major redesigns", "New feature development", "24/7 phone support"]
+    id: "crm",
+    icon: <Users size={28} />,
+    title: "Customer Relationship Management",
+    problem: "Customer data scattered across inboxes, spreadsheets, and sticky notes means you're losing leads and repeat business.",
+    solution: "We build CRM systems that centralize every customer interaction, automate follow-ups, and help you close more deals.",
+    features: ["Centralized customer data", "Automated follow-ups", "Pipeline management", "Performance tracking"],
+    color: "#3B82F6",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "notifications",
+    icon: <BellRing size={28} />,
+    title: "Automated Emails & Notifications",
+    problem: "Manual emails and phone calls for confirmations, reminders, and cancellations waste hours every day.",
+    solution: "We set up intelligent notification systems that handle communications automatically — emails, SMS, and in-app alerts.",
+    features: ["Booking confirmations", "Reminder sequences", "Cancellation handling", "Custom templates"],
+    color: "#10B981",
+    image: "https://images.unsplash.com/photo-1563986768609-322da13575f2?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "dashboards",
+    icon: <LayoutDashboard size={28} />,
+    title: "Custom Admin Dashboards",
+    problem: "Without clear visibility into your operations, decisions are based on guesswork instead of data.",
+    solution: "We build intuitive admin dashboards and internal tools that give you real-time insights into every part of your business.",
+    features: ["Real-time analytics", "Role-based access", "Custom reporting", "Data visualization"],
+    color: "#FF6B00",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
   }
 ];
 
-const comparisonData = {
-  template: {
-    title: "Template Websites",
-    subtitle: "WordPress, Wix, Squarespace",
-    points: [
-      { text: "Built from pre-made themes", negative: true },
-      { text: "Loaded with unused features", negative: true },
-      { text: "Slow performance out of the box", negative: true },
-      { text: "Security vulnerabilities from plugins", negative: true },
-      { text: "Breaks with updates", negative: true },
-      { text: "Looks like everyone else", negative: true },
-      { text: "Limited scalability", negative: true }
-    ]
-  },
-  custom: {
-    title: "Custom Systems",
-    subtitle: "React, Next.js, Purpose-Built",
-    points: [
-      { text: "Built specifically for your business", negative: false },
-      { text: "Only what you need—nothing you don't", negative: false },
-      { text: "Optimized for speed from day one", negative: false },
-      { text: "Secure by design, no plugin risks", negative: false },
-      { text: "Stable and predictable", negative: false },
-      { text: "Unique to your brand", negative: false },
-      { text: "Grows with you without limits", negative: false }
-    ]
-  }
-};
+/* ─── SYSTEMS THINKING DATA ─── */
+const systemsThinking = [
+  { icon: <Search size={22} />, title: "End-to-End Analysis", desc: "Every business workflow is mapped and understood before we write a single line of code." },
+  { icon: <Workflow size={22} />, title: "Automation First", desc: "Manual work is identified and replaced with reliable automated processes." },
+  { icon: <TrendingUp size={22} />, title: "Built to Scale", desc: "Systems are designed to grow with your business — from 10 customers to 10,000." },
+  { icon: <Shield size={22} />, title: "Reliable & Secure", desc: "Enterprise-level security and 99.9% uptime so your operations never stop." }
+];
 
-const processSteps = [
+/* ─── INDUSTRY USE CASES ─── */
+const useCases = [
   {
-    number: "01",
-    title: "Discovery & Strategy",
-    description: "We understand your business, goals, and technical needs before writing a single line of code.",
-    duration: "1-2 weeks"
+    industry: "Hotels & Hospitality",
+    icon: <Hotel size={24} />,
+    description: "Online bookings, automated confirmations, guest communication, cancellation handling, and real-time room management — all in one system.",
+    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+    color: "#10B981"
   },
   {
-    number: "02",
-    title: "Design & Architecture",
-    description: "UI/UX design and technical architecture planning. You see exactly what you're getting.",
-    duration: "2-3 weeks"
+    industry: "Service Businesses",
+    icon: <Briefcase size={24} />,
+    description: "Appointment scheduling, automated follow-ups, invoicing, and customer profiles that help you deliver better service and retain clients.",
+    image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80",
+    color: "#3B82F6"
   },
   {
-    number: "03",
-    title: "Development & Testing",
-    description: "We build, you review. Clear milestones, regular check-ins, no surprises.",
-    duration: "4-8 weeks"
-  },
-  {
-    number: "04",
-    title: "Launch & Training",
-    description: "Smooth deployment, admin training, and documentation. You're never left guessing.",
-    duration: "1 week"
-  },
-  {
-    number: "05",
-    title: "Support & Growth",
-    description: "Ongoing monitoring, updates, and improvements. We're with you for the long haul.",
-    duration: "Ongoing"
+    industry: "Internal Operations",
+    icon: <Building2 size={24} />,
+    description: "Custom dashboards, reporting tools, team coordination, and workflow automation that eliminate bottlenecks and give leadership full visibility.",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+    color: "#FF6B00"
   }
+];
+
+/* ─── PROCESS STEPS ─── */
+const processSteps = [
+  { step: "01", label: "Business Analysis", description: "We study your business, customers, and workflows to understand exactly what needs to be built.", icon: <ClipboardList size={24} />, color: "#3B82F6" },
+  { step: "02", label: "System Design", description: "We architect the complete system — databases, workflows, integrations — before development begins.", icon: <Palette size={24} />, color: "#10B981" },
+  { step: "03", label: "Development & Integration", description: "We build your system in phases, testing each module and integrating with your existing tools.", icon: <Code2 size={24} />, color: "#FF6B00" },
+  { step: "04", label: "Testing & Deployment", description: "Rigorous testing across all scenarios. We launch only when everything runs perfectly.", icon: <Rocket size={24} />, color: "#8B5CF6" },
+  { step: "05", label: "Ongoing Support", description: "Continuous monitoring, optimization, and support to keep your systems running and improving.", icon: <Headphones size={24} />, color: "#3B82F6" }
 ];
 
 const Services = () => {
-  const [expandedService, setExpandedService] = useState(null);
-  const [comparisonSlider, setComparisonSlider] = useState(50);
-  const [activeProcess, setActiveProcess] = useState(0);
-  const [isAutoPlay, setIsAutoPlay] = useState(true);
-  const sliderRef = useRef(null);
+  const [activeService, setActiveService] = useState(0);
+  const [visibleSections, setVisibleSections] = useState({});
 
-  // Auto-advance process steps
   useEffect(() => {
-    if (!isAutoPlay) return;
-    const interval = setInterval(() => {
-      setActiveProcess(prev => (prev + 1) % processSteps.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [isAutoPlay]);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setVisibleSections(prev => ({ ...prev, [entry.target.id]: true }));
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
+    );
 
-  const handleSliderDrag = (e) => {
-    if (!sliderRef.current) return;
-    const rect = sliderRef.current.getBoundingClientRect();
-    const x = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-    const percentage = ((x - rect.left) / rect.width) * 100;
-    setComparisonSlider(Math.min(Math.max(percentage, 0), 100));
-  };
-
-  const toggleService = (id) => {
-    setExpandedService(expandedService === id ? null : id);
-  };
+    document.querySelectorAll("[data-srv-animate]").forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className="services-page">
-      <NavBar />
-      
-      {/* POSITIONING HERO */}
-      <section className="positioning-hero">
-        <div className="positioning-content">
-          <div className="positioning-badge">
-            <Sparkles size={16} />
-            <span>FOR SERVICE-BASED BUSINESSES</span>
-          </div>
-          <h1 className="positioning-title">
-            We Don't Build Websites.<br />We Build Business Systems.
-          </h1>
-          <p className="positioning-subtitle">
-            Most websites are cobbled from templates that break, slow you down, and limit growth.<br />
-            We build custom systems designed around how your business actually works.
-          </p>
-          <div className="positioning-filters">
-            <div className="filter-item">
-              <Check size={20} />
-              <span>You need predictable leads, not just a pretty website</span>
-            </div>
-            <div className="filter-item">
-              <Check size={20} />
-              <span>You're tired of technical limitations holding you back</span>
-            </div>
-            <div className="filter-item">
-              <Check size={20} />
-              <span>You want a system that scales with your business</span>
+    <div className="srv-page">
+      {/* ════════ HERO ════════ */}
+      <div className="srv-hero-wrapper">
+        <NavBar />
+        <section className="srv-hero">
+          <div className="srv-hero-parallax" aria-hidden="true" />
+          <div className="srv-hero-noise" aria-hidden="true" />
+          <div className="srv-hero-copy">
+            <p className="srv-eyebrow">WHAT WE BUILD</p>
+            <h1 className="srv-hero-title">We Build Complete Business Systems</h1>
+            <p className="srv-hero-subtext">
+              Not just websites — we design and develop the automated systems, dashboards, and tools that help businesses operate efficiently and scale with confidence.
+            </p>
+            <div className="srv-hero-actions">
+              <a className="srv-cta primary" href="#srv-services">Explore Our Services</a>
+              <Link className="srv-cta ghost" to="/plan">Start Your Project</Link>
             </div>
           </div>
-          <a href="#services" className="positioning-cta">
-            See What We Actually Build
-            <ArrowRight size={20} />
-          </a>
-        </div>
-      </section>
+        </section>
+      </div>
 
-      {/* SERVICES - INTERACTIVE EXPANDABLE */}
-      <section id="services" className="services-section">
-        <div className="section-header">
-          <h2 className="section-title">What We Build</h2>
-          <p className="section-subtitle">Services designed as systems, not tasks</p>
-        </div>
+      {/* ════════ MAIN CONTENT (light bg, matching HomePage) ════════ */}
+      <div className="srv-main-content-bg">
 
-        <div className="services-list">
-          {services.map((service, index) => (
-            <div 
-              key={service.id}
-              className={`service-item ${expandedService === service.id ? 'expanded' : ''}`}
-            >
-              <div 
-                className="service-header"
-                onClick={() => toggleService(service.id)}
-              >
-                <div className="service-header-left">
-                  <div className="service-icon-wrapper">{service.icon}</div>
-                  <div className="service-header-text">
-                    <h3 className="service-title">{service.title}</h3>
-                    <p className="service-subtitle">{service.subtitle}</p>
-                  </div>
-                </div>
-                <div className="service-expand-icon">
-                  {expandedService === service.id ? <ChevronDown size={24} /> : <ChevronRight size={24} />}
-                </div>
-              </div>
-
-              {expandedService === service.id && (
-                <div className="service-details">
-                  <div className="service-details-grid">
-                    <div className="service-detail-col">
-                      <h4 className="detail-heading">The Problem</h4>
-                      <p className="detail-text problem">{service.problem}</p>
-                      
-                      <h4 className="detail-heading">Our Solution</h4>
-                      <p className="detail-text solution">{service.solution}</p>
-                    </div>
-
-                    <div className="service-detail-col">
-                      <h4 className="detail-heading">What You Get</h4>
-                      <ul className="outcomes-list">
-                        {service.outcomes.map((outcome, i) => (
-                          <li key={i}>
-                            <TrendingUp size={18} />
-                            <span>{outcome}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="service-detail-col">
-                      <h4 className="detail-heading">Includes</h4>
-                      <ul className="includes-list">
-                        {service.includes.map((item, i) => (
-                          <li key={i}>
-                            <Check size={16} />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-
-                      <h4 className="detail-heading not-included-heading">Does NOT Include</h4>
-                      <ul className="not-included-list">
-                        {service.notIncluded.map((item, i) => (
-                          <li key={i}>
-                            <X size={16} />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="service-image-wrapper">
-                    <img src={service.image} alt={service.title} className="service-detail-image" />
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* COMPARISON SLIDER */}
-      <section className="comparison-section">
-        <div className="section-header">
-          <h2 className="section-title">Template Websites vs Custom Systems</h2>
-          <p className="section-subtitle">Drag the slider to compare</p>
-        </div>
-
-        <div 
-          className="comparison-container"
-          ref={sliderRef}
-          onMouseMove={handleSliderDrag}
-          onMouseDown={(e) => {
-            e.preventDefault();
-            const onMove = (moveEvent) => handleSliderDrag(moveEvent);
-            const onUp = () => {
-              document.removeEventListener('mousemove', onMove);
-              document.removeEventListener('mouseup', onUp);
-            };
-            document.addEventListener('mousemove', onMove);
-            document.addEventListener('mouseup', onUp);
-          }}
-          onTouchMove={handleSliderDrag}
-        >
-          <div className="comparison-side template" style={{ clipPath: `inset(0 ${100 - comparisonSlider}% 0 0)` }}>
-            <div className="comparison-content">
-              <div className="comparison-header">
-                <X className="comparison-icon negative" size={32} />
-                <h3>{comparisonData.template.title}</h3>
-                <p>{comparisonData.template.subtitle}</p>
-              </div>
-              <ul className="comparison-list">
-                {comparisonData.template.points.map((point, i) => (
-                  <li key={i}>
-                    <X size={18} className="negative-icon" />
-                    <span>{point.text}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="comparison-side custom">
-            <div className="comparison-content">
-              <div className="comparison-header">
-                <Check className="comparison-icon positive" size={32} />
-                <h3>{comparisonData.custom.title}</h3>
-                <p>{comparisonData.custom.subtitle}</p>
-              </div>
-              <ul className="comparison-list">
-                {comparisonData.custom.points.map((point, i) => (
-                  <li key={i}>
-                    <Check size={18} className="positive-icon" />
-                    <span>{point.text}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="comparison-slider" style={{ left: `${comparisonSlider}%` }}>
-            <div className="slider-handle">
-              <ChevronRight size={20} />
-              <ChevronRight size={20} style={{ marginLeft: '-10px' }} />
-            </div>
-          </div>
-        </div>
-
-        <div className="comparison-footer">
-          <p className="comparison-note">
-            Technology should feel like infrastructure, not a selling pitch.<br />
-            We use React and Next.js because they enable this level of performance—not because they sound impressive.
-          </p>
-        </div>
-      </section>
-
-      {/* PROCESS - INTERACTIVE TIMELINE */}
-      <section className="process-section">
-        <div className="section-header">
-          <h2 className="section-title">How It Works</h2>
-          <p className="section-subtitle">Clear steps. Clear handoffs. No surprises.</p>
-        </div>
-
-        <div className="process-controls">
-          <button 
-            className="process-control-btn"
-            onClick={() => setIsAutoPlay(!isAutoPlay)}
-          >
-            {isAutoPlay ? <Pause size={18} /> : <Play size={18} />}
-            <span>{isAutoPlay ? 'Pause' : 'Play'}</span>
-          </button>
-        </div>
-
-        <div className="process-timeline">
-          {processSteps.map((step, index) => (
-            <div
-              key={index}
-              className={`process-step ${activeProcess === index ? 'active' : ''} ${activeProcess > index ? 'completed' : ''}`}
-              onClick={() => {
-                setActiveProcess(index);
-                setIsAutoPlay(false);
-              }}
-            >
-              <div className="process-step-number">{step.number}</div>
-              <div className="process-step-content">
-                <h3 className="process-step-title">{step.title}</h3>
-                <p className="process-step-description">{step.description}</p>
-                <span className="process-step-duration">{step.duration}</span>
-              </div>
-              {index < processSteps.length - 1 && (
-                <div className={`process-connector ${activeProcess > index ? 'completed' : ''}`}></div>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* PROOF SECTION */}
-      <section className="proof-section">
-        <div className="section-header">
-          <h2 className="section-title">How We're Different</h2>
-          <p className="section-subtitle">Proof beats praise</p>
-        </div>
-
-        <div className="proof-grid">
-          <div className="proof-card">
-            <Code2 className="proof-icon" size={28} />
-            <h3>Clean, Maintainable Code</h3>
-            <p>No spaghetti code. No technical debt. Systems built to last and scale without breaking.</p>
-          </div>
-
-          <div className="proof-card">
-            <Shield className="proof-icon" size={28} />
-            <h3>Security by Design</h3>
-            <p>Built with security from line one. No plugin vulnerabilities, no hope-based strategies.</p>
-          </div>
-
-          <div className="proof-card">
-            <Zap className="proof-icon" size={28} />
-            <h3>Performance Engineering</h3>
-            <p>Sub-2-second loads aren't luck. They're engineered through code splitting, optimization, and smart architecture.</p>
-          </div>
-
-          <div className="proof-card">
-            <Users className="proof-icon" size={28} />
-            <h3>Built for Humans</h3>
-            <p>Admin panels you can actually use. No technical jargon. Documentation that makes sense.</p>
-          </div>
-
-          <div className="proof-card">
-            <Lock className="proof-icon" size={28} />
-            <h3>Clear Boundaries</h3>
-            <p>Explicit scope. Clear deliverables. No scope creep. You know exactly what you're getting.</p>
-          </div>
-
-          <div className="proof-card">
-            <BarChart3 className="proof-icon" size={28} />
-            <h3>Data-Driven Decisions</h3>
-            <p>Built-in analytics. Real insights. Know what's working before guessing what to fix.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* PRICING CONTEXT */}
-      <section className="pricing-context-section">
-        <div className="pricing-context-card">
-          <div className="pricing-context-header">
-            <h2>Investment Range</h2>
-            <p>Clear expectations, no surprises</p>
-          </div>
-          
-          <div className="pricing-tiers">
-            <div className="pricing-tier">
-              <h3>Custom Website System</h3>
-              <p className="tier-price">Starting from $6,500</p>
-              <p className="tier-description">5-10 page custom system with admin panel</p>
-            </div>
-
-            <div className="pricing-tier featured">
-              <div className="tier-badge">MOST POPULAR</div>
-              <h3>Full-Stack Platform</h3>
-              <p className="tier-price">Starting from $15,000</p>
-              <p className="tier-description">Complete system with backend, database, user management</p>
-            </div>
-
-            <div className="pricing-tier">
-              <h3>Enterprise Solution</h3>
-              <p className="tier-price">Custom Quote</p>
-              <p className="tier-description">Multi-system platforms with advanced integrations</p>
-            </div>
-          </div>
-
-          <div className="pricing-notes">
-            <div className="pricing-note">
-              <Check size={18} />
-              <span>All projects include admin training & documentation</span>
-            </div>
-            <div className="pricing-note">
-              <Check size={18} />
-              <span>2-3 month typical timeline for full-stack systems</span>
-            </div>
-            <div className="pricing-note">
-              <Check size={18} />
-              <span>Ongoing maintenance available from $500/month</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="services-cta-section">
-        <div className="services-cta-card">
-          <div className="cta-header">
-            <div className="cta-badge">
-              <Sparkles size={14} />
-              <span>READY TO START?</span>
-            </div>
-            <h2 className="cta-title">Talk to Us Before Choosing a Platform</h2>
-            <p className="cta-subtitle">
-              Book a 30-minute discovery call. We'll discuss your business, technical needs, and whether we're the right fit.
+        {/* ════════ CORE SERVICES ════════ */}
+        <section className="srv-services-section" id="srv-services" data-srv-animate>
+          <div className="srv-section-header">
+            <span className="srv-section-eyebrow">- OUR SERVICES -</span>
+            <h2 className="srv-section-title">What We Build For Your Business</h2>
+            <p className="srv-section-subtitle">
+              Every service is focused on solving a real business problem — reducing manual work, increasing efficiency, and helping you grow.
             </p>
           </div>
 
-          <div className="contact-options-grid">
-            <a href="#" className="contact-card">
-              <div className="contact-card-icon">
-                <MessageCircle size={24} />
-              </div>
-              <div className="contact-card-content">
-                <h3 className="contact-card-title">WhatsApp</h3>
-                <p className="contact-card-subtitle">Quick questions? Message us</p>
-              </div>
-              <ArrowRight className="contact-card-arrow" size={20} />
-            </a>
-
-            <a href="#" className="contact-card featured">
-              <div className="contact-card-icon">
-                <Mail size={24} />
-              </div>
-              <div className="contact-card-content">
-                <h3 className="contact-card-title">Email</h3>
-                <p className="contact-card-subtitle">hello@agency.com</p>
-              </div>
-              <ArrowRight className="contact-card-arrow" size={20} />
-            </a>
-
-            <a href="#" className="contact-card">
-              <div className="contact-card-icon">
-                <Phone size={24} />
-              </div>
-              <div className="contact-card-content">
-                <h3 className="contact-card-title">Call</h3>
-                <p className="contact-card-subtitle">Schedule a discovery call</p>
-              </div>
-              <ArrowRight className="contact-card-arrow" size={20} />
-            </a>
-          </div>
-
-          <div className="cta-trust-section">
-            <div className="trust-item">
-              <Check size={18} />
-              <span>No pressure sales calls</span>
-            </div>
-            <div className="trust-divider"></div>
-            <div className="trust-item">
-              <Check size={18} />
-              <span>Clear, honest pricing</span>
-            </div>
-            <div className="trust-divider"></div>
-            <div className="trust-item">
-              <Check size={18} />
-              <span>Response within 24 hours</span>
+          {/* Service Navigation Tabs */}
+          <div className="srv-tabs-wrapper">
+            <div className="srv-tabs">
+              {coreServices.map((service, index) => (
+                <button
+                  key={service.id}
+                  className={`srv-tab ${activeService === index ? "active" : ""}`}
+                  onClick={() => setActiveService(index)}
+                  style={{ "--tab-color": service.color }}
+                >
+                  <span className="srv-tab-icon">{service.icon}</span>
+                  <span className="srv-tab-label">{service.title.split(" ").slice(0, 2).join(" ")}</span>
+                </button>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+
+          {/* Active Service Display */}
+          <div className="srv-service-display">
+            {coreServices.map((service, index) => (
+              <div
+                key={service.id}
+                className={`srv-service-panel ${activeService === index ? "active" : ""}`}
+              >
+                <div className="srv-panel-content">
+                  <div className="srv-panel-badge" style={{ "--badge-color": service.color }}>
+                    {service.icon}
+                    <span>{service.title}</span>
+                  </div>
+
+                  <div className="srv-panel-problem">
+                    <span className="srv-label">The Problem</span>
+                    <p>{service.problem}</p>
+                  </div>
+
+                  <div className="srv-panel-solution">
+                    <span className="srv-label">Our Solution</span>
+                    <p>{service.solution}</p>
+                  </div>
+
+                  <ul className="srv-panel-features">
+                    {service.features.map((feature, i) => (
+                      <li key={i}>
+                        <Check size={16} />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Link to="/plan" className="srv-panel-cta">
+                    <span>Discuss This Service</span>
+                    <ArrowUpRight size={18} />
+                  </Link>
+                </div>
+
+                <div className="srv-panel-visual">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    loading="lazy"
+                  />
+                  <div className="srv-panel-img-overlay" style={{ "--overlay-color": service.color }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ════════ SYSTEMS THINKING ════════ */}
+        <section className="srv-systems-section" id="srv-systems" data-srv-animate>
+          <div className="srv-systems-shell">
+            <div className="srv-systems-img-col">
+              <img
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
+                alt="Systems automation dashboard"
+                className="srv-systems-img"
+                loading="lazy"
+              />
+            </div>
+            <div className="srv-systems-content">
+              <span className="srv-section-eyebrow">- SYSTEMS THINKING -</span>
+              <h2 className="srv-section-title left">Every Project Is a Complete System</h2>
+              <p className="srv-systems-lead">
+                We don't just build pages — we analyze your entire business workflow and design connected systems that reduce manual work and scale with you.
+              </p>
+              <div className="srv-systems-grid">
+                {systemsThinking.map((item, i) => (
+                  <div key={i} className="srv-system-card">
+                    <div className="srv-system-icon">{item.icon}</div>
+                    <div className="srv-system-text">
+                      <h4>{item.title}</h4>
+                      <p>{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ════════ INDUSTRY USE CASES ════════ */}
+        <section className="srv-usecases-section" id="srv-usecases" data-srv-animate>
+          <div className="srv-section-header">
+            <span className="srv-section-eyebrow">- INDUSTRY USE CASES -</span>
+            <h2 className="srv-section-title">Built for Real Businesses</h2>
+            <p className="srv-section-subtitle">
+              We work with hotel owners, service businesses, and companies looking to automate operations and grow efficiently.
+            </p>
+          </div>
+
+          <div className="srv-usecases-grid">
+            {useCases.map((uc, i) => (
+              <div key={i} className="srv-usecase-card" style={{ "--uc-color": uc.color }}>
+                <div className="srv-usecase-img-wrapper">
+                  <img src={uc.image} alt={uc.industry} loading="lazy" />
+                  <div className="srv-usecase-img-overlay" />
+                </div>
+                <div className="srv-usecase-content">
+                  <div className="srv-usecase-icon">{uc.icon}</div>
+                  <h3>{uc.industry}</h3>
+                  <p>{uc.description}</p>
+                  <Link to="/plan" className="srv-usecase-link">
+                    <span>Learn More</span>
+                    <ArrowUpRight size={16} />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ════════ PROCESS ════════ */}
+        <section className="srv-process-section" id="srv-process" data-srv-animate>
+          <div className="srv-section-header">
+            <span className="srv-section-eyebrow">- OUR PROCESS -</span>
+            <h2 className="srv-section-title">How We Work</h2>
+            <p className="srv-section-subtitle">
+              A clear, professional process so you always know what's happening, what's next, and how it benefits your business.
+            </p>
+          </div>
+
+          <div className="srv-process-timeline">
+            {processSteps.map((step, i) => (
+              <div key={i} className="srv-process-step" style={{ "--step-color": step.color }}>
+                <div className="srv-step-indicator">
+                  <div className="srv-step-number">{step.step}</div>
+                  {i < processSteps.length - 1 && <div className="srv-step-line" />}
+                </div>
+                <div className="srv-step-card">
+                  <div className="srv-step-icon">{step.icon}</div>
+                  <h4>{step.label}</h4>
+                  <p>{step.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ════════ CTA (reuse HomePage CTA component) ════════ */}
+        <CTA />
+        <Footer />
+      </div>
     </div>
   );
 };
 
 export default Services;
-

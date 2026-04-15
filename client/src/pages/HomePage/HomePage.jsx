@@ -14,7 +14,7 @@ import PortfolioSection from "../../components/PortfolioSection.jsx";
 import OurTeam from "../../components/OurTeam.jsx";
 import RobotServices from "../../components/RobotServices.jsx";
 // import Process from "../../components/Process.jsx";
-import PricingSection1 from "../../components/PricingSection1.jsx";
+import PricingSection from "../../components/PricingSection.jsx";
 import ServicesSection from "../../components/ServicesSection.jsx";
 import FAQ from "../../components/FAQ.jsx";
 import CTA from "../../components/CTA.jsx";
@@ -43,7 +43,7 @@ function HomePage() {
                   
                   <Process3 />
                   <IntroText />
-                  <PricingSection1 />
+                  <PricingSection />
                   <Stats />
                     <ReviewsSection />
                   

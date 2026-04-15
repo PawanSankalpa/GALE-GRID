@@ -23,7 +23,7 @@
   --service-page-blue: #3B82F6;
   --service-page-green: #10B981;
   --service-page-purple: #8B5CF6;
-  --service-page-yellow: #F59E0B;
+  --service-page-yellow: var(--color-accent-500);
   --service-page-pink: #EC4899;
   --service-page-cyan: #06B6D4;
   
