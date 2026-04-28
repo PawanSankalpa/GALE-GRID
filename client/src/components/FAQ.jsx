@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { Link } from "react-router-dom";
 import { useBooking } from "../context/BookingContext.jsx";
 import {
   Clock, Shield, Smartphone, Pencil, CreditCard,

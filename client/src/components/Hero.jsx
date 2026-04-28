@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
 import { motion, AnimatePresence } from "framer-motion";

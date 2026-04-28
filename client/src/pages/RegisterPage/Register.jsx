@@ -58,7 +58,6 @@ export default function Register() {
   const { register, loggedIn } = useAuth();
 
   const [inviteMode,  setInviteMode]  = useState(false);
-  const [inviteEmail, setInviteEmail] = useState("");
 
   const [name,     setName]     = useState("");
   const [email,    setEmail]    = useState("");
@@ -83,7 +82,6 @@ export default function Register() {
       .then((res) => {
         if (res.data.valid) {
           setInviteMode(true);
-          setInviteEmail(res.data.email);
           setEmail(res.data.email);
           if (res.data.name) setName(res.data.name);
         }

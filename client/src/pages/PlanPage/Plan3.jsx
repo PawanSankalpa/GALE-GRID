@@ -69,7 +69,7 @@ export default function Plan() {
           <ul>
             {navItems.map((item) => (
               <li key={item.label} className={item.active ? 'active' : ''}>
-                <a href="#">{item.label}</a>
+                <a href={`/plan#${item.label.toLowerCase().replace(/\s+/g, '-')}`}>{item.label}</a>
               </li>
             ))}
           </ul>

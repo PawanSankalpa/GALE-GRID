@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth.js";
 import { useBooking } from "../context/BookingContext.jsx";
 import { motion, AnimatePresence } from "framer-motion";
 import './styles/NavBar.css';
@@ -20,7 +19,6 @@ const linkItemVariants = {
 };
 
 const NavBar = () => {
-  const { loggedIn } = useAuth();
   const { openBooking } = useBooking();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);

@@ -7,7 +7,7 @@ import {
   Check, ArrowRight, Package, Zap, CalendarDays,
   Sparkles, Rocket, Star, Building2,
   ThumbsDown, Frown, Meh, Smile, ThumbsUp, Heart,
-  AlertTriangle, Target,
+  Target,
 } from "lucide-react";
 import AdminDashboardView from "./AdminDashboardView.jsx";
 
@@ -74,6 +74,7 @@ function KpiCard({ label, value, sub, accent, icon, trend, to }) {
   );
 }
 
+// eslint-disable-next-line no-unused-vars
 function RevenueChart({ bars }) {
   const max = Math.max(...bars.map((b) => b.amount), 1);
   return (
@@ -95,6 +96,7 @@ function RevenueChart({ bars }) {
   );
 }
 
+// eslint-disable-next-line no-unused-vars
 function Pipeline({ lifecycle }) {
   const stages = ["lead", "onboarding", "active", "delivered", "subscription"];
   return (
@@ -147,6 +149,7 @@ function ProjectsTable({ projects }) {
   );
 }
 
+// eslint-disable-next-line no-unused-vars
 function ActivityFeed({ activity }) {
   if (!activity?.length) return <p className="gg-muted" style={{ padding: "12px 0" }}>No activity yet.</p>;
   return (
@@ -166,6 +169,7 @@ function ActivityFeed({ activity }) {
   );
 }
 
+// eslint-disable-next-line no-unused-vars
 function BookingsList({ bookings }) {
   if (!bookings?.length) return <p className="gg-muted" style={{ padding: "12px 0" }}>No bookings yet.</p>;
   return (

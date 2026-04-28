@@ -1,5 +1,5 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
 import { useBooking } from "../context/BookingContext.jsx";
 import { motion, useInView } from "framer-motion";
 import { ArrowUpRight, Star, ExternalLink } from "lucide-react";
