@@ -1,21 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { 
-  Sparkles, 
-  Zap, 
-  Rocket, 
-  Crown,
-  ArrowRight,
-  Shield,
-  Clock,
-  TrendingUp,
-  Users,
-  Star,
-  Check,
-  X,
-  MessageCircle,
-  Headphones,
-  Award,
+import React, { useState } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useBooking } from "../context/BookingContext.jsx";
+import {
+  Sparkles, Zap, Rocket, Crown, ArrowRight,
+  Shield, Clock, TrendingUp, Users, Star,
+  Check, X, MessageCircle, Headphones,
 } from "lucide-react";
 import "./styles/PricingSection.css";
 
@@ -27,18 +16,16 @@ const plans = [
     price: "1,499",
     originalPrice: "1,999",
     period: "one-time payment",
-    description: "Launch your professional online presence with everything you need to get started.",
     icon: Zap,
     color: "#10B981",
-    accentLight: "rgba(16, 185, 129, 0.1)",
-    deliveryTime: "2-3 weeks",
-    outcome: "Get online fast with instant credibility",
+    deliveryTime: "2–3 weeks",
+    outcome: "Get online with instant credibility",
     features: [
       { text: "5 Custom Pages", included: true },
       { text: "Mobile-First Design", included: true },
       { text: "Basic SEO Setup", included: true },
       { text: "Contact Form", included: true },
-      { text: "Analytics Dashboard", included: true },
+      { text: "Analytics Setup", included: true },
       { text: "1 Month Support", included: true },
       { text: "CMS Access", included: false },
       { text: "E-commerce", included: false },
@@ -52,11 +39,9 @@ const plans = [
     price: "2,999",
     originalPrice: "3,999",
     period: "one-time payment",
-    description: "Scale your business with advanced features and conversion-focused design.",
     icon: Rocket,
     color: "#FF6B00",
-    accentLight: "rgba(255, 107, 0, 0.1)",
-    deliveryTime: "3-4 weeks",
+    deliveryTime: "3–4 weeks",
     outcome: "2x more conversions guaranteed",
     features: [
       { text: "10 Custom Pages", included: true },
@@ -77,12 +62,10 @@ const plans = [
     price: "5,999",
     originalPrice: "7,999",
     period: "starting price",
-    description: "Complete digital solution with unlimited potential and dedicated support.",
     icon: Crown,
     color: "#8B5CF6",
-    accentLight: "rgba(139, 92, 246, 0.1)",
-    deliveryTime: "5-8 weeks",
-    outcome: "Unlimited growth & full automation",
+    deliveryTime: "5–8 weeks",
+    outcome: "Unlimited growth & automation",
     features: [
       { text: "Unlimited Pages", included: true },
       { text: "Full E-commerce", included: true },
@@ -105,10 +88,8 @@ const hireTeamOptions = [
     price: "3,999",
     originalPrice: "5,999",
     period: "per month",
-    description: "Get a dedicated web design team to handle all your digital needs continuously.",
     icon: Users,
     color: "#3B82F6",
-    accentLight: "rgba(59, 130, 246, 0.1)",
     features: [
       { text: "3-Person Design Team", included: true },
       { text: "Unlimited Revisions", included: true },
@@ -128,10 +109,8 @@ const hireTeamOptions = [
     price: "10,999",
     originalPrice: "14,999",
     period: "per quarter",
-    description: "Intensive quarterly projects with full team dedication and advanced features.",
     icon: Rocket,
     color: "#FF6B00",
-    accentLight: "rgba(255, 107, 0, 0.1)",
     features: [
       { text: "5-Person Expert Team", included: true },
       { text: "Unlimited Revisions", included: true },
@@ -151,10 +130,8 @@ const hireTeamOptions = [
     price: "39,999",
     originalPrice: "54,999",
     period: "per year",
-    description: "Year-long partnership with dedicated team, unlimited projects, and complete digital transformation.",
     icon: Crown,
     color: "#8B5CF6",
-    accentLight: "rgba(139, 92, 246, 0.1)",
     features: [
       { text: "Full-time Design Team", included: true },
       { text: "Unlimited Projects", included: true },
@@ -169,12 +146,6 @@ const hireTeamOptions = [
   },
 ];
 
-const stats = [
-  { value: "150+", label: "Projects", icon: Award },
-  { value: "5.0", label: "Rating", icon: Star },
-  { value: "100%", label: "Satisfaction", icon: Shield },
-];
-
 const guarantees = [
   { icon: Shield, text: "Money-back guarantee" },
   { icon: Headphones, text: "24/7 support" },
@@ -182,292 +153,190 @@ const guarantees = [
   { icon: MessageCircle, text: "Unlimited revisions" },
 ];
 
-const PricingSection = () => {
-  const [hoveredPlan, setHoveredPlan] = useState(null);
-  const [inView, setInView] = useState(false);
-  const [activeFeature, setActiveFeature] = useState(null);
-  const [pricingMode, setPricingMode] = useState("packages"); // "packages" or "hire"
-  const sectionRef = useRef(null);
+const cardVariants = {
+  hidden: { opacity: 0, y: 48 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.1, duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+function PricingCard({ plan, index }) {
+  const ref = React.useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const Icon = plan.icon;
+  const { openBooking } = useBooking();
 
   return (
-    <section className="pricing-v3" ref={sectionRef}>
-      {/* Ambient Background */}
-      <div className="pricing-v3-bg">
-        <div className="bg-gradient-orb bg-orb-1"></div>
-        <div className="bg-gradient-orb bg-orb-2"></div>
-        <div className="bg-grid"></div>
+    <motion.div
+      ref={ref}
+      className={`ps-card${plan.popular ? " ps-card--popular" : ""}`}
+      style={{ "--pc": plan.color }}
+      custom={index}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      variants={cardVariants}
+      whileHover={{ y: -8, transition: { type: "spring", stiffness: 260, damping: 20 } }}
+    >
+      {plan.popular && (
+        <div className="ps-popular-badge">
+          <Star size={11} fill="currentColor" /> Best Value
+        </div>
+      )}
+
+      <div className="ps-card-top">
+        <div className="ps-icon">
+          <Icon size={20} strokeWidth={1.8} />
+        </div>
+        <div>
+          <span className="ps-tagline">{plan.tagline}</span>
+          <h3 className="ps-name">{plan.name}</h3>
+        </div>
       </div>
 
-      <div className="pricing-v3-container">
+      <div className="ps-price-block">
+        <div className="ps-price-row">
+          <span className="ps-currency">$</span>
+          <span className="ps-amount">{plan.price}</span>
+        </div>
+        <div className="ps-price-meta">
+          <span className="ps-original">${plan.originalPrice}</span>
+          <span className="ps-period">{plan.period}</span>
+        </div>
+      </div>
+
+      <div className="ps-outcome">
+        <TrendingUp size={13} />
+        <span>{plan.outcome}</span>
+      </div>
+
+      <ul className="ps-features">
+        {plan.features.map((f, i) => (
+          <li key={i} className={f.included ? "ps-f-yes" : "ps-f-no"}>
+            {f.included
+              ? <Check size={12} strokeWidth={3} />
+              : <X size={10} strokeWidth={2.5} />}
+            {f.text}
+          </li>
+        ))}
+      </ul>
+
+      {plan.deliveryTime && (
+        <div className="ps-delivery">
+          <Clock size={13} /> {plan.deliveryTime}
+        </div>
+      )}
+
+      <button type="button" className={`ps-cta${plan.popular ? " ps-cta--primary" : ""}`} onClick={openBooking}>
+        Get Started <ArrowRight size={15} />
+      </button>
+    </motion.div>
+  );
+}
+
+export default function PricingSection() {
+  const [mode, setMode] = useState("packages");
+  const headerRef = React.useRef(null);
+  const headerInView = useInView(headerRef, { once: true, margin: "-60px" });
+  const { openBooking } = useBooking();
+
+  const activePlans = mode === "packages" ? plans : hireTeamOptions;
+
+  return (
+    <section className="ps-section">
+      {/* Background orbs */}
+      <div className="ps-bg" aria-hidden="true">
+        <div className="ps-orb ps-orb-1" />
+        <div className="ps-orb ps-orb-2" />
+      </div>
+
+      <div className="ps-container">
         {/* Header */}
-        <header className={`pricing-v3-header ${inView ? "animate-in" : ""}`}>
-          <div className="header-badge">
-            <Sparkles size={14} />
+        <motion.header
+          ref={headerRef}
+          className="ps-header"
+          initial={{ opacity: 0, y: 32 }}
+          animate={headerInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className="ps-eyebrow">
+            <Sparkles size={13} strokeWidth={2} />
             <span>Simple Pricing</span>
           </div>
-          
-          <h2 className="header-title">
-            Choose Your <span className="gradient-text">Growth Plan</span>
+          <h2 className="ps-headline">
+            Choose your <em>growth plan</em>
           </h2>
-          
-          <p className="header-subtitle">
-            No hidden fees. No surprises. Just results.
-          </p>
+          <p className="ps-sub">No hidden fees. No surprises. Just results.</p>
 
-          {/* Pricing Mode Toggle */}
-          <div className="pricing-mode-toggle">
-            <button 
-              className={`toggle-btn ${pricingMode === "packages" ? "active" : ""}`}
-              onClick={() => setPricingMode("packages")}
+          {/* Toggle */}
+          <div className="ps-toggle">
+            <button
+              className={`ps-toggle-btn${mode === "packages" ? " active" : ""}`}
+              onClick={() => setMode("packages")}
             >
-              <Zap size={16} />
-              <span>Complete a Project</span>
+              <Zap size={15} /> Complete a Project
             </button>
-            <div className="toggle-divider"></div>
-            <button 
-              className={`toggle-btn ${pricingMode === "hire" ? "active" : ""}`}
-              onClick={() => setPricingMode("hire")}
+            <button
+              className={`ps-toggle-btn${mode === "hire" ? " active" : ""}`}
+              onClick={() => setMode("hire")}
             >
-              <Users size={16} />
-              <span>Hire Our Team</span>
+              <Users size={15} /> Hire Our Team
             </button>
           </div>
-        </header>
+        </motion.header>
 
-        {/* ===== SECTION 1: PROJECT-BASED PRICING ===== */}
-        {pricingMode === "packages" && (
-          <div className="pricing-section-wrapper fade-in">
-            {/* Pricing Cards */}
-            <div className={`pricing-v3-cards ${inView ? "animate-in" : ""}`}>
-            {plans.map((plan, index) => {
-              const IconComponent = plan.icon;
-              const isHovered = hoveredPlan === plan.id;
-              const isPopular = plan.popular;
-              
-              return (
-                <div 
-                  className={`pricing-card-v3 ${isPopular ? "popular" : ""} ${isHovered ? "hovered" : ""}`}
-                  key={plan.id}
-                  style={{ 
-                    "--plan-color": plan.color,
-                    "--plan-accent": plan.accentLight,
-                    "--delay": `${index * 0.1}s`
-                  }}
-                  onMouseEnter={() => setHoveredPlan(plan.id)}
-                  onMouseLeave={() => setHoveredPlan(null)}
-                >
-                  {/* Popular Indicator */}
-                  {isPopular && (
-                    <div className="popular-ribbon">
-                      <Star size={12} fill="currentColor" />
-                      <span>Best Value</span>
-                    </div>
-                  )}
+        {/* Cards */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={mode}
+            className="ps-cards"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.35, ease: "easeInOut" }}
+          >
+            {activePlans.map((plan, i) => (
+              <PricingCard key={plan.id} plan={plan} index={i} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
 
-                  {/* Card Top Section */}
-                  <div className="card-top">
-                    <div className="plan-icon-badge">
-                      <IconComponent size={22} strokeWidth={2} />
-                    </div>
-                    
-                    <div className="plan-header">
-                      <span className="plan-tagline">{plan.tagline}</span>
-                      <h3 className="plan-name">{plan.name}</h3>
-                    </div>
-                  </div>
-
-                  {/* Pricing */}
-                  <div className="plan-pricing-block">
-                    <div className="price-main">
-                      <span className="price-currency">$</span>
-                      <span className="price-amount">{plan.price}</span>
-                    </div>
-                    <div className="price-meta">
-                      <span className="price-original">${plan.originalPrice}</span>
-                      <span className="price-period">{plan.period}</span>
-                    </div>
-                  </div>
-
-                  {/* Outcome Badge */}
-                  <div className="outcome-badge">
-                    <TrendingUp size={14} />
-                    <span>{plan.outcome}</span>
-                  </div>
-
-                  {/* Features */}
-                  <ul className="features-list-v3">
-                    {plan.features.map((feature, idx) => (
-                      <li 
-                        key={idx} 
-                        className={`feature-item ${feature.included ? "included" : "excluded"}`}
-                        onMouseEnter={() => setActiveFeature(`${plan.id}-${idx}`)}
-                        onMouseLeave={() => setActiveFeature(null)}
-                      >
-                        <span className={`feature-check ${activeFeature === `${plan.id}-${idx}` ? "pulse" : ""}`}>
-                          {feature.included ? <Check size={12} strokeWidth={3} /> : <X size={10} strokeWidth={2.5} />}
-                        </span>
-                        <span className="feature-text">{feature.text}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Delivery */}
-                  <div className="delivery-info">
-                    <Clock size={14} />
-                    <span>{plan.deliveryTime}</span>
-                  </div>
-
-                  {/* CTA */}
-                  <Link 
-                    to="/contact" 
-                    className={`card-cta ${isPopular ? "cta-primary" : "cta-secondary"}`}
-                  >
-                    <span>Get Started</span>
-                    <ArrowRight size={16} className="cta-arrow" />
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        )}
-
-        {/* ===== SECTION 2: TEAM HIRE PRICING ===== */}
-        {pricingMode === "hire" && (
-        <div className="team-hire-section fade-in">
-          {/* Team Hire Cards */}
-          <div className={`pricing-v3-cards team-hire-cards ${inView ? "animate-in" : ""}`}>
-            {hireTeamOptions.map((plan, index) => {
-              const IconComponent = plan.icon;
-              const isHovered = hoveredPlan === plan.id;
-              const isPopular = plan.popular;
-              
-              return (
-                <div 
-                  className={`pricing-card-v3 ${isPopular ? "popular" : ""} ${isHovered ? "hovered" : ""}`}
-                  key={plan.id}
-                  style={{ 
-                    "--plan-color": plan.color,
-                    "--plan-accent": plan.accentLight,
-                    "--delay": `${index * 0.1}s`
-                  }}
-                  onMouseEnter={() => setHoveredPlan(plan.id)}
-                  onMouseLeave={() => setHoveredPlan(null)}
-                >
-                  {/* Popular Indicator */}
-                  {isPopular && (
-                    <div className="popular-ribbon">
-                      <Star size={12} fill="currentColor" />
-                      <span>Most Popular</span>
-                    </div>
-                  )}
-
-                  {/* Card Top Section */}
-                  <div className="card-top">
-                    <div className="plan-icon-badge">
-                      <IconComponent size={22} strokeWidth={2} />
-                    </div>
-                    
-                    <div className="plan-header">
-                      <span className="plan-tagline">{plan.tagline}</span>
-                      <h3 className="plan-name">{plan.name}</h3>
-                    </div>
-                  </div>
-
-                  {/* Pricing */}
-                  <div className="plan-pricing-block">
-                    <div className="price-main">
-                      <span className="price-currency">$</span>
-                      <span className="price-amount">{plan.price}</span>
-                    </div>
-                    <div className="price-meta">
-                      <span className="price-original">${plan.originalPrice}</span>
-                      <span className="price-period">{plan.period}</span>
-                    </div>
-                  </div>
-
-                  {/* Team Badge */}
-                  <div className="outcome-badge team-badge">
-                    <Users size={14} />
-                    <span>Dedicated Team Partnership</span>
-                  </div>
-
-                  {/* Features */}
-                  <ul className="features-list-v3">
-                    {plan.features.map((feature, idx) => (
-                      <li 
-                        key={idx} 
-                        className={`feature-item ${feature.included ? "included" : "excluded"}`}
-                        onMouseEnter={() => setActiveFeature(`${plan.id}-${idx}`)}
-                        onMouseLeave={() => setActiveFeature(null)}
-                      >
-                        <span className={`feature-check ${activeFeature === `${plan.id}-${idx}` ? "pulse" : ""}`}>
-                          {feature.included ? <Check size={12} strokeWidth={3} /> : <X size={10} strokeWidth={2.5} />}
-                        </span>
-                        <span className="feature-text">{feature.text}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* CTA */}
-                  <Link 
-                    to="/contact" 
-                    className={`card-cta ${isPopular ? "cta-primary" : "cta-secondary"}`}
-                  >
-                    <span>Schedule Consultation</span>
-                    <ArrowRight size={16} className="cta-arrow" />
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        )}
-
-        {/* Guarantees Strip */}
-        <div className={`guarantees-strip ${inView ? "animate-in" : ""}`}>
-          {guarantees.map((item, i) => (
-            <div className="guarantee-chip" key={i}>
-              <item.icon size={16} />
-              <span>{item.text}</span>
+        {/* Guarantees strip */}
+        <motion.div
+          className="ps-guarantees"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          {guarantees.map((g, i) => (
+            <div key={i} className="ps-guarantee">
+              <g.icon size={15} />
+              <span>{g.text}</span>
             </div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Bottom CTA */}
-        <div className={`pricing-v3-cta ${inView ? "animate-in" : ""}`}>
-          <div className="cta-box">
-            <div className="cta-content">
-              <h3>Need something custom?</h3>
-              <p>Let's discuss your specific requirements and create a tailored solution.</p>
+        <motion.div
+          className="ps-bottom-cta"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className="ps-cta-box">
+            <div>
+              <h3 className="ps-cta-title">Need something custom?</h3>
+              <p className="ps-cta-copy">Let's discuss your requirements and build a tailored solution.</p>
             </div>
-            <Link to="/contact" className="cta-button">
-              <MessageCircle size={18} />
-              <span>Book Free Call</span>
-              <ArrowRight size={16} />
-            </Link>
+            <button type="button" className="ps-cta-btn" onClick={openBooking}>
+              <MessageCircle size={17} /> Book Free Call <ArrowRight size={15} />
+            </button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
-};
-
-export default PricingSection;
+}

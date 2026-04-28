@@ -1,0 +1,372 @@
+/* ============================================
+   SKELETON LOADING SYSTEM - GPU-OPTIMIZED
+   ============================================ */
+
+/* Base Skeleton Styling */
+.skeleton {
+  background-color: var(--skeleton-bg, #e0e0e0);
+  background-image: linear-gradient(
+    90deg,
+    var(--skeleton-bg, #e0e0e0) 0%,
+    var(--skeleton-highlight, #f0f0f0) 50%,
+    var(--skeleton-bg, #e0e0e0) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: shimmer 2s infinite;
+  will-change: background-position;
+}
+
+/* Shimmer Animation - GPU-friendly (transform + opacity only) */
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    background-position: -200% 0;
+    opacity: 1;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .skeleton {
+    --skeleton-bg: #2a2a2a;
+    --skeleton-highlight: #3a3a3a;
+  }
+}
+
+/* ============================================
+   SKELETON TEXT COMPONENT
+   ============================================ */
+
+.skeleton-text {
+  height: 16px;
+  margin: 8px 0;
+  border-radius: 4px;
+  animation: shimmer 2s infinite;
+  background-size: 200% 100%;
+  background-image: linear-gradient(
+    90deg,
+    var(--skeleton-bg, #e0e0e0) 0%,
+    var(--skeleton-highlight, #f0f0f0) 50%,
+    var(--skeleton-bg, #e0e0e0) 100%
+  );
+}
+
+.skeleton-text.large {
+  height: 24px;
+  margin: 12px 0;
+}
+
+.skeleton-text.small {
+  height: 12px;
+  margin: 6px 0;
+}
+
+.skeleton-text.heading {
+  height: 32px;
+  margin: 16px 0 12px 0;
+  border-radius: 6px;
+}
+
+/* Multi-line text skeleton */
+.skeleton-text-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-text-lines .line {
+  height: 16px;
+  border-radius: 4px;
+  background-image: linear-gradient(
+    90deg,
+    var(--skeleton-bg, #e0e0e0) 0%,
+    var(--skeleton-highlight, #f0f0f0) 50%,
+    var(--skeleton-bg, #e0e0e0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.skeleton-text-lines .line:last-child {
+  width: 80%;
+}
+
+/* ============================================
+   SKELETON IMAGE COMPONENT
+   ============================================ */
+
+.skeleton-image {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  background-size: 200% 100%;
+  background-image: linear-gradient(
+    90deg,
+    var(--skeleton-bg, #e0e0e0) 0%,
+    var(--skeleton-highlight, #f0f0f0) 50%,
+    var(--skeleton-bg, #e0e0e0) 100%
+  );
+  animation: shimmer 2s infinite;
+  overflow: hidden;
+}
+
+.skeleton-image.landscape {
+  aspect-ratio: 16 / 9;
+}
+
+.skeleton-image.portrait {
+  aspect-ratio: 9 / 16;
+}
+
+.skeleton-image.square {
+  aspect-ratio: 1;
+}
+
+.skeleton-image.circular {
+  border-radius: 50%;
+  aspect-ratio: 1;
+}
+
+.skeleton-image.thumbnail {
+  aspect-ratio: 1;
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+}
+
+/* ============================================
+   SKELETON CARD COMPONENT
+   ============================================ */
+
+.skeleton-card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.skeleton-card.dark {
+  background: #1a1a1a;
+}
+
+.skeleton-card-header {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.skeleton-card-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-size: 200% 100%;
+  background-image: linear-gradient(
+    90deg,
+    var(--skeleton-bg, #e0e0e0) 0%,
+    var(--skeleton-highlight, #f0f0f0) 50%,
+    var(--skeleton-bg, #e0e0e0) 100%
+  );
+  animation: shimmer 2s infinite;
+  flex-shrink: 0;
+}
+
+.skeleton-card-title {
+  height: 20px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  background-size: 200% 100%;
+  background-image: linear-gradient(
+    90deg,
+    var(--skeleton-bg, #e0e0e0) 0%,
+    var(--skeleton-highlight, #f0f0f0) 50%,
+    var(--skeleton-bg, #e0e0e0) 100%
+  );
+  animation: shimmer 2s infinite;
+  width: 70%;
+}
+
+.skeleton-card-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.skeleton-card-text {
+  height: 16px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  background-size: 200% 100%;
+  background-image: linear-gradient(
+    90deg,
+    var(--skeleton-bg, #e0e0e0) 0%,
+    var(--skeleton-highlight, #f0f0f0) 50%,
+    var(--skeleton-bg, #e0e0e0) 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+.skeleton-card-text:last-child {
+  width: 85%;
+}
+
+/* ============================================
+   SKELETON CAROUSEL COMPONENT
+   ============================================ */
+
+.skeleton-carousel {
+  display: flex;
+  gap: 16px;
+  overflow-x: hidden;
+}
+
+.skeleton-carousel-item {
+  min-width: 100%;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .skeleton-carousel-item {
+    min-width: calc(50% - 8px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .skeleton-carousel-item {
+    min-width: calc(33.333% - 11px);
+  }
+}
+
+/* ============================================
+   SKELETON GRID COMPONENT
+   ============================================ */
+
+.skeleton-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.skeleton-grid-item {
+  border-radius: 12px;
+  background: white;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.skeleton-grid-item.dark {
+  background: #1a1a1a;
+}
+
+.skeleton-grid-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-size: 200% 100%;
+  background-image: linear-gradient(
+    90deg,
+    var(--skeleton-bg, #e0e0e0) 0%,
+    var(--skeleton-highlight, #f0f0f0) 50%,
+    var(--skeleton-bg, #e0e0e0) 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+.skeleton-grid-content {
+  padding: 16px;
+}
+
+.skeleton-grid-title {
+  height: 20px;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  background-size: 200% 100%;
+  background-image: linear-gradient(
+    90deg,
+    var(--skeleton-bg, #e0e0e0) 0%,
+    var(--skeleton-highlight, #f0f0f0) 50%,
+    var(--skeleton-bg, #e0e0e0) 100%
+  );
+  animation: shimmer 2s infinite;
+  width: 75%;
+}
+
+.skeleton-grid-description {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-grid-description .line {
+  height: 14px;
+  border-radius: 4px;
+  background-size: 200% 100%;
+  background-image: linear-gradient(
+    90deg,
+    var(--skeleton-bg, #e0e0e0) 0%,
+    var(--skeleton-highlight, #f0f0f0) 50%,
+    var(--skeleton-bg, #e0e0e0) 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+.skeleton-grid-description .line:last-child {
+  width: 85%;
+}
+
+/* ============================================
+   FADE TRANSITION (Content Replace)
+   ============================================ */
+
+.fade-in {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-out {
+  animation: fadeOut 0.2s ease-in-out;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   REDUCED MOTION SUPPORT
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton,
+  .skeleton-text,
+  .skeleton-image,
+  .skeleton-card-avatar,
+  .skeleton-card-title,
+  .skeleton-card-text,
+  .skeleton-grid-image,
+  .skeleton-grid-title,
+  .skeleton-grid-description .line,
+  .fade-in,
+  .fade-out {
+    animation: none;
+    background-color: var(--skeleton-bg, #e0e0e0);
+    background-image: none;
+  }
+}

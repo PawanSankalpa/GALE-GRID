@@ -1,0 +1,439 @@
+/* ================================================================
+   auth-premium.css
+   Dark glassmorphism auth design system — Login + Register pages
+   Palette: deep #07080f bg | sky #0ea5e9 accent | #f8fafc text
+================================================================ */
+
+/* ── Variables ────────────────────────────────────────────── */
+:root {
+  --ap-bg:           #07080f;
+  --ap-surface:      rgba(255, 255, 255, 0.04);
+  --ap-border:       rgba(255, 255, 255, 0.08);
+  --ap-border-focus: rgba(14, 165, 233, 0.55);
+  --ap-accent:       #0ea5e9;
+  --ap-accent-dark:  #0284c7;
+  --ap-glow:         rgba(14, 165, 233, 0.18);
+  --ap-text:         #f8fafc;
+  --ap-text-muted:   rgba(248, 250, 252, 0.45);
+  --ap-error:        #f87171;
+  --ap-success:      #34d399;
+  --ap-warn:         #fbbf24;
+  --ap-radius:       18px;
+  --ap-radius-sm:    10px;
+  --ap-shadow:       0 24px 80px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* ── Shell + animated background ─────────────────────────── */
+.ap-shell {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ap-bg);
+  overflow: hidden;
+  padding: 24px 16px;
+}
+
+.ap-shell::before {
+  content: "";
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  top: -180px;
+  left: -180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(14,165,233,0.12) 0%, transparent 70%);
+  animation: ap-orb1 8s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ap-shell::after {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  bottom: -160px;
+  right: -140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99,102,241,0.10) 0%, transparent 70%);
+  animation: ap-orb2 10s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ap-orb3 {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(14,165,233,0.05) 0%, transparent 65%);
+  pointer-events: none;
+  animation: ap-orb3 12s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+@keyframes ap-orb1 {
+  from { transform: translate(0,0) scale(1); }
+  to   { transform: translate(40px,30px) scale(1.12); }
+}
+@keyframes ap-orb2 {
+  from { transform: translate(0,0) scale(1); }
+  to   { transform: translate(-30px,-40px) scale(1.08); }
+}
+@keyframes ap-orb3 {
+  from { opacity:.8; transform: translate(-50%,-50%) scale(1); }
+  to   { opacity:.4; transform: translate(-50%,-50%) scale(1.15); }
+}
+
+/* ── Card ─────────────────────────────────────────────────── */
+.ap-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 460px;
+  background: var(--ap-surface);
+  border: 1px solid var(--ap-border);
+  border-radius: var(--ap-radius);
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
+  box-shadow: var(--ap-shadow);
+  padding: 40px 40px 36px;
+}
+
+/* ── Brand ────────────────────────────────────────────────── */
+.ap-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.ap-brand-mark {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--ap-accent) 0%, #6366f1 100%);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  animation: ap-brand-pulse 3s ease-in-out infinite;
+}
+
+@keyframes ap-brand-pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(14,165,233,0); }
+  50%     { box-shadow: 0 0 0 6px rgba(14,165,233,0.15); }
+}
+
+.ap-brand-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ap-text);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+/* ── Headline ─────────────────────────────────────────────── */
+.ap-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ap-text);
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+
+.ap-subtitle {
+  font-size: 14px;
+  color: var(--ap-text-muted);
+  margin: 0 0 28px;
+  line-height: 1.5;
+}
+
+/* ── Role selector ────────────────────────────────────────── */
+.ap-role-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.ap-role-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 10px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--ap-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, transform .15s;
+  color: var(--ap-text-muted);
+}
+
+.ap-role-card:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(14,165,233,0.3);
+  color: var(--ap-text);
+  transform: translateY(-1px);
+}
+
+.ap-role-card.is-selected {
+  background: rgba(14,165,233,0.10);
+  border-color: var(--ap-accent);
+  color: var(--ap-text);
+}
+
+.ap-role-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: rgba(255,255,255,0.05);
+  transition: background .2s, color .2s;
+  color: inherit;
+}
+
+.ap-role-card.is-selected .ap-role-icon {
+  background: rgba(14,165,233,0.15);
+  color: var(--ap-accent);
+}
+
+.ap-role-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.ap-role-desc {
+  font-size: 10px;
+  color: var(--ap-text-muted);
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* ── Form ─────────────────────────────────────────────────── */
+.ap-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ap-field-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ap-text-muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ap-input-wrap {
+  position: relative;
+}
+
+.ap-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--ap-border);
+  border-radius: var(--ap-radius-sm);
+  color: var(--ap-text);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .2s, background .2s, box-shadow .2s;
+  box-sizing: border-box;
+}
+
+.ap-input::placeholder { color: rgba(248,250,252,0.25); }
+
+.ap-input:focus {
+  border-color: var(--ap-border-focus);
+  background: rgba(14,165,233,0.05);
+  box-shadow: 0 0 0 3px rgba(14,165,233,0.10);
+}
+
+.ap-input.has-suffix { padding-right: 44px; }
+.ap-input.is-error   { border-color: var(--ap-error); }
+
+.ap-input-suffix {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ap-text-muted);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color .15s;
+}
+.ap-input-suffix:hover { color: var(--ap-text); }
+
+/* ── Password strength ────────────────────────────────────── */
+.ap-strength {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ap-strength-bars {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+.ap-strength-bar {
+  height: 3px;
+  flex: 1;
+  border-radius: 99px;
+  background: rgba(255,255,255,0.08);
+  transition: background .3s;
+}
+.ap-strength-bar.active-weak   { background: var(--ap-error); }
+.ap-strength-bar.active-good   { background: var(--ap-warn); }
+.ap-strength-bar.active-strong { background: var(--ap-success); }
+.ap-strength-label {
+  font-size: 11px;
+  font-weight: 600;
+  min-width: 42px;
+  text-align: right;
+  color: var(--ap-text-muted);
+  transition: color .3s;
+}
+.ap-strength-label.weak   { color: var(--ap-error); }
+.ap-strength-label.good   { color: var(--ap-warn); }
+.ap-strength-label.strong { color: var(--ap-success); }
+
+/* ── Inline error ─────────────────────────────────────────── */
+.ap-error-text {
+  font-size: 12px;
+  color: var(--ap-error);
+  margin-top: 4px;
+  display: block;
+}
+
+.ap-form-error {
+  font-size: 13px;
+  color: var(--ap-error);
+  background: rgba(248,113,113,0.08);
+  border: 1px solid rgba(248,113,113,0.2);
+  border-radius: var(--ap-radius-sm);
+  padding: 10px 14px;
+  text-align: center;
+}
+
+/* ── Submit button ────────────────────────────────────────── */
+.ap-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px 20px;
+  background: linear-gradient(135deg, var(--ap-accent) 0%, var(--ap-accent-dark) 100%);
+  border: none;
+  border-radius: var(--ap-radius-sm);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity .2s, transform .15s, box-shadow .2s;
+  box-shadow: 0 4px 20px rgba(14,165,233,0.30);
+  margin-top: 4px;
+}
+.ap-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 28px rgba(14,165,233,0.45);
+}
+.ap-submit:active:not(:disabled) { transform: translateY(0); }
+.ap-submit:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Loading spinner */
+.ap-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ap-spin .7s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes ap-spin { to { transform: rotate(360deg); } }
+
+/* ── Footer text + links ──────────────────────────────────── */
+.ap-footer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ap-text-muted);
+}
+.ap-footer a,
+.ap-footer-link {
+  color: var(--ap-accent);
+  text-decoration: none;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  transition: color .15s;
+}
+.ap-footer a:hover,
+.ap-footer-link:hover { color: #7dd3fc; }
+
+/* ── Demo hint ────────────────────────────────────────────── */
+.ap-hint {
+  margin-top: 20px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--ap-border);
+  border-radius: var(--ap-radius-sm);
+  font-size: 12px;
+  color: var(--ap-text-muted);
+  line-height: 1.8;
+  text-align: center;
+}
+.ap-hint strong { color: rgba(248,250,252,0.70); }
+
+/* ── Invite badge ─────────────────────────────────────────── */
+.ap-invite-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(14,165,233,0.12);
+  border: 1px solid rgba(14,165,233,0.3);
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ap-accent);
+  margin-bottom: 20px;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 500px) {
+  .ap-card  { padding: 28px 20px 24px; }
+  .ap-title { font-size: 20px; }
+  .ap-role-grid { grid-template-columns: 1fr; }
+  .ap-role-card { flex-direction: row; padding: 12px; justify-content: flex-start; }
+  .ap-role-desc { display: none; }
+}

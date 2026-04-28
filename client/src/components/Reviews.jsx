@@ -1,269 +1,252 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Star, Quote, ArrowLeft, ArrowRight, Sparkles, TrendingUp, Award } from 'lucide-react';
-import './styles/Reviews.css';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
+import { Star, Quote, ArrowLeft, ArrowRight, TrendingUp, Award } from "lucide-react";
+import "./styles/Reviews.css";
 
-const ReviewsSection = () => {
-  const [activeReview, setActiveReview] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const scrollContainerRef = useRef(null);
+const reviews = [
+  {
+    id: 1,
+    name: "Sarah Mitchell",
+    role: "CEO, TechVenture Inc.",
+    initials: "SM",
+    color: "#3B82F6",
+    rating: 5,
+    quote:
+      "They transformed our entire digital presence. The website doesn't just look incredible — it actively generates leads. Best investment we've ever made.",
+    metric: "250% more conversions",
+    project: "E-commerce Platform",
+  },
+  {
+    id: 2,
+    name: "Michael Chen",
+    role: "Founder, StartupHub",
+    initials: "MC",
+    color: "#10B981",
+    rating: 5,
+    quote:
+      "We went from 20 leads per month to 85 in just 6 weeks of the new site going live. The speed optimisations alone were mind-blowing.",
+    metric: "20 → 85 leads/month",
+    project: "SaaS Landing Page",
+  },
+  {
+    id: 3,
+    name: "Emily Rodriguez",
+    role: "Marketing Director, GrowthCo",
+    initials: "ER",
+    color: "#8B5CF6",
+    rating: 5,
+    quote:
+      "Every decision was intentional — from the copy structure to the call-to-actions. They think like marketers AND build like engineers. Rare combination.",
+    metric: "180% more qualified leads",
+    project: "Corporate Website",
+  },
+  {
+    id: 4,
+    name: "David Park",
+    role: "Owner, Boutique Fashion",
+    initials: "DP",
+    color: "#FF6B00",
+    rating: 5,
+    quote:
+      "Our online store was barely breaking even. After the redesign, we doubled sales within the first month. The new checkout flow is seamless.",
+    metric: "2x sales in 30 days",
+    project: "Fashion E-commerce",
+  },
+  {
+    id: 5,
+    name: "Jessica Thompson",
+    role: "Director, Creative Agency",
+    initials: "JT",
+    color: "#F59E0B",
+    rating: 5,
+    quote:
+      "As a creative agency ourselves, our standards are high. GALE GRID didn't just meet them — they set a new benchmark for what a web agency can deliver.",
+    metric: "95% client satisfaction",
+    project: "Portfolio Website",
+  },
+  {
+    id: 6,
+    name: "Robert Kim",
+    role: "CTO, DataFlow Systems",
+    initials: "RK",
+    color: "#EC4899",
+    rating: 5,
+    quote:
+      "Complex dashboard, clean code, 99.9% uptime. Six months in and we haven't had a single complaint from users. That's the bar they set.",
+    metric: "99.9% uptime achieved",
+    project: "Web Application",
+  },
+];
 
-  const reviews = [
-    {
-      id: 1,
-      name: 'Sarah Mitchell',
-      role: 'CEO, TechVenture Inc.',
-      avatar: 'SM',
-      rating: 5,
-      text: 'Exceptional work! The team transformed our outdated website into a modern, high-performing platform. Their attention to detail and creative approach exceeded our expectations. Response time was incredible.',
-      project: 'E-commerce Platform',
-      metric: '250% increase in conversions',
-      color: '#74aed4ff'
-    },
-    {
-      id: 2,
-      name: 'Michael Chen',
-      role: 'Founder, StartupHub',
-      avatar: 'MC',
-      rating: 5,
-      text: 'Working with GALE GRID was a game-changer for our startup. They delivered a stunning website that perfectly captures our brand. The performance optimization they implemented resulted in lightning-fast load times.',
-      project: 'SaaS Landing Page',
-      metric: '3x faster page speed',
-      color: '#8aa2dfff'
-    },
-    {
-      id: 3,
-      name: 'Emily Rodriguez',
-      role: 'Marketing Director, GrowthCo',
-      avatar: 'ER',
-      rating: 5,
-      text: 'The level of professionalism and expertise displayed by the team was outstanding. They took the time to understand our business goals and delivered a solution that exceeded all expectations. Highly recommend!',
-      project: 'Corporate Website',
-      metric: '180% more leads generated',
-      color: '#8cd3bbff'
-    },
-    {
-      id: 4,
-      name: 'David Park',
-      role: 'Owner, Boutique Fashion',
-      avatar: 'DP',
-      rating: 5,
-      text: 'Our new e-commerce site is beautiful and functional. Sales have doubled since launch. The team was patient with our requests and delivered exactly what we envisioned. Best investment we\'ve made.',
-      project: 'Fashion E-commerce',
-      metric: '2x sales increase',
-      color: '#aa90ddff'
-    },
-    {
-      id: 5,
-      name: 'Jessica Thompson',
-      role: 'Director, Creative Agency',
-      avatar: 'JT',
-      rating: 5,
-      text: 'As a creative agency ourselves, we have high standards. GALE GRID not only met but exceeded them. The design is modern, the code is clean, and the final product is simply stunning. A true partnership.',
-      project: 'Portfolio Website',
-      metric: '95% client satisfaction',
-      color: '#e2c478ff'
-    },
-    {
-      id: 6,
-      name: 'Robert Kim',
-      role: 'CTO, DataFlow Systems',
-      avatar: 'RK',
-      rating: 5,
-      text: 'Technical excellence combined with creative design. They built a complex web application that handles our data visualization needs perfectly. The performance and scalability are impressive.',
-      project: 'Web Application',
-      metric: '99.9% uptime achieved',
-      color: '#dd82aaff'
-    }
-  ];
+const stats = [
+  { icon: Star, value: "5.0", label: "Google Rating", color: "#FBBF24" },
+  { icon: TrendingUp, value: "150+", label: "Happy Clients", color: "#10B981" },
+  { icon: Award, value: "98%", label: "Satisfaction Rate", color: "#FF6B00" },
+];
 
-  const stats = [
-    { icon: Star, value: '5.0', label: 'Average Rating', color: '#FBBF24' },
-    { icon: TrendingUp, value: '150+', label: 'Happy Clients', color: '#10B981' },
-    { icon: Award, value: '98%', label: 'Satisfaction Rate', color: '#FF6B00' }
-  ];
+function StatCard({ s, i }) {
+  const ref = React.useRef(null);
+  const inView = useInView(ref, { once: true });
+  return (
+    <motion.div
+      ref={ref}
+      className="rv-stat"
+      style={{ "--sc": s.color }}
+      initial={{ opacity: 0, y: 24 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: i * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <div className="rv-stat-icon">
+        <s.icon size={20} strokeWidth={1.8} />
+      </div>
+      <span className="rv-stat-val">{s.value}</span>
+      <span className="rv-stat-label">{s.label}</span>
+    </motion.div>
+  );
+}
+
+export default function ReviewsSection() {
+  const [active, setActive] = useState(0);
+  const [autoplay, setAutoplay] = useState(true);
 
   useEffect(() => {
-    let interval;
-    if (isAutoPlaying) {
-      interval = setInterval(() => {
-        setActiveReview((prev) => (prev + 1) % reviews.length);
-      }, 5000);
-    }
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, reviews.length]);
+    if (!autoplay) return;
+    const t = setInterval(() => setActive((p) => (p + 1) % reviews.length), 5500);
+    return () => clearInterval(t);
+  }, [autoplay]);
 
-  const handlePrevious = () => {
-    setIsAutoPlaying(false);
-    setActiveReview((prev) => (prev - 1 + reviews.length) % reviews.length);
-  };
+  const prev = () => { setAutoplay(false); setActive((p) => (p - 1 + reviews.length) % reviews.length); };
+  const next = () => { setAutoplay(false); setActive((p) => (p + 1) % reviews.length); };
 
-  const handleNext = () => {
-    setIsAutoPlaying(false);
-    setActiveReview((prev) => (prev + 1) % reviews.length);
-  };
-
-  const handleDotClick = (index) => {
-    setIsAutoPlaying(false);
-    setActiveReview(index);
-  };
+  const current = reviews[active];
+  const headerRef = React.useRef(null);
+  const headerInView = useInView(headerRef, { once: true, margin: "-60px" });
 
   return (
-    <section className="reviews-section">
-      <div className="reviews-container">
-        
-        {/* Section Header */}
-        <div className="reviews-header">
-          {/* <div className="reviews-badge"> */}
-            {/* <Sparkles size={16} /> */}
-            {/* <span>Reviews</span> */}
-          {/* </div> */}
-          <h2 className="reviews-title">
-            What Our Clients Say
+    <section className="rv-section">
+      <div className="rv-container">
+        {/* Header */}
+        <motion.div
+          ref={headerRef}
+          className="rv-header"
+          initial={{ opacity: 0, y: 28 }}
+          animate={headerInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <span className="rv-eyebrow">Client Stories</span>
+          <h2 className="rv-headline">
+            Real results from <em>real businesses</em>
           </h2>
-          <p className="reviews-subtitle">
-            Real feedback from real businesses. Discover why companies trust us 
-            to transform their digital presence.
+          <p className="rv-sub">
+            Every website we build comes with a promise: measurable improvement. Here's what our clients say.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Main Review Carousel */}
-        <div className="reviews-carousel-wrapper">
-            {/* Thumbnail Gallery */}
-        <div className="reviews-thumbnail-gallery" ref={scrollContainerRef}>
-          {reviews.map((review, index) => (
-            <div
-              key={review.id}
-              className={`review-thumbnail ${activeReview === index ? 'active-thumbnail' : ''}`}
-              onClick={() => handleDotClick(index)}
-              style={{ '--thumb-color': review.color }}
-            >
-              <div className="thumbnail-avatar" style={{ background: review.color }}>
-                {review.avatar}
-              </div>
-              <div className="thumbnail-info">
-                <span className="thumbnail-name">{review.name}</span>
-                <div className="thumbnail-stars">
-                  {[...Array(review.rating)].map((_, idx) => (
-                    <Star key={idx} size={12} fill="#FBBF24" color="#FBBF24" />
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-          
-          {/* Featured Review Card */}
-          <div className="featured-review-container">
-            <div 
-              className="featured-review-card"
-              style={{ '--review-color': reviews[activeReview].color }}
-            >
-              
-              {/* Floating Quote Icon */}
-              <div className="floating-quote-icon">
-                <Quote size={48} />
-              </div>
+        {/* Main carousel */}
+        <div className="rv-carousel">
+          {/* Thumbnail strip */}
+          <div className="rv-thumbs">
+            {reviews.map((r, i) => (
+              <button
+                key={r.id}
+                className={`rv-thumb${active === i ? " rv-thumb--active" : ""}`}
+                style={{ "--tc": r.color }}
+                onClick={() => { setAutoplay(false); setActive(i); }}
+                aria-label={`View ${r.name}'s review`}
+              >
+                <span
+                  className="rv-thumb-av"
+                  style={{ background: r.color }}
+                >
+                  {r.initials}
+                </span>
+                <span className="rv-thumb-name">{r.name.split(" ")[0]}</span>
+              </button>
+            ))}
+          </div>
 
-              {/* Review Header */}
-              <div className="review-card-header">
-                <div className="reviewer-avatar-large" style={{ background: reviews[activeReview].color }}>
-                  {reviews[activeReview].avatar}
-                </div>
-                <div className="reviewer-info-main">
-                  <h3 className="reviewer-name-large">{reviews[activeReview].name}</h3>
-                  <p className="reviewer-role-large">{reviews[activeReview].role}</p>
-                  <div className="review-stars-large">
-                    {[...Array(reviews[activeReview].rating)].map((_, idx) => (
-                      <Star key={idx} size={18} fill="#FBBF24" color="#FBBF24" />
-                    ))}
+          {/* Featured card */}
+          <div className="rv-feature-wrap">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={current.id}
+                className="rv-card"
+                style={{ "--rc": current.color }}
+                initial={{ opacity: 0, x: 32 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -24 }}
+                transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {/* Large decorative quote */}
+                <Quote
+                  className="rv-quote-icon"
+                  size={56}
+                  aria-hidden="true"
+                />
+
+                {/* Reviewer row */}
+                <div className="rv-reviewer">
+                  <div className="rv-av" style={{ background: current.color }}>
+                    {current.initials}
+                  </div>
+                  <div className="rv-reviewer-info">
+                    <strong>{current.name}</strong>
+                    <span>{current.role}</span>
+                    <div className="rv-stars">
+                      {Array.from({ length: current.rating }).map((_, i) => (
+                        <Star key={i} size={14} fill="#FBBF24" color="#FBBF24" />
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Review Text */}
-              <p className="review-text-large">{reviews[activeReview].text}</p>
+                {/* Quote text */}
+                <p className="rv-quote-text">"{current.quote}"</p>
 
-              {/* Project Info */}
-              <div className="review-project-info">
-                <div className="project-detail">
-                  <span className="project-label">Project</span>
-                  <span className="project-value">{reviews[activeReview].project}</span>
+                {/* Metric + project badges */}
+                <div className="rv-badges">
+                  <span className="rv-metric-badge">
+                    <TrendingUp size={13} />
+                    {current.metric}
+                  </span>
+                  <span className="rv-project-badge">{current.project}</span>
                 </div>
-                <div className="project-detail">
-                  <span className="project-label">Result</span>
-                  <span className="project-value metric-value">{reviews[activeReview].metric}</span>
-                </div>
+
+                {/* Glow accent */}
+                <div className="rv-card-glow" aria-hidden="true" />
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Controls */}
+            <div className="rv-controls">
+              <button onClick={prev} className="rv-ctrl" aria-label="Previous">
+                <ArrowLeft size={18} />
+              </button>
+              <div className="rv-dots">
+                {reviews.map((_, i) => (
+                  <button
+                    key={i}
+                    className={`rv-dot${active === i ? " rv-dot--active" : ""}`}
+                    style={{ "--dc": reviews[i].color }}
+                    onClick={() => { setAutoplay(false); setActive(i); }}
+                    aria-label={`Review ${i + 1}`}
+                  />
+                ))}
               </div>
-
-              {/* Decorative Elements */}
-              <div className="review-decoration review-decoration-1"></div>
-              <div className="review-decoration review-decoration-2"></div>
-              <div className="review-decoration review-decoration-3"></div>
-
+              <button onClick={next} className="rv-ctrl" aria-label="Next">
+                <ArrowRight size={18} />
+              </button>
             </div>
           </div>
-
-          {/* Navigation Controls */}
-          <div className="carousel-controls">
-            <button 
-              className="carousel-control-btn prev-btn"
-              onClick={handlePrevious}
-              aria-label="Previous review"
-            >
-              <ArrowLeft size={20} />
-            </button>
-
-            {/* Dots Indicator */}
-            <div className="carousel-dots">
-              {reviews.map((_, index) => (
-                <button
-                  key={index}
-                  className={`carousel-dot ${activeReview === index ? 'active' : ''}`}
-                  onClick={() => handleDotClick(index)}
-                  aria-label={`Go to review ${index + 1}`}
-                  style={{ '--dot-color': reviews[index].color }}
-                />
-              ))}
-            </div>
-
-            <button 
-              className="carousel-control-btn next-btn"
-              onClick={handleNext}
-              aria-label="Next review"
-            >
-              <ArrowRight size={20} />
-            </button>
-          </div>
-
         </div>
 
-        
-
-        {/* Stats Grid */}
-        <div className="reviews-stats-grid">
-          {stats.map((stat, index) => {
-            const IconComponent = stat.icon;
-            return (
-              <div 
-                key={index} 
-                className="review-stat-card"
-                style={{ '--stat-color': stat.color }}
-              >
-                <div className="stat-icon-wrapper">
-                  <IconComponent size={24} />
-                </div>
-                <div className="stat-content">
-                  <span className="stat-value">{stat.value}</span>
-                  <span className="stat-label">{stat.label}</span>
-                </div>
-              </div>
-            );
-          })}
+        {/* Stats strip */}
+        <div className="rv-stats">
+          {stats.map((s, i) => (
+            <StatCard key={i} s={s} i={i} />
+          ))}
         </div>
-
       </div>
     </section>
   );
-};
-
-export default ReviewsSection;
+}

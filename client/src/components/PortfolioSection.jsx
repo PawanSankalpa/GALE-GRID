@@ -1,146 +1,180 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-import { FaGoogle, FaStar, FaClock } from "react-icons/fa";
-import leftImg from "../assets/portfolioPics/hotel11.png"; // third image in row 1
-import rightImg from "../assets/portfolioPics/luxia-item.png"; // right column images in row 2
-import proj4 from "../assets/portfolioPics/hotel-full.png"; // first image in row 2
-import modernHouse from "../assets/portfolioPics/lifecare.jpeg"; // first image in row 1
-import luxiaHero3 from "../assets/portfolioPics/luxia-hero3.png"; // center stat card in row 1
+import { useBooking } from "../context/BookingContext.jsx";
+import { motion, useInView } from "framer-motion";
+import { ArrowUpRight, Star, ExternalLink } from "lucide-react";
+import leftImg from "../assets/portfolioPics/hotel11.png";
+import rightImg from "../assets/portfolioPics/luxia-item.png";
+import proj4 from "../assets/portfolioPics/hotel-full.png";
+import modernHouse from "../assets/portfolioPics/lifecare.jpeg";
+import luxiaHero3 from "../assets/portfolioPics/luxia-hero3.png";
 import "./styles/PortfolioSection.css";
 
-// Legacy metrics moved to Stats.jsx for home page placement
+const cards = [
+  {
+    cls: "pf-r1-left",
+    img: modernHouse,
+    alt: "LifeCare Medical project",
+    title: "LIFECARE MEDICAL",
+    hook: "+45% Conversion",
+    industry: "Healthcare Platform",
+    stat: true,
+    delay: 0,
+  },
+  {
+    cls: "pf-r1-center pf-stat-only",
+    img: luxiaHero3,
+    alt: "Client satisfaction metric",
+    isStat: true,
+    delay: 0.08,
+  },
+  {
+    cls: "pf-r1-right",
+    img: leftImg,
+    alt: "Grand Hotel project",
+    title: "GRAND HOTEL",
+    hook: "+30% Bookings",
+    industry: "Luxury Hospitality",
+    delay: 0.16,
+  },
+  {
+    cls: "pf-r2-left-large",
+    img: proj4,
+    alt: "Emerald Estates",
+    title: "EMERALD ESTATES",
+    hook: "+35% Conversion Rate",
+    industry: "Luxury Real Estate · Dubai",
+    delay: 0.24,
+  },
+  {
+    cls: "pf-r2-right-top",
+    img: rightImg,
+    alt: "Opera Listings",
+    title: "OPERA LISTINGS",
+    hook: "Virtual Tours",
+    industry: "Real Estate",
+    delay: 0.32,
+  },
+  {
+    cls: "pf-r2-right-bottom pf-stat-only",
+    img: luxiaHero3,
+    alt: "Client recommendation",
+    isStat: true,
+    delay: 0.4,
+  },
+];
 
-// Modern mosaic section (new)
 const PortfolioSection = () => {
-  const pfRef = useRef(null);
-
-  // In-view animations for header and cards
-  useEffect(() => {
-    const root = pfRef.current; if (!root) return;
-    const items = Array.from(root.querySelectorAll('.reveal'));
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        const idx = items.indexOf(entry.target);
-        setTimeout(() => entry.target.classList.add('is-visible'), Math.max(0, idx) * 80);
-      });
-    }, { threshold: 0.18 });
-    items.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
+  const headerRef = useRef(null);
+  const headerInView = useInView(headerRef, { once: true, margin: "-10% 0px" });
 
   return (
-    <section id="portfolio" className="pf-section" aria-labelledby="pf-title" ref={pfRef}>
+    <section id="portfolio" className="pf-section" aria-labelledby="pf-title">
       <div className="pf-shell">
-        <header className="pf-header reveal">
-          <h2 id="pf-title">SOME OF OUR RECENT WORK</h2>
-          <p className="pf-sub">
-            A few recent projects we’ve designed and built. Feel free to explore the live sites.
-          </p>
-        </header>
+        {/* Header */}
+        <motion.header
+          ref={headerRef}
+          className="pf-header"
+          initial={{ opacity: 0, y: 32 }}
+          animate={headerInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ type: "spring", stiffness: 80, damping: 20 }}
+        >
+          <span className="pf-hd-eyebrow">Our Work</span>
+          <h2 className="pf-hd-headline" id="pf-title">Recent work. Real <em>results.</em></h2>
+          <p className="pf-hd-sub">Real projects. Measurable results. Feel free to explore the live sites.</p>
+        </motion.header>
 
+        {/* Mosaic */}
         <div className="pf-mosaic">
-          {/* ROW 1: three equal cards (4 cols each) */}
-          <article className="pf-card pf-r1-left reveal pf-magnetic" aria-label="SunMax Energy" tabIndex={0}>
-            <div className="hover-scrim" />
-            <img src={modernHouse} loading="lazy" decoding="async" alt="SunMax Energy project" className="pf-img" />
-            <div className="pf-glass-overlay">
-              <div className="pf-glass-title">LIFECARE MEDICAL</div>
-              <div className="pf-glass-hook">+45% Conversion</div>
-              <div className="pf-glass-industry">Healthcare Platform</div>
-            </div>
-            <div className="pf-arrow-fixed"><span className="arrow">↗</span></div>
-          </article>
-
-          <article className="pf-card pf-r1-center pf-no-tilt reveal" aria-label="Customer satisfaction" tabIndex={0}>
-            <img src={luxiaHero3} loading="lazy" decoding="async" alt="Luxury property architecture" />
-            <div className="pf-veil pf-veil-stat" />
-            <div className="pf-stat-overlay" aria-hidden="true">
-              <div className="pf-stat-percent">99%</div>
-              <p className="pf-stat-line">Clients recommend us to their network</p>
-              <Link to="/contact" className="pf-stat-btn" aria-label="Start your project">Start Your Project</Link>
-            </div>
-          </article>
-
-          <article className="pf-card pf-r1-right reveal pf-magnetic" aria-label="Hotel project" tabIndex={0}>
-            <div className="hover-scrim" />
-            <img src={leftImg} loading="lazy" decoding="async" alt="Hotel project screenshot" className="pf-img" />
-            <div className="pf-glass-overlay">
-              <div className="pf-glass-title">GRAND HOTEL</div>
-              <div className="pf-glass-hook">+30% Bookings</div>
-              <div className="pf-glass-industry">Luxury Hospitality</div>
-            </div>
-            <div className="pf-arrow-fixed"><span className="arrow">↗</span></div>
-          </article>
-
-          {/* ROW 2: Left large image, right stack with banner + rate */}
-          <article className="pf-card pf-r2-left-large reveal pf-magnetic" aria-label="Luxury hotel" tabIndex={0}>
-            <div className="hover-scrim" />
-            <img src={proj4} loading="lazy" decoding="async" alt="Emerald Estates project" className="pf-img" />
-            <div className="pf-glass-overlay">
-              <div className="pf-glass-title">EMERALD ESTATES</div>
-              <div className="pf-glass-hook">+35% Conversion Rate</div>
-              <div className="pf-glass-industry">Luxury Real Estate · Dubai</div>
-            </div>
-            <div className="pf-arrow-fixed"><span className="arrow">↗</span></div>
-          </article>
-
-          {/* Right top with dark banner overlay */}
-          <article className="pf-card pf-r2-right-top reveal pf-magnetic" aria-label="Property listing" tabIndex={0}>
-            <div className="hover-scrim" />
-            <img src={rightImg} loading="lazy" decoding="async" alt="Property listing page" className="pf-img" />
-            <div className="pf-glass-overlay">
-              <div className="pf-glass-title">OPERA LISTINGS</div>
-              <div className="pf-glass-hook">Virtual Tours</div>
-              <div className="pf-glass-industry">Real Estate</div>
-            </div>
-            <div className="pf-arrow-fixed"><span className="arrow">↗</span></div>
-          </article>
-
-          {/* Right bottom: mirror center stat (99%) */}
-          <article className="pf-card pf-r2-right-bottom pf-no-tilt reveal" aria-label="Customer recommendation" tabIndex={0}>
-            <img src={luxiaHero3} loading="lazy" decoding="async" alt="Customer satisfaction" />
-            <div className="pf-veil pf-veil-stat" />
-            <div className="pf-stat-overlay" aria-hidden="true">
-              <div className="pf-stat-percent">99%</div>
-              <p className="pf-stat-line">Clients recommend us to their network</p>
-              <Link to="/contact" className="pf-stat-btn" aria-label="Start your project">Start Your Project</Link>
-            </div>
-          </article>
+          {cards.map((card, i) => (
+            <PfCard key={i} card={card} />
+          ))}
         </div>
       </div>
-      {/* Stats Footer: below portfolio images */}
-      <div className="stats-footer">
-        <div className="stat-item">
-          <div className="stat-icon">
-            <i className="fa fa-google"><FaGoogle /></i>
-          </div>
-          <div className="stat-info">
-            <div className="stat-number">4.9/5</div>
-            <div className="stat-label">Google Rating</div>
-          </div>
-        </div>
-        <div className="stat-item">
-          <div className="stat-icon">
-            <i className="fa fa-star"><FaStar /></i>
-          </div>
-          <div className="stat-info">
-            <div className="stat-number">200+</div>
-            <div className="stat-label">Projects</div>
+
+      {/* Stats footer */}
+      <div className="pf-stats-footer">
+        <div className="psf-item">
+          <Star size={18} fill="#FBBF24" strokeWidth={0} />
+          <div>
+            <span className="psf-num">4.9/5</span>
+            <span className="psf-label">Google Rating</span>
           </div>
         </div>
-        <div className="stat-item">
-          <div className="stat-icon">
-            <i className="fa fa-clock"><FaClock /></i>
+        <div className="psf-divider" />
+        <div className="psf-item">
+          <ArrowUpRight size={18} className="psf-icon" />
+          <div>
+            <span className="psf-num">10+</span>
+            <span className="psf-label">Projects</span>
           </div>
-          <div className="stat-info">
-            <div className="stat-number">2-8</div>
-            <div className="stat-label">Weeks Delivery</div>
+        </div>
+        <div className="psf-divider" />
+        <div className="psf-item">
+          <ExternalLink size={17} className="psf-icon" />
+          <div>
+            <span className="psf-num">2–8</span>
+            <span className="psf-label">Weeks Delivery</span>
           </div>
         </div>
       </div>
     </section>
   );
 };
+
+/* ── Individual card ──────────────────────────── */
+function PfCard({ card }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-8% 0px" });
+  const { openBooking } = useBooking();
+
+  if (card.isStat) {
+    return (
+      <motion.article
+        ref={ref}
+        className={`pf-card ${card.cls}`}
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={inView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ type: "spring", stiffness: 90, damping: 20, delay: card.delay }}
+        tabIndex={0}
+        aria-label="Client recommendation"
+      >
+        <img src={card.img} loading="lazy" decoding="async" alt={card.alt} />
+        <div className="pf-veil pf-veil-stat" />
+        <div className="pf-stat-overlay">
+          <div className="pf-stat-percent">99%</div>
+          <p className="pf-stat-line">Clients recommend us to their network</p>
+          <button type="button" className="pf-stat-btn" onClick={openBooking}>Start Your Project</button>
+        </div>
+      </motion.article>
+    );
+  }
+
+  return (
+    <motion.article
+      ref={ref}
+      className={`pf-card ${card.cls}`}
+      initial={{ opacity: 0, y: 36 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ type: "spring", stiffness: 80, damping: 20, delay: card.delay }}
+      whileHover={{ scale: 1.025, transition: { type: "spring", stiffness: 280, damping: 22 } }}
+      tabIndex={0}
+      aria-label={card.title}
+    >
+      <img src={card.img} loading="lazy" decoding="async" alt={card.alt} className="pf-img" />
+      <div className="pf-card-info">
+        <span className="pf-card-industry">{card.industry}</span>
+        <span className="pf-card-title">{card.title}</span>
+        <span className="pf-card-hook">{card.hook}</span>
+      </div>
+      <motion.div
+        className="pf-arrow-fixed"
+        whileHover={{ rotate: 45, scale: 1.1, transition: { type: "spring", stiffness: 300 } }}
+      >
+        <ArrowUpRight size={20} />
+      </motion.div>
+    </motion.article>
+  );
+}
 
 export default PortfolioSection;

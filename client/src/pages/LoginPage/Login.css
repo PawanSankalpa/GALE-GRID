@@ -299,6 +299,73 @@
   }
 }
 
+/* Form Group & Error Styling */
+.form-group {
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group input {
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(33, 224, 178, 0.2);
+}
+
+.input-error {
+  border-color: #ef4444 !important;
+  background-color: rgba(239, 68, 68, 0.05);
+}
+
+.error-text {
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: 0.375rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 500;
+}
+
+.login-forgot {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.login-toregister,
+.login-forgot {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.login-anchor1 {
+  color: var(--primary);
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.login-anchor1:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* Disabled button state */
+.login-loginButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-loginButton:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
 /* Error Message */
 .error-message {
   color: #EF4444;

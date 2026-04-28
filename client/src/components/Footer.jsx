@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useBooking } from "../context/BookingContext.jsx";
 import { 
   Mail, 
   Phone, 
@@ -15,6 +16,7 @@ import "./styles/Footer.css";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
+  const { openBooking } = useBooking();
 
   return (
     <footer className="footer" role="contentinfo" aria-label="Footer">
@@ -70,10 +72,10 @@ function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/contact" aria-label="Contact page">
+                  <button type="button" aria-label="Book a discovery call" onClick={openBooking} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 4, color: "inherit", fontFamily: "inherit", fontSize: "inherit", padding: 0 }}>
                     <span>Contact</span>
                     <ArrowUpRight size={14} />
-                  </Link>
+                  </button>
                 </li>
               </ul>
             </nav>
@@ -150,7 +152,7 @@ function Footer() {
                   <Facebook size={20} />
                 </a>
                 <a
-                  href="#"
+                  href="https://linkedin.com/company/galegrid"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
@@ -159,7 +161,7 @@ function Footer() {
                   <Linkedin size={20} />
                 </a>
                 <a
-                  href="#"
+                  href="https://instagram.com/galegrid"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"

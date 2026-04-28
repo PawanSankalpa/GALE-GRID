@@ -26,18 +26,23 @@
 }
 
 .navbar.sticky {
-  /* Make the sticky navbar use fixed positioning so it reliably stays
-     at the top during page scroll (absolute -> fixed avoids layout
-     inconsistencies when toggling classes). */
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  /* subtle glassy overlay that blends with hero */
   backdrop-filter: blur(6px) saturate(120%);
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   box-shadow: 0 6px 24px rgba(2,6,23,0.35);
   padding: 12px 28px;
+  transition: backdrop-filter 380ms ease, background 380ms ease, box-shadow 380ms ease, border-color 380ms ease;
+}
+
+/* Frosted glass fully activates after 22px scroll */
+.navbar.sticky.scrolled {
+  backdrop-filter: blur(20px) saturate(160%);
+  background: rgba(10, 11, 16, 0.78) !important;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.06), 0 20px 60px rgba(0,0,0,0.45) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
 }
 
 /* Floating navbar on larger screens: centered, rounded, and elevated so it
@@ -222,6 +227,9 @@
 
 .nav-cta {
   border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
   /* increase horizontal padding for a roomier CTA */
   padding: 14px 40px;
   border: 1px solid rgba(255,140,0,0.95);
@@ -296,12 +304,22 @@
 	font-weight: 700;
 	font-size: 1.5rem;
 	letter-spacing: 2px;
-	color: var(--navbar-text-primary);
+	color: var(--navbar-text-primary, #EDEFF3);
 	text-decoration: none;
 }
 
 .logo span {
-	color: var(--navbar-text-primary);
+	color: var(--navbar-text-primary, #EDEFF3);
+}
+
+/* ── Mobile/desktop visibility helpers ── */
+.desktop-only { display: flex; }
+.mobile-only  { display: none; }
+
+@media (max-width: 699px) {
+  .desktop-only { display: none !important; }
+  .mobile-only  { display: flex !important; }
+  .hamburger    { display: flex !important; }
 }
 
 /* -------------------- Mobile Nav & Hamburger -------------------- */

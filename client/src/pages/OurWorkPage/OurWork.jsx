@@ -1,13 +1,21 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import './OurWork.css';
 import NavBar from '../../components/NavBar';
 import Footer from '../../components/Footer';
+import CTA from '../../components/CTA';
+import {
+  ArrowRight, ArrowDown, Check, X, Target,
+  TrendingUp, Globe, BarChart2, Code2, Palette,
+  ChevronLeft, ChevronRight
+} from 'lucide-react';
 
-// Import images from assets
+/* ─────────────────────────────────────────
+   ASSETS
+───────────────────────────────────────── */
 import luxiaScreenshot from '../../assets/OurWork/screencapture-luxia-clothing-vercel-app-2026-01-16-19_39_34.png';
 import sunmaxScreenshot from '../../assets/OurWork/screencapture-sunmaxenergy-lk-2026-01-16-19_36_25.png';
 import galegridScreenshot from '../../assets/OurWork/screencapture-galegrid-2026-01-16-19_40_58.png';
-// Using same screenshots for before/after - replace with actual before images when available
 import luxiaBefore from '../../assets/OurWork/Screenshot 2026-01-16 at 19.41.52.png';
 import luxiaAfter from '../../assets/OurWork/screencapture-luxia-clothing-vercel-app-2026-01-16-19_39_34.png';
 import sunmaxBefore from '../../assets/OurWork/Screenshot 2026-01-16 at 19.42.37.png';
@@ -15,525 +23,1039 @@ import sunmaxAfter from '../../assets/OurWork/screencapture-sunmaxenergy-lk-2026
 import galegridBefore from '../../assets/OurWork/Screenshot 2026-01-16 at 19.43.45.png';
 import galegridAfter from '../../assets/OurWork/screencapture-galegrid-2026-01-16-19_40_58.png';
 
-// Icons
-const CheckIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="20 6 9 17 4 12"></polyline>
-  </svg>
-);
-
-const XIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="18" y1="6" x2="6" y2="18"></line>
-    <line x1="6" y1="6" x2="18" y2="18"></line>
-  </svg>
-);
-
-const ArrowRightIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="5" y1="12" x2="19" y2="12"></line>
-    <polyline points="12 5 19 12 12 19"></polyline>
-  </svg>
-);
-
-const CloseIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="18" y1="6" x2="6" y2="18"></line>
-    <line x1="6" y1="6" x2="18" y2="18"></line>
-  </svg>
-);
-
-const TargetIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10"></circle>
-    <circle cx="12" cy="12" r="6"></circle>
-    <circle cx="12" cy="12" r="2"></circle>
-  </svg>
-);
-
-const LightbulbIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M9 18h6"></path>
-    <path d="M10 22h4"></path>
-    <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
-  </svg>
-);
-
-// Case Studies Data
+/* ─────────────────────────────────────────
+   DATA
+───────────────────────────────────────── */
 const caseStudies = [
   {
     id: 1,
-    title: "Luxia Interiors",
-    industry: "Interior Design",
-    type: "Website Redesign",
-    problem: "Outdated website failing to capture the luxury brand essence, resulting in 80% bounce rate and zero online leads.",
+    title: 'Luxia Interiors',
+    industry: 'Interior Design',
+    type: 'Website Redesign',
+    year: '2025',
+    size: 'lg',
+    isNew: false,
+    problem: 'Outdated website failing to capture the luxury brand essence, resulting in 80% bounce rate and zero online leads.',
     image: luxiaScreenshot,
     beforeImage: luxiaBefore,
     afterImage: luxiaAfter,
-    metricValue: "+340%",
-    metricLabel: "Lead Generation",
-    tags: ["UX Design", "Development", "SEO"],
-    category: "design",
+    metricValue: '+340%',
+    metricLabel: 'Lead Generation',
+    color: '#3B82F6',
+    tags: ['UX Design', 'Development', 'SEO'],
+    category: 'design',
     problems: [
       "Website looked outdated and didn't reflect premium brand positioning",
-      "No clear call-to-action leading to missed conversion opportunities",
-      "Mobile experience was broken, losing 60% of potential clients",
-      "Page load time over 8 seconds causing high abandonment"
+      'No clear call-to-action leading to missed conversion opportunities',
+      'Mobile experience was broken, losing 60% of potential clients',
+      'Page load time over 8 seconds causing high abandonment',
     ],
     solutions: [
-      "Redesigned with luxury-focused aesthetics and modern glass morphism",
-      "Implemented strategic CTA placement based on heat map analysis",
-      "Built mobile-first responsive design for seamless experience",
-      "Optimized performance achieving sub-2-second load times"
+      'Redesigned with luxury-focused aesthetics and modern glass morphism',
+      'Implemented strategic CTA placement based on heat map analysis',
+      'Built mobile-first responsive design for seamless experience',
+      'Optimized performance achieving sub-2-second load times',
     ],
     results: [
-      { value: "+340%", label: "Lead Generation" },
-      { value: "2.1s", label: "Load Time" },
-      { value: "-65%", label: "Bounce Rate" },
-      { value: "+180%", label: "Time on Site" }
+      { value: '+340%', label: 'Lead Generation' },
+      { value: '2.1s', label: 'Load Time' },
+      { value: '-65%', label: 'Bounce Rate' },
+      { value: '+180%', label: 'Time on Site' },
     ],
     decisions: [
-      "Chose subtle animations over flashy effects to maintain elegance",
-      "Prioritized portfolio imagery over text-heavy descriptions",
-      "Integrated booking system directly into homepage flow"
-    ]
+      'Chose subtle animations over flashy effects to maintain elegance',
+      'Prioritized portfolio imagery over text-heavy descriptions',
+      'Integrated booking system directly into homepage flow',
+    ],
   },
   {
     id: 2,
-    title: "SunMax Solar",
-    industry: "Renewable Energy",
-    type: "Full Brand & Web",
-    problem: "New solar company struggling to establish credibility in competitive market with zero online presence.",
+    title: 'SunMax Solar',
+    industry: 'Renewable Energy',
+    type: 'Full Brand & Web',
+    year: '2025',
+    size: 'wide',
+    isNew: false,
+    problem: 'New solar company struggling to establish credibility in a competitive market with zero online presence.',
     image: sunmaxScreenshot,
     beforeImage: sunmaxBefore,
     afterImage: sunmaxAfter,
-    metricValue: "+520%",
-    metricLabel: "Quote Requests",
-    tags: ["Branding", "Web Design", "Marketing"],
-    category: "branding",
+    metricValue: '+520%',
+    metricLabel: 'Quote Requests',
+    color: '#10B981',
+    tags: ['Branding', 'Web Design', 'Marketing'],
+    category: 'branding',
     problems: [
-      "No established brand identity or market differentiation",
-      "Competitors dominated search results for local solar queries",
-      "No system to capture and nurture potential leads",
-      "Complex pricing confused potential customers"
+      'No established brand identity or market differentiation',
+      'Competitors dominated search results for local solar queries',
+      'No system to capture and nurture potential leads',
+      'Complex pricing confused potential customers',
     ],
     solutions: [
-      "Created distinctive brand identity emphasizing trust and innovation",
-      "Developed SEO-optimized content strategy targeting local keywords",
-      "Built automated lead capture with instant quote calculator",
-      "Designed transparent pricing section with comparison tools"
+      'Created distinctive brand identity emphasizing trust and innovation',
+      'Developed SEO-optimized content strategy targeting local keywords',
+      'Built automated lead capture with instant quote calculator',
+      'Designed transparent pricing section with comparison tools',
     ],
     results: [
-      { value: "+520%", label: "Quote Requests" },
-      { value: "#1", label: "Local SEO Rank" },
-      { value: "45%", label: "Conversion Rate" },
-      { value: "$2.4M", label: "Revenue Year 1" }
+      { value: '+520%', label: 'Quote Requests' },
+      { value: '#1', label: 'Local SEO Rank' },
+      { value: '45%', label: 'Conversion Rate' },
+      { value: '$2.4M', label: 'Revenue Year 1' },
     ],
     decisions: [
-      "Chose green/orange color palette to balance eco-friendly with energy",
-      "Prioritized trust signals over aggressive sales messaging",
-      "Built ROI calculator as primary conversion mechanism"
-    ]
+      'Chose green/orange colour palette to balance eco-friendly with energy',
+      'Prioritized trust signals over aggressive sales messaging',
+      'Built ROI calculator as primary conversion mechanism',
+    ],
   },
   {
     id: 3,
-    title: "GaleGrid Tech",
-    industry: "SaaS",
-    type: "Product Landing",
-    problem: "Tech startup with powerful product but confusing messaging that failed to convert trial users.",
+    title: 'GaleGrid Tech',
+    industry: 'SaaS',
+    type: 'Product Landing',
+    year: '2025',
+    size: 'md',
+    isNew: true,
+    problem: 'Tech startup with powerful product but confusing messaging that failed to convert trial users.',
     image: galegridScreenshot,
     beforeImage: galegridBefore,
     afterImage: galegridAfter,
-    metricValue: "+280%",
-    metricLabel: "Trial Sign-ups",
-    tags: ["UI/UX", "Conversion", "Development"],
-    category: "development",
+    metricValue: '+280%',
+    metricLabel: 'Trial Sign-ups',
+    color: '#8B5CF6',
+    tags: ['UI/UX', 'Conversion', 'Development'],
+    category: 'development',
     problems: [
-      "Technical jargon alienated non-technical decision makers",
-      "Trial sign-up process had 7 steps causing 90% drop-off",
-      "No clear demonstration of product value proposition",
-      "Pricing page confusion led to support ticket overload"
+      'Technical jargon alienated non-technical decision makers',
+      'Trial sign-up process had 7 steps causing 90% drop-off',
+      'No clear demonstration of product value proposition',
+      'Pricing page confusion led to support ticket overload',
     ],
     solutions: [
-      "Rewrote all copy focusing on benefits, not features",
-      "Reduced sign-up to 2 steps with progressive disclosure",
-      "Created interactive product demo embedded in homepage",
-      "Redesigned pricing with clear tier comparisons"
+      'Rewrote all copy focusing on benefits, not features',
+      'Reduced sign-up to 2 steps with progressive disclosure',
+      'Created interactive product demo embedded in homepage',
+      'Redesigned pricing with clear tier comparisons',
     ],
     results: [
-      { value: "+280%", label: "Trial Sign-ups" },
-      { value: "+150%", label: "Paid Conversions" },
-      { value: "-70%", label: "Support Tickets" },
-      { value: "4.8★", label: "User Rating" }
+      { value: '+280%', label: 'Trial Sign-ups' },
+      { value: '+150%', label: 'Paid Conversions' },
+      { value: '-70%', label: 'Support Tickets' },
+      { value: '4.8\u2605', label: 'User Rating' },
     ],
     decisions: [
-      "Chose conversational tone over corporate speak",
-      "Prioritized interactive demo over static screenshots",
-      "Added comparison section addressing competitor concerns"
-    ]
-  }
+      'Chose conversational tone over corporate speak',
+      'Prioritized interactive demo over static screenshots',
+      'Added comparison section addressing competitor concerns',
+    ],
+  },
+
+  // ─────────────────────────────────────────────────────────────────
+  // PROJECTS 4 – 10  →  Add your screenshots when ready
+  //
+  // HOW TO ADD A SCREENSHOT:
+  //   1. Drop your image in:  src/assets/OurWork/your-file.png
+  //   2. Import it at the top of this file:
+  //        import aceroScreenshot from '../../assets/OurWork/your-file.png';
+  //   3. Replace  image: null  with  image: aceroScreenshot
+  //      Do the same for beforeImage / afterImage if you have them.
+  //
+  // The card will show a colour gradient until you add a real image.
+  // ─────────────────────────────────────────────────────────────────
+
+  {
+    id: 4,
+    title: 'Acero Restaurant',
+    industry: 'Hospitality',
+    type: 'Brand & Website',
+    year: '2025',
+    size: 'sm',
+    isNew: false,
+    // ↓ Replace null with your imported screenshot when ready
+    image: null,
+    beforeImage: null,
+    afterImage: null,
+    metricValue: '+210%',
+    metricLabel: 'Reservations',
+    color: '#F59E0B',
+    tags: ['Branding', 'Web Design', 'Photography'],
+    category: 'branding',
+    problem: 'Upscale restaurant losing walk-ins to competitors due to an outdated website with no online booking system.',
+    problems: [
+      'No online reservation system, causing phone-only bookings and missed revenue',
+      'Website photography was low quality and did not reflect the dining experience',
+      'Menu was a scanned PDF — unusable on mobile devices',
+      'No Google My Business strategy despite being in a high-foot-traffic area',
+    ],
+    solutions: [
+      'Integrated live booking widget directly on the homepage above the fold',
+      'Organised a professional food photography shoot and built an immersive gallery',
+      'Built an interactive digital menu with allergen filters',
+      'Optimised local SEO and GMB profile to capture nearby search intent',
+    ],
+    results: [
+      { value: '+210%', label: 'Reservations' },
+      { value: '+85%',  label: 'Avg. Spend' },
+      { value: '4.9★',  label: 'Google Rating' },
+      { value: '-40%',  label: 'No-shows' },
+    ],
+    decisions: [
+      'Chose warm amber palette to evoke candlelit fine dining',
+      'Kept navigation minimal — only Menu, Reserve, and About',
+      'Prioritised mobile booking flow as 78% of traffic was mobile',
+    ],
+  },
+  {
+    id: 5,
+    title: 'Bloom Aesthetics',
+    industry: 'Beauty & Wellness',
+    type: 'Website Redesign',
+    year: '2025',
+    size: 'md',
+    isNew: false,
+    image: null,
+    beforeImage: null,
+    afterImage: null,
+    metricValue: '+310%',
+    metricLabel: 'Bookings',
+    color: '#EC4899',
+    tags: ['UI/UX', 'Booking System', 'SEO'],
+    category: 'design',
+    problem: 'Beauty clinic relying on Instagram DMs for bookings, losing high-value clients to competitors with professional online presence.',
+    problems: [
+      'All bookings managed through Instagram DMs — chaotic and unscalable',
+      'No pricing transparency driving away conversion-ready visitors',
+      'Before/after gallery was buried and hard to navigate',
+      'Zero email capture meaning repeat business was near impossible',
+    ],
+    solutions: [
+      'Built a 3-step booking flow with time-slot selection and deposit payment',
+      'Designed transparent treatment pricing with clear package comparisons',
+      'Created a full-screen before/after gallery as the hero section',
+      'Added lead magnet and loyalty programme email capture',
+    ],
+    results: [
+      { value: '+310%', label: 'Bookings' },
+      { value: '+140%', label: 'Avg. Order Value' },
+      { value: '2,400', label: 'Email Subscribers' },
+      { value: '-60%',  label: 'Admin Time' },
+    ],
+    decisions: [
+      'Chose soft rose palette to convey luxury and trust simultaneously',
+      'Hero section leads with transformation results, not services',
+      'Booking flow designed to collect key info upfront to reduce no-shows',
+    ],
+  },
+  {
+    id: 6,
+    title: 'IronForge Gym',
+    industry: 'Fitness',
+    type: 'Full Brand & Web',
+    year: '2025',
+    size: 'wide',
+    isNew: false,
+    image: null,
+    beforeImage: null,
+    afterImage: null,
+    metricValue: '+180%',
+    metricLabel: 'Memberships',
+    color: '#EF4444',
+    tags: ['Branding', 'Web Design', 'Marketing'],
+    category: 'branding',
+    problem: 'Independent gym struggling to compete with national chains despite offering superior coaching and community.',
+    problems: [
+      'Generic branding with no differentiation from national gym chains',
+      'Membership sign-up required an in-person visit — losing online traffic',
+      'Class schedule was managed via a Facebook group post',
+      'No mechanism to showcase coaching credentials and community culture',
+    ],
+    solutions: [
+      'Built a bold, high-energy brand identity centered on "real results, real people"',
+      'Launched online membership sign-up with tiered plans and payment processing',
+      'Built a live class timetable with digital booking and waitlist',
+      'Created a members results wall with testimonials and transformation stories',
+    ],
+    results: [
+      { value: '+180%', label: 'Memberships' },
+      { value: '+95%',  label: 'Class Fill Rate' },
+      { value: '-50%',  label: 'Churn Rate' },
+      { value: '+240%', label: 'PT Enquiries' },
+    ],
+    decisions: [
+      'Chose high-contrast red/black to signal intensity and commitment',
+      'Community-first messaging over equipment and facilities',
+      'Landing page A/B tested — free trial CTA outperformed discount CTA by 3×',
+    ],
+  },
+  {
+    id: 7,
+    title: 'UrbanNest Realty',
+    industry: 'Real Estate',
+    type: 'Platform & Web',
+    year: '2025',
+    size: 'sm',
+    isNew: false,
+    image: null,
+    beforeImage: null,
+    afterImage: null,
+    metricValue: '+260%',
+    metricLabel: 'Enquiries',
+    color: '#6366F1',
+    tags: ['Development', 'UI/UX', 'Maps API'],
+    category: 'development',
+    problem: 'Real estate agency losing qualified leads to property portals charging high listing fees and showing competitor listings.',
+    problems: [
+      'Over-reliance on Rightmove and Zoopla eroding margin and brand control',
+      'No property search on own website — buyers left immediately',
+      'Valuation request form had a 92% abandonment rate',
+      'No CRM integration — leads were missed or responded to days late',
+    ],
+    solutions: [
+      'Built a branded property search with interactive map and saved searches',
+      'Redesigned valuation flow — instant estimate + human follow-up in 24h',
+      'Integrated Pipedrive CRM with automated lead assignment and email sequences',
+      'Launched neighbourhood guides as SEO content to capture organic traffic',
+    ],
+    results: [
+      { value: '+260%', label: 'Enquiries' },
+      { value: '+120%', label: 'Valuations' },
+      { value: '4h',    label: 'Avg. Response Time' },
+      { value: '-35%',  label: 'Portal Dependency' },
+    ],
+    decisions: [
+      'Chose map-first listing experience based on user research — buyers scan by area',
+      'Instant valuation estimate built trust even before human contact',
+      'Neighbourhood content targeted zero-competition long-tail keywords',
+    ],
+  },
+  {
+    id: 8,
+    title: 'Peak Financial',
+    industry: 'Financial Services',
+    type: 'Website Redesign',
+    year: '2025',
+    size: 'sm',
+    isNew: false,
+    image: null,
+    beforeImage: null,
+    afterImage: null,
+    metricValue: '+195%',
+    metricLabel: 'Consultations',
+    color: '#0EA5E9',
+    tags: ['UI/UX', 'Compliance', 'Development'],
+    category: 'design',
+    problem: 'Independent financial adviser invisible online — all clients from word of mouth, zero digital acquisition.',
+    problems: [
+      'Website looked like it was built in 2009 — destroying trust instantly',
+      'No clear articulation of services or ideal client profile',
+      'No regulatory/compliance copy — required for FCA-authorised firms',
+      'Zero content marketing — competitors dominated "financial adviser near me" searches',
+    ],
+    solutions: [
+      'Rebuilt with modern, trustworthy design aligned to FCA compliance requirements',
+      'Wrote clear service pages with client outcome focus and authority signals',
+      'Created a retirement planning calculator as the primary lead magnet',
+      'Launched a bi-monthly newsletter attracting organic subscribers from SEO',
+    ],
+    results: [
+      { value: '+195%', label: 'Consultations' },
+      { value: '#3',    label: 'Local SEO Rank' },
+      { value: '1,800', label: 'Newsletter Subs' },
+      { value: '+88%',  label: 'Avg. Client Value' },
+    ],
+    decisions: [
+      'Deep blue palette signals stability and trust — critical in financial services',
+      'Calculator placed above the fold — captures intent before hard sell',
+      'Compliance copy written with solicitor review, reducing regulatory risk',
+    ],
+  },
+  {
+    id: 9,
+    title: 'Voyage Collective',
+    industry: 'Travel & Tourism',
+    type: 'Booking Platform',
+    year: '2025',
+    size: 'wide',
+    isNew: true,
+    image: null,
+    beforeImage: null,
+    afterImage: null,
+    metricValue: '+440%',
+    metricLabel: 'Bookings',
+    color: '#F97316',
+    tags: ['UI/UX', 'Booking', 'Development'],
+    category: 'development',
+    problem: 'Boutique travel agency manually handling all bookings via email — unable to scale and losing tech-savvy travellers to OTAs.',
+    problems: [
+      'All trip bookings managed through email chains taking days to confirm',
+      'No itinerary builder — clients received static PDF quotes',
+      'Zero ability for customers to self-serve, browse, or compare trips',
+      'Seasonal demand spikes overwhelmed the small team every summer',
+    ],
+    solutions: [
+      'Built a full booking platform with real-time availability and instant confirmation',
+      'Created an interactive itinerary builder with day-by-day customisation',
+      'Developed a trip discovery feature with filters for style, budget, and destination',
+      'Automated booking confirmation, payment, and pre-departure email sequences',
+    ],
+    results: [
+      { value: '+440%', label: 'Bookings' },
+      { value: '92%',   label: 'Self-Serve Rate' },
+      { value: '-75%',  label: 'Admin Hours' },
+      { value: '+320%', label: 'Repeat Bookings' },
+    ],
+    decisions: [
+      'Built on headless CMS so travel team can update trip content without dev help',
+      'Immersive video hero converts 2.4× better than static imagery for travel',
+      'Deposit-first payment flow reduced abandoned checkouts by 58%',
+    ],
+  },
+  {
+    id: 10,
+    title: 'Meridian Legal',
+    industry: 'Legal Services',
+    type: 'Website & SEO',
+    year: '2025',
+    size: 'sm',
+    isNew: true,
+    image: null,
+    beforeImage: null,
+    afterImage: null,
+    metricValue: '+290%',
+    metricLabel: 'Case Enquiries',
+    color: '#475569',
+    tags: ['UI/UX', 'SEO', 'Content Strategy'],
+    category: 'design',
+    problem: 'Mid-size law firm with strong reputation but no digital presence — losing high-value cases to less experienced but digitally active competitors.',
+    problems: [
+      'Website had no practice area pages — invisible for service-specific searches',
+      'No client testimonials or case results — trust gap vs. competitor firms',
+      'Contact form was the only CTA — high-friction for urgent legal situations',
+      'Blog section had not been updated since 2021',
+    ],
+    solutions: [
+      'Built 12 dedicated practice area pages with long-tail SEO targeting',
+      'Created a verified results and testimonials section with structured data markup',
+      'Added live chat widget and "Call us now" sticky CTA for urgent enquiries',
+      'Launched a content programme — 2 articles per month targeting legal FAQs',
+    ],
+    results: [
+      { value: '+290%', label: 'Case Enquiries' },
+      { value: '+160%', label: 'Organic Traffic' },
+      { value: '#1',    label: 'Target Keywords' },
+      { value: '+220%', label: 'High-Value Cases' },
+    ],
+    decisions: [
+      'Chose navy/slate palette — signals authority without the intimidation of black',
+      'Practice area pages structured for Featured Snippet capture on Google',
+      'Results section uses anonymised summaries to maintain client confidentiality',
+    ],
+  },
 ];
 
-const filters = [
-  { id: 'all', label: 'All Projects', count: caseStudies.length },
-  { id: 'design', label: 'Design', count: caseStudies.filter(c => c.category === 'design').length },
-  { id: 'branding', label: 'Branding', count: caseStudies.filter(c => c.category === 'branding').length },
-  { id: 'development', label: 'Development', count: caseStudies.filter(c => c.category === 'development').length },
+const CATEGORIES = ['all', ...new Set(caseStudies.map(c => c.category))];
+const filters = CATEGORIES.map(cat => ({
+  id: cat,
+  label: cat === 'all' ? 'All Projects' : cat.charAt(0).toUpperCase() + cat.slice(1),
+  count: cat === 'all' ? caseStudies.length : caseStudies.filter(c => c.category === cat).length,
+}));
+
+const SKELETON_LAYOUT = ['lg', 'wide', 'md', 'sm', 'md', 'wide', 'sm', 'sm', 'wide', 'sm'];
+
+const proofStats = [
+  { endValue: 340, suffix: '%', label: 'Avg. lead increase', prefix: '+' },
+  { endValue: 3, suffix: '', label: 'Sites delivered', prefix: '' },
+  { endValue: 100, suffix: '%', label: 'On-time delivery', prefix: '' },
+  { endValue: 4.4, suffix: 'M+', label: 'Client revenue unlocked', prefix: '$' },
 ];
 
+const processSteps = [
+  { num: '01', icon: <Target size={20} />, title: 'Discover', desc: 'Deep-dive into your business, users, and competitors to build a rock-solid strategy.' },
+  { num: '02', icon: <Palette size={20} />, title: 'Design', desc: 'Pixel-perfect designs built for conversion — every decision backed by data.' },
+  { num: '03', icon: <Code2 size={20} />, title: 'Deploy', desc: 'Lightning-fast build, rigorous QA, and a smooth launch with zero surprises.' },
+];
+
+/* ─────────────────────────────────────────
+   SKELETON CARD
+───────────────────────────────────────── */
+const SkeletonCard = ({ size }) => (
+  <div className="ow-skel" data-size={size} aria-hidden="true">
+    <div className="ow-skel-inner" />
+  </div>
+);
+
+/* ─────────────────────────────────────────
+   PROJECT CARD  (image-first overlay)
+───────────────────────────────────────── */
+const ProjectCard = ({ project, onOpen }) => {
+  const cardRef = useRef(null);
+  const [cx, setCx] = useState(-999);
+  const [cy, setCy] = useState(-999);
+
+  const handleMouseMove = useCallback((e) => {
+    const rect = cardRef.current.getBoundingClientRect();
+    setCx(e.clientX - rect.left);
+    setCy(e.clientY - rect.top);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setCx(-999);
+    setCy(-999);
+  }, []);
+
+  return (
+    <article
+      ref={cardRef}
+      className="ow-card"
+      data-size={project.size}
+      style={{ '--ow-cx': cx + 'px', '--ow-cy': cy + 'px', '--ow-color': project.color }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={() => onOpen(project)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(project); } }}
+      aria-label={'View ' + project.title + ' case study'}
+    >
+      <div className="ow-card-spotlight" aria-hidden="true" />
+
+      {project.image
+        ? <img src={project.image} alt={project.title + ' screenshot'} className="ow-card-bg" loading="lazy" draggable="false" />
+        : <div className="ow-card-bg ow-card-bg-placeholder" style={{ background: 'linear-gradient(135deg, #0E0F13 0%, ' + project.color + '44 100%)' }} aria-hidden="true" />
+      }
+
+      <div className="ow-metric-badge">
+        <span className="ow-metric-val">{project.metricValue}</span>
+        <span className="ow-metric-lbl">{project.metricLabel}</span>
+      </div>
+
+      {project.isNew && <span className="ow-new-badge">NEW</span>}
+
+      <div className="ow-card-overlay">
+        <div className="ow-card-footer">
+          <div className="ow-card-header-row">
+            <span className="ow-meta-pill">{project.industry}</span>
+            {project.year && <span className="ow-year-tag">{project.year}</span>}
+          </div>
+          <h3 className="ow-card-title">{project.title}</h3>
+          <div className="ow-card-reveal">
+            <div className="ow-card-reveal-inner">
+              <div className="ow-card-reveal-content">
+                <div className="ow-card-tags">
+                  {project.tags.map(tag => (
+                    <span key={tag} className="ow-tag">{tag}</span>
+                  ))}
+                </div>
+                <div className="ow-card-cta-row">
+                  <span>View Case Study</span>
+                  <ArrowRight size={15} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+};
+
+/* ─────────────────────────────────────────
+   MAIN PAGE
+───────────────────────────────────────── */
 const OurWork = () => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedCase, setSelectedCase] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalState, setModalState] = useState(null); // 'open' | 'closing' | null
+  const [isSticky, setIsSticky] = useState(false);
+  const [visibleSections, setVisibleSections] = useState({});
+  const [sliderPos, setSliderPos] = useState(50);
+  const [isDragging, setIsDragging] = useState(false);
+  const [statsVisible, setStatsVisible] = useState(false);
+  const [animatedStats, setAnimatedStats] = useState(proofStats.map(() => 0));
+  const [isLoading, setIsLoading] = useState(true);
 
-  const filteredCases = activeFilter === 'all' 
-    ? caseStudies 
-    : caseStudies.filter(c => c.category === activeFilter);
+  const sentinelRef = useRef(null);
+  const statsRef = useRef(null);
+  const sliderRef = useRef(null);
+  const rafRef = useRef(null);
 
-  const openCaseStudy = useCallback((caseItem) => {
-    setSelectedCase(caseItem);
-    setIsModalOpen(true);
+  /* ── Skeleton loading — waits for every real project image to decode ──
+     Stays visible until ALL images are loaded (or errored).
+     Minimum 500 ms so it never flashes on fast connections.
+     Safety valve at 5 s in case a slow/broken image stalls the page. ── */
+  useEffect(() => {
+    const realImages = caseStudies.filter(p => p.image).map(p => p.image);
+
+    // No real images (all placeholders) — skip immediately
+    if (realImages.length === 0) {
+      setIsLoading(false);
+      return;
+    }
+
+    const startedAt = Date.now();
+    const MIN_MS    = 500;  // never hide skeleton faster than this
+    let   loaded    = 0;
+
+    const tick = () => {
+      loaded += 1;
+      if (loaded < realImages.length) return; // still waiting
+      const elapsed = Date.now() - startedAt;
+      const wait    = Math.max(0, MIN_MS - elapsed);
+      setTimeout(() => setIsLoading(false), wait);
+    };
+
+    // Safety: hide skeleton after 5 s even if some images stall / error
+    const safetyTimer = setTimeout(() => setIsLoading(false), 5000);
+
+    // Pre-fetch every real image so the card grid is already in cache
+    realImages.forEach(src => {
+      const img   = new window.Image();
+      img.onload  = tick;
+      img.onerror = tick; // errors count too — don't hang forever
+      img.src     = src;
+    });
+
+    return () => clearTimeout(safetyTimer);
+  }, []);
+
+  /* ── Sticky filter ── */
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([entry]) => setIsSticky(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    const el = sentinelRef.current;
+    if (el) obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  /* ── Scroll reveal ── */
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => entries.forEach(e => {
+        if (e.isIntersecting) setVisibleSections(p => ({ ...p, [e.target.id]: true }));
+      }),
+      { threshold: 0.07, rootMargin: '0px 0px -5% 0px' }
+    );
+    document.querySelectorAll('[data-ow-animate]').forEach(el => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
+  /* ── Stats count-up trigger ── */
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setStatsVisible(true); },
+      { threshold: 0.3 }
+    );
+    const el = statsRef.current;
+    if (el) obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  /* ── Stats RAF animation ── */
+  useEffect(() => {
+    if (!statsVisible) return;
+    const targets = proofStats.map(s => s.endValue);
+    const startTime = performance.now();
+    const duration = 1600;
+    const animate = (now) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      setAnimatedStats(targets.map(t =>
+        Number.isInteger(t) ? Math.round(t * ease) : Math.round(t * ease * 10) / 10
+      ));
+      if (progress < 1) rafRef.current = requestAnimationFrame(animate);
+    };
+    rafRef.current = requestAnimationFrame(animate);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, [statsVisible]);
+
+  /* ── Escape key ── */
+  useEffect(() => {
+    const handler = (e) => { if (e.key === 'Escape' && modalState === 'open') closeModal(); };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [modalState]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  /* ── Drag slider ── */
+  const handlePointerDown = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+    if (sliderRef.current) sliderRef.current.setPointerCapture(e.pointerId);
+  };
+  const handlePointerMove = useCallback((e) => {
+    if (!isDragging || !sliderRef.current) return;
+    const rect = sliderRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+    setSliderPos(Math.round((x / rect.width) * 100));
+  }, [isDragging]);
+  const handlePointerUp = useCallback(() => setIsDragging(false), []);
+
+  /* ── Modal ── */
+  const openModal = useCallback((project) => {
+    setSelectedCase(project);
+    setModalState('open');
     document.body.style.overflow = 'hidden';
   }, []);
-
-  const closeCaseStudy = useCallback(() => {
-    setIsModalOpen(false);
+  const closeModal = useCallback(() => {
+    setModalState('closing');
     document.body.style.overflow = '';
-    setTimeout(() => setSelectedCase(null), 300);
+    setTimeout(() => { setModalState(null); setSelectedCase(null); }, 350);
   }, []);
 
-  // Close modal on escape key
-  useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === 'Escape' && isModalOpen) {
-        closeCaseStudy();
-      }
-    };
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, [isModalOpen, closeCaseStudy]);
+  const vis = (id) => visibleSections[id] ? 'ow-visible' : 'ow-hidden';
 
+  const filteredProjects = activeFilter === 'all'
+    ? caseStudies
+    : caseStudies.filter(c => c.category === activeFilter);
+
+  const sliderProject = caseStudies.find(c => c.size === 'lg') || caseStudies[0];
+
+  /* ════════════════════════════════════════
+     RENDER
+  ════════════════════════════════════════ */
   return (
-    <div className="portfolio-page">
-      <NavBar />
-      {/* SECTION 1: Hero with Dark Overlay */}
-      <section className="work-hero">
-        <div className="hero-background">
-          <div className="hero-overlay"></div>
-        </div>
-        <div className="work-hero-container">
-          <h1 className="work-hero-title">
-            Systems That <span className="title-highlight">Make Money</span>,<br />
-            Not Just Websites
-          </h1>
-          <p className="work-hero-subtitle">
-            Every project below delivered measurable ROI. Real results, real businesses, real growth.
-          </p>
-        </div>
-      </section>
+    <div className="ow-page">
 
-      {/* Filter Pills - Below Hero */}
-      <section className="work-filters-hero">
-        <div className="filters-hero-container">
-          <div className="filter-pills">
-            {filters.map(filter => (
-              <button
-                key={filter.id}
-                className={`filter-pill ${activeFilter === filter.id ? 'active' : ''}`}
-                onClick={() => setActiveFilter(filter.id)}
-              >
-                {filter.label}
-                <span className="filter-count">{filter.count}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ── HERO ── */}
+      <div className="ow-hero-wrapper">
+        <NavBar />
+        <section className="ow-hero">
+          <div className="ow-orb ow-orb-1" aria-hidden="true" />
+          <div className="ow-orb ow-orb-2" aria-hidden="true" />
+          <div className="ow-orb ow-orb-3" aria-hidden="true" />
 
-      {/* SECTION 2: Differentiators */}
-      <section className="work-differentiators">
-        <div className="differentiators-container">
-          <div className="diff-grid">
-            <div className="diff-card">
-              <div className="diff-icon-wrapper">
-                <TargetIcon />
-              </div>
-              <h3>Results-First Approach</h3>
-              <p>Every design decision is backed by data. We don't guess—we test, measure, and optimize until your metrics move in the right direction.</p>
-            </div>
-            <div className="diff-card">
-              <div className="diff-icon-wrapper">
-                <LightbulbIcon />
-              </div>
-              <h3>Strategic Partnership</h3>
-              <p>We're not just vendors—we're invested partners. Your success is our success, which is why we offer performance-based pricing.</p>
-            </div>
-            <div className="diff-card">
-              <div className="diff-icon-wrapper">
-                <CheckIcon />
-              </div>
-              <h3>Transparent Process</h3>
-              <p>No surprises, no hidden costs. You'll always know exactly where your project stands with weekly updates and real-time dashboards.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 3: Sticky Filters - Shows on scroll */}
-      <section className="work-filters">
-        <div className="filters-container">
-          <div className="filter-pills">
-            {filters.map(filter => (
-              <button
-                key={filter.id}
-                className={`filter-pill ${activeFilter === filter.id ? 'active' : ''}`}
-                onClick={() => setActiveFilter(filter.id)}
-              >
-                {filter.label}
-                <span className="filter-count">{filter.count}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 4: Case Studies Grid */}
-      <section className="work-cases">
-        <div className="cases-container">
-          <div className="cases-grid">
-            {filteredCases.map(caseItem => (
-              <article key={caseItem.id} className="case-card">
-                <div className="case-image-wrapper">
-                  <img 
-                    src={caseItem.image} 
-                    alt={`${caseItem.title} project screenshot`}
-                    className="case-image"
-                    loading="lazy"
-                  />
-                  <div className="case-overlay">
-                    <div className="case-metric-badge">
-                      <span className="metric-value">{caseItem.metricValue}</span>
-                      <span className="metric-label">{caseItem.metricLabel}</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="case-content">
-                  <div className="case-meta">
-                    <span className="case-industry">{caseItem.industry}</span>
-                    <span className="case-type">{caseItem.type}</span>
-                  </div>
-                  <h3 className="case-title">{caseItem.title}</h3>
-                  <p className="case-problem">{caseItem.problem}</p>
-                  <div className="case-tags">
-                    {caseItem.tags.map(tag => (
-                      <span key={tag} className="case-tag">{tag}</span>
-                    ))}
-                  </div>
-                  <button 
-                    className="filter-pill view-case-btn"
-                    onClick={() => openCaseStudy(caseItem)}
-                  >
-                    View Case Study
-                    <ArrowRightIcon />
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 5: Confidence Builder */}
-      <section className="work-confidence">
-        <div className="confidence-container">
-          <span className="confidence-badge">Why We're Selective</span>
-          <h2 className="confidence-title">We Say No to 60% of Inquiries</h2>
-          <p className="confidence-subtitle">
-            Not because we don't need the work—but because we only take projects where we can guarantee results.
-          </p>
-          <div className="confidence-story">
-            <div className="story-scenario">
-              <h3>Recent Example:</h3>
-              <p className="story-request">
-                "A well-funded startup approached us for a complete rebrand. Budget: $50K. Timeline: 3 weeks."
-              </p>
-            </div>
-            <div className="story-analysis">
-              <div className="story-point">
-                <strong>The Problem:</strong>
-                <p>Their timeline made it impossible to do proper user research, which meant we'd be guessing—not designing based on data.</p>
-              </div>
-              <div className="story-point">
-                <strong>Our Response:</strong>
-                <p>We declined the project but offered a phased approach: 6-week discovery + 4-week execution. They went elsewhere.</p>
-              </div>
-            </div>
-            <div className="story-outcome">
-              <strong>3 months later?</strong>
-              <p>They came back. The rushed rebrand failed. We did it right, and they're now one of our happiest clients with +180% user engagement.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 6: CTA */}
-      <section className="work-cta">
-        <div className="work-cta-container">
-          <div className="cta-card">
-            <span className="cta-badge">
-              <span className="badge-pulse"></span>
-              Limited Availability
-            </span>
-            <h2 className="cta-title">Ready to Be Our Next Success Story?</h2>
-            <p className="cta-subtitle">
-              We take on just 3-4 new projects per quarter to ensure every client gets our full attention. 
-              Let's see if we're the right fit.
+          <div className="ow-hero-content">
+            <p className="ow-eyebrow">— OUR WORK —</p>
+            <h1 className="ow-hero-title">
+              Work That<br /><span className="ow-accent">Speaks Numbers.</span>
+            </h1>
+            <p className="ow-hero-sub">
+              Every project below delivered measurable ROI. Real results,
+              real businesses, real growth — no stock photos, no fake metrics.
             </p>
-            <div className="cta-buttons">
-              <a href="/contact" className="cta-button primary">
-                Start a Conversation
-                <ArrowRightIcon />
-              </a>
-              <a href="/process" className="cta-button secondary">
-                See Our Process
-              </a>
+            <div className="ow-hero-badges">
+              <div className="ow-hero-badge ow-badge-1">
+                <TrendingUp size={14} /><span>+340% avg. leads</span>
+              </div>
+              <div className="ow-hero-badge ow-badge-2">
+                <Globe size={14} /><span>3 Industries</span>
+              </div>
+              <div className="ow-hero-badge ow-badge-3">
+                <BarChart2 size={14} /><span>$4.4M+ revenue</span>
+              </div>
             </div>
-            <div className="cta-trust">
-              <span className="trust-item">
-                <CheckIcon className="trust-icon" />
-                Free Strategy Call
-              </span>
-              <span className="trust-item">
-                <CheckIcon className="trust-icon" />
-                No Commitment
-              </span>
-              <span className="trust-item">
-                <CheckIcon className="trust-icon" />
-                Response in 24hrs
-              </span>
+          </div>
+
+          <a className="ow-scroll-hint" href="#ow-projects" aria-label="Scroll to projects">
+            <ArrowDown size={20} />
+          </a>
+        </section>
+        <div ref={sentinelRef} className="ow-sentinel" aria-hidden="true" />
+      </div>
+
+      {/* ── STICKY FILTER BAR ── */}
+      <div className={'ow-filter-bar' + (isSticky ? ' ow-filter-sticky' : '')}>
+        <div className="ow-filter-inner">
+          {filters.map(f => (
+            <button
+              key={f.id}
+              className={'ow-pill' + (activeFilter === f.id ? ' ow-pill-active' : '')}
+              onClick={() => setActiveFilter(f.id)}
+            >
+              {f.label}
+              <span className="ow-pill-count">{f.count}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ── BENTO PROJECT GRID ── */}
+      <section className="ow-projects-section" id="ow-projects">
+        <div className="ow-projects-container">
+
+          <div className={'ow-bento' + (isLoading ? ' ow-bento-loading' : '')}>
+            {isLoading
+              ? SKELETON_LAYOUT.map((size, i) => <SkeletonCard key={i} size={size} />)
+              : filteredProjects.map(p => (
+                  <ProjectCard key={p.id} project={p} onOpen={openModal} />
+                ))
+            }
+            {!isLoading && filteredProjects.length === 0 && (
+              <p className="ow-empty">No projects in this category yet.</p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ── PROOF STRIP ── */}
+      <section
+        ref={statsRef}
+        id="ow-proof"
+        data-ow-animate
+        className={'ow-proof-section ' + vis('ow-proof')}
+      >
+        <div className="ow-proof-inner">
+          <p className="ow-proof-eyebrow">— THE NUMBERS DON'T LIE —</p>
+          <div className="ow-proof-grid">
+            {proofStats.map((s, i) => (
+              <div key={i} className="ow-proof-stat">
+                <span className="ow-proof-num">{s.prefix}{animatedStats[i]}{s.suffix}</span>
+                <span className="ow-proof-lbl">{s.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── BEFORE / AFTER SLIDER ── */}
+      <section
+        id="ow-slider"
+        data-ow-animate
+        className={'ow-slider-section ' + vis('ow-slider')}
+      >
+        <div className="ow-slider-container">
+          <div className="ow-slider-header">
+            <p className="ow-section-eyebrow">— VISUAL TRANSFORMATION —</p>
+            <h2 className="ow-section-title">Before &amp; After</h2>
+            <p className="ow-section-sub">
+              Drag the handle to compare {sliderProject.title} before and after our redesign.
+            </p>
+          </div>
+
+          <div
+            ref={sliderRef}
+            className={'ow-compare-track' + (isDragging ? ' ow-dragging' : '')}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerLeave={handlePointerUp}
+          >
+            <img src={sliderProject.afterImage} alt="After redesign" className="ow-compare-after" draggable="false" />
+            <div className="ow-compare-before-wrap" style={{ width: sliderPos + '%' }}>
+              <img src={sliderProject.beforeImage} alt="Before redesign" className="ow-compare-before" draggable="false" />
+            </div>
+            <span className="ow-compare-label ow-label-before">Before</span>
+            <span className="ow-compare-label ow-label-after">After</span>
+            <div
+              className="ow-compare-handle"
+              style={{ left: sliderPos + '%' }}
+              onPointerDown={handlePointerDown}
+            >
+              <div className="ow-handle-line" />
+              <div className="ow-handle-knob">
+                <ChevronLeft size={13} />
+                <ChevronRight size={13} />
+              </div>
+              <div className="ow-handle-line" />
+            </div>
+          </div>
+
+          <div className="ow-slider-results">
+            {sliderProject.results.map((r, i) => (
+              <div key={i} className="ow-slider-result">
+                <span className="ow-slider-result-val" style={{ color: sliderProject.color }}>{r.value}</span>
+                <span className="ow-slider-result-lbl">{r.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── PROCESS TEASER ── */}
+      <section
+        id="ow-process"
+        data-ow-animate
+        className={'ow-process-section ' + vis('ow-process')}
+      >
+        <div className="ow-process-container">
+          <p className="ow-section-eyebrow">— HOW WE MAKE IT HAPPEN —</p>
+          <h2 className="ow-section-title">Three Steps to Results</h2>
+          <div className="ow-process-track">
+            {processSteps.map((step, i) => (
+              <React.Fragment key={i}>
+                <div className="ow-process-step">
+                  <div className="ow-step-top">
+                    <span className="ow-step-num">{step.num}</span>
+                    <div className="ow-step-icon">{step.icon}</div>
+                  </div>
+                  <h3 className="ow-step-title">{step.title}</h3>
+                  <p className="ow-step-desc">{step.desc}</p>
+                </div>
+                {i < processSteps.length - 1 && (
+                  <div className="ow-step-connector" aria-hidden="true" />
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CONFIDENCE BUILDER ── */}
+      <section
+        id="ow-confidence"
+        data-ow-animate
+        className={'ow-confidence-section ' + vis('ow-confidence')}
+      >
+        <div className="ow-confidence-container">
+          <div className="ow-confidence-card">
+            <div className="ow-confidence-accent-bar" />
+            <div className="ow-confidence-body">
+              <p className="ow-section-eyebrow">— WHY WE'RE SELECTIVE —</p>
+              <h2 className="ow-confidence-title">
+                We Say No to<br /><span className="ow-accent">60% of Projects.</span>
+              </h2>
+              <p className="ow-confidence-intro">
+                Not because we don't need the work — because we only take projects where we can guarantee results.
+              </p>
+              <div className="ow-story-grid">
+                <div className="ow-story-block">
+                  <span className="ow-story-tag">The Request</span>
+                  <p>"A well-funded startup approached us for a complete rebrand. Budget: $50K. Timeline: 3 weeks."</p>
+                </div>
+                <div className="ow-story-block">
+                  <span className="ow-story-tag">The Problem</span>
+                  <p>Their timeline made proper user research impossible — we'd be guessing, not designing from data.</p>
+                </div>
+                <div className="ow-story-block">
+                  <span className="ow-story-tag">Our Response</span>
+                  <p>We declined but offered a phased approach: 6-week discovery + 4-week execution. They went elsewhere.</p>
+                </div>
+                <div className="ow-story-block ow-story-outcome">
+                  <span className="ow-story-tag ow-tag-outcome">3 Months Later</span>
+                  <p>They came back. The rushed rebrand had failed. We did it right — now one of our happiest clients with <strong>+180% user engagement.</strong></p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CASE STUDY MODAL */}
-      <div 
-        className={`case-modal-overlay ${isModalOpen ? 'active' : ''}`}
-        onClick={closeCaseStudy}
+      {/* ── CTA + FOOTER ── */}
+      <CTA />
+      <Footer />
+
+      {/* ══════════════════════════════════════
+          MODAL
+      ══════════════════════════════════════ */}
+      <div
+        className={'ow-modal-overlay' + (modalState === 'open' ? ' ow-overlay-in' : '') + (modalState === 'closing' ? ' ow-overlay-out' : '')}
+        onClick={closeModal}
+        aria-hidden={modalState === null}
       >
-        <div 
-          className={`case-modal ${isModalOpen ? 'active' : ''}`}
-          onClick={(e) => e.stopPropagation()}
+        <div
+          className={'ow-modal' + (modalState === 'open' ? ' ow-modal-in' : '') + (modalState === 'closing' ? ' ow-modal-out' : '')}
+          onClick={e => e.stopPropagation()}
+          role="dialog"
+          aria-modal="true"
         >
           {selectedCase && (
             <>
-              <button className="modal-close" onClick={closeCaseStudy}>
-                <CloseIcon />
-              </button>
-              
-              <div className="modal-header">
-                <div className="modal-meta">
-                  <span className="case-industry">{selectedCase.industry}</span>
-                  <span className="case-type">{selectedCase.type}</span>
-                </div>
-                <h2 className="modal-title">{selectedCase.title}</h2>
-                <p className="modal-subtitle">{selectedCase.problem}</p>
-              </div>
-
-              <div className="modal-content">
-                {/* Before/After Comparison */}
-                <div className="case-comparison">
-                  <h3 className="comparison-title">Visual Transformation</h3>
-                  <div className="comparison-grid">
-                    <div className="comparison-item">
-                      <span className="comparison-label before">Before</span>
-                      <img 
-                        src={selectedCase.beforeImage} 
-                        alt="Before redesign"
-                        className="comparison-image"
-                      />
-                    </div>
-                    <div className="comparison-item">
-                      <span className="comparison-label after">After</span>
-                      <img 
-                        src={selectedCase.afterImage} 
-                        alt="After redesign"
-                        className="comparison-image"
-                      />
-                    </div>
+              {/* Header */}
+              <div className="ow-modal-header" style={{ '--modal-color': selectedCase.color }}>
+                <div className="ow-modal-header-content">
+                  <div className="ow-modal-meta">
+                    <span className="ow-meta-pill">{selectedCase.industry}</span>
+                    <span className="ow-meta-sep">&middot;</span>
+                    <span className="ow-meta-pill">{selectedCase.type}</span>
+                  </div>
+                  <h2 className="ow-modal-title">{selectedCase.title}</h2>
+                  <div className="ow-modal-hero-metric">
+                    <span className="ow-modal-metric-val" style={{ color: selectedCase.color }}>{selectedCase.metricValue}</span>
+                    <span className="ow-modal-metric-lbl">{selectedCase.metricLabel}</span>
                   </div>
                 </div>
+                <button className="ow-modal-close" onClick={closeModal} aria-label="Close modal">
+                  <X size={22} />
+                </button>
+              </div>
 
-                {/* Problems Section */}
-                <div className="case-problem-section">
-                  <h3 className="problem-section-title">
-                    <XIcon />
-                    The Challenges
-                  </h3>
-                  <ul className="problem-list">
-                    {selectedCase.problems.map((problem, idx) => (
-                      <li key={idx} className="problem-item">
-                        <span className="problem-icon"><XIcon /></span>
-                        {problem}
+              <div className="ow-modal-body">
+                {/* Before / After — only shown when screenshots exist */}
+                {selectedCase.beforeImage && selectedCase.afterImage && (
+                  <div className="ow-modal-section">
+                    <h3 className="ow-modal-section-title">Visual Transformation</h3>
+                    <div className="ow-modal-ba-grid">
+                      <div className="ow-modal-ba-item">
+                        <span className="ow-ba-label ow-ba-before">Before</span>
+                        <img src={selectedCase.beforeImage} alt="Before" className="ow-modal-ba-img" loading="lazy" />
+                      </div>
+                      <div className="ow-modal-ba-item">
+                        <span className="ow-ba-label ow-ba-after">After</span>
+                        <img src={selectedCase.afterImage} alt="After" className="ow-modal-ba-img" loading="lazy" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Problems */}
+                <div className="ow-modal-section">
+                  <h3 className="ow-modal-section-title">The Challenges</h3>
+                  <ul className="ow-modal-problem-list">
+                    {selectedCase.problems.map((p, i) => (
+                      <li key={i}>
+                        <span className="ow-prob-icon"><X size={13} /></span>
+                        {p}
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                {/* Solutions Section */}
-                <div className="case-solution-section">
-                  <h3 className="solution-section-title">
-                    <LightbulbIcon />
-                    Our Solutions
-                  </h3>
-                  <div className="solution-grid">
-                    {selectedCase.solutions.map((solution, idx) => (
-                      <div key={idx} className="solution-item">
-                        <span className="solution-number">{idx + 1}</span>
-                        <p>{solution}</p>
+                {/* Solutions */}
+                <div className="ow-modal-section">
+                  <h3 className="ow-modal-section-title">Our Solutions</h3>
+                  <div className="ow-modal-sol-grid">
+                    {selectedCase.solutions.map((s, i) => (
+                      <div key={i} className="ow-modal-sol-item">
+                        <span className="ow-sol-num" style={{ background: selectedCase.color }}>{i + 1}</span>
+                        <p>{s}</p>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* Results Section */}
-                <div className="case-results-section">
-                  {selectedCase.results.map((result, idx) => (
-                    <div key={idx} className="result-card">
-                      <span className="result-value">{result.value}</span>
-                      <span className="result-label">{result.label}</span>
+                {/* Results */}
+                <div className="ow-modal-results-grid">
+                  {selectedCase.results.map((r, i) => (
+                    <div key={i} className="ow-modal-result-card">
+                      <span className="ow-modal-res-val" style={{ color: selectedCase.color }}>{r.value}</span>
+                      <span className="ow-modal-res-lbl">{r.label}</span>
                     </div>
                   ))}
                 </div>
 
-                {/* Key Decisions */}
-                <div className="case-decisions-section">
-                  <h3 className="decisions-title">
-                    <TargetIcon />
-                    Key Strategic Decisions
-                  </h3>
-                  <ul className="decisions-list">
-                    {selectedCase.decisions.map((decision, idx) => (
-                      <li key={idx} className="decision-item">
-                        <CheckIcon />
-                        {decision}
+                {/* Decisions */}
+                <div className="ow-modal-section">
+                  <h3 className="ow-modal-section-title">Key Strategic Decisions</h3>
+                  <ul className="ow-modal-dec-list">
+                    {selectedCase.decisions.map((d, i) => (
+                      <li key={i}>
+                        <span className="ow-dec-icon" style={{ color: selectedCase.color }}><Check size={14} /></span>
+                        {d}
                       </li>
                     ))}
                   </ul>
                 </div>
               </div>
 
-              <div className="modal-footer">
-                <a href="/contact" className="cta-button primary">
-                  Start Your Project
-                  <ArrowRightIcon />
-                </a>
+              {/* Footer */}
+              <div className="ow-modal-footer">
+                <p>Ready to write your own success story?</p>
+                <Link
+                  to="/plan"
+                  className="ow-modal-cta"
+                  style={{ background: selectedCase.color }}
+                  onClick={closeModal}
+                >
+                  <span>Start Your Project</span>
+                  <ArrowRight size={16} />
+                </Link>
               </div>
             </>
           )}
         </div>
       </div>
-      <Footer />
+
     </div>
   );
 };
