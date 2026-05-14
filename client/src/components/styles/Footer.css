@@ -1164,6 +1164,22 @@
   }
 }
 
+/* ── Noon Mobile Footer (≤768px) ── */
+@media (max-width: 768px) {
+  /* Extra bottom padding so footer clears BottomTabBar */
+  .footer {
+    padding-bottom: calc(62px + env(safe-area-inset-bottom, 0px) + 24px) !important;
+  }
+  /* Footer CTA: Noon yellow */
+  .footer-cta-primary {
+    background: #FFBF00!important;
+    color: #1A0A00!important;
+    border-radius: 999px!important;
+    font-weight: 800!important;
+    border: none!important;
+  }
+}
+
 /* Focus States for Accessibility */
 .footer-cta-primary:focus-visible,
 .footer-cta-secondary:focus-visible,

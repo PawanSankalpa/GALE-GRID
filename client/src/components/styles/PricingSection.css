@@ -406,3 +406,73 @@
   .ps-card { padding: 24px 20px; }
   .ps-guarantees { gap: 6px; }
 }
+
+/* ── Noon Mobile (≤768px) ── */
+@media (max-width: 768px) {
+  .ps-section {
+    padding: 40px 0;
+    background: #F7F8FA;
+  }
+  .ps-container {
+    padding: 0 16px;
+  }
+  /* Section header: left-aligned */
+  .ps-header {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  /* Toggle: pill style */
+  .ps-toggle {
+    justify-content: flex-start;
+    background: #EDEEF2;
+    border-radius: 999px;
+    padding: 4px;
+    display: inline-flex;
+    gap: 0;
+  }
+  .ps-toggle-btn {
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-size: 0.8rem;
+  }
+  .ps-toggle-btn.active {
+    background: #FFBF00;
+    color: #1A0A00;
+    box-shadow: none;
+  }
+  /* Cards: horizontal scroll snap row */
+  .ps-cards {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    gap: 12px;
+    padding: 8px 16px 16px;
+    grid-template-columns: unset;
+    margin: 0 -16px;
+  }
+  .ps-cards::-webkit-scrollbar { display: none; }
+  .ps-card {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    width: 260px;
+    border-radius: 16px;
+  }
+  /* Popular card: Noon yellow ring */
+  .ps-card.ps-card--popular {
+    border: 2px solid #FFBF00;
+    box-shadow: 0 4px 20px rgba(255,191,0,0.18);
+  }
+  /* CTA button: Noon yellow */
+  .ps-cta {
+    background: #FFBF00;
+    color: #1A0A00;
+    border-radius: 999px;
+    font-weight: 800;
+    border: none;
+  }
+  .ps-card.ps-card--popular .ps-cta--primary {
+    background: #FFBF00;
+    color: #1A0A00;
+  }
+}

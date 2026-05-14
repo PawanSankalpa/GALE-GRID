@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Star, Quote, ArrowLeft, ArrowRight, TrendingUp, Award } from "lucide-react";
 import "./styles/Reviews.css";
@@ -118,6 +118,15 @@ export default function ReviewsSection() {
   const prev = () => { setAutoplay(false); setActive((p) => (p - 1 + reviews.length) % reviews.length); };
   const next = () => { setAutoplay(false); setActive((p) => (p + 1) % reviews.length); };
 
+  const touchStartX = useRef(null);
+  const handleTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) >= 50) { diff > 0 ? next() : prev(); }
+    touchStartX.current = null;
+  };
+
   const current = reviews[active];
   const headerRef = React.useRef(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-60px" });
@@ -143,7 +152,11 @@ export default function ReviewsSection() {
         </motion.div>
 
         {/* Main carousel */}
-        <div className="rv-carousel">
+        <div
+          className="rv-carousel"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           {/* Thumbnail strip */}
           <div className="rv-thumbs">
             {reviews.map((r, i) => (

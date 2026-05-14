@@ -1,375 +1,660 @@
-/* ============================================================
-   WhyUs — Animated Feature Tabs
-   ============================================================ */
+/* =====================================================================
+   wu2-  v4  —  Full-screen quiz overlay
+   Color philosophy:
+     • Warm off-whites (#FAFAF8, #F5F3EE) not neutral whites — warmth = trust
+     • Slate text family (#0F172A, #475569) not zinc — slate has blue-black
+       character, reads premium in the eye's neural map
+     • SUCCESS_GREEN = #22C55E — exact Stripe / Apple Pay / WhatsApp shade
+       (not #16A34A which reads anxious, not #4ADE80 which reads weak)
+     • Result plan box border = #E8E3DB — warm stone, references paper/linen
+       (Hermès, Dior tonal range) — dividers warm not cool
+     • CTA: subtle gradient adds perceived dimensionality (not flat orange)
+     • Three-layer card shadow: deep warm + close warm + micro-orange outline
+       — card appears to float on brand-color heat
+   ===================================================================== */
 
-.why-section {
-  background: #FAFAFA;
-  background-image: radial-gradient(circle, #D1D5DB 1px, transparent 1px);
-  background-size: 28px 28px;
+/* ── Section ── */
+.wu2-section {
+  background: #FAFAF8;
   overflow: hidden;
 }
 
-/* ── Section header ── */
-.why-header {
-  max-width: 680px;
+/* ══════════════════════════════════════════════
+   TEASER
+══════════════════════════════════════════════ */
+.wu2-teaser {
+  max-width: 620px;
   margin: 0 auto;
+  padding: clamp(72px, 10vw, 112px) clamp(1.5rem, 5vw, 40px) clamp(60px, 9vw, 100px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  padding: clamp(80px, 10vw, 120px) clamp(1.5rem, 5vw, 40px) clamp(48px, 5vw, 64px);
 }
 
-.why-eyebrow {
+.wu2-eyebrow {
   display: inline-block;
-  font-size: 0.75rem;
+  font-size: 0.69rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #FF8C00;
-  background: rgba(255, 140, 0, 0.08);
-  border: 1px solid rgba(255, 140, 0, 0.22);
-  padding: 6px 16px;
+  color: #FF6B00;
+  background: rgba(255, 107, 0, 0.07);
+  border: 1px solid rgba(255, 107, 0, 0.2);
+  padding: 5px 14px;
   border-radius: 999px;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
-.why-headline {
-  font-size: clamp(2rem, 4.5vw, 3.2rem);
+.wu2-headline {
+  font-size: clamp(1.9rem, 4.2vw, 3rem);
   font-weight: 800;
-  color: #18181B;
-  line-height: 1.12;
-  letter-spacing: -0.03em;
+  /* Slate-900: blue-black depth — reads premium like Apple / Chanel */
+  color: #0F172A;
+  line-height: 1.1;
+  letter-spacing: -0.036em;
   margin: 0 0 16px;
 }
 
-.why-headline em {
-  font-style: italic;
-  color: #FF8C00;
+.wu2-sub {
+  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+  /* Slate-500 harmonises with slate-900 headline — same family */
+  color: #64748B;
+  line-height: 1.68;
+  margin: 0 0 32px;
 }
 
-.why-sub {
-  font-size: clamp(1rem, 1.8vw, 1.125rem);
-  color: #52525B;
-  line-height: 1.65;
-  margin: 0;
+.wu2-open-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* Subtle gradient: warm → pure → deep — creates perceived dimensionality */
+  background: linear-gradient(135deg, #FF7A20 0%, #FF6B00 50%, #F55D00 100%);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 30px;
+  cursor: pointer;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 28px rgba(255, 107, 0, 0.3), 0 2px 6px rgba(255, 107, 0, 0.16);
+  transition: opacity 0.18s, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.wu2-open-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
 }
 
-/* ── Tab navigation ── */
-.why-tabs {
+.wu2-no-commitment {
+  font-size: 0.75rem;
+  color: #94A3B8;
+  letter-spacing: 0.025em;
+}
+
+/* ══════════════════════════════════════════════
+   OVERLAY — backdrop + card wrapper
+══════════════════════════════════════════════ */
+
+/* Backdrop: higher saturation boost lets background colors bleed through faintly
+   making it feel alive rather than a dead black overlay.
+   z-index: 9998 — above navbar (max 500) and all other page elements */
+.wu2-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: rgba(6, 6, 10, 0.74);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  cursor: pointer;
+}
+
+.wu2-overlay-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
   display: flex;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 clamp(1.5rem, 5vw, 40px);
-  border-bottom: 1px solid #E4E4E7;
-  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  pointer-events: none;
 }
 
-.why-tab {
-  flex: 1;
+/* Card: three-layer shadow — deep warm (R>B) + close warm + micro-orange outline
+   The card floats on a halo of brand heat */
+.wu2-card {
+  pointer-events: all;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow:
+    0 32px 80px rgba(10, 5, 0, 0.13),
+    0 4px 20px rgba(10, 5, 0, 0.06),
+    0 0 0 1px rgba(255, 107, 0, 0.04);
+  width: 100%;
+  max-width: 560px;
+  overflow: hidden;
   position: relative;
+}
+
+/* ── Progress bar ── */
+.wu2-prog-track {
+  height: 3px;
+  background: #F1EFE9;
+  width: 100%;
+  flex-shrink: 0;
+}
+.wu2-prog-fill {
+  height: 100%;
+  border-radius: 0 3px 3px 0;
+}
+
+/* ── Card header ── */
+.wu2-card-hdr {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 22px 0;
+}
+
+.wu2-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.wu2-dot {
+  display: block;
+  height: 8px;
+  width: 8px;
+  border-radius: 999px;
+  background: #E5E7EB;
+}
+
+.wu2-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #94A3B8;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.wu2-meta-sep { color: #D1D5DB; }
+
+.wu2-time-badge {
+  background: #F5F3EE;
+  color: #94A3B8;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.wu2-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #F5F3EE;
+  border: none;
+  cursor: pointer;
+  color: #94A3B8;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.wu2-close-btn:hover {
+  background: #EDE9E0;
+  color: #0F172A;
+}
+
+/* ── Card body ── */
+.wu2-card-body {
+  padding: 24px 28px 32px;
+}
+
+/* ── Quiz step ── */
+.wu2-step { display: flex; flex-direction: column; }
+
+.wu2-step-q {
+  font-size: clamp(1.05rem, 2.4vw, 1.28rem);
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.026em;
+  line-height: 1.28;
+  margin: 0 0 6px;
+}
+
+.wu2-step-hint {
+  font-size: 0.78rem;
+  color: #94A3B8;
+  font-weight: 500;
+  margin: 0 0 20px;
+}
+
+/* ── Chips ── */
+.wu2-chips {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-  padding: 20px 16px 18px;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+/* Unselected: #1E293B on #fff = 17:1 contrast (WCAG AAA)
+   Warm gray border references the card shadow warmth */
+.wu2-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1.5px solid #E8E3DB;
+  border-radius: 12px;
+  padding: 13px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1E293B;
+  text-align: left;
+  cursor: pointer;
+  line-height: 1.4;
+  transition: border-color 0.14s ease, background 0.14s ease, color 0.14s ease;
+}
+.wu2-chip:hover:not(.is-sel) {
+  border-color: #D5CFC5;
+  background: #FAFAF8;
+}
+.wu2-chip.is-sel {
+  color: #fff;
+}
+
+.wu2-chip-dot {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #D5CFC5;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+.wu2-chip-dot.is-sel {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: transparent;
+}
+
+/* ── Step actions ── */
+.wu2-step-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.wu2-back-btn {
   background: none;
   border: none;
   cursor: pointer;
-  text-align: left;
-  transition: background 0.2s;
-  border-radius: 8px 8px 0 0;
-}
-
-.why-tab:hover {
-  background: rgba(0, 0, 0, 0.03);
-}
-
-.wt-num {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: #A1A1AA;
-  transition: color 0.2s;
-}
-
-.why-tab.is-active .wt-num {
-  color: var(--tab-color);
-}
-
-.wt-label {
-  font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+  font-size: 0.86rem;
   font-weight: 600;
-  color: #71717A;
-  line-height: 1.3;
-  transition: color 0.2s;
+  color: #94A3B8;
+  padding: 10px 14px;
+  border-radius: 10px;
+  transition: color 0.15s, background 0.15s;
+}
+.wu2-back-btn:hover {
+  color: #0F172A;
+  background: rgba(0, 0, 0, 0.035);
 }
 
-.why-tab.is-active .wt-label {
-  color: #18181B;
-}
-
-.wt-underline {
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  border-radius: 2px 2px 0 0;
-}
-
-/* ── Content body ── */
-.why-body {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: clamp(48px, 6vw, 72px) clamp(1.5rem, 5vw, 80px) clamp(80px, 10vw, 120px);
-}
-
-.why-pane {
-  display: grid;
-  grid-template-columns: 1fr 1.15fr;
-  gap: clamp(40px, 6vw, 80px);
+.wu2-next-btn {
+  display: inline-flex;
   align-items: center;
+  gap: 7px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 26px;
+  cursor: pointer;
+  transition: opacity 0.18s, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.wu2-next-btn:hover:not(.is-off) {
+  opacity: 0.88;
+  transform: translateY(-2px);
+}
+.wu2-next-btn.is-off {
+  opacity: 0.3;
+  cursor: not-allowed;
+  background: #CBD5E1 !important;
+  box-shadow: none !important;
 }
 
-/* ── Left column ── */
-.wp-left {
+/* ══════════════════════════════════════════════
+   RESULT — personalised outcome screen
+══════════════════════════════════════════════ */
+.wu2-result {
   display: flex;
   flex-direction: column;
-  gap: 0;
-}
-
-.wp-stat-card {
-  background: #0D1117;
-  border-radius: 20px;
-  padding: 28px 32px;
-  margin-bottom: 28px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto;
-  column-gap: 18px;
-  row-gap: 6px;
   align-items: center;
+  text-align: center;
 }
 
-.wp-stat-icon {
-  grid-row: 1 / 3;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--ac) 14%, transparent);
+/* ── Animated tick wrapper ── */
+.wu2-tick-wrap {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+  flex-shrink: 0;
+}
+
+/* Expanding ripple rings — border-only circles, green */
+.wu2-ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(34, 197, 94, 0.52);
+  pointer-events: none;
+}
+
+/* The green circle — glow: inner ring (soft halo) + outer shadow (depth) */
+.wu2-tick-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #22C55E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  box-shadow:
+    0 0 0 8px rgba(34, 197, 94, 0.10),
+    0 12px 32px rgba(34, 197, 94, 0.30);
+}
+
+/* ── "Analysis complete" badge ── */
+/* #15803D on rgba(34,197,94,0.07) — darker green derivative for text
+   avoids same-shade sameness; badge text = secondary green, icon = primary */
+.wu2-result-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(34, 197, 94, 0.07);
+  border: 1px solid rgba(34, 197, 94, 0.16);
+  color: #15803D;
+  font-size: 0.71rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  padding: 4px 12px;
+  margin-bottom: 14px;
+}
+
+/* ── Result copy ── */
+.wu2-result-headline {
+  font-size: clamp(1.15rem, 2.5vw, 1.48rem);
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.032em;
+  line-height: 1.2;
+  margin: 0 0 10px;
+  max-width: 420px;
+}
+
+.wu2-result-sub {
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.66;
+  margin: 0 0 20px;
+  max-width: 380px;
+}
+
+/* ── Personalised plan box ──
+   Warm off-white bg (#FAFAF8) deliberately different from card white (#fff)
+   Two different whites in one card = Apple product page technique
+   Border: warm stone #E8E3DB references linen/paper (Hermès tonal range)
+   Dividers: even warmer #F1EFE9 — barely-there, like fine paper grain */
+.wu2-result-plan {
+  width: 100%;
+  background: #FAFAF8;
+  border: 1px solid #E8E3DB;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin: 0 0 22px;
+  text-align: left;
+}
+
+.wu2-plan-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Plan label recedes completely — slate-400, label energy, not competing */
+.wu2-plan-label {
+  font-size: 0.69rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #94A3B8;
+}
+
+.wu2-urgency-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* Plan rows: slide in from x:-12, staggered by ResultCard */
+.wu2-plan-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 0;
+  border-top: 1px solid #F1EFE9;
+}
+.wu2-plan-row:first-of-type {
+  border-top: none;
+  padding-top: 2px;
+}
+
+/* Small green-tinted icon circle */
+.wu2-plan-row-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.10);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
-.wp-stat-num {
-  font-size: clamp(2.6rem, 5vw, 4rem);
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.04em;
-}
-
-.wp-stat-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.wp-stat-label {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #E4E4E7;
-  line-height: 1.2;
-}
-
-.wp-stat-context {
-  font-size: 0.72rem;
-  color: #71717A;
-  letter-spacing: 0.01em;
-}
-
-.wp-title {
-  font-size: clamp(1.5rem, 2.8vw, 2rem);
-  font-weight: 800;
-  color: #18181B;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  margin: 0 0 12px;
-}
-
-.wp-desc {
-  font-size: 1rem;
-  color: #52525B;
-  line-height: 1.65;
-  margin: 0 0 24px;
-}
-
-/* Staggered bullet list */
-.wp-bullets {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.wp-bullets li {
-  position: relative;
-  padding-left: 22px;
-  font-size: 0.95rem;
-  color: #3F3F46;
+.wu2-plan-row-text {
+  font-size: 0.855rem;
   font-weight: 500;
-  line-height: 1.5;
+  color: #1E293B;
+  line-height: 1.45;
 }
 
-.wp-bullets li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 7px;
-  width: 7px;
-  height: 7px;
-  border-radius: 3px;
-  background: var(--ac);
-  opacity: 0.85;
-}
-
-/* CTA button */
-.wp-cta {
+/* ── CTA ── */
+.wu2-result-cta {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--ac);
+  background: linear-gradient(135deg, #FF7A20 0%, #FF6B00 50%, #F55D00 100%);
   color: #fff;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  border-radius: 12px;
-  padding: 14px 26px;
-  text-decoration: none;
-  width: fit-content;
-  transition: opacity 0.18s, transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
-  letter-spacing: 0.01em;
+  border: none;
+  border-radius: 999px;
+  padding: 15px 30px;
+  cursor: pointer;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 28px rgba(255, 107, 0, 0.30), 0 2px 6px rgba(255, 107, 0, 0.16);
+  transition: opacity 0.18s, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
-.wp-cta:hover {
-  opacity: 0.88;
+.wu2-result-cta:hover {
+  opacity: 0.9;
   transform: translateY(-2px);
 }
 
-/* ── Right column — tilt photo ── */
-.wp-photo-tilt {
-  perspective: 1000px;
-  cursor: none;
+.wu2-result-restart {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.76rem;
+  color: #94A3B8;
+  font-weight: 500;
+  padding: 6px 10px;
+  transition: color 0.15s;
+}
+.wu2-result-restart:hover { color: #475569; }
+
+/* ══════════════════════════════════════════════
+   WELCOME BACK — returning-visitor toast
+══════════════════════════════════════════════ */
+/* Lighter backdrop so it doesn't feel as heavy as the full quiz */
+.wu2-wb-backdrop {
+  background: rgba(6, 6, 10, 0.52) !important;
 }
 
-.wp-photo-wrap {
-  border-radius: 24px;
-  overflow: hidden;
-  aspect-ratio: 4 / 3;
+/* Narrower card — feels like a friendly nudge, not a takeover */
+.wu2-wb-card {
+  max-width: 400px !important;
+  border-radius: 20px !important;
   position: relative;
-  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.14), 0 12px 24px rgba(0, 0, 0, 0.07);
 }
 
-.wp-photo-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+/* Close btn sits in the top-right corner of the card */
+.wu2-wb-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.wu2-wb-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 32px 32px;
+  gap: 0;
+}
+
+.wu2-wb-wave {
+  font-size: 2.4rem;
+  line-height: 1;
+  margin-bottom: 14px;
   display: block;
 }
 
-/* Ghost step number overlay */
-.wp-step-bg-num {
-  position: absolute;
-  bottom: -10px;
-  left: 16px;
-  font-size: clamp(7rem, 16vw, 13rem);
-  font-weight: 900;
-  color: #fff;
-  opacity: 0.06;
-  line-height: 1;
-  letter-spacing: -0.06em;
-  pointer-events: none;
-  user-select: none;
+.wu2-wb-headline {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.032em;
+  line-height: 1.1;
+  margin: 0 0 10px;
 }
 
-/* Floating metric badge */
-.wp-float-badge {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 14px;
-  padding: 10px 16px;
+.wu2-wb-sub {
+  font-size: 0.97rem;
+  color: #64748B;
+  line-height: 1.65;
+  margin: 0 0 24px;
+  max-width: 300px;
+}
+
+/* Reuse result-cta + result-restart — already styled */
+.wu2-wb-body .wu2-result-cta { width: 100%; justify-content: center; }
+
+/* ══════════════════════════════════════════════
+   INLINE RESULT — shown on the page after quiz
+══════════════════════════════════════════════ */
+.wu2-inline-result {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: clamp(72px, 10vw, 112px) clamp(1.5rem, 5vw, 40px) clamp(60px, 9vw, 100px);
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
+  align-items: center;
+  text-align: center;
 }
 
-.wfb-num {
-  font-size: 1.35rem;
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.03em;
+/* Tick + badge side-by-side, centered */
+.wu2-ir-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 22px;
 }
 
-.wfb-label {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  line-height: 1.2;
+.wu2-ir-badge {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #15803D;
+  letter-spacing: 0.02em;
 }
+
+.wu2-ir-headline {
+  font-size: clamp(1.65rem, 3.8vw, 2.6rem);
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.1;
+  letter-spacing: -0.034em;
+  margin: 0 0 14px;
+}
+
+.wu2-ir-sub {
+  font-size: clamp(0.92rem, 1.5vw, 1.02rem);
+  color: #64748B;
+  line-height: 1.66;
+  margin: 0 0 26px;
+  max-width: 460px;
+}
+
+/* Plan box — same warm styling, wider for the page context */
+.wu2-ir-plan {
+  width: 100%;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wu2-retake-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.76rem;
+  color: #94A3B8;
+  font-weight: 500;
+  padding: 6px 10px;
+  margin-top: 6px;
+  transition: color 0.15s;
+}
+.wu2-retake-btn:hover { color: #475569; }
 
 /* ── Responsive ── */
-@media (max-width: 900px) {
-  .why-pane {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .wp-photo-tilt {
-    /* Disable tilt on touch devices */
-    transform: none !important;
-  }
-}
-
-@media (max-width: 640px) {
-  .why-tabs {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    gap: 0;
-  }
-
-  .why-tabs::-webkit-scrollbar {
-    display: none;
-  }
-
-  .why-tab {
-    min-width: 120px;
-    padding: 16px 12px 14px;
-  }
-
-  .wt-label {
-    font-size: 0.78rem;
-  }
-
-  .wp-stat-card {
-    padding: 20px 24px;
-  }
-
-  .wp-stat-num {
-    font-size: 2.2rem;
-  }
-
-  .wp-float-badge {
-    top: 12px;
-    right: 12px;
-    padding: 8px 12px;
-  }
+@media (max-width: 600px) {
+  .wu2-card { border-radius: 20px; }
+  .wu2-card-body { padding: 20px 18px 28px; }
+  .wu2-step-actions { flex-direction: column-reverse; align-items: stretch; gap: 8px; }
+  .wu2-next-btn { justify-content: center; }
+  .wu2-back-btn { text-align: center; }
+  .wu2-result-cta { width: 100%; justify-content: center; }
 }

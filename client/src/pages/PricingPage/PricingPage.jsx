@@ -9,29 +9,31 @@ import './PricingPage.css';
 import NavBar from '../../components/NavBar';
 import CTA from '../../components/CTA';
 import Footer from '../../components/Footer';
+import { calcEstimate, getPlanForEstimate } from '../../utils/projectEstimate';
+import { cacheGet, cacheSet } from '../../utils/prefetch.js';
 
-/* ─────────────────────────────────────────
-   PURE ESTIMATE FUNCTION (outside component)
-───────────────────────────────────────── */
-function calcEstimate({ pages, features, timeline, addOns }) {
-  const base = 1200;
-  const pagePrice = pages * 180;
-  const featureMultiplier =
-    features === 'basic' ? 1 :
-    features === 'advanced' ? 1.6 : 2.2;
-  const timelineMultiplier = timeline === 'rush' ? 1.25 : 1;
-  let addOnsCost = 0;
-  if (addOns.includes('seo'))          addOnsCost += 500;
-  if (addOns.includes('copywriting'))  addOnsCost += 800;
-  if (addOns.includes('branding'))     addOnsCost += 1200;
-  if (addOns.includes('hosting'))      addOnsCost += 300;
-  return Math.round((base + pagePrice) * featureMultiplier * timelineMultiplier + addOnsCost);
-}
+const DEFAULT_ESTIMATOR_VALUES = {
+  pages: 5,
+  features: 'basic',
+  timeline: 'standard',
+  addOns: [],
+};
 
-function getPlanForEstimate(estimate) {
-  if (estimate < 1200)  return 'starter';
-  if (estimate <= 3500) return 'professional';
-  return 'enterprise';
+function getInitialEstimatorState() {
+  const warmed = cacheGet('pricing_estimator_seed');
+  if (!warmed || !warmed.scenario) return DEFAULT_ESTIMATOR_VALUES;
+
+  const { scenario } = warmed;
+  if (
+    typeof scenario.pages !== 'number' ||
+    typeof scenario.features !== 'string' ||
+    typeof scenario.timeline !== 'string' ||
+    !Array.isArray(scenario.addOns)
+  ) {
+    return DEFAULT_ESTIMATOR_VALUES;
+  }
+
+  return scenario;
 }
 
 /* ─────────────────────────────────────────
@@ -332,18 +334,14 @@ const PlanCard = ({ plan, billingCycle, isAnimating, recommendedPlan, openValueS
    MAIN PAGE
 ───────────────────────────────────────── */
 const PricingPage = () => {
+  const initialEstimatorValues = getInitialEstimatorState();
   const [billingCycle, setBillingCycle] = useState('one-time');
   const [isAnimating, setIsAnimating] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
   const [openValueStack, setOpenValueStack] = useState(null);
   const [visibleSections, setVisibleSections] = useState({});
-  const [estimatorValues, setEstimatorValues] = useState({
-    pages: 5,
-    features: 'basic',
-    timeline: 'standard',
-    addOns: [],
-  });
-  const [animatedPrice, setAnimatedPrice] = useState(calcEstimate({ pages: 5, features: 'basic', timeline: 'standard', addOns: [] }));
+  const [estimatorValues, setEstimatorValues] = useState(initialEstimatorValues);
+  const [animatedPrice, setAnimatedPrice] = useState(calcEstimate(initialEstimatorValues));
   const [recommendedPlan, setRecommendedPlan] = useState('professional');
   const [pingKey, setPingKey] = useState(0);
   const rafRef = useRef(null);
@@ -391,6 +389,21 @@ const PricingPage = () => {
     rafRef.current = requestAnimationFrame(animate);
     return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
   }, [estimatorValues]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const estimate = calcEstimate(estimatorValues);
+    const predictedPlan = getPlanForEstimate(estimate);
+    cacheSet(
+      'pricing_estimator_seed',
+      {
+        scenario: estimatorValues,
+        estimate,
+        predictedPlan,
+        warmedAt: Date.now(),
+      },
+      24 * 60 * 60 * 1000
+    );
+  }, [estimatorValues]);
 
   // Scroll reveal
   useEffect(() => {

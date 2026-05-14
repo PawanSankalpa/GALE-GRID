@@ -213,3 +213,26 @@
   .cta2-trust { flex-direction: column; }
   .cta2-trust-div { display: none; }
 }
+
+/* ── Noon Mobile CTA (≤768px) ── */
+@media (max-width: 768px) {
+  .cta2-section {
+    padding: 48px 16px 80px; /* bottom: BottomTabBar clearance */
+  }
+  /* Full-width Noon yellow primary CTA */
+  .cta2-primary {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: #FFBF00;
+    color: #1A0A00;
+    border: none;
+    border-radius: 999px;
+    font-weight: 800;
+    padding: 15px 24px;
+  }
+  /* Contacts: single column on very small screens */
+  .cta2-contacts {
+    grid-template-columns: 1fr !important;
+  }
+}

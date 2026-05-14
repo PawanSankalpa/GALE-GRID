@@ -4,7 +4,7 @@ import { useBooking } from "../context/BookingContext.jsx";
 import {
   Clock, Shield, Smartphone, Pencil, CreditCard,
   Search, Star, TrendingUp, ChevronDown,
-  ArrowRight, Phone,
+  ArrowRight, Phone, MessageCircle, Mail,
 } from "lucide-react";
 import "./styles/FAQ.css";
 
@@ -45,21 +45,21 @@ const faqs = [
     q: "Can I edit the website myself after launch?",
     preview: "Yes — we set up a friendly CMS and train you. No coding knowledge required.",
     a: "Yes. We configure a user-friendly CMS so you can update text, swap images, and add new pages without touching code. A full training session is included so you're never dependent on us for routine updates.",
-    icon: Pencil, color: "#EC4899", cat: "technical", badge: "CMS included",
+    icon: Pencil, color: "#F97316", cat: "technical", badge: "CMS included",
   },
   {
     num: "05",
     q: "What payment options do you offer?",
     preview: "Split into 3 milestones — 50% upfront, 25% at design approval, 25% at launch.",
     a: "We use a milestone-based payment schedule to keep risk low for both sides: 50% upfront to begin, 25% at design sign-off, 25% at launch. Custom schedules available for larger enterprise projects.",
-    icon: CreditCard, color: "#FF6B00", cat: "pricing", badge: "Milestone payments",
+    icon: CreditCard, color: "#F59E0B", cat: "pricing", badge: "Milestone payments",
   },
   {
     num: "06",
     q: "Do you include SEO?",
     preview: "Technical SEO is baked into every build — meta tags, schema, sitemap, and more.",
     a: "Yes — foundation SEO is standard on every project. This includes: meta titles/descriptions, Open Graph tags, schema markup, XML sitemap, clean URLs, fast load times, and Google Search Console setup. Advanced SEO growth packages are available separately.",
-    icon: Search, color: "#F59E0B", cat: "technical", badge: "SEO built-in",
+    icon: Search, color: "#6366F1", cat: "technical", badge: "SEO built-in",
   },
   {
     num: "07",
@@ -73,17 +73,136 @@ const faqs = [
     q: "Do you offer ongoing support after launch?",
     preview: "1–6 months of post-launch support is included depending on your plan.",
     a: "All plans include at minimum 1 month of post-launch support for bug fixes and small updates. Professional plans get 3 months, Enterprise plans get 6 months. Monthly retainer packages are also available for ongoing improvements.",
-    icon: Star, color: "#84CC16", cat: "support", badge: "1–6 months included",
+    icon: Star, color: "#14B8A6", cat: "support", badge: "1–6 months included",
   },
 ];
+
+/* ═══════════════════════════════════════════════════════════
+   ANIMATED STAT ICON COMPONENTS — modern / data-viz style
+═══════════════════════════════════════════════════════════ */
+
+/** Circular progress ring — 4.9/5 rating → 98% arc */
+function StatStars() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.5 });
+  const size = 44;
+  const stroke = 3.2;
+  const r = (size - stroke) / 2;
+  const circ = 2 * Math.PI * r;
+  const pct = 0.98; // 4.9/5
+  return (
+    <div ref={ref} className="faqn-stat-anim" aria-hidden="true">
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ transform: "rotate(-90deg)" }}>
+        {/* Track */}
+        <circle cx={size/2} cy={size/2} r={r}
+          fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth={stroke} />
+        {/* Animated fill arc */}
+        <motion.circle cx={size/2} cy={size/2} r={r}
+          fill="none" stroke="#F59E0B" strokeWidth={stroke}
+          strokeLinecap="round"
+          strokeDasharray={circ}
+          initial={{ strokeDashoffset: circ }}
+          animate={inView ? { strokeDashoffset: circ * (1 - pct) } : {}}
+          transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        />
+        {/* Glow duplicate */}
+        <motion.circle cx={size/2} cy={size/2} r={r}
+          fill="none" stroke="#F59E0B" strokeWidth={stroke + 3}
+          strokeLinecap="round" opacity={0.18}
+          strokeDasharray={circ}
+          initial={{ strokeDashoffset: circ }}
+          animate={inView ? { strokeDashoffset: circ * (1 - pct) } : {}}
+          transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        />
+      </svg>
+    </div>
+  );
+}
+
+/** Stacked bar chart — 5 bars that grow up sequentially, purple palette */
+function StatRocket() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.5 });
+  const bars = [55, 72, 88, 68, 100];
+  const maxH = 32;
+  return (
+    <div ref={ref} className="faqn-stat-anim" aria-hidden="true">
+      <svg width="44" height="40" viewBox="0 0 44 40" style={{ overflow: "visible" }}>
+        {bars.map((pct, i) => {
+          const h = (pct / 100) * maxH;
+          const x = 2 + i * 9;
+          const w = 6;
+          return (
+            <g key={i}>
+              {/* Track */}
+              <rect x={x} y={40 - maxH} width={w} height={maxH}
+                rx={3} fill="rgba(255,255,255,0.05)" />
+              {/* Animated bar */}
+              <motion.rect
+                x={x} y={40 - h} width={w} rx={3}
+                fill={i === 4 ? "#7C3AED" : `rgba(124,58,237,${0.4 + i * 0.12})`}
+                initial={{ height: 0, y: 40 }}
+                animate={inView ? { height: h, y: 40 - h } : {}}
+                transition={{ duration: 0.5, delay: 0.1 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              />
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
+/** Sparkline — a smooth path that draws itself left-to-right, sky blue */
+function StatZap() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.5 });
+  // Points for an upward trend line (x, y) in a 48x32 viewport
+  const pts = [[0,28],[8,24],[16,20],[22,22],[30,12],[38,8],[46,4]];
+  const d = pts.map((p, i) => (i === 0 ? `M${p[0]},${p[1]}` : `L${p[0]},${p[1]}`)).join(" ");
+  // Area fill path
+  const area = `${d} L46,32 L0,32 Z`;
+  return (
+    <div ref={ref} className="faqn-stat-anim" aria-hidden="true">
+      <svg width="48" height="34" viewBox="0 0 48 34" fill="none" className="faqn-stat-zap" style={{ overflow: "visible" }}>
+        {/* Area fill */}
+        <motion.path d={area} fill="#38BDF8" fillOpacity={0}
+          animate={inView ? { fillOpacity: 0.1 } : {}}
+          transition={{ delay: 0.8, duration: 0.5 }}
+        />
+        {/* Line */}
+        <motion.path
+          d={d} stroke="#38BDF8" strokeWidth="2.2"
+          strokeLinecap="round" strokeLinejoin="round" fill="none"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={inView ? { pathLength: 1, opacity: 1 } : {}}
+          transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+        />
+        {/* Dot on last point */}
+        <motion.circle cx={46} cy={4} r={3} fill="#38BDF8"
+          initial={{ scale: 0 }}
+          animate={inView ? { scale: 1 } : {}}
+          transition={{ delay: 0.95, type: "spring", stiffness: 320, damping: 14 }}
+        />
+        {/* Ping on dot */}
+        <motion.circle cx={46} cy={4} r={3} fill="none" stroke="#38BDF8"
+          animate={inView ? { r: [3, 8], opacity: [0.6, 0] } : {}}
+          transition={{ delay: 1.1, duration: 0.7, repeat: Infinity, repeatDelay: 2.2 }}
+        />
+      </svg>
+    </div>
+  );
+}
 
 function FAQItem({ faq, index }) {
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const Icon = faq.icon;
+  const expanded = open || hovered;
 
   return (
     <motion.div
-      className={"faqn-item" + (open ? " faqn-item--open" : "") + (hovered ? " faqn-item--hovered" : "")}
+      className={`faqn-item${expanded ? " faqn-item--open" : ""}`}
       style={{ "--fc": faq.color }}
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
@@ -95,27 +214,43 @@ function FAQItem({ faq, index }) {
       <button
         className="faqn-trigger"
         onClick={() => setOpen(!open)}
-        aria-expanded={open}
+        aria-expanded={expanded}
         aria-label={faq.q}
       >
-        <div className="faqn-num-col">
-          <span className="faqn-num">{faq.num}</span>
-          <span className="faqn-cat-tag">{faq.cat}</span>
-        </div>
-        <div className="faqn-trigger-row">
+        <span className="faqn-icon-wrap" aria-hidden="true">
+          <Icon size={20} strokeWidth={2} />
+        </span>
+
+        <div className="faqn-content">
+          <div className="faqn-top-row">
+            <span className="faqn-badge">{faq.badge}</span>
+            <motion.span
+              className="faqn-chevron"
+              animate={{ rotate: expanded ? 180 : 0 }}
+              transition={{ duration: 0.24, ease: "easeInOut" }}
+            >
+              <ChevronDown size={15} strokeWidth={2.2} />
+            </motion.span>
+          </div>
           <span className="faqn-q">{faq.q}</span>
-          <motion.span
-            className="faqn-chevron"
-            animate={{ rotate: open ? 180 : 0 }}
-            transition={{ duration: 0.24, ease: "easeInOut" }}
-          >
-            <ChevronDown size={16} strokeWidth={2.2} />
-          </motion.span>
+          <AnimatePresence initial={false}>
+            {!expanded && (
+              <motion.p
+                className="faqn-preview"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
+              >
+                {faq.preview}
+              </motion.p>
+            )}
+          </AnimatePresence>
         </div>
       </button>
 
       <AnimatePresence initial={false}>
-        {open && (
+        {expanded && (
           <motion.div
             className="faqn-answer"
             initial={{ height: 0, opacity: 0 }}
@@ -197,39 +332,124 @@ export default function FAQ() {
         <motion.div
           ref={bottomRef}
           className="faqn-bottom"
-          initial={{ opacity: 0, y: 32 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={bottomInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="faqn-stats">
+          {/* Decorative orbs */}
+          <span className="faqn-orb faqn-orb--a" aria-hidden="true" />
+          <span className="faqn-orb faqn-orb--b" aria-hidden="true" />
+
+          {/* Social proof row */}
+          <motion.div
+            className="faqn-proof"
+            initial={{ opacity: 0, y: 10 }}
+            animate={bottomInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.18, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="faqn-avatars" aria-hidden="true">
+              {["#F97316","#3B82F6","#10B981","#7C3AED","#F59E0B"].map((c, i) => (
+                <span key={i} className="faqn-avatar" style={{ background: c, zIndex: 5 - i }} />
+              ))}
+            </div>
+            <span className="faqn-proof-text">
+              <strong>150+ businesses</strong> already growing with us
+            </span>
+          </motion.div>
+
+          {/* Headline */}
+          <motion.h3
+            className="faqn-bottom-headline"
+            initial={{ opacity: 0, y: 14 }}
+            animate={bottomInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.26, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          >
+            Still have a question?
+          </motion.h3>
+
+          <motion.p
+            className="faqn-bottom-copy"
+            initial={{ opacity: 0 }}
+            animate={bottomInView ? { opacity: 1 } : {}}
+            transition={{ delay: 0.36, duration: 0.5 }}
+          >
+            We answer everything on a free&nbsp;20-minute call —
+            no sales pressure, no obligation.
+          </motion.p>
+
+          {/* Contact channel cards */}
+          <motion.div
+            className="faqn-bottom-actions"
+            initial={{ opacity: 0, y: 10 }}
+            animate={bottomInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.44, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          >
             {[
-              { val: "4.9/5",   lbl: "Google Rating",     color: "#FBBF24" },
-              { val: "150+",    lbl: "Projects Delivered", color: "#10B981" },
-              { val: "2–8 wks", lbl: "Avg. Delivery",      color: "#3B82F6" },
+              {
+                href: "https://wa.me/94776868537",
+                Icon: MessageCircle,
+                label: "WhatsApp",
+                sub: "Reply within the hour",
+                color: "#F97316",
+              },
+              {
+                href: "tel:+94776868537",
+                Icon: Phone,
+                label: "Call Us",
+                sub: "+94 77 686 8537",
+                color: "#7C3AED",
+              },
+              {
+                href: "mailto:hello@galegrid.com",
+                Icon: Mail,
+                label: "Email",
+                sub: "hello@galegrid.com",
+                color: "#38BDF8",
+              },
+            ].map((c, i) => (
+              <motion.a
+                key={i}
+                href={c.href}
+                className="faqn-contact-card"
+                style={{ "--cc": c.color }}
+                target={c.href.startsWith("http") ? "_blank" : undefined}
+                rel={c.href.startsWith("http") ? "noreferrer" : undefined}
+                initial={{ opacity: 0, y: 12 }}
+                animate={bottomInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.48 + i * 0.1, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -3, transition: { duration: 0.18 } }}
+              >
+                <span className="faqn-cc-icon">
+                  <c.Icon size={18} strokeWidth={2} />
+                </span>
+                <span className="faqn-cc-text">
+                  <span className="faqn-cc-label">{c.label}</span>
+                  <span className="faqn-cc-sub">{c.sub}</span>
+                </span>
+                <ArrowRight size={13} strokeWidth={2.5} className="faqn-cc-arrow" />
+              </motion.a>
+            ))}
+          </motion.div>
+
+          {/* Stats strip */}
+          <motion.div
+            className="faqn-stats"
+            initial={{ opacity: 0 }}
+            animate={bottomInView ? { opacity: 1 } : {}}
+            transition={{ delay: 0.54, duration: 0.5 }}
+          >
+          {[                
+              { val: "4.9 / 5", lbl: "Google Rating",     StatComp: StatStars  },
+              { val: "150+",    lbl: "Projects Delivered", StatComp: StatRocket },
+              { val: "2\u20138 wks", lbl: "Avg. Delivery Time", StatComp: StatZap    },
             ].map((s, i) => (
-              <div key={i} className="faqn-stat" style={{ "--sc": s.color }}>
+              <div key={i} className="faqn-stat">
+                <s.StatComp />
                 <span className="faqn-stat-val">{s.val}</span>
                 <span className="faqn-stat-lbl">{s.lbl}</span>
               </div>
             ))}
-          </div>
-
-          <div className="faqn-bottom-right">
-            <p className="faqn-bottom-title">Still have a question?</p>
-            <p className="faqn-bottom-copy">
-              We answer everything on a free 20-minute call — no sales pressure, no obligation.
-            </p>
-            <div className="faqn-bottom-actions">
-              <button type="button" className="faqn-cta-btn" onClick={openBooking}>
-                Book Free Call
-                <ArrowRight size={17} />
-              </button>
-              <a href="tel:+44000000000" className="faqn-cta-secondary">
-                <Phone size={16} />
-                Call Us Now
-              </a>
-            </div>
-          </div>
+          </motion.div>
         </motion.div>
 
       </div>

@@ -1117,3 +1117,92 @@
   .ow-hidden { opacity: 0; }
   .ow-visible { opacity: 1; transition: none !important; }
 }
+
+/* ── Noon Mobile OurWork (\u2264768px) ── */
+@media (max-width: 768px) {
+  /* Fixed slim navbar clearance */
+  .ow-hero {
+    padding-top: calc(52px + 48px) !important;
+    min-height: auto !important;
+    padding-bottom: 40px !important;
+  }
+
+  /* Filter pills: horizontal scroll row (Noon category pills) */
+  .ow-filter-bar,
+  .ow-filter-inner {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    gap: 8px;
+    padding: 12px 16px;
+    flex-wrap: nowrap;
+  }
+  .ow-filter-bar::-webkit-scrollbar,
+  .ow-filter-inner::-webkit-scrollbar { display: none; }
+  .ow-pill {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    white-space: nowrap;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    border: 1.5px solid #EDEEF2;
+    background: transparent;
+    color: #374151;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+  }
+  .ow-pill.ow-pill-active {
+    background: #FFBF00;
+    color: #1A0A00;
+    border-color: #FFBF00;
+    font-weight: 700;
+  }
+
+  /* Bento grid: strict 2-col layout (Noon product grid) */
+  .ow-bento {
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-auto-rows: 180px !important;
+    gap: 10px !important;
+    padding: 0 16px;
+  }
+  .ow-card[data-size],
+  .ow-skel[data-size] {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+
+  /* Modal: bottom sheet (Noon product detail sheet) */
+  .ow-modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+  .ow-modal {
+    border-radius: 20px 20px 0 0;
+    max-height: 90vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* Sheet drag handle */
+  .ow-modal::before {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 4px;
+    background: #D1D5DB;
+    border-radius: 999px;
+    margin: 12px auto 0;
+    flex-shrink: 0;
+  }
+
+  /* CTA button: Noon yellow */
+  .ow-modal-cta {
+    background: #FFBF00!important;
+    color: #1A0A00!important;
+    border: none!important;
+    border-radius: 999px!important;
+    font-weight: 800!important;
+  }
+}

@@ -1,13 +1,15 @@
-import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import React, { Suspense, useEffect } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import "./admin/styles/admin-shell.css";
+import "./components/styles/mobile-elite.css";
+import "./styles/mobile-noon.css";
+import "./styles/mobile-premium.css";
+import BottomTabBar from "./components/BottomTabBar";
+import { recordRouteVisit } from "./utils/prefetch.js";
 
 // Public pages
+// HomePage is eager — it's the entry point, must render immediately.
 import HomePage from "./pages/HomePage/HomePage.jsx";
-import Services from "./pages/ServicesPage/Services.jsx";
-import PricingPage from "./pages/PricingPage/PricingPage.jsx";
-import OurWork from "./pages/OurWorkPage/OurWork.jsx";
-import Plan from "./pages/PlanPage/Plan3.jsx";
 
 // Auth
 import AdminLogin from "./pages/LoginPage/AdminLogin.jsx";
@@ -45,9 +47,26 @@ import PartnerResourcesPage from "./portals/partner/pages/PartnerResourcesPage.j
 // Booking system
 import { BookingProvider } from "./context/BookingContext.jsx";
 
-function App() {
+// Other public pages: lazy-loaded so webpack splits them into separate chunks.
+// prefetchAllRoutes() in HomePage will call the same import() functions
+// in the background, so these chunks are already cached before the user taps.
+const Services    = React.lazy(() => import("./pages/ServicesPage/Services.jsx"));
+const PricingPage = React.lazy(() => import("./pages/PricingPage/PricingPage.jsx"));
+const OurWork     = React.lazy(() => import("./pages/OurWorkPage/OurWork.jsx"));
+const Plan        = React.lazy(() => import("./pages/PlanPage/Plan3.jsx"));
+
+function AppInner() {
+  const { pathname } = useLocation();
+  const isAdminOrPartner = pathname.startsWith("/admin") || pathname.startsWith("/partner");
+
+  useEffect(() => {
+    recordRouteVisit(pathname);
+  }, [pathname]);
+
   return (
-    <BookingProvider>
+    // Suspense fallback=null: by the time the user taps, chunks are already
+    // prefetched in the background — the fallback is essentially never shown.
+    <Suspense fallback={null}>
       <Routes>
         {/* Public website */}
         <Route path="/" element={<HomePage />} />
@@ -113,6 +132,17 @@ function App() {
         {/* 404 → home */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+
+      {/* Bottom tab bar — mobile only, hidden inside admin/partner portals */}
+      {!isAdminOrPartner && <BottomTabBar />}
+    </Suspense>
+  );
+}
+
+function App() {
+  return (
+    <BookingProvider>
+      <AppInner />
     </BookingProvider>
   );
 }

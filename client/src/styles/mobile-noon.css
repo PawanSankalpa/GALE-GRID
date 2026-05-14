@@ -1,0 +1,181 @@
+/* ================================================================
+   MOBILE-NOON — Noon UAE App–Inspired Mobile Design System
+   Scope: max-width 768px only — desktop styles are NEVER touched
+   ================================================================ */
+
+/* ── Design Tokens ───────────────────────────────────────────── */
+:root {
+  --noon-yellow:        #FFBF00;
+  --noon-yellow-hover:  #E6AC00;
+  --noon-yellow-soft:   rgba(255, 191, 0, 0.12);
+  --noon-yellow-text:   #7A5800;
+
+  --noon-red:           #E53935;
+  --noon-red-soft:      rgba(229, 57, 53, 0.1);
+
+  --noon-bg:            #F7F8FA;
+  --noon-surface:       #FFFFFF;
+  --noon-card:          #FFFFFF;
+  --noon-border:        #EDEEF2;
+  --noon-border-strong: #D5D7DF;
+
+  --noon-text:          #0F172A;
+  --noon-text-2:        #374151;
+  --noon-muted:         #6B7280;
+  --noon-muted-light:   #9CA3AF;
+
+  --noon-header-h:      52px;
+  --noon-bottomnav-h:   62px;
+  --noon-page-pad:      16px;
+  --noon-card-radius:   12px;
+  --noon-pill-radius:   999px;
+
+  --noon-shadow-card:   0 1px 4px rgba(0,0,0,0.07), 0 2px 8px rgba(0,0,0,0.04);
+  --noon-shadow-raised: 0 4px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+
+  --noon-transition:    180ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Global Mobile Base ─────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* Smooth momentum scroll on iOS */
+  html {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Remove tap highlight flash */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Contain overscroll bounce on body */
+  body {
+    overscroll-behavior-y: contain;
+  }
+
+  /* Reserve space for bottom tab bar */
+  body.has-bottom-nav {
+    padding-bottom: calc(var(--noon-bottomnav-h) + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Horizontal scrollable strip — shared utility */
+  .noon-hscroll {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 12px;
+    padding: 4px var(--noon-page-pad) 12px;
+  }
+  .noon-hscroll::-webkit-scrollbar { display: none; }
+  .noon-hscroll > * {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+
+  /* Section header row (title + "See All" link) */
+  .noon-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--noon-page-pad);
+    margin-bottom: 12px;
+  }
+  .noon-section-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--noon-text);
+    margin: 0;
+  }
+  .noon-section-link {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--noon-yellow-text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  /* Nudge badge (urgency / social proof) */
+  .noon-nudge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: var(--noon-pill-radius);
+    white-space: nowrap;
+  }
+  .noon-nudge--yellow {
+    background: var(--noon-yellow-soft);
+    color: var(--noon-yellow-text);
+  }
+  .noon-nudge--red {
+    background: var(--noon-red-soft);
+    color: var(--noon-red);
+  }
+  .noon-nudge--green {
+    background: rgba(16, 185, 129, 0.1);
+    color: #065F46;
+  }
+
+  /* Pill CTA button (Noon "Add to Cart" style) */
+  .noon-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 24px;
+    background: var(--noon-yellow);
+    color: #1A0A00;
+    font-size: 0.95rem;
+    font-weight: 800;
+    border: none;
+    border-radius: var(--noon-pill-radius);
+    cursor: pointer;
+    transition: background var(--noon-transition), transform 120ms ease;
+    -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+  .noon-btn-primary:active {
+    background: var(--noon-yellow-hover);
+    transform: scale(0.97);
+  }
+
+  .noon-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 22px;
+    background: transparent;
+    color: var(--noon-text);
+    font-size: 0.95rem;
+    font-weight: 700;
+    border: 1.5px solid var(--noon-border-strong);
+    border-radius: var(--noon-pill-radius);
+    cursor: pointer;
+    transition: border-color var(--noon-transition);
+    -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
+  }
+  .noon-btn-ghost:active {
+    background: rgba(0,0,0,0.03);
+    transform: scale(0.97);
+  }
+
+  /* Card base */
+  .noon-card {
+    background: var(--noon-surface);
+    border-radius: var(--noon-card-radius);
+    border: 1px solid var(--noon-border);
+    box-shadow: var(--noon-shadow-card);
+    overflow: hidden;
+  }
+}

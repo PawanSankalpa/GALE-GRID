@@ -47,9 +47,9 @@ function IconEye({ off }) {
 }
 
 const ROLES = [
-  { key: "admin",  label: "Owner",       desc: "Full system access",      Icon: IconOwner,  hint: "admin@galegrid.com" },
-  { key: "team",   label: "Team Member", desc: "Tasks, projects & work",  Icon: IconTeam,   hint: "team@galegrid.com"  },
-  { key: "client", label: "Client",      desc: "Your project portal",     Icon: IconClient, hint: "client@galegrid.com"},
+  { key: "admin",  label: "Owner",       desc: "Full system access",      Icon: IconOwner },
+  { key: "team",   label: "Team Member", desc: "Tasks, projects & work",  Icon: IconTeam },
+  { key: "client", label: "Client",      desc: "Your project portal",     Icon: IconClient },
 ];
 
 export default function AdminLogin() {
@@ -70,8 +70,7 @@ export default function AdminLogin() {
   const handleRoleSelect = (key) => {
     setSelectedRole(key);
     setError("");
-    const found = ROLES.find((r) => r.key === key);
-    if (found) setEmail(found.hint);
+    setEmail("");
     setPassword("");
   };
 
@@ -137,6 +136,7 @@ export default function AdminLogin() {
                   className="ap-input"
                   value={email}
                   onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                  placeholder="you@company.com"
                   autoFocus
                   required
                 />
@@ -180,12 +180,9 @@ export default function AdminLogin() {
           </form>
         )}
 
-        {/* Demo hint */}
         <div className="ap-hint">
-          <strong>Demo credentials</strong><br />
-          Owner &nbsp;·&nbsp; admin@galegrid.com &nbsp;/&nbsp; Admin123!<br />
-          Team &nbsp;&nbsp;·&nbsp; team@galegrid.com &nbsp;/&nbsp; Team123!<br />
-          Client &nbsp;·&nbsp; client@galegrid.com &nbsp;/&nbsp; Client123!
+          <strong>Secure login</strong><br />
+          Use your assigned workspace credentials.
         </div>
 
         {/* Footer: register link */}

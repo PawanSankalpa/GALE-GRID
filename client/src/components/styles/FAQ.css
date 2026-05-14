@@ -107,106 +107,92 @@
   z-index: 0;
 }
 
-/* ── Accordion list (editorial hairline rules, no card boxes) ──────── */
+/* ── Card list ─────────────────────────────────────────────── */
 .faqn-list {
   margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-/* ── Item ───────────────────────────────────────────────── */
+/* ── Card item ──────────────────────────────────────────────── */
 .faqn-item {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
-  position: relative;
-  transition: background 0.22s ease;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: border-color 0.22s ease, box-shadow 0.22s ease;
 }
 
-.faqn-list > .faqn-item:first-child {
-  border-top: 1px solid rgba(0, 0, 0, 0.07);
-}
-
-.faqn-item--hovered {
-  background: rgba(0, 0, 0, 0.013);
+.faqn-item:hover {
+  border-color: color-mix(in srgb, var(--fc) 22%, transparent);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
 }
 
 .faqn-item--open {
-  background: color-mix(in srgb, var(--fc) 3.5%, #ffffff);
+  border-color: color-mix(in srgb, var(--fc) 35%, transparent);
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.08);
 }
 
-/* ── Trigger button (full-width clickable row) ──────────────── */
+/* ── Trigger button ─────────────────────────────────────────── */
 .faqn-trigger {
   width: 100%;
   display: flex;
   align-items: flex-start;
-  gap: 24px;
-  padding: 22px 0;
+  gap: 14px;
+  padding: 18px 20px;
   background: none;
   border: none;
   cursor: pointer;
   text-align: left;
 }
 
-/* ── Left: large editorial number ─────────────────────────── */
-.faqn-num-col {
-  width: 72px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 5px;
-  padding-top: 2px;
-}
-
-.faqn-num {
-  font-size: clamp(1.55rem, 2.4vw, 2.1rem);
-  font-weight: 900;
-  color: #DDE3EB;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  transition: color 0.28s ease;
-  font-variant-numeric: tabular-nums;
-}
-
-.faqn-item--hovered .faqn-num,
-.faqn-item--open .faqn-num {
+/* ── Coloured icon orb ──────────────────────────────────────── */
+.faqn-icon-wrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--fc) 11%, transparent);
   color: var(--fc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: background 0.22s ease;
 }
 
-.faqn-cat-tag {
-  font-size: 0.6rem;
-  font-weight: 800;
-  letter-spacing: 1.6px;
-  text-transform: uppercase;
-  color: #CBD5E1;
-  line-height: 1;
-  transition: color 0.28s ease;
+.faqn-item--open .faqn-icon-wrap {
+  background: color-mix(in srgb, var(--fc) 16%, transparent);
 }
 
-.faqn-item--hovered .faqn-cat-tag,
-.faqn-item--open .faqn-cat-tag {
-  color: color-mix(in srgb, var(--fc) 60%, transparent);
-}
-
-/* ── Right: question + chevron ────────────────────────────── */
-.faqn-trigger-row {
+/* ── Right: badge row + question + preview ──────────────────── */
+.faqn-content {
   flex: 1;
   min-width: 0;
+}
+
+.faqn-top-row {
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding-top: 5px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 5px;
 }
 
-.faqn-q {
-  flex: 1;
-  font-size: 0.97rem;
-  font-weight: 600;
-  color: #18181B;
-  line-height: 1.46;
-  transition: color 0.25s ease;
-  text-align: left;
-}
-
-.faqn-item--open .faqn-q {
+/* Badge pill */
+.faqn-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--fc);
+  background: color-mix(in srgb, var(--fc) 10%, transparent);
+  padding: 3px 9px;
+  border-radius: 999px;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .faqn-chevron {
@@ -214,12 +200,31 @@
   display: flex;
   align-items: center;
   color: #94A3B8;
-  margin-top: 3px;
-  transition: color 0.25s ease;
+  transition: color 0.22s ease;
 }
 
-.faqn-item--open .faqn-chevron {
-  color: var(--fc);
+.faqn-item--open .faqn-chevron { color: var(--fc); }
+
+/* Question */
+.faqn-q {
+  display: block;
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: #18181B;
+  line-height: 1.42;
+  margin-bottom: 5px;
+  transition: color 0.22s ease;
+}
+
+.faqn-item--open .faqn-q { color: var(--fc); }
+
+/* Preview — short one-liner visible when collapsed */
+.faqn-preview {
+  font-size: 0.82rem;
+  color: #71717A;
+  line-height: 1.55;
+  margin: 0;
+  overflow: hidden;
 }
 
 /* ── Answer dropdown ──────────────────────────────────────── */
@@ -228,7 +233,7 @@
 }
 
 .faqn-answer-body {
-  padding: 0 0 26px calc(72px + 24px);
+  padding: 0 20px 20px calc(20px + 42px + 14px);
 }
 
 .faqn-answer-body p {
@@ -236,152 +241,291 @@
   color: #52525B;
   line-height: 1.82;
   margin: 0;
-  padding-left: 18px;
-  border-left: 2px solid color-mix(in srgb, var(--fc) 28%, transparent);
+  padding-left: 16px;
+  border-left: 2px solid color-mix(in srgb, var(--fc) 32%, transparent);
 }
 
-/* Bottom CTA block */
+/* ══════════════════════════════════════════════════════════════
+   BOTTOM CTA — full-width gradient card
+══════════════════════════════════════════════════════════════ */
 .faqn-bottom {
-  background: #1A1D26;
-  border-radius: 24px;
-  padding: clamp(32px, 5vw, 52px) clamp(24px, 5vw, 52px);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(24px, 4vw, 48px);
-  align-items: center;
-}
-
-.faqn-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.faqn-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  padding: 16px 10px;
-  background: rgba(255, 255, 255, 0.04);
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  /* Deep dark with subtle warm undertone */
+  background:
+    radial-gradient(ellipse 72% 60% at 18% 50%,  rgba(255, 107, 0, 0.13) 0%, transparent 65%),
+    radial-gradient(ellipse 56% 70% at 88% 30%,  rgba(124, 58, 237, 0.10) 0%, transparent 60%),
+    #0F1117;
   border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 12px;
-}
-
-.faqn-stat-val {
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
-  font-weight: 900;
-  color: var(--sc, #F2F4F8);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  font-feature-settings: "tnum";
-}
-
-.faqn-stat-lbl {
-  font-size: 0.7rem;
-  color: #9CA3B0;
-  font-weight: 500;
-  text-align: center;
-  line-height: 1.3;
-}
-
-.faqn-bottom-right {
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.28),
+    0 2px 0 rgba(255, 255, 255, 0.05) inset;
+  padding: clamp(48px, 7vw, 80px) clamp(24px, 6vw, 72px);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  text-align: center;
+  gap: 0;
 }
 
-.faqn-bottom-title {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: #F2F4F8;
-  margin: 0;
-  letter-spacing: -0.02em;
+/* Decorative light orbs */
+.faqn-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(64px);
+}
+.faqn-orb--a {
+  width: 320px; height: 320px;
+  background: rgba(255, 107, 0, 0.14);
+  top: -80px; left: -60px;
+}
+.faqn-orb--b {
+  width: 260px; height: 260px;
+  background: rgba(124, 58, 237, 0.10);
+  bottom: -60px; right: -40px;
 }
 
+/* Social proof row */
+.faqn-proof {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.faqn-avatars {
+  display: flex;
+}
+
+.faqn-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #0F1117;
+  margin-left: -8px;
+  opacity: 0.85;
+}
+.faqn-avatars .faqn-avatar:first-child { margin-left: 0; }
+
+.faqn-proof-text {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.52);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.faqn-proof-text strong {
+  color: rgba(255, 255, 255, 0.82);
+  font-weight: 700;
+}
+
+/* Headline */
+.faqn-bottom-headline {
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 900;
+  color: #F8FAFC;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+  margin: 0 0 16px;
+}
+
+/* Sub copy */
 .faqn-bottom-copy {
-  font-size: 0.9rem;
-  color: #9CA3B0;
-  line-height: 1.65;
-  margin: 0;
+  font-size: clamp(0.92rem, 1.4vw, 1.05rem);
+  color: rgba(255, 255, 255, 0.48);
+  line-height: 1.7;
+  margin: 0 0 36px;
+  max-width: 440px;
 }
 
+/* Buttons */
 .faqn-bottom-actions {
   display: flex;
   align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 44px;
+}
+
+.faqn-stats {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  width: 100%;
+  max-width: 520px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.faqn-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 16px 10px;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+.faqn-stat:last-child { border-right: none; }
+
+/* ── Animated stat icon components ───────────────────────── */
+.faqn-stat-anim {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+/* ── Zap sparkline glow ── */
+.faqn-stat-zap {
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.4));
+}
+
+/* ── Contact channel cards ──────────────────────────────── */
+.faqn-bottom-actions {
+  display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 40px;
+  width: 100%;
+  max-width: 560px;
 }
 
-.faqn-cta-btn {
-  display: inline-flex;
+.faqn-contact-card {
+  flex: 1;
+  min-width: 140px;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 13px 28px;
-  background: #FF6B00;
-  color: #fff;
-  font-size: 0.9rem;
-  font-weight: 800;
+  gap: 10px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
   text-decoration: none;
-  border-radius: 12px;
-  border: none;
   cursor: pointer;
-  font-family: inherit;
-  box-shadow: 0 8px 28px rgba(255, 107, 0, 0.35);
-  transition: background 0.2s, gap 0.2s, transform 0.2s;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
 }
 
-.faqn-cta-btn:hover {
-  background: #e55f00;
-  gap: 11px;
-  transform: translateY(-2px);
+/* Accent left strip on hover */
+.faqn-contact-card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 12%; bottom: 12%;
+  width: 2.5px;
+  border-radius: 4px;
+  background: var(--cc);
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 
-.faqn-cta-secondary {
-  display: inline-flex;
+.faqn-contact-card:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: color-mix(in srgb, var(--cc) 35%, transparent);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2), 0 0 0 1px color-mix(in srgb, var(--cc) 18%, transparent);
+}
+.faqn-contact-card:hover::before { opacity: 1; }
+
+.faqn-cc-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--cc) 14%, transparent);
+  color: var(--cc);
+  display: flex;
   align-items: center;
-  gap: 7px;
-  padding: 13px 22px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #F2F4F8;
-  font-size: 0.88rem;
-  font-weight: 700;
-  text-decoration: none;
-  border-radius: 12px;
-  transition: background 0.2s, border-color 0.2s;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.faqn-contact-card:hover .faqn-cc-icon {
+  background: color-mix(in srgb, var(--cc) 22%, transparent);
 }
 
-.faqn-cta-secondary:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.2);
+.faqn-cc-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.faqn-cc-label {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1;
+}
+
+.faqn-cc-sub {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.38);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.faqn-cc-arrow {
+  color: rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+  transition: color 0.2s, transform 0.2s;
+}
+.faqn-contact-card:hover .faqn-cc-arrow {
+  color: var(--cc);
+  transform: translateX(2px);
+}
+
+.faqn-stat-val {
+  font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+  font-weight: 900;
+  color: #F8FAFC;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.faqn-stat-lbl {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.38);
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.3;
+  white-space: nowrap;
 }
 
 /* Responsive */
-@media (max-width: 760px) {
-  .faqn-bottom {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media (max-width: 640px) {
   .faqn-bottom-actions {
     flex-direction: column;
     width: 100%;
   }
-  .faqn-cta-btn,
-  .faqn-cta-secondary {
+  .faqn-contact-card {
     width: 100%;
-    justify-content: center;
+    justify-content: flex-start;
   }
+  .faqn-stats {
+    flex-direction: column;
+    gap: 0;
+  }
+  .faqn-stat {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 14px 10px;
+  }
+  .faqn-stat:last-child { border-bottom: none; }
   .faqn-answer-body {
-    padding: 0 0 20px 22px;
+    padding: 0 14px 18px 14px;
   }
-  .faqn-num-col {
-    width: 44px;
-  }
-  .faqn-num {
-    font-size: 1.1rem;
+  .faqn-icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
   }
 }
 
@@ -397,5 +541,58 @@
     grid-template-columns: 1fr;
     max-width: 200px;
     margin: 0 auto;
+  }
+}
+
+/* ── Noon Mobile (≤768px) ── */
+@media (max-width: 768px) {
+  .faqn-section {
+    padding: 40px 16px 56px;
+    background: #FFFFFF;
+  }
+  /* Header: left-aligned */
+  .faqn-header {
+    text-align: left;
+    margin-bottom: 24px;
+  }
+  /* Category pills: horizontal scroll row */
+  .faqn-cats {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+    margin-bottom: 20px;
+    gap: 8px;
+  }
+  .faqn-cats::-webkit-scrollbar { display: none; }
+  .faqn-cat-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  /* Active pill: Noon yellow */
+  .faqn-cat-btn--active {
+    background: #FFBF00;
+    color: #1A0A00;
+    border-color: #FFBF00;
+  }
+  .faqn-cat-btn--active .faqn-cat-pill {
+    background: #FFBF00;
+    box-shadow: 0 2px 8px rgba(255,191,0,0.3);
+  }
+  /* Accordion items */
+  .faqn-trigger {
+    padding: 18px 0;
+    gap: 12px;
+  }
+  /* FAQ CTA buttons: full width */
+  .faqn-cta-btn {
+    background: #FFBF00;
+    color: #1A0A00;
+    border-radius: 999px;
+    font-weight: 800;
+    border: none;
+    width: 100%;
+    justify-content: center;
   }
 }

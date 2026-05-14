@@ -1,0 +1,100 @@
+/* ================================================================
+   BOTTOM TAB BAR — Noon UAE style mobile navigation
+   Visible: max-width 768px only
+   ================================================================ */
+
+/* ── Hidden on desktop ─────────────────────────────────────── */
+.bottom-tab-bar {
+  display: none;
+}
+
+/* ── Mobile: Fixed bottom bar ──────────────────────────────── */
+@media (max-width: 768px) {
+  .bottom-tab-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 900;
+    height: var(--noon-bottomnav-h, 62px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: #FFFFFF;
+    border-top: 1px solid #EDEEF2;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+    align-items: stretch;
+    justify-content: space-around;
+  }
+
+  .btb-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 3px;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 4px;
+    min-width: 0;
+    transition: opacity 120ms ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btb-tab:active {
+    opacity: 0.7;
+  }
+
+  /* Default (inactive) state */
+  .btb-icon {
+    color: #9CA3AF;
+    transition: color 160ms ease;
+  }
+  .btb-label {
+    font-size: 0.64rem;
+    font-weight: 600;
+    color: #9CA3AF;
+    letter-spacing: 0.01em;
+    transition: color 160ms ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 58px;
+  }
+
+  /* Active state — Noon yellow */
+  .btb-tab--active .btb-icon,
+  .btb-tab--active .btb-label {
+    color: #FFBF00;
+  }
+
+  /* Active indicator dot under icon */
+  .btb-tab--active .btb-icon {
+    position: relative;
+  }
+  .btb-tab--active .btb-icon::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #FFBF00;
+  }
+
+  /* Contact (booking) tab — subtle yellow accent on default */
+  .btb-tab--contact .btb-icon,
+  .btb-tab--contact .btb-label {
+    color: #FFBF00;
+  }
+
+  /* Active contact tab gets stronger yellow */
+  .btb-tab--contact:focus .btb-icon,
+  .btb-tab--contact:focus .btb-label {
+    color: #E6AC00;
+  }
+}

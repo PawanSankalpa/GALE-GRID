@@ -428,4 +428,30 @@
   .pf-arrow-fixed { width: 28px; height: 28px; bottom: 10px; right: 10px; }
 }
 
+/* ── Noon Mobile: Portfolio section header (≤768px) ── */
+@media (max-width: 768px) {
+  .pf-section {
+    background: #F7F8FA;
+  }
+  /* Section title aligns left like Noon's category rows */
+  .pf-header {
+    text-align: left;
+    margin: 0 0 20px;
+    padding: 0 16px;
+    align-items: flex-start;
+  }
+  .pf-header h2 {
+    font-size: clamp(1.4rem, 5.5vw, 1.9rem);
+  }
+  /* CTA button: Noon yellow */
+  .pf-stat-btn {
+    background: #FFBF00;
+    color: #1A0A00;
+    border-radius: 999px;
+    font-weight: 800;
+    box-shadow: 0 3px 12px rgba(255,191,0,0.3);
+    border: none;
+  }
+}
+
 

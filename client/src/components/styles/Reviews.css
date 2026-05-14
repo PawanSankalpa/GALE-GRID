@@ -322,3 +322,38 @@
   .rv-thumb { min-width: 80px; }
   .rv-card { padding: 24px 20px; }
 }
+
+/* ── Noon Mobile (≤768px) ── */
+@media (max-width: 768px) {
+  .rv-section {
+    padding: 40px 0;
+  }
+  .rv-container {
+    padding: 0 16px;
+  }
+  /* Keep JS-driven carousel as single column — do NOT convert to CSS scroll */
+  .rv-carousel {
+    grid-template-columns: 1fr;
+  }
+  .rv-card {
+    border-radius: 16px;
+    padding: 28px 20px;
+  }
+  /* Thumbs: horizontal scroll row */
+  .rv-thumbs {
+    flex-direction: row;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 8px;
+    padding: 8px 16px;
+  }
+  .rv-thumbs::-webkit-scrollbar { display: none; }
+  .rv-thumb {
+    flex-shrink: 0;
+    border-radius: 999px;
+  }
+  .rv-thumb--active {
+    border-color: #FFBF00;
+    background: rgba(255,191,0,0.08);
+  }
+}

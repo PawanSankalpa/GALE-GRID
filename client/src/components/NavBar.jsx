@@ -88,7 +88,7 @@ const NavBar = () => {
           <button type="button" className="nav-cta" onClick={openBooking}>Let's Talk</button>
         </div>
 
-        {/* Hamburger */}
+        {/* Hamburger — hidden on mobile (replaced by BottomTabBar) */}
         <button
           ref={hamburgerRef}
           className={`hamburger mobile-only${menuOpen ? ' open' : ''}`}
@@ -98,6 +98,16 @@ const NavBar = () => {
           onClick={() => setMenuOpen(p => !p)}
         >
           <span /><span /><span />
+        </button>
+
+        {/* Mobile-only: slim Book pill (replaces hamburger on ≤768px) */}
+        <button
+          type="button"
+          className="navbar-mobile-book"
+          onClick={openBooking}
+          aria-label="Book a free call"
+        >
+          Book Free Call
         </button>
       </nav>
 
@@ -148,16 +158,20 @@ const NavBar = () => {
                       <Link to={l.to} onClick={() => setMenuOpen(false)}>{l.label}</Link>
                     </motion.li>
                   ))}
-                  <motion.li variants={linkItemVariants}>
-                    <button
-                      type="button"
-                      className="nav-cta"
-                      onClick={() => { openBooking(); setMenuOpen(false); }}
-                      style={{ display: "block", textAlign: "center", marginTop: "8px", cursor: "pointer" }}
-                    >Let's Talk</button>
-                  </motion.li>
                 </motion.ul>
               </nav>
+
+              {/* Premium bottom CTA — always visible at drawer bottom */}
+              <div className="drawer-cta-wrap">
+                <button
+                  type="button"
+                  className="drawer-book-btn"
+                  onClick={() => { openBooking(); setMenuOpen(false); }}
+                >
+                  Book Free Strategy Call
+                </button>
+                <p className="drawer-book-note">No commitment &mdash; usually replied within 2h</p>
+              </div>
             </motion.div>
           </>
         )}

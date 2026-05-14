@@ -226,3 +226,54 @@
   .pc3-grid { grid-template-columns: 1fr; }
   .pc3-ghost-num { font-size: 5rem; }
 }
+
+/* ── Noon Mobile (≤768px) ── */
+@media (max-width: 768px) {
+  .pc3-section {
+    padding: 40px 0 48px;
+  }
+  .pc3-header {
+    padding: 0 16px;
+    text-align: left;
+  }
+  .pc3-grid {
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 16px;
+  }
+  /* Hide oversized watermark — it's position:absolute and not useful on mobile */
+  .pc3-ghost-num {
+    display: none;
+  }
+  .pc3-card {
+    padding: 20px 18px;
+    border-radius: 14px;
+  }
+  /* Step badge: Noon yellow accent */
+  .pc3-step-badge {
+    background: rgba(255,191,0,0.12);
+    border-radius: 8px;
+    padding: 3px 10px;
+    margin-bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .pc3-step-num {
+    color: #FFBF00;
+    font-weight: 800;
+  }
+  .pc3-title {
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+  }
+  .pc3-desc {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: #6B7280;
+  }
+  .pc3-cta {
+    font-size: 0.8rem;
+    padding: 8px 14px;
+  }
+}

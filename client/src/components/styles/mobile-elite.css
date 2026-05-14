@@ -1,0 +1,1647 @@
+/* ============================================================
+   MOBILE ELITE v2 — App-Grade Mobile Redesign
+   
+   DEVICE TARGETS (CSS px = physical px ÷ device pixel ratio):
+   ┌──────────────────────────────────────────────────────────┐
+   │ iPhone 16 Pro         393×852   @3x    Dynamic Island    │
+   │ iPhone 15 Pro Max     430×932   @3x    Dynamic Island    │
+   │ iPhone 15 / 14        390×844   @3x    Dynamic Island    │
+   │ iPhone SE 3rd gen     375×667   @2x    no notch          │
+   │ Samsung Galaxy S24 U  412×915   @3.5x  punch-hole cam    │
+   │ Samsung Galaxy S24    360×780   @3x    punch-hole cam    │
+   │ Google Pixel 8        393×851   @2.75x punch-hole cam    │
+   └──────────────────────────────────────────────────────────┘
+   
+   DESIGN RULES:
+   ✔ All rules ≤768px — desktop NEVER touched
+   ✔ viewport-fit=cover + env(safe-area-inset-*) on all edges
+   ✔ Bottom tab bar = 62px + env(safe-area-inset-bottom)
+   ✔ Touch targets ≥44pt/48dp — no tap frustration
+   ✔ Font floor 16px on all inputs — prevents iOS auto-zoom
+   ✔ 100dvh not 100vh — correct on mobile chrome bars
+   ✔ -webkit-tap-highlight-color: transparent everywhere
+   ✔ overscroll-behavior: contain on scroll containers
+   ✔ Horizontal card strips with scroll-snap for carousels
+   ✔ Bottom-sheet modals for overlays (not center-screen)
+   ============================================================ */
+
+/* ─────────────────────────────────────────────────────────────
+   0. CSS CUSTOM PROPERTIES — mobile token system
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  :root {
+    --sat: env(safe-area-inset-top,    0px);
+    --sar: env(safe-area-inset-right,  0px);
+    --sab: env(safe-area-inset-bottom, 0px);
+    --sal: env(safe-area-inset-left,   0px);
+
+    --btb-h: 62px;
+    --btb-safe: calc(var(--btb-h) + var(--sab));
+    --nav-h: 52px;
+    --nav-safe: calc(var(--nav-h) + var(--sat));
+
+    --px: clamp(1rem, 5vw, 1.5rem);
+    --py: clamp(56px, 12vw, 80px);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   1. GLOBAL MOBILE BASE
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body.has-bottom-nav {
+    padding-bottom: var(--btb-safe);
+  }
+
+  /* All main sections: bottom clearance for tab bar */
+  .faqn-section,
+  .rv-section,
+  .pf-section,
+  .ps-section,
+  .pc3-section,
+  .trust-strip,
+  .wu2-section {
+    padding-bottom: calc(var(--py) + var(--btb-safe)) !important;
+  }
+
+  .footer {
+    padding-bottom: calc(var(--btb-safe) + 24px) !important;
+  }
+
+  /* Section horizontal padding */
+  .faqn-section,
+  .rv-section,
+  .ps-section,
+  .wu2-section {
+    padding-left: var(--px) !important;
+    padding-right: var(--px) !important;
+    padding-top: var(--py) !important;
+  }
+
+  /* Universal tap target floor */
+  button, a, [role="button"], [role="tab"] {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Scrollbar: hide on all scrollable areas */
+  * { scrollbar-width: none; -ms-overflow-style: none; }
+  *::-webkit-scrollbar { display: none; }
+
+  /* Universal eyebrow pills */
+  .faqn-eyebrow,
+  .rv-eyebrow,
+  .ps-eyebrow,
+  .pc3-eyebrow,
+  .pf-hd-eyebrow {
+    font-size: 0.68rem;
+    padding: 5px 13px;
+  }
+
+  /* Universal section headlines */
+  .faqn-headline,
+  .rv-headline,
+  .ps-headline,
+  .pc3-headline {
+    font-size: clamp(1.75rem, 7vw, 2.2rem) !important;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   2. NAVBAR — Status bar + Dynamic Island clearance
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .navbar,
+  .navbar.sticky,
+  .navbar.sticky.scrolled {
+    top: var(--sat) !important;
+    height: var(--nav-h) !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .logo {
+    font-size: 1.05rem !important;
+    letter-spacing: 1.5px !important;
+  }
+
+  .navbar-mobile-book {
+    min-height: 36px;
+    padding: 7px 16px !important;
+    font-size: 0.78rem !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   3. HERO — Full-bleed app hero with stats strip
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero-container {
+    min-height: 100dvh;
+  }
+
+  .hero-visual {
+    grid-template-columns: 1fr !important;
+    min-height: 100dvh;
+    padding-top: calc(var(--nav-safe) + 24px) !important;
+    padding-bottom: calc(var(--btb-safe) + 56px) !important;
+    padding-left: var(--px) !important;
+    padding-right: var(--px) !important;
+    gap: 28px !important;
+    text-align: center;
+    align-content: center;
+  }
+
+  .hero-copy { align-items: center; }
+  .hero-eyebrow { justify-content: center; }
+
+  .hero-subtext {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: clamp(0.9rem, 3.5vw, 1rem) !important;
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .hero-cta {
+    width: 100%;
+    justify-content: center;
+    min-height: 52px;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  }
+
+  /* Trust pills: horizontal scroll strip, no wrap */
+  .hero-trust-pills {
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap !important;
+    scrollbar-width: none;
+    gap: 8px;
+    padding-bottom: 4px;
+    mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
+  }
+  .trust-pill {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 7px 14px;
+    font-size: 0.74rem;
+  }
+
+  /* Hide heavy desktop elements */
+  .hero-mockup-side   { display: none !important; }
+  .hero-metric-badge  { display: none !important; }
+  .hero-scroll-hint   { display: none !important; }
+
+  /* Marquee strip: readable on small screens */
+  .hm-name   { font-size: 0.74rem; }
+  .hm-metric { font-size: 0.7rem; }
+  .hm-pair   { padding: 0 20px; }
+}
+
+/* Device-specific hero title scaling */
+@media (max-width: 360px) {
+  .hero-title { font-size: clamp(1.6rem, 10.5vw, 1.9rem) !important; line-height: 1.1; letter-spacing: -0.03em; }
+  .hero-copy  { padding-bottom: clamp(12px, 3vw, 20px); }
+}
+@media (min-width: 361px) and (max-width: 390px) {
+  .hero-title { font-size: clamp(1.75rem, 10vw, 2.1rem) !important; line-height: 1.1; letter-spacing: -0.03em; }
+}
+@media (min-width: 391px) and (max-width: 430px) {
+  .hero-title { font-size: clamp(1.9rem, 9.5vw, 2.35rem) !important; line-height: 1.1; letter-spacing: -0.03em; }
+}
+@media (min-width: 431px) and (max-width: 768px) {
+  .hero-title { font-size: clamp(2rem, 5.5vw, 2.6rem) !important; line-height: 1.1; letter-spacing: -0.03em; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   3b. HERO MOBILE PROOF CARDS (replaces hidden browser mockup)
+───────────────────────────────────────────────────────────── */
+.hero-mobile-proof { display: none; }
+
+@media (max-width: 768px) {
+  .hero-mobile-proof {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 24px;
+    width: 100%;
+  }
+
+  .hmp-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 16px 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .hmp-icon { color: #FF8C00; }
+  .hmp-num  {
+    font-size: clamp(1.05rem, 4.5vw, 1.3rem);
+    font-weight: 900;
+    color: #F2F4F8;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .hmp-lbl  {
+    font-size: 0.64rem;
+    font-weight: 600;
+    color: #9CA3B0;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-mobile-proof { gap: 8px; margin-top: 20px; }
+  .hmp-card  { padding: 13px 8px; border-radius: 12px; }
+  .hmp-num   { font-size: clamp(0.95rem, 5vw, 1.15rem); }
+  .hmp-lbl   { font-size: 0.6rem; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   4. FLOATING SHOWCASE (Trust / Stats)
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .ts-editorial {
+    padding: clamp(48px, 9vw, 64px) var(--px) !important;
+  }
+
+  .ts-ed-inner {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .ts-ed-col--center {
+    order: -1;
+    margin-bottom: 32px;
+  }
+
+  .ts-ed-col--left,
+  .ts-ed-col--right {
+    align-items: center !important;
+    text-align: center !important;
+    width: 100%;
+  }
+
+  .ts-ed-col {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 20px;
+  }
+
+  .ts-stat-item::before {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .ts-stat-num {
+    font-size: clamp(1.8rem, 7vw, 2.4rem) !important;
+  }
+
+  .ts-stat-label { font-size: 0.76rem !important; }
+
+  .ts-stats-band {
+    padding: clamp(40px, 8vw, 56px) var(--px) !important;
+  }
+
+  .ts-stats-inner { gap: 12px; }
+
+  .ts-stat-card {
+    padding: 22px 14px !important;
+    border-radius: 14px !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   5. PORTFOLIO — Horizontal snap-scroll card strip
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .pf-section {
+    padding-top: var(--py) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    overflow: hidden;
+    padding-bottom: calc(var(--py) + var(--btb-safe)) !important;
+  }
+
+  .pf-header {
+    padding-left: var(--px);
+    padding-right: var(--px);
+    text-align: center;
+    margin-bottom: clamp(28px, 5vw, 40px) !important;
+  }
+
+  .pf-hd-headline {
+    font-size: clamp(1.75rem, 7vw, 2.2rem) !important;
+    letter-spacing: -0.03em;
+  }
+
+  .pf-shell {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* Card grid → snap-scroll horizontal strip */
+  .pf-grid,
+  .pf-cards {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 14px !important;
+    padding: 8px var(--px) 20px !important;
+  }
+
+  .pf-card,
+  [class*="pf-card"] {
+    flex-shrink: 0 !important;
+    width: 72vw !important;
+    max-width: 300px !important;
+    scroll-snap-align: start;
+    border-radius: 16px !important;
+  }
+
+  /* Filter tabs: scrollable row */
+  .pf-filter-tabs,
+  .pf-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px var(--px) 12px;
+    gap: 8px;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+  }
+
+  .pf-tab-btn,
+  .pf-filter-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+    min-height: 38px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   6. WHY US — Feature section
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .wu2-section {
+    padding: var(--py) var(--px) calc(var(--btb-safe) + var(--py)) !important;
+  }
+
+  .wu2-teaser {
+    padding: clamp(56px, 10vw, 80px) 0 clamp(48px, 8vw, 64px) !important;
+  }
+
+  .wu2-headline {
+    font-size: clamp(1.65rem, 7.5vw, 2.2rem) !important;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+  }
+
+  .wu2-sub {
+    font-size: clamp(0.9rem, 3.5vw, 1rem) !important;
+    line-height: 1.65;
+  }
+
+  .wu2-open-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 52px;
+    font-size: 1rem !important;
+    border-radius: 16px !important;
+  }
+
+  /* Quiz: bottom sheet */
+  .wu2-overlay-wrap {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+
+  .wu2-card,
+  .wu2-overlay-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 28px 28px 0 0 !important;
+    max-height: 92dvh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 28px var(--px) calc(var(--sab) + 28px) !important;
+    overscroll-behavior: contain;
+  }
+
+  /* Sheet drag pill */
+  .wu2-card::before,
+  .wu2-overlay-inner::before {
+    content: "";
+    display: block;
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(0, 0, 0, 0.12);
+    margin: 0 auto 20px;
+  }
+
+  /* Welcome-back toast */
+  .wu2-wb-card {
+    width: calc(100% - 2 * var(--px)) !important;
+    border-radius: 20px !important;
+    padding: 24px 20px !important;
+  }
+
+  /* Stats grid: 2 columns */
+  .wu2-stats-grid,
+  .wp-stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  .wp-stat-card {
+    border-radius: 16px !important;
+    padding: 20px 14px !important;
+  }
+
+  .wp-stat-num {
+    font-size: clamp(2rem, 8vw, 2.6rem) !important;
+  }
+
+  .wp-title {
+    font-size: clamp(1.3rem, 5.5vw, 1.6rem) !important;
+  }
+
+  /* Tabs: scrollable row */
+  .wu2-tabs,
+  .why-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    padding-bottom: 4px;
+    gap: 8px !important;
+  }
+
+  .wu2-tab,
+  .why-tab {
+    flex-shrink: 0;
+    white-space: nowrap;
+    min-height: 40px;
+  }
+
+  /* Inline result card */
+  .wu2-result-inline {
+    border-radius: 20px !important;
+    padding: clamp(24px, 5vw, 32px) var(--px) !important;
+  }
+
+  /* why-body padding */
+  .why-body {
+    padding: clamp(32px, 6vw, 48px) var(--px) clamp(60px, 12vw, 80px) !important;
+  }
+
+  .why-header {
+    padding-left: var(--px) !important;
+    padding-right: var(--px) !important;
+    padding-top: clamp(56px, 10vw, 72px) !important;
+    padding-bottom: clamp(24px, 4.5vw, 32px) !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   7. PROCESS 3 — Snap-scroll step cards
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .pc3-section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: var(--py) !important;
+    padding-bottom: calc(var(--py) + var(--btb-safe)) !important;
+  }
+
+  .pc3-header {
+    padding-left: var(--px) !important;
+    padding-right: var(--px) !important;
+    margin-bottom: 36px !important;
+  }
+
+  .pc3-headline {
+    font-size: clamp(1.75rem, 7vw, 2.2rem) !important;
+    letter-spacing: -0.03em;
+  }
+
+  /* Hide SVG connector — irrelevant on mobile */
+  .pc3-track-wrap { display: none !important; }
+
+  /* Cards: horizontal snap-scroll */
+  .pc3-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 12px !important;
+    padding: 4px var(--px) 20px !important;
+    max-width: 100% !important;
+  }
+
+  .pc3-card {
+    flex-shrink: 0 !important;
+    width: 74vw !important;
+    max-width: 300px !important;
+    scroll-snap-align: start;
+    padding: 28px 22px 26px !important;
+    border-radius: 18px !important;
+  }
+
+  .pc3-ghost-num {
+    font-size: 4rem !important;
+    opacity: 0.065 !important;
+  }
+
+  .pc3-title { font-size: 1.05rem !important; }
+
+  .pc3-desc {
+    font-size: 0.88rem !important;
+    line-height: 1.6;
+  }
+
+  .pc3-cta-wrap {
+    padding: 28px var(--px) !important;
+  }
+
+  .pc3-cta,
+  .pc3-cta-btn {
+    width: 100% !important;
+    justify-content: center;
+    min-height: 52px;
+    border-radius: 14px !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .pc3-card { padding: 24px 18px 22px !important; width: 80vw !important; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   8. PRICING SECTION — Dark card stack
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .ps-section {
+    padding-left: var(--px) !important;
+    padding-right: var(--px) !important;
+  }
+
+  .ps-header {
+    margin-bottom: 32px !important;
+    text-align: center;
+  }
+
+  /* Billing toggle: full-width, proper tap targets */
+  .ps-toggle {
+    width: 100% !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+  .ps-toggle-btn {
+    flex: 1;
+    justify-content: center;
+    min-height: 44px !important;
+    font-size: 0.88rem !important;
+    padding: 10px 14px !important;
+  }
+
+  /* Cards: single column */
+  .ps-grid,
+  .ps-cards {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .ps-card {
+    border-radius: 20px !important;
+    padding: 28px 22px !important;
+    /* No transform on mobile — overlap issues */
+    transform: none !important;
+  }
+
+  .ps-card--featured,
+  .ps-card[class*="featured"] {
+    transform: none !important;
+  }
+
+  /* Price: large, impactful */
+  .ps-amount {
+    font-size: clamp(2.2rem, 8vw, 2.8rem) !important;
+  }
+
+  /* Full-width CTA */
+  .ps-cta,
+  .ps-card-cta {
+    width: 100% !important;
+    justify-content: center;
+    min-height: 52px !important;
+    border-radius: 14px !important;
+    font-size: 1rem !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .ps-card { padding: 22px 16px !important; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   9. REVIEWS — Testimonial layout
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .rv-header {
+    margin-bottom: 32px !important;
+    text-align: center;
+  }
+
+  /* Stack carousel: remove side thumbnails */
+  .rv-carousel {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    margin-bottom: 28px !important;
+    touch-action: pan-y; /* allow vertical scroll while capturing swipe */
+  }
+
+  /* Thumbs: horizontal scroll row */
+  .rv-thumbs {
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    gap: 8px !important;
+    padding-bottom: 4px;
+  }
+
+  .rv-thumb {
+    flex-shrink: 0;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 10px !important;
+    min-width: 72px;
+    gap: 6px !important;
+    border-radius: 14px !important;
+    min-height: 44px;
+  }
+
+  .rv-thumb-name {
+    font-size: 0.7rem !important;
+    text-align: center;
+  }
+
+  /* Main review card */
+  .rv-card,
+  .rv-main {
+    border-radius: 20px !important;
+    padding: clamp(24px, 5vw, 32px) !important;
+  }
+
+  .rv-quote,
+  .rv-quote-text {
+    font-size: clamp(0.95rem, 3.8vw, 1.15rem) !important;
+    line-height: 1.65 !important;
+  }
+
+  /* Navigation controls: large tap area */
+  .rv-ctrl,
+  .rv-nav-btn {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 12px !important;
+  }
+
+  /* Dots */
+  .rv-dots { gap: 10px !important; margin-top: 16px; }
+  .rv-dot  {
+    width: 28px !important;
+    height: 28px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .rv-dot::after {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background: currentColor;
+  }
+
+  /* Stats row */
+  .rv-stats { gap: 12px; }
+  .rv-stat  {
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+  .rv-stat-val { font-size: 1.6rem; }
+}
+
+@media (max-width: 375px) {
+  .rv-card, .rv-main { padding: 22px 16px !important; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   10. FAQ SECTION — Accordion cards
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .faqn-section {
+    background: #F8FAFC !important;
+  }
+
+  .faqn-container { max-width: 100% !important; }
+
+  .faqn-header {
+    text-align: left !important;
+    margin-bottom: 24px !important;
+  }
+
+  .faqn-sub {
+    font-size: 0.9rem !important;
+    line-height: 1.65;
+  }
+
+  /* Category filter: horizontal scroll */
+  .faqn-cats {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start !important;
+    padding-bottom: 4px;
+    gap: 7px !important;
+    mask-image: linear-gradient(to right, #000 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, #000 85%, transparent 100%);
+  }
+
+  .faqn-cat-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 8px 16px !important;
+    font-size: 0.8rem !important;
+    min-height: 38px;
+  }
+
+  /* FAQ item cards */
+  .faqn-item    { border-radius: 14px !important; }
+
+  .faqn-trigger {
+    padding: 16px !important;
+    gap: 12px !important;
+  }
+
+  .faqn-icon-wrap {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 9px !important;
+    flex-shrink: 0;
+  }
+
+  .faqn-q       { font-size: 0.9rem !important; }
+  .faqn-preview { font-size: 0.78rem !important; line-height: 1.5; }
+
+  .faqn-answer-body {
+    padding: 0 16px 18px calc(16px + 36px + 12px) !important;
+  }
+
+  .faqn-answer-body p {
+    font-size: 0.84rem !important;
+    line-height: 1.75;
+    padding-left: 14px;
+  }
+
+  /* Bottom CTA dark card */
+  .faqn-bottom {
+    border-radius: 20px !important;
+    padding: 36px var(--px) calc(var(--sab) + 36px) !important;
+  }
+
+  .faqn-bottom-headline {
+    font-size: clamp(1.6rem, 7vw, 2.2rem) !important;
+    letter-spacing: -0.04em;
+  }
+
+  .faqn-bottom-copy {
+    font-size: 0.88rem !important;
+    line-height: 1.65;
+    margin-bottom: 28px !important;
+  }
+
+  /* Contact cards: stacked */
+  .faqn-bottom-actions {
+    flex-direction: column !important;
+    max-width: 100% !important;
+    gap: 10px !important;
+    margin-bottom: 28px !important;
+  }
+
+  .faqn-contact-card { padding: 16px !important; }
+
+  /* Stats strip */
+  .faqn-stats   { max-width: 100% !important; }
+  .faqn-stat    { padding: 14px 8px !important; }
+  .faqn-stat-val{ font-size: 0.9rem !important; }
+  .faqn-stat-lbl{ font-size: 0.62rem !important; }
+}
+
+/* Small phone: stack stats vertically */
+@media (max-width: 375px) {
+  .faqn-stats {
+    flex-direction: column !important;
+    border-radius: 16px !important;
+  }
+
+  .faqn-stat {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    padding: 14px 10px !important;
+  }
+
+  .faqn-stat:last-child { border-bottom: none !important; }
+
+  .faqn-q      { font-size: 0.85rem !important; }
+  .faqn-badge  { font-size: 0.6rem !important; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   11. FOOTER
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .footer-cta-section {
+    padding: clamp(40px, 8vw, 56px) var(--px) !important;
+  }
+
+  .footer-cta-container {
+    flex-direction: column !important;
+    gap: 24px !important;
+    padding: clamp(28px, 6vw, 36px) clamp(20px, 5vw, 28px) !important;
+    border-radius: 20px !important;
+    transform: none !important;
+  }
+
+  .footer-cta-container:hover { transform: none !important; }
+
+  .footer-cta-title {
+    font-size: clamp(1.5rem, 6.5vw, 1.9rem) !important;
+    letter-spacing: -0.025em;
+  }
+
+  .footer-cta-subtitle {
+    font-size: 0.9rem !important;
+    line-height: 1.65;
+  }
+
+  .footer-cta-actions { width: 100%; flex-direction: column; }
+
+  .footer-cta-primary {
+    width: 100%;
+    justify-content: center;
+    min-height: 52px !important;
+    font-size: 1rem !important;
+    border-radius: 14px !important;
+  }
+
+  /* Footer grid: single column */
+  .footer-main,
+  .footer-grid,
+  .footer-cols {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  /* Links: comfortable tap target */
+  .footer a {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 0;
+  }
+
+  /* Bottom bar */
+  .footer-bottom,
+  .footer-bottom-bar {
+    flex-direction: column !important;
+    gap: 12px !important;
+    text-align: center;
+    padding: 20px var(--px) calc(var(--btb-safe) + 20px) !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   12. BOOKING MODAL — Bottom sheet
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .booking-overlay,
+  .modal-overlay {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+
+  .booking-modal,
+  .modal-card,
+  [class*="booking-modal"],
+  [class*="BookingModal"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 24px 24px 0 0 !important;
+    max-height: 96dvh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding: 24px var(--px) calc(var(--sab) + 24px) !important;
+  }
+
+  /* Drag handle */
+  .booking-modal::before,
+  .modal-card::before {
+    content: "";
+    display: block;
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(0, 0, 0, 0.12);
+    margin: 0 auto 20px;
+  }
+
+  /* 16px floor — prevents iOS zoom on focus */
+  .booking-modal input,
+  .booking-modal select,
+  .booking-modal textarea,
+  .modal-card input,
+  .modal-card select,
+  .modal-card textarea {
+    font-size: 16px !important;
+    border-radius: 12px !important;
+    min-height: 48px !important;
+  }
+
+  .booking-submit,
+  [class*="booking-submit"],
+  [class*="modal-submit"] {
+    width: 100% !important;
+    min-height: 52px !important;
+    border-radius: 14px !important;
+    font-size: 1rem !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   13. BOTTOM TAB BAR — Safe area & device sizing
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .bottom-tab-bar {
+    z-index: 900;
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+    height: calc(var(--btb-h) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .btb-tab {
+    min-height: var(--btb-h);
+    padding: 6px 4px;
+    gap: 3px !important;
+    min-width: 44px;
+  }
+
+  .btb-icon svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .btb-label { font-size: 0.62rem !important; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   14. FLOATING BUTTONS (WhatsApp, Back-to-Top)
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .whatsapp-float,
+  .wa-float,
+  [class*="whatsapp-btn"],
+  [class*="whatsapp-button"],
+  [class*="WhatsAppButton"] {
+    bottom: calc(var(--btb-safe) + 16px) !important;
+    right: 16px !important;
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 16px !important;
+  }
+
+  .back-to-top,
+  [class*="back-top"],
+  [class*="BackToTop"] {
+    bottom: calc(var(--btb-safe) + 16px) !important;
+    right: 78px !important;
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 12px !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   15. LANDSCAPE ORIENTATION — thin screen phones
+───────────────────────────────────────────────────────────── */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
+  .hero-visual {
+    min-height: 100dvh;
+    padding-top: calc(var(--nav-h) + 12px) !important;
+    padding-bottom: calc(var(--btb-safe) + 12px) !important;
+    gap: 16px !important;
+  }
+
+  .hero-title  { font-size: clamp(1.5rem, 5vh, 2rem) !important; }
+  .hero-subtext { display: none; }
+
+  .bottom-tab-bar {
+    height: calc(48px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .booking-modal,
+  .modal-card,
+  .wu2-overlay-inner {
+    max-height: 100dvh !important;
+    border-radius: 0 !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   16. REDUCED MOTION
+───────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   17. DEVICE-SPECIFIC FINE-TUNING
+───────────────────────────────────────────────────────────── */
+
+/* Galaxy S24 base (≤360px) — tightest layout */
+@media (max-width: 360px) {
+  :root { --px: 0.875rem; }
+
+  .faqn-q           { font-size: 0.85rem !important; }
+  .faqn-badge       { font-size: 0.6rem !important; }
+  .ps-card          { padding: 22px 16px !important; }
+  .rv-quote         { font-size: 0.88rem !important; }
+  .footer-cta-title { font-size: 1.4rem !important; }
+  .pc3-card         { width: 82vw !important; }
+}
+
+/* iPhone SE / small Android (361–375px) */
+@media (min-width: 361px) and (max-width: 375px) {
+  :root { --px: 0.9375rem; }
+  .pc3-card         { width: 80vw !important; }
+}
+
+/* iPhone 14/15, Pixel 8 (376–393px) */
+@media (min-width: 376px) and (max-width: 393px) {
+  :root { --px: 1rem; }
+}
+
+/* iPhone 15 Pro Max, Galaxy S24 Ultra (414px+) */
+@media (min-width: 414px) and (max-width: 768px) {
+  :root { --px: 1.25rem; }
+
+  .hero-visual { gap: 36px !important; }
+  .pc3-card    { width: 68vw !important; }
+
+  .pf-card,
+  [class*="pf-card"] { width: 68vw !important; }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   GLOBAL SECTION PADDING
+   Uniform breathing room across all content sections on mobile.
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .faqn-section,
+  .rv-section,
+  .ps-section,
+  .why-section {
+    padding-left: clamp(1rem, 4vw, 1.5rem);
+    padding-right: clamp(1rem, 4vw, 1.5rem);
+    padding-top: clamp(60px, 12vw, 80px);
+    padding-bottom: clamp(60px, 12vw, 80px);
+  }
+
+  .pc3-section .pc3-header {
+    padding-left: clamp(1rem, 4vw, 1.5rem);
+    padding-right: clamp(1rem, 4vw, 1.5rem);
+  }
+
+  .why-header {
+    padding-left: clamp(1rem, 4vw, 1.5rem);
+    padding-right: clamp(1rem, 4vw, 1.5rem);
+    padding-top: clamp(60px, 12vw, 80px);
+    padding-bottom: clamp(28px, 5vw, 40px);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   HERO — Premium mobile experience
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Taller, rounder CTAs — premium touch targets */
+  .hero-cta {
+    min-height: 52px;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  }
+
+  .hero-cta-secondary {
+    min-height: 52px;
+    border-radius: 14px;
+  }
+
+  /* Trust pills: single-row horizontal scroll strip instead of messy wrap */
+  .hero-trust-pills {
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+    gap: 8px;
+    /* Fade edges */
+    mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
+  }
+
+  .hero-trust-pills::-webkit-scrollbar {
+    display: none;
+  }
+
+  .trust-pill {
+    flex-shrink: 0;
+    white-space: nowrap;
+    /* Slightly larger tap target */
+    padding: 7px 14px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Strong, punchy hero title on mid-size phones */
+  .hero-title {
+    font-size: clamp(1.85rem, 10vw, 2.45rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .hero-subtext {
+    font-size: clamp(0.9rem, 3.5vw, 1rem);
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    gap: 10px;
+  }
+
+  .hero-trust-pills {
+    gap: 6px;
+    mask-image: linear-gradient(to right, transparent 0, #000 8px, #000 calc(100% - 8px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8px, #000 calc(100% - 8px), transparent 100%);
+  }
+}
+
+@media (max-width: 375px) {
+  .hero-title {
+    font-size: clamp(1.7rem, 11vw, 2.05rem);
+    letter-spacing: -0.03em;
+  }
+
+  .hero-copy {
+    padding-bottom: clamp(12px, 3vw, 20px);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   TRUST STRIP / FLOATING SHOWCASE — Stats band
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .ts-stats-band {
+    padding: clamp(40px, 8vw, 56px) clamp(1rem, 4vw, 1.5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .ts-stats-inner {
+    gap: 12px;
+  }
+
+  .ts-stat-card {
+    padding: 22px 14px;
+    border-radius: 14px;
+  }
+
+  .ts-stat-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .ts-stat-num {
+    font-size: clamp(1.9rem, 7.5vw, 2.4rem);
+    letter-spacing: -0.03em;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   WHY US — Feature tabs
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .why-body {
+    padding: clamp(32px, 6vw, 48px) clamp(1rem, 4vw, 1.5rem) clamp(60px, 12vw, 80px);
+  }
+}
+
+@media (max-width: 640px) {
+  .why-header {
+    padding-top: clamp(56px, 10vw, 72px);
+    padding-bottom: clamp(24px, 4.5vw, 32px);
+  }
+
+  .wp-stat-card {
+    border-radius: 16px;
+  }
+
+  .wp-stat-num {
+    font-size: clamp(2.2rem, 9vw, 3rem);
+  }
+
+  .wp-title {
+    font-size: clamp(1.35rem, 5.5vw, 1.65rem);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   PROCESS 3 — Step cards
+───────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .pc3-grid {
+    padding: 0 clamp(1rem, 4vw, 1.5rem);
+  }
+
+  .pc3-card {
+    padding: 28px 22px 26px;
+    border-radius: 18px;
+  }
+
+  /* Smaller ghost number so it doesn't overwhelm the card on 375px */
+  .pc3-ghost-num {
+    font-size: 4rem;
+    opacity: 0.065;
+  }
+
+  .pc3-title {
+    font-size: 1.05rem;
+  }
+
+  /* Full-width bottom CTA on mobile */
+  .pc3-cta {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 375px) {
+  .pc3-card {
+    padding: 24px 18px 22px;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   PRICING SECTION — Cards & toggle
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .ps-card {
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Keep toggle as a row — the existing CSS incorrectly stacks it to column */
+  .ps-toggle {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .ps-toggle-btn {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+    font-size: 0.82rem;
+    padding: 10px 14px;
+  }
+
+  /* Larger price amount for impact — money should look powerful */
+  .ps-amount {
+    font-size: 2.6rem;
+  }
+
+  .ps-cta {
+    min-height: 48px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 375px) {
+  .ps-card {
+    padding: 26px 18px;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   REVIEWS SECTION — Carousel
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Bigger quote text relative to viewport — easy to read while scrolling */
+  .rv-quote-text {
+    font-size: clamp(1rem, 4.5vw, 1.25rem);
+    line-height: 1.62;
+  }
+
+  /* Ensure control buttons have proper touch targets */
+  .rv-ctrl {
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 640px) {
+  .rv-card {
+    padding: 28px 20px;
+    border-radius: 18px;
+  }
+
+  .rv-stats {
+    gap: 12px;
+  }
+
+  .rv-stat {
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+
+  .rv-stat-val {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .rv-card {
+    padding: 22px 16px;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   FAQ SECTION — Accordion
+───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .faqn-container {
+    max-width: 100%;
+  }
+
+  /* Bottom CTA block: stack vertically on mobile */
+  .faqn-bottom {
+    grid-template-columns: 1fr;
+    border-radius: 18px;
+    gap: clamp(20px, 4vw, 28px);
+  }
+
+  /* Put the CTA button/text above the stats */
+  .faqn-bottom-right {
+    order: 1;
+  }
+
+  .faqn-stats {
+    order: 2;
+  }
+
+  /* Category filter pills — centered scrollable row */
+  .faqn-cats {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    justify-content: flex-start;
+    padding-bottom: 4px;
+    mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+  }
+
+  .faqn-cats::-webkit-scrollbar {
+    display: none;
+  }
+
+  .faqn-cat-btn {
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Shrink the large editorial number column — saves critical horizontal space */
+  .faqn-num-col {
+    width: 44px;
+  }
+
+  .faqn-num {
+    font-size: clamp(1.2rem, 5.5vw, 1.5rem);
+  }
+
+  /* Tighter trigger row on small phones */
+  .faqn-trigger {
+    gap: 14px;
+    padding: 18px 0;
+  }
+
+  .faqn-trigger-row {
+    gap: 10px;
+  }
+
+  /* Reduce answer indent so text doesn't get squeezed on 320px */
+  .faqn-answer-body {
+    padding: 0 0 20px calc(44px + 12px);
+  }
+
+  .faqn-answer-body p {
+    padding-left: 12px;
+  }
+
+  .faqn-cat-btn {
+    padding: 8px 14px;
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 375px) {
+  /* Even tighter on the smallest phones */
+  .faqn-trigger {
+    gap: 10px;
+  }
+
+  .faqn-num-col {
+    width: 36px;
+  }
+
+  .faqn-num {
+    font-size: clamp(1.1rem, 6vw, 1.35rem);
+  }
+
+  .faqn-answer-body {
+    padding: 0 0 16px calc(36px + 10px);
+  }
+
+  .faqn-answer-body p {
+    padding-left: 10px;
+  }
+}
+
+
+/* ================================================================
+   WAVE 2 — HERO MOBILE PROOF CARDS
+   Mobile-only proof metrics that appear in place of hidden browser
+   mockup. Hidden on desktop via base rule.
+================================================================ */
+.hero-mobile-proof { display: none; }
+
+@media (max-width: 768px) {
+  .hero-mobile-proof {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 24px;
+    width: 100%;
+  }
+
+  .hmp-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 16px 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .hmp-icon { color: #FF8C00; }
+
+  .hmp-num {
+    font-size: clamp(1.05rem, 4.5vw, 1.3rem);
+    font-weight: 900;
+    color: #F2F4F8;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .hmp-lbl {
+    font-size: 0.64rem;
+    font-weight: 600;
+    color: #9CA3B0;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  /* Reviews: allow vertical page scroll while capturing horizontal swipe */
+  .rv-carousel { touch-action: pan-y; }
+
+  /* Hide scroll hint on mobile — clutters tight vertical space */
+  .hero-scroll-hint { display: none; }
+
+  /* Universal eyebrow pill sizing */
+  .faqn-eyebrow,
+  .rv-eyebrow,
+  .ps-eyebrow,
+  .why-eyebrow,
+  .pc3-eyebrow,
+  .pf-hd-eyebrow {
+    font-size: 0.68rem;
+    padding: 5px 13px;
+  }
+
+  /* Universal section headline — crisp mobile scale */
+  .faqn-headline,
+  .rv-headline,
+  .ps-headline,
+  .why-headline,
+  .pc3-headline {
+    font-size: clamp(1.7rem, 7.5vw, 2.4rem);
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+  }
+
+  /* CTA section — rounded cards on mobile */
+  .cta2-card { border-radius: 16px; }
+}
+
+@media (max-width: 480px) {
+  .hero-mobile-proof { gap: 8px; margin-top: 20px; }
+
+  .hmp-card {
+    padding: 13px 8px;
+    border-radius: 12px;
+  }
+
+  .hmp-num { font-size: clamp(0.95rem, 5vw, 1.15rem); }
+  .hmp-lbl { font-size: 0.6rem; }
+}
+
+@media (max-width: 375px) {
+  .hero-mobile-proof { gap: 6px; margin-top: 16px; }
+
+  .hmp-card { padding: 11px 6px; }
+  .hmp-num { font-size: 0.92rem; }
+}

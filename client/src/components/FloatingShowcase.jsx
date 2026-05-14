@@ -1,63 +1,53 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { TrendingUp, Clock, Award, MessageSquare } from "lucide-react";
 import "./styles/FloatingShowcase.css";
 
-/* ── Counter component ─────────────────────────── */
-function StatCounter({ target, suffix = "", prefix = "" }) {
+/* ── Stat item with slide-in animation ─────────── */
+function StatItem({ value, label, align }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
-
   return (
-    <span ref={ref} className="ts-stat-num">
-      {prefix}
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : {}}
-        transition={{ duration: 0.4 }}
-      >
-        {target}
-      </motion.span>
-      {suffix}
-    </span>
+    <motion.div
+      ref={ref}
+      className={`ts-stat-item ts-stat-item--${align}`}
+      initial={{ opacity: 0, x: align === "left" ? -24 : 24 }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
+      transition={{ type: "spring", stiffness: 80, damping: 22 }}
+    >
+      <span className="ts-stat-num">{value}</span>
+      <span className="ts-stat-label">{label}</span>
+    </motion.div>
   );
 }
 
-const stats = [
-  { icon: Award,        target: "10+",   label: "Projects Delivered",    color: "#FF8C00" },
-  { icon: TrendingUp,   target: "+340%", label: "Avg. Lead Increase",    color: "#10B981" },
-  { icon: Clock,        target: "1.8s",  label: "Avg. Load Time",        color: "#3B82F6" },
-  { icon: MessageSquare,target: "98%",   label: "Client Satisfaction",   color: "#8B5CF6" },
+const leftStats = [
+  { value: "10+",   label: "Projects\nDelivered"  },
+  { value: "+340%", label: "Avg. Lead\nIncrease"  },
+];
+const rightStats = [
+  { value: "1.8s",  label: "Avg. Load\nTime"      },
+  { value: "98%",   label: "Client\nSatisfaction" },
 ];
 
 const marqueePairs = [
-  { name: "Grand Hotel",     metric: "+30% Bookings"   },
-  { name: "LifeCare Medical",metric: "+45% Conversion" },
-  { name: "Emerald Estates", metric: "+35% Rate"       },
-  { name: "Opera Listings",  metric: "Virtual Tours"   },
-  { name: "Luxia Editorial", metric: "+52% Leads"      },
-  { name: "SunMax Energy",   metric: "Page 1 Google"   },
-  { name: "Hotel GrandView", metric: "+28% Revenue"    },
-  { name: "TechVenture Inc", metric: "-60% Bounce Rate"},
+  { name: "Grand Hotel",      metric: "+30% Bookings"    },
+  { name: "LifeCare Medical", metric: "+45% Conversion"  },
+  { name: "Emerald Estates",  metric: "+35% Rate"        },
+  { name: "Opera Listings",   metric: "Virtual Tours"    },
+  { name: "Luxia Editorial",  metric: "+52% Leads"       },
+  { name: "SunMax Energy",    metric: "Page 1 Google"    },
+  { name: "Hotel GrandView",  metric: "+28% Revenue"     },
+  { name: "TechVenture Inc",  metric: "-60% Bounce Rate" },
 ];
 
 const FloatingShowcase = () => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-15% 0px" });
-
-  const containerVariants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.12 } },
-  };
-  const cardVariants = {
-    hidden: { opacity: 0, y: 28 },
-    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 20 } },
-  };
+  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
 
   return (
     <section className="trust-strip" aria-label="Results and client work">
 
-      {/* ── Infinite project marquee ── */}
+      {/* ── Marquee strip ── */}
       <div className="ts-marquee-wrap">
         <div className="ts-marquee-track">
           {[...marqueePairs, ...marqueePairs, ...marqueePairs].map((p, i) => (
@@ -70,35 +60,51 @@ const FloatingShowcase = () => {
         </div>
       </div>
 
-      {/* ── Stats band ── */}
-      <motion.div
-        ref={ref}
-        className="ts-stats-band"
-        variants={containerVariants}
-        initial="hidden"
-        animate={inView ? "visible" : "hidden"}
-      >
-        <div className="ts-stats-inner">
-          {stats.map((s) => {
-            const Icon = s.icon;
-            return (
-              <motion.div
-                key={s.label}
-                className="ts-stat-card"
-                variants={cardVariants}
-                whileHover={{ y: -4, transition: { type: "spring", stiffness: 300, damping: 20 } }}
-                style={{ "--ts-color": s.color }}
-              >
-                <div className="ts-stat-icon">
-                  <Icon size={20} strokeWidth={1.8} />
-                </div>
-                <StatCounter target={s.target} />
-                <span className="ts-stat-label">{s.label}</span>
-              </motion.div>
-            );
-          })}
+      {/* ── Editorial brand band ── */}
+      <div className="ts-editorial" ref={ref}>
+        <div className="ts-ed-inner">
+
+          {/* Left stats — in the white negative space */}
+          <div className="ts-ed-col ts-ed-col--left">
+            {leftStats.map((s) => (
+              <StatItem key={s.value} value={s.value} label={s.label} align="left" />
+            ))}
+          </div>
+
+          {/* Centre: brand logo */}
+          <div className="ts-ed-center">
+            <motion.div
+              className="ts-logo-wrap"
+              initial={{ opacity: 0, scale: 0.88 }}
+              animate={inView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.85, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
+              <img
+                src={`${process.env.PUBLIC_URL}/galegrid-logo.png`}
+                alt="Gale Grid"
+                className="ts-logo-img"
+                draggable={false}
+              />
+            </motion.div>
+            <motion.p
+              className="ts-ed-tagline"
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.4, duration: 0.55 }}
+            >
+              Websites built to convert — not just impress
+            </motion.p>
+          </div>
+
+          {/* Right stats — in the white negative space */}
+          <div className="ts-ed-col ts-ed-col--right">
+            {rightStats.map((s) => (
+              <StatItem key={s.value} value={s.value} label={s.label} align="right" />
+            ))}
+          </div>
+
         </div>
-      </motion.div>
+      </div>
 
     </section>
   );
