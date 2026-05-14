@@ -2,7 +2,6 @@ import React from "react";
 import "./styles/AboutMe.css";
 import { FaUser } from "react-icons/fa";
 
-import Aos from "aos";
 import "aos/dist/aos.css";
 
 function AboutMe() {
@@ -13,7 +12,7 @@ function AboutMe() {
         <div className="text-column">
           <h2 id="aboutme-title" data-aos="zoom-in">
             About Me
-            <span className="subheading" data-aos="zoom-in" aria-label="The main developer of GALE GRID" role="text">
+            <span className="subheading" data-aos="zoom-in" aria-label="The main developer of GALE GRID">
               {" "} (The main developer of GALE GRID)
             </span>
           </h2>

@@ -156,10 +156,10 @@ const ServicesSection = () => {
                 </div>
 
                 {/* Learn More Link */}
-                <a href="#" className="service-link">
+                <button type="button" className="service-link">
                   <span>Learn more</span>
                   <ArrowUpRight size={16} />
-                </a>
+                </button>
 
                 {/* Floating Elements */}
                 <div className="service-float-element service-float-1"></div>
