@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { useBooking } from "../context/BookingContext.jsx";
 import {
   Clock, Shield, Smartphone, Pencil, CreditCard,
   Search, Star, TrendingUp, ChevronDown,
@@ -270,7 +269,6 @@ function FAQItem({ faq, index }) {
 
 export default function FAQ() {
   const [activeCat, setActiveCat] = useState("all");
-  const { openBooking } = useBooking();
   const headerRef = useRef(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-60px" });
   const bottomRef = useRef(null);
