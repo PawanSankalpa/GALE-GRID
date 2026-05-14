@@ -406,6 +406,8 @@ export default function WhyUs() {
   useEffect(() => {
     try {
       if (sessionStorage.getItem("wu2_dismissed")) return;
+      // Don't auto-pop on mobile — inline quiz section is the CTA there
+      if (window.innerWidth <= 768) return;
       const t = setTimeout(() => {
         if (localStorage.getItem("wu2_visited")) {
           setWelcomeBack(true);
