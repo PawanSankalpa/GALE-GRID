@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowRight, Check, X } from "lucide-react";
 import { useBooking } from "../context/BookingContext.jsx";
+import { lockBodyScroll } from "../utils/scrollLock";
 import "./styles/WhyUs.css";
 
 const STEP_COLORS = ["#2563EB", "#7C3AED", "#D97706", "#059669"];
@@ -398,6 +399,7 @@ export default function WhyUs() {
   /* Persists after overlay closes — drives the inline result on the page */
   const [savedAnswers, setSavedAnswers] = useState(null);
   const autoRef = useRef(null);
+  const unlockScrollRef = useRef(null);
 
   /* Pop on visit:
      - sessionStorage("wu2_dismissed") set this session → do nothing
@@ -430,16 +432,15 @@ export default function WhyUs() {
   /* Body scroll lock */
   useEffect(() => {
     if (isOpen) {
-      const sw = window.innerWidth - document.documentElement.clientWidth;
-      if (sw > 0) document.body.style.paddingRight = `${sw}px`;
-      document.body.style.overflow = "hidden";
+      unlockScrollRef.current?.();
+      unlockScrollRef.current = lockBodyScroll();
     } else {
-      document.body.style.overflow = "";
-      document.body.style.paddingRight = "";
+      unlockScrollRef.current?.();
+      unlockScrollRef.current = null;
     }
     return () => {
-      document.body.style.overflow = "";
-      document.body.style.paddingRight = "";
+      unlockScrollRef.current?.();
+      unlockScrollRef.current = null;
     };
   }, [isOpen]);
 

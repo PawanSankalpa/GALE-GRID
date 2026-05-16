@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './OurWork.css';
 import NavBar from '../../components/NavBar';
 import Footer from '../../components/Footer';
 import CTA from '../../components/CTA';
+import { lockBodyScroll } from '../../utils/scrollLock';
 import {
   ArrowRight, ArrowDown, Check, X, Target,
   TrendingUp, Globe, BarChart2, Code2, Palette,
@@ -564,6 +565,7 @@ const ProjectCard = ({ project, onOpen }) => {
    MAIN PAGE
 ───────────────────────────────────────── */
 const OurWork = () => {
+  const location = useLocation();
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedCase, setSelectedCase] = useState(null);
   const [modalState, setModalState] = useState(null); // 'open' | 'closing' | null
@@ -579,6 +581,7 @@ const OurWork = () => {
   const statsRef = useRef(null);
   const sliderRef = useRef(null);
   const rafRef = useRef(null);
+  const unlockScrollRef = useRef(null);
 
   /* ── Skeleton loading — waits for every real project image to decode ──
      Stays visible until ALL images are loaded (or errored).
@@ -696,12 +699,30 @@ const OurWork = () => {
   const openModal = useCallback((project) => {
     setSelectedCase(project);
     setModalState('open');
-    document.body.style.overflow = 'hidden';
+    unlockScrollRef.current?.();
+    unlockScrollRef.current = lockBodyScroll();
   }, []);
   const closeModal = useCallback(() => {
     setModalState('closing');
-    document.body.style.overflow = '';
+    unlockScrollRef.current?.();
+    unlockScrollRef.current = null;
     setTimeout(() => { setModalState(null); setSelectedCase(null); }, 350);
+  }, []);
+
+  /* ── Route changes: ensure modal state and body lock are fully reset ── */
+  useEffect(() => {
+    setModalState(null);
+    setSelectedCase(null);
+    unlockScrollRef.current?.();
+    unlockScrollRef.current = null;
+  }, [location.pathname]);
+
+  /* ── Unmount safety: never leave page with scroll locked ── */
+  useEffect(() => {
+    return () => {
+      unlockScrollRef.current?.();
+      unlockScrollRef.current = null;
+    };
   }, []);
 
   const vis = (id) => visibleSections[id] ? 'ow-visible' : 'ow-hidden';

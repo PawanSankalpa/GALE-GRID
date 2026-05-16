@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useBooking } from "../context/BookingContext.jsx";
 import { motion, AnimatePresence } from "framer-motion";
+import { lockBodyScroll } from "../utils/scrollLock";
 import './styles/NavBar.css';
 
 const linkStaggerVariants = {
@@ -20,10 +21,12 @@ const linkItemVariants = {
 
 const NavBar = () => {
   const { openBooking } = useBooking();
+  const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const hamburgerRef = useRef(null);
   const mobileNavRef = useRef(null);
+  const unlockScrollRef = useRef(null);
 
   /* ── Scroll tracking for frosted-glass activation ── */
   useEffect(() => {
@@ -38,22 +41,21 @@ const NavBar = () => {
     const onKey = (e) => { if (e.key === 'Escape') setMenuOpen(false); };
     if (menuOpen) {
       document.addEventListener('keydown', onKey);
-      const sw = window.innerWidth - document.documentElement.clientWidth;
-      if (sw > 0) document.body.style.paddingRight = `${sw}px`;
-      document.body.style.overflow = 'hidden';
+      unlockScrollRef.current?.();
+      unlockScrollRef.current = lockBodyScroll();
       setTimeout(() => {
         const first = mobileNavRef.current?.querySelector('a');
         if (first) first.focus();
       }, 0);
     } else {
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
+      unlockScrollRef.current?.();
+      unlockScrollRef.current = null;
       hamburgerRef.current?.focus();
     }
     return () => {
       document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
+      unlockScrollRef.current?.();
+      unlockScrollRef.current = null;
     };
   }, [menuOpen]);
 
@@ -63,6 +65,11 @@ const NavBar = () => {
     window.addEventListener('resize', closeIfDesktop);
     return () => window.removeEventListener('resize', closeIfDesktop);
   }, [menuOpen]);
+
+  /* ── Route changes: force-close drawer and release body lock ── */
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
 
   const navLinks = [
     { to: "/",        label: "Home"      },
