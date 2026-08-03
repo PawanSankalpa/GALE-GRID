@@ -1,40 +1,44 @@
 /* ===================================================
-   FLOATING SHOWCASE — Editorial Brand Section
-   White background · Logo centred · Stats in negative space
+   FLOATING SHOWCASE — Dark Mockup with Light Glass Cards
    =================================================== */
 
 .trust-strip {
   width: 100%;
   overflow: hidden;
-  background: #FFFFFF;
+  /* Dark background with a radial light flare in the bottom-left corner */
+  background: radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.12) 0%, #08090C 65%);
+  position: relative;
 }
+
+
 
 /* ── Marquee strip ──────────────────────────────── */
 .ts-marquee-wrap {
   position: relative;
   overflow: hidden;
-  background: #FAFAFA;
-  border-top: 1px solid #E8EAED;
-  border-bottom: 1px solid #E8EAED;
-  padding: 13px 0;
+  background: #0E0F14;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 12px 0;
+  z-index: 1;
 }
 .ts-marquee-wrap::before,
 .ts-marquee-wrap::after {
   content: "";
   position: absolute;
   top: 0;
-  width: 100px;
+  width: 120px;
   height: 100%;
   z-index: 2;
   pointer-events: none;
 }
-.ts-marquee-wrap::before { left: 0;  background: linear-gradient(to right, #FAFAFA, transparent); }
-.ts-marquee-wrap::after  { right: 0; background: linear-gradient(to left,  #FAFAFA, transparent); }
+.ts-marquee-wrap::before { left: 0;  background: linear-gradient(to right, #08090C, transparent); }
+.ts-marquee-wrap::after  { right: 0; background: linear-gradient(to left,  #08090C, transparent); }
 
 .ts-marquee-track {
   display: flex;
   width: max-content;
-  animation: ts-scroll 36s linear infinite;
+  animation: ts-scroll 40s linear infinite;
 }
 @keyframes ts-scroll {
   from { transform: translateX(0); }
@@ -43,146 +47,255 @@
 .ts-pair {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 0 28px;
+  gap: 12px;
+  padding: 0 32px;
   white-space: nowrap;
 }
-.ts-name   { font-size: 0.78rem; font-weight: 600; color: #9CA3AF; letter-spacing: 0.3px; }
-.ts-sep    { width: 4px; height: 4px; border-radius: 50%; background: #FFBF00; opacity: 0.9; }
-.ts-metric { font-size: 0.74rem; font-weight: 700; color: #FFBF00; letter-spacing: 0.2px; }
+.ts-name   { font-size: 0.8rem; font-weight: 600; color: #4B5563; letter-spacing: 0.5px; }
+.ts-sep    { width: 5px; height: 5px; border-radius: 50%; background: #FF8C00; box-shadow: 0 0 6px rgba(255, 140, 0, 0.4); }
+.ts-metric { font-size: 0.76rem; font-weight: 700; color: #FF9E2C; letter-spacing: 0.2px; }
 
-/* ── Editorial band ─────────────────────────────── */
+/* ── Editorial Grid Layout (Expanded Padding) ─────── */
 .ts-editorial {
-  background: #FFFFFF;
-  padding: clamp(56px, 8vw, 100px) clamp(1.5rem, 5vw, 80px);
-}
-.ts-ed-inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: clamp(32px, 4vw, 72px);
+  padding: clamp(100px, 11vw, 160px) clamp(1.5rem, 5vw, 80px); /* Expanded padding to make section taller vertically */
+  position: relative;
+  z-index: 1;
+  min-height: 85vh; /* Added min-height for extra vertical presence */
+  display: flex;
   align-items: center;
 }
+.ts-ed-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 1fr;
+  gap: 32px;
+  align-items: stretch;
+  width: 100%;
+}
 
-/* ── Stats columns ──────────────────────────────── */
+/* Columns */
 .ts-ed-col {
   display: flex;
   flex-direction: column;
-  gap: clamp(28px, 4vw, 52px);
+  gap: 24px;
+  justify-content: center;
 }
-.ts-ed-col--left  { align-items: flex-end;   text-align: right; }
-.ts-ed-col--right { align-items: flex-start; text-align: left;  }
+.ts-ed-col--left  { align-items: stretch; }
+.ts-ed-col--right { align-items: stretch; }
 
-.ts-stat-item { display: flex; flex-direction: column; gap: 5px; }
-
-/* Thin editorial rule above each stat */
-.ts-stat-item::before {
-  content: "";
-  display: block;
-  width: 28px;
-  height: 1px;
-  background: #D1D5DB;
-  margin-bottom: 10px;
+/* ── Glassmorphic Cards (Very transparent light glass) ──── */
+.ts-stat-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 26px 30px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  box-shadow: 
+    0 24px 50px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  cursor: default;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  z-index: 1;
 }
-.ts-ed-col--left .ts-stat-item::before { margin-left: auto; }
+.ts-stat-card:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-color: rgba(255, 140, 0, 0.45);
+  transform: translateY(-6px);
+  box-shadow: 
+    0 32px 64px rgba(0, 0, 0, 0.5),
+    0 0 25px rgba(255, 140, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.ts-stat-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(255, 140, 0, 0.08);
+  border: 1px solid rgba(255, 140, 0, 0.15);
+  color: #FF8C00;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+.ts-stat-card:hover .ts-stat-icon-wrapper {
+  background: linear-gradient(135deg, #FF9E2C 0%, #FF8C00 100%);
+  border-color: transparent;
+  color: #FFFFFF;
+  box-shadow: 0 4px 15px rgba(255, 140, 0, 0.25);
+  transform: scale(1.08) rotate(5deg);
+}
 
 .ts-stat-num {
-  font-size: clamp(2rem, 3.8vw, 3.2rem);
-  font-weight: 900;
-  color: #0A0E1A;
+  font-size: clamp(2rem, 3vw, 2.6rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #FFFFFF 40%, #E2E8F0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   line-height: 1;
-  letter-spacing: -0.05em;
-  font-feature-settings: "tnum";
+  letter-spacing: -0.04em;
+  margin-bottom: 6px;
+  transition: all 0.3s ease;
 }
-.ts-stat-label {
-  font-size: clamp(0.72rem, 1.1vw, 0.84rem);
-  color: #9CA3AF;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  line-height: 1.45;
-  white-space: pre-line;
+.ts-stat-card:hover .ts-stat-num {
+  background: linear-gradient(135deg, #FFB246 0%, #FF8C00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(255, 140, 0, 0.2));
 }
 
-/* ── Centre logo ────────────────────────────────── */
+.ts-stat-label {
+  font-size: 0.8rem;
+  color: #E2E8F0; /* Brighter light grey for high readability */
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  line-height: 1.45;
+  transition: color 0.3s ease;
+}
+.ts-stat-card:hover .ts-stat-label {
+  color: #FFFFFF; /* Pure white on hover */
+}
+
+/* ── Center Brand Showcase Card (Lighter glass over dark BG) ── */
 .ts-ed-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ts-brand-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 28px;
+  padding: 36px 30px;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(14px, 2vw, 20px);
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 32px 64px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.ts-brand-card:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-color: #FF8C00;
+  transform: scale(1.02);
+  box-shadow: 
+    0 40px 80px rgba(0, 0, 0, 0.5),
+    0 0 35px rgba(255, 140, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.ts-brand-mesh {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(circle at center, rgba(255, 140, 0, 0.04) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .ts-logo-wrap {
-  filter: drop-shadow(0 8px 32px rgba(255,120,0,0.18))
-          drop-shadow(0 2px 8px rgba(0,0,0,0.05));
-  will-change: transform;
-  transition: filter 0.3s ease, transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 18px;
+  /* Logo stands out cleanly in white against the dark background behind the glass card! */
+  filter: invert(1) hue-rotate(180deg) brightness(1.2) drop-shadow(0 4px 12px rgba(255, 140, 0, 0.15));
+  transition: all 0.3s ease;
 }
-.ts-logo-wrap:hover {
-  filter: drop-shadow(0 14px 44px rgba(255,120,0,0.28))
-          drop-shadow(0 3px 12px rgba(0,0,0,0.08));
-  transform: translateY(-3px);
+.ts-brand-card:hover .ts-logo-wrap {
+  transform: scale(1.03) translateY(-2px);
+  filter: invert(1) hue-rotate(180deg) brightness(1.3) drop-shadow(0 8px 20px rgba(255, 140, 0, 0.25));
 }
 
 .ts-logo-img {
-  width: clamp(160px, 22vw, 280px);
+  width: clamp(170px, 24vw, 240px);
   height: auto;
   display: block;
-  pointer-events: none;
-  user-select: none;
 }
 
 .ts-ed-tagline {
-  font-size: clamp(0.65rem, 0.9vw, 0.78rem);
-  font-weight: 500;
-  color: #9CA3AF;
-  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #94A3B8;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   text-align: center;
   margin: 0;
-  padding-top: 12px;
-  border-top: 1px solid #E5E7EB;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   width: 100%;
-  max-width: 300px;
+  max-width: 230px;
+  position: relative;
+  z-index: 1;
 }
 
-/* ── Responsive ─────────────────────────────────── */
-@media (max-width: 900px) {
+/* ── Responsive breakpoints ──────────────────────── */
+@media (max-width: 990px) {
   .ts-ed-inner {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 24px;
+    max-width: 500px;
   }
-  .ts-ed-center { order: -1; }
-  .ts-ed-col--left,
-  .ts-ed-col--right {
+  .ts-ed-center {
+    order: -1;
+  }
+  .ts-ed-col {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: flex-start;
-    gap: 20px 48px;
-    text-align: left;
-  }
-  .ts-stat-item::before  { margin: 0 0 10px; }
-  .ts-logo-img { width: clamp(140px, 40vw, 220px); }
-}
-
-@media (max-width: 768px) {
-  .ts-editorial { padding: 40px 20px; }
-  .ts-ed-inner  { gap: 24px; }
-  .ts-logo-img  { width: clamp(130px, 45vw, 190px); }
-  .ts-stat-num  { font-size: clamp(1.6rem, 6vw, 2.2rem); }
-}
-
-@media (max-width: 480px) {
-  .ts-editorial { padding: 32px 16px; }
-  .ts-logo-img  { width: clamp(120px, 52vw, 170px); }
-  .ts-ed-col--left,
-  .ts-ed-col--right {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px 20px;
     width: 100%;
-    text-align: left;
+    gap: 20px;
   }
-  .ts-stat-item::before { margin: 0 0 8px; }
+  .ts-stat-card {
+    max-width: calc(50% - 10px);
+    flex-grow: 1;
+  }
+  .ts-ed-col--left { align-items: stretch; }
+  .ts-ed-col--right { align-items: stretch; }
+  .ts-brand-card {
+    max-width: 100%;
+    min-height: auto;
+    padding: 36px 24px;
+  }
+}
+
+@media (max-width: 580px) {
+  .ts-editorial {
+    padding: 32px 16px;
+  }
+  .ts-ed-inner {
+    gap: 16px;
+  }
+  .ts-ed-col {
+    gap: 16px;
+  }
+  .ts-stat-card {
+    max-width: 100%;
+    width: 100%;
+    padding: 20px;
+  }
+  .ts-brand-card {
+    padding: 28px 16px;
+  }
+  .ts-stat-num {
+    font-size: 2.2rem;
+  }
 }

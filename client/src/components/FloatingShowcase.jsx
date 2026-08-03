@@ -1,19 +1,24 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { Briefcase, TrendingUp, Zap, Award } from "lucide-react";
 import "./styles/FloatingShowcase.css";
 
 /* ── Stat item with slide-in animation ─────────── */
-function StatItem({ value, label, align }) {
+function StatItem({ value, label, icon: Icon, delay }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true });
+  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
   return (
     <motion.div
       ref={ref}
-      className={`ts-stat-item ts-stat-item--${align}`}
-      initial={{ opacity: 0, x: align === "left" ? -24 : 24 }}
-      animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ type: "spring", stiffness: 80, damping: 22 }}
+      className="ts-stat-card"
+      initial={{ opacity: 0, y: 24 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ type: "spring", stiffness: 80, damping: 20, delay }}
+      whileHover={{ y: -6, boxShadow: "0 16px 36px rgba(255, 140, 0, 0.08)", borderColor: "rgba(255, 140, 0, 0.25)" }}
     >
+      <div className="ts-stat-icon-wrapper">
+        <Icon size={20} className="ts-stat-icon" />
+      </div>
       <span className="ts-stat-num">{value}</span>
       <span className="ts-stat-label">{label}</span>
     </motion.div>
@@ -21,12 +26,12 @@ function StatItem({ value, label, align }) {
 }
 
 const leftStats = [
-  { value: "10+",   label: "Projects\nDelivered"  },
-  { value: "+340%", label: "Avg. Lead\nIncrease"  },
+  { value: "10+",   label: "Projects Delivered",   icon: Briefcase,  delay: 0.1 },
+  { value: "+340%", label: "Avg. Lead Increase",   icon: TrendingUp, delay: 0.2 },
 ];
 const rightStats = [
-  { value: "1.8s",  label: "Avg. Load\nTime"      },
-  { value: "98%",   label: "Client\nSatisfaction" },
+  { value: "1.8s",  label: "Avg. Load Time",       icon: Zap,        delay: 0.15 },
+  { value: "98%",   label: "Client Satisfaction",  icon: Award,      delay: 0.25 },
 ];
 
 const marqueePairs = [
@@ -46,7 +51,6 @@ const FloatingShowcase = () => {
 
   return (
     <section className="trust-strip" aria-label="Results and client work">
-
       {/* ── Marquee strip ── */}
       <div className="ts-marquee-wrap">
         <div className="ts-marquee-track">
@@ -64,42 +68,45 @@ const FloatingShowcase = () => {
       <div className="ts-editorial" ref={ref}>
         <div className="ts-ed-inner">
 
-          {/* Left stats — in the white negative space */}
+          {/* Left stats column */}
           <div className="ts-ed-col ts-ed-col--left">
             {leftStats.map((s) => (
-              <StatItem key={s.value} value={s.value} label={s.label} align="left" />
+              <StatItem key={s.value} value={s.value} label={s.label} icon={s.icon} delay={s.delay} />
             ))}
           </div>
 
-          {/* Centre: brand logo */}
+          {/* Centre: brand logo card */}
           <div className="ts-ed-center">
-            <motion.div
-              className="ts-logo-wrap"
-              initial={{ opacity: 0, scale: 0.88 }}
-              animate={inView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.85, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
-              <img
-                src={`${process.env.PUBLIC_URL}/galegrid-logo.png`}
-                alt="Gale Grid"
-                className="ts-logo-img"
-                draggable={false}
-              />
-            </motion.div>
-            <motion.p
-              className="ts-ed-tagline"
-              initial={{ opacity: 0, y: 12 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.4, duration: 0.55 }}
-            >
-              Websites built to convert — not just impress
-            </motion.p>
+            <div className="ts-brand-card">
+              <div className="ts-brand-mesh" />
+              <motion.div
+                className="ts-logo-wrap"
+                initial={{ opacity: 0, scale: 0.88 }}
+                animate={inView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.85, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                <img
+                  src={`${process.env.PUBLIC_URL}/galegrid-logo.png`}
+                  alt="Gale Grid"
+                  className="ts-logo-img"
+                  draggable={false}
+                />
+              </motion.div>
+              <motion.p
+                className="ts-ed-tagline"
+                initial={{ opacity: 0, y: 12 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.4, duration: 0.55 }}
+              >
+                Websites built to convert — not just impress
+              </motion.p>
+            </div>
           </div>
 
-          {/* Right stats — in the white negative space */}
+          {/* Right stats column */}
           <div className="ts-ed-col ts-ed-col--right">
             {rightStats.map((s) => (
-              <StatItem key={s.value} value={s.value} label={s.label} align="right" />
+              <StatItem key={s.value} value={s.value} label={s.label} icon={s.icon} delay={s.delay} />
             ))}
           </div>
 
