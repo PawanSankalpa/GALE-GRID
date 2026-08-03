@@ -6,8 +6,8 @@ import { lockBodyScroll } from "../utils/scrollLock";
 import { createPortal } from "react-dom";
 import "./styles/WhyUs.css";
 
-const STEP_COLORS = ["#2563EB", "#7C3AED", "#D97706", "#059669"];
-const RESULT_COLOR = "#FF6B00";
+const STEP_COLORS = ["#FF8C00", "#FF8C00", "#FF8C00"];
+const RESULT_COLOR = "#FF8C00";
 const SUCCESS_GREEN = "#22C55E";
 
 const QUESTIONS = [
@@ -17,64 +17,50 @@ const QUESTIONS = [
     hint: "Select all that apply",
     options: [
       "Rank higher than my competitors on Google",
-      "Look more professional than anyone in my market",
+      "Look more professional and premium",
       "Turn visitors into paying leads automatically",
       "Sell products or services online, 24/7",
-      "Load fast and work perfectly on every phone",
-      "Stand out and be remembered",
     ],
   },
   {
     id: "q2", type: "single",
-    question: "What does success look like to you?",
-    hint: "Choose the one that resonates most — be honest",
-    options: [
-      "My competitors start asking who built my site",
-      "Clients say 'wow' before reading a single word",
-      "I wake up to new leads in my inbox every morning",
-      "My business becomes the undeniable choice in my market",
-    ],
-  },
-  {
-    id: "q3", type: "multi",
     question: "What is holding your business back right now?",
-    hint: "Select all that apply",
+    hint: "Choose the primary reason",
     options: [
       "My website looks outdated and unprofessional",
       "I am invisible on Google — nobody finds me",
-      "Competitors with worse services look more credible",
-      "My site is slow or breaks on mobile",
+      "Competitors look more credible than me",
       "I do not have a proper website yet",
     ],
   },
   {
-    id: "q4", type: "single",
-    question: "When are you ready to take action?",
-    hint: "There is no wrong answer here",
+    id: "q3", type: "single",
+    question: "When are you ready to launch?",
+    hint: "Choose the timeframe",
     options: [
-      "Right now — I am already losing to competitors",
-      "Within 90 days — I am planning my next move",
-      "I am just exploring what is possible",
+      "Right now — within 30 days",
+      "Within 90 days — planning next step",
+      "Just exploring what is possible",
     ],
   },
 ];
 
 const RESULTS = {
-  "My competitors start asking who built my site": {
+  "My website looks outdated and unprofessional": {
     headline: "You need a brand that commands respect.",
     sub: "We build websites so sharp your competitors will wonder who is behind them.",
   },
-  "Clients say 'wow' before reading a single word": {
-    headline: "You need design that stops the scroll.",
-    sub: "First impression is everything. We build the kind of site that earns a reaction before a word is read.",
-  },
-  "I wake up to new leads in my inbox every morning": {
-    headline: "You need a 24/7 lead generation machine.",
-    sub: "Our average client doubles their inquiries within 90 days of going live.",
-  },
-  "My business becomes the undeniable choice in my market": {
+  "I am invisible on Google — nobody finds me": {
     headline: "You need to own your market online.",
     sub: "Positioning, trust-signals, SEO, speed — we combine them to make you the obvious choice.",
+  },
+  "Competitors look more credible than me": {
+    headline: "You need design that stops the scroll.",
+    sub: "First impressions are everything. We build the kind of authority design that commands trust.",
+  },
+  "I do not have a proper website yet": {
+    headline: "You need a 24/7 lead generation machine.",
+    sub: "We will build a high-performance site from scratch that converts traffic into customers.",
   },
 };
 const DEFAULT_RESULT = {
@@ -84,15 +70,12 @@ const DEFAULT_RESULT = {
 
 const DELIVERABLE_MAP = {
   "Rank higher than my competitors on Google":          "SEO-optimised architecture & content strategy",
-  "Look more professional than anyone in my market":    "Premium brand-led design system",
+  "Look more professional and premium":                 "Premium brand-led design system",
   "Turn visitors into paying leads automatically":      "Conversion-optimised pages with intelligent CTAs",
   "Sell products or services online, 24/7":             "E-commerce flow with automated order processing",
-  "Load fast and work perfectly on every phone":        "Performance build — Core Web Vitals green",
-  "Stand out and be remembered":                        "Distinctive visual identity that gets remembered",
   "My website looks outdated and unprofessional":       "Full visual redesign — modern, premium, polished",
   "I am invisible on Google — nobody finds me":         "Technical SEO + local and national search domination",
-  "Competitors with worse services look more credible": "Authority design & trust-signal architecture",
-  "My site is slow or breaks on mobile":                "Speed audit + mobile-first performance rebuild",
+  "Competitors look more credible than me":             "Authority design & trust-signal architecture",
   "I do not have a proper website yet":                 "End-to-end build from scratch — done properly",
 };
 const DEFAULT_DELIVERABLES = [
@@ -101,25 +84,25 @@ const DEFAULT_DELIVERABLES = [
   "Ongoing performance tracking and optimisation",
 ];
 
-function buildDeliverables(q1Arr, q3Arr) {
-  const combined = [...(q1Arr || []), ...(q3Arr || [])];
+function buildDeliverables(q1Arr, q2Arr) {
+  const combined = [...(q1Arr || []), ...(q2Arr || [])];
   const mapped = combined.map((opt) => DELIVERABLE_MAP[opt]).filter(Boolean);
   const unique = [...new Set(mapped)];
   return [...unique, ...DEFAULT_DELIVERABLES].slice(0, 3);
 }
 
 const URGENCY_MAP = {
-  "Right now — I am already losing to competitors": {
+  "Right now — within 30 days": {
     label: "Priority intake",
     bg: "rgba(255, 107, 0, 0.08)",
     color: "#C2410C",
   },
-  "Within 90 days — I am planning my next move": {
+  "Within 90 days — planning next step": {
     label: "90-day roadmap",
     bg: "rgba(37, 99, 235, 0.08)",
     color: "#1D4ED8",
   },
-  "I am just exploring what is possible": {
+  "Just exploring what is possible": {
     label: "Discovery call",
     bg: "rgba(107, 114, 128, 0.08)",
     color: "#6B7280",
@@ -189,14 +172,13 @@ function AnimatedTick({ size = 72, reduced }) {
 
 /* ─── Inline result — shown on the page after quiz completion ─── */
 function InlineResult({ savedAnswers, onRetake, onBook, reduced }) {
-  const q2Answer = (savedAnswers.q2 || [])[0] || "";
   const q1Sels = savedAnswers.q1 || [];
-  const q3Sels = savedAnswers.q3 || [];
-  const q4Answer = (savedAnswers.q4 || [])[0] || "";
+  const q2Answer = (savedAnswers.q2 || [])[0] || "";
+  const q3Answer = (savedAnswers.q3 || [])[0] || "";
 
   const result = RESULTS[q2Answer] || DEFAULT_RESULT;
-  const deliverables = buildDeliverables(q1Sels, q3Sels);
-  const urgency = URGENCY_MAP[q4Answer] || DEFAULT_URGENCY;
+  const deliverables = buildDeliverables(q1Sels, [q2Answer]);
+  const urgency = URGENCY_MAP[q3Answer] || DEFAULT_URGENCY;
 
   return (
     <motion.div
@@ -290,14 +272,13 @@ function InlineResult({ savedAnswers, onRetake, onBook, reduced }) {
 
 /* ─── Result card — shown inside the overlay ─── */
 function ResultCard({ answers, onReset, onBook, reduced }) {
-  const q2Answer = (answers.q2 || [])[0] || "";
   const q1Sels = answers.q1 || [];
-  const q3Sels = answers.q3 || [];
-  const q4Answer = (answers.q4 || [])[0] || "";
+  const q2Answer = (answers.q2 || [])[0] || "";
+  const q3Answer = (answers.q3 || [])[0] || "";
 
   const result = RESULTS[q2Answer] || DEFAULT_RESULT;
-  const deliverables = buildDeliverables(q1Sels, q3Sels);
-  const urgency = URGENCY_MAP[q4Answer] || DEFAULT_URGENCY;
+  const deliverables = buildDeliverables(q1Sels, [q2Answer]);
+  const urgency = URGENCY_MAP[q3Answer] || DEFAULT_URGENCY;
 
   return (
     <motion.div
@@ -535,7 +516,7 @@ export default function WhyUs() {
             <h2 className="wu2-headline" id="wu2-headline">
               What does your business<br />actually need online?
             </h2>
-            <p className="wu2-sub">4 questions. 60 seconds. Your answer, built around your goals.</p>
+            <p className="wu2-sub">3 questions. 45 seconds. Your answer, built around your goals.</p>
             <button type="button" className="wu2-open-btn" onClick={handleOpen}>
               Find out now <ArrowRight size={16} strokeWidth={2.4} />
             </button>
@@ -626,6 +607,20 @@ export default function WhyUs() {
                 aria-hidden="true"
               />
 
+              {/* Floating images positioned behind the card but on top of backdrop */}
+              <div className="wu2-floating-container desktop-only">
+                <img
+                  src="/images/quiz_left_vector.jpg"
+                  alt="Creative Analytics Dashboard"
+                  className="wu2-floating-img wu2-float-left"
+                />
+                <img
+                  src="/images/quiz_right_vector.jpg"
+                  alt="Strategy and Innovation"
+                  className="wu2-floating-img wu2-float-right"
+                />
+              </div>
+
               <motion.div
                 className="wu2-overlay-wrap"
                 role="dialog" aria-modal="true" aria-label="Website needs assessment"
@@ -664,7 +659,7 @@ export default function WhyUs() {
                     <span className="wu2-card-meta">
                       {isResult ? "Your result" : `${step + 1} of ${QUESTIONS.length}`}
                       <span className="wu2-meta-sep">·</span>
-                      <span className="wu2-time-badge">~60 sec</span>
+                      <span className="wu2-time-badge">~45 sec</span>
                     </span>
                     <button type="button" className="wu2-close-btn" onClick={handleClose} aria-label="Exit quiz">
                       <X size={15} strokeWidth={2.4} />
@@ -685,25 +680,20 @@ export default function WhyUs() {
                           <p className="wu2-step-hint">{q.hint}</p>
 
                           <div className="wu2-chips">
-                            {q.options.map((opt) => {
+                            {q.options.map((opt, idx) => {
                               const sel = selected.includes(opt);
+                              const letter = String.fromCharCode(65 + idx);
                               return (
                                 <button
                                   key={opt} type="button"
                                   className={`wu2-chip${sel ? " is-sel" : ""}`}
-                                  style={sel ? {
-                                    background: currentColor,
-                                    borderColor: currentColor,
-                                    boxShadow: `0 4px 18px ${currentColor}38`,
-                                  } : {}}
                                   onClick={() => handleChipClick(q.id, opt, q.type)}
                                   aria-pressed={sel}
                                 >
-                                  <span
-                                    className={`wu2-chip-dot${sel ? " is-sel" : ""}`}
-                                    style={sel ? { background: "rgba(255,255,255,0.9)", borderColor: "transparent" } : {}}
-                                  />
-                                  {opt}
+                                  <span className={`wu2-chip-letter${sel ? " is-sel" : ""}`}>
+                                    {letter}
+                                  </span>
+                                  <span className="wu2-chip-text">{opt}</span>
                                 </button>
                               );
                             })}
@@ -716,7 +706,6 @@ export default function WhyUs() {
                             <button
                               type="button"
                               className={`wu2-next-btn${canNext ? "" : " is-off"}`}
-                              style={canNext ? { background: currentColor, boxShadow: `0 4px 20px ${currentColor}44` } : {}}
                               onClick={canNext ? handleNext : undefined}
                               disabled={!canNext}
                             >

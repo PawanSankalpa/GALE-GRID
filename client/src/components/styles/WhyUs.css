@@ -103,9 +103,9 @@
   position: fixed;
   inset: 0;
   z-index: 9998;
-  background: rgba(6, 6, 10, 0.74);
-  backdrop-filter: blur(24px) saturate(190%);
-  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  background: radial-gradient(circle at center, rgba(255, 140, 0, 0.06) 0%, rgba(14, 15, 19, 0.94) 80%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   cursor: pointer;
 }
 
@@ -118,28 +118,33 @@
   justify-content: center;
   padding: 20px;
   pointer-events: none;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Card: three-layer shadow — deep warm (R>B) + close warm + micro-orange outline
    The card floats on a halo of brand heat */
 .wu2-card {
   pointer-events: all;
-  background: #fff;
+  background: #12131A;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
   box-shadow:
-    0 32px 80px rgba(10, 5, 0, 0.13),
-    0 4px 20px rgba(10, 5, 0, 0.06),
-    0 0 0 1px rgba(255, 107, 0, 0.04);
+    0 32px 80px rgba(0, 0, 0, 0.5),
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(255, 140, 0, 0.05);
   width: 100%;
   max-width: 560px;
   overflow: hidden;
   position: relative;
+  margin: auto;
+  flex-shrink: 0;
 }
 
 /* ── Progress bar ── */
 .wu2-prog-track {
   height: 3px;
-  background: #F1EFE9;
+  background: rgba(255, 255, 255, 0.06);
   width: 100%;
   flex-shrink: 0;
 }
@@ -185,7 +190,7 @@
 .wu2-meta-sep { color: #D1D5DB; }
 
 .wu2-time-badge {
-  background: #F5F3EE;
+  background: rgba(255, 255, 255, 0.04);
   color: #94A3B8;
   font-size: 0.68rem;
   font-weight: 600;
@@ -200,7 +205,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #F5F3EE;
+  background: rgba(255, 255, 255, 0.04);
   border: none;
   cursor: pointer;
   color: #94A3B8;
@@ -208,8 +213,8 @@
   transition: background 0.15s, color 0.15s;
 }
 .wu2-close-btn:hover {
-  background: #EDE9E0;
-  color: #0F172A;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
 /* ── Card body ── */
@@ -223,7 +228,7 @@
 .wu2-step-q {
   font-size: clamp(1.05rem, 2.4vw, 1.28rem);
   font-weight: 800;
-  color: #0F172A;
+  color: #F8FAFC;
   letter-spacing: -0.026em;
   line-height: 1.28;
   margin: 0 0 6px;
@@ -249,39 +254,51 @@
 .wu2-chip {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: #fff;
-  border: 1.5px solid #E8E3DB;
-  border-radius: 12px;
-  padding: 13px 16px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #1E293B;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #E2E8F0;
   text-align: left;
   cursor: pointer;
   line-height: 1.4;
-  transition: border-color 0.14s ease, background 0.14s ease, color 0.14s ease;
+  transition: all 0.16s ease;
 }
 .wu2-chip:hover:not(.is-sel) {
-  border-color: #D5CFC5;
-  background: #FAFAF8;
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.05);
 }
 .wu2-chip.is-sel {
-  color: #fff;
+  background: linear-gradient(135deg, #FF9E2C 0%, #FF8C00 100%) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+  box-shadow: 0 4px 16px rgba(255, 140, 0, 0.3) !important;
 }
 
-.wu2-chip-dot {
-  display: block;
-  width: 16px;
-  height: 16px;
+.wu2-chip-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  border: 2px solid #D5CFC5;
+  background: rgba(255, 255, 255, 0.06);
+  color: #94A3B8;
+  font-weight: 700;
+  font-size: 0.78rem;
   flex-shrink: 0;
-  transition: background 0.15s, border-color 0.15s;
+  transition: all 0.16s ease;
 }
-.wu2-chip-dot.is-sel {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: transparent;
+.wu2-chip-letter.is-sel {
+  background: #fff !important;
+  color: #FF8C00 !important;
+}
+
+.wu2-chip-text {
+  flex-grow: 1;
 }
 
 /* ── Step actions ── */
@@ -298,14 +315,14 @@
   cursor: pointer;
   font-size: 0.86rem;
   font-weight: 600;
-  color: #94A3B8;
+  color: #64748B;
   padding: 10px 14px;
   border-radius: 10px;
   transition: color 0.15s, background 0.15s;
 }
 .wu2-back-btn:hover {
-  color: #0F172A;
-  background: rgba(0, 0, 0, 0.035);
+  color: #FFF;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .wu2-next-btn {
@@ -319,7 +336,9 @@
   border-radius: 999px;
   padding: 12px 26px;
   cursor: pointer;
-  transition: opacity 0.18s, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: linear-gradient(135deg, #FF9E2C 0%, #FF8C00 100%);
+  box-shadow: 0 4px 16px rgba(255, 140, 0, 0.3);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .wu2-next-btn:hover:not(.is-off) {
   opacity: 0.88;
@@ -401,7 +420,7 @@
 .wu2-result-headline {
   font-size: clamp(1.15rem, 2.5vw, 1.48rem);
   font-weight: 800;
-  color: #0F172A;
+  color: #F8FAFC;
   letter-spacing: -0.032em;
   line-height: 1.2;
   margin: 0 0 10px;
@@ -410,21 +429,17 @@
 
 .wu2-result-sub {
   font-size: 0.9rem;
-  color: #475569;
+  color: #94A3B8;
   line-height: 1.66;
   margin: 0 0 20px;
   max-width: 380px;
 }
 
-/* ── Personalised plan box ──
-   Warm off-white bg (#FAFAF8) deliberately different from card white (#fff)
-   Two different whites in one card = Apple product page technique
-   Border: warm stone #E8E3DB references linen/paper (Hermès tonal range)
-   Dividers: even warmer #F1EFE9 — barely-there, like fine paper grain */
+/* ── Personalised plan box ── */
 .wu2-result-plan {
   width: 100%;
-  background: #FAFAF8;
-  border: 1px solid #E8E3DB;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
   padding: 14px 16px;
   margin: 0 0 22px;
@@ -463,7 +478,7 @@
   align-items: flex-start;
   gap: 10px;
   padding: 9px 0;
-  border-top: 1px solid #F1EFE9;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 .wu2-plan-row:first-of-type {
   border-top: none;
@@ -486,7 +501,7 @@
 .wu2-plan-row-text {
   font-size: 0.855rem;
   font-weight: 500;
-  color: #1E293B;
+  color: #E2E8F0;
   line-height: 1.45;
 }
 
@@ -565,16 +580,16 @@
 .wu2-wb-headline {
   font-size: clamp(1.5rem, 3.5vw, 2rem);
   font-weight: 800;
-  color: #0F172A;
+  color: #F8FAFC;
   letter-spacing: -0.032em;
   line-height: 1.1;
   margin: 0 0 10px;
 }
 
 .wu2-wb-sub {
-  font-size: 0.97rem;
-  color: #64748B;
-  line-height: 1.65;
+  font-size: 0.875rem;
+  color: #94A3B8;
+  line-height: 1.6;
   margin: 0 0 24px;
   max-width: 300px;
 }
@@ -650,11 +665,54 @@
 .wu2-retake-btn:hover { color: #475569; }
 
 /* ── Responsive ── */
-@media (max-width: 600px) {
-  .wu2-card { border-radius: 20px; }
-  .wu2-card-body { padding: 20px 18px 28px; }
+@media (max-width: 768px) {
+  .wu2-overlay-wrap { padding: 12px; }
+  .wu2-card { border-radius: 18px; }
+  .wu2-card-body { padding: 18px 14px 24px; }
   .wu2-step-actions { flex-direction: column-reverse; align-items: stretch; gap: 8px; }
   .wu2-next-btn { justify-content: center; }
   .wu2-back-btn { text-align: center; }
   .wu2-result-cta { width: 100%; justify-content: center; }
+  .desktop-only { display: none !important; }
+}
+
+/* ══════════════════════════════════════════════
+   FLOATING ILLUSTRATION IMAGES (WhyUs Quiz)
+   ══════════════════════════════════════════════ */
+.wu2-floating-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4%;
+}
+
+.wu2-floating-img {
+  max-width: clamp(200px, 20vw, 290px);
+  height: auto;
+  border-radius: 18px;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.45),
+    0 0 40px rgba(255, 140, 0, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  animation: float-slow-img 6s ease-in-out infinite alternate;
+}
+
+@keyframes float-slow-img {
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(-12px) rotate(1deg); }
+}
+
+.wu2-float-left {
+  animation-duration: 7s;
+  transform: rotate(-1deg);
+}
+
+.wu2-float-right {
+  animation-duration: 8.5s;
+  transform: rotate(1.5deg);
 }
