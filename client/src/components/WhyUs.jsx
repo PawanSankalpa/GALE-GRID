@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowRight, Check, X } from "lucide-react";
 import { useBooking } from "../context/BookingContext.jsx";
 import { lockBodyScroll } from "../utils/scrollLock";
+import { createPortal } from "react-dom";
 import "./styles/WhyUs.css";
 
 const STEP_COLORS = ["#2563EB", "#7C3AED", "#D97706", "#059669"];
@@ -553,193 +554,199 @@ export default function WhyUs() {
       </AnimatePresence>
 
       {/* ── Welcome-back toast (returning visitors) ── */}
-      <AnimatePresence>
-        {welcomeBack && (
-          <>
-            <motion.div
-              className="wu2-backdrop wu2-wb-backdrop"
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              transition={{ duration: 0.28 }}
-              onClick={handleWelcomeBackClose}
-              aria-hidden="true"
-            />
-            <motion.div
-              className="wu2-overlay-wrap"
-              role="dialog" aria-modal="true" aria-label="Welcome back"
-              initial={{ opacity: 0, scale: reduced ? 1 : 0.9, y: reduced ? 0 : 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 120, damping: 20, delay: 0.05 } }}
-              exit={{ opacity: 0, scale: reduced ? 1 : 0.96, y: reduced ? 0 : 8, transition: { duration: 0.2 } }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="wu2-card wu2-wb-card">
-                <button
-                  type="button"
-                  className="wu2-close-btn wu2-wb-close"
-                  onClick={handleWelcomeBackClose}
-                  aria-label="Close"
-                >
-                  <X size={15} strokeWidth={2.4} />
-                </button>
-
-                <div className="wu2-wb-body">
-                  <span className="wu2-wb-wave" aria-hidden="true">&#128075;</span>
-                  <h3 className="wu2-wb-headline">Welcome back.</h3>
-                  <p className="wu2-wb-sub">
-                    Good to see you again. Ready to find out exactly what your
-                    business needs online?
-                  </p>
+      {createPortal(
+        <AnimatePresence>
+          {welcomeBack && (
+            <>
+              <motion.div
+                className="wu2-backdrop wu2-wb-backdrop"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                transition={{ duration: 0.28 }}
+                onClick={handleWelcomeBackClose}
+                aria-hidden="true"
+              />
+              <motion.div
+                className="wu2-overlay-wrap"
+                role="dialog" aria-modal="true" aria-label="Welcome back"
+                initial={{ opacity: 0, scale: reduced ? 1 : 0.9, y: reduced ? 0 : 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 120, damping: 20, delay: 0.05 } }}
+                exit={{ opacity: 0, scale: reduced ? 1 : 0.96, y: reduced ? 0 : 8, transition: { duration: 0.2 } }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="wu2-card wu2-wb-card">
                   <button
                     type="button"
-                    className="wu2-result-cta"
-                    onClick={handleWelcomeBackTakeQuiz}
-                  >
-                    Take the quiz <ArrowRight size={15} strokeWidth={2.4} />
-                  </button>
-                  <button
-                    type="button"
-                    className="wu2-result-restart"
+                    className="wu2-close-btn wu2-wb-close"
                     onClick={handleWelcomeBackClose}
+                    aria-label="Close"
                   >
-                    Maybe later
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* ── Full-screen overlay ── */}
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            <motion.div
-              className="wu2-backdrop"
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              transition={{ duration: 0.28 }}
-              onClick={handleClose}
-              aria-hidden="true"
-            />
-
-            <motion.div
-              className="wu2-overlay-wrap"
-              role="dialog" aria-modal="true" aria-label="Website needs assessment"
-              initial={{ opacity: 0, scale: reduced ? 1 : 0.88, y: reduced ? 0 : 24 }}
-              animate={{ opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 110, damping: 20, delay: 0.05 } }}
-              exit={{ opacity: 0, scale: reduced ? 1 : 0.94, y: reduced ? 0 : 12, transition: { duration: 0.22 } }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="wu2-card">
-
-                <div className="wu2-prog-track" aria-hidden="true">
-                  <motion.div
-                    className="wu2-prog-fill"
-                    animate={{ width: `${progressPct}%`, background: progressColor }}
-                    transition={{ type: "spring", stiffness: 70, damping: 20 }}
-                  />
-                </div>
-
-                <div className="wu2-card-hdr">
-                  <div className="wu2-dots" aria-hidden="true">
-                    {QUESTIONS.map((_, i) => {
-                      const done = isResult || i < step;
-                      const active = !isResult && i === step;
-                      return (
-                        <motion.span
-                          key={i} className="wu2-dot" layout
-                          animate={{
-                            background: (done || active) ? progressColor : "#E5E7EB",
-                            width: active ? 20 : 8,
-                          }}
-                          transition={{ type: "spring", stiffness: 140, damping: 18 }}
-                        />
-                      );
-                    })}
-                  </div>
-                  <span className="wu2-card-meta">
-                    {isResult ? "Your result" : `${step + 1} of ${QUESTIONS.length}`}
-                    <span className="wu2-meta-sep">·</span>
-                    <span className="wu2-time-badge">~60 sec</span>
-                  </span>
-                  <button type="button" className="wu2-close-btn" onClick={handleClose} aria-label="Exit quiz">
                     <X size={15} strokeWidth={2.4} />
                   </button>
+
+                  <div className="wu2-wb-body">
+                    <span className="wu2-wb-wave" aria-hidden="true">&#128075;</span>
+                    <h3 className="wu2-wb-headline">Welcome back.</h3>
+                    <p className="wu2-wb-sub">
+                      Good to see you again. Ready to find out exactly what your
+                      business needs online?
+                    </p>
+                    <button
+                      type="button"
+                      className="wu2-result-cta"
+                      onClick={handleWelcomeBackTakeQuiz}
+                    >
+                      Take the quiz <ArrowRight size={15} strokeWidth={2.4} />
+                    </button>
+                    <button
+                      type="button"
+                      className="wu2-result-restart"
+                      onClick={handleWelcomeBackClose}
+                    >
+                      Maybe later
+                    </button>
+                  </div>
                 </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
 
-                <div className="wu2-card-body">
-                  <AnimatePresence mode="wait">
+      {/* ── Full-screen overlay ── */}
+      {createPortal(
+        <AnimatePresence>
+          {isOpen && (
+            <>
+              <motion.div
+                className="wu2-backdrop"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                transition={{ duration: 0.28 }}
+                onClick={handleClose}
+                aria-hidden="true"
+              />
 
-                    {phase === "quiz" && (
-                      <motion.div
-                        key={step} className="wu2-step"
-                        initial={{ opacity: 0, x: reduced ? 0 : direction * 52 }}
-                        animate={{ opacity: 1, x: 0, transition: { type: "spring", stiffness: 100, damping: 20 } }}
-                        exit={{ opacity: 0, x: reduced ? 0 : direction * -52, transition: { duration: 0.15 } }}
-                      >
-                        <h3 className="wu2-step-q">{q.question}</h3>
-                        <p className="wu2-step-hint">{q.hint}</p>
+              <motion.div
+                className="wu2-overlay-wrap"
+                role="dialog" aria-modal="true" aria-label="Website needs assessment"
+                initial={{ opacity: 0, scale: reduced ? 1 : 0.88, y: reduced ? 0 : 24 }}
+                animate={{ opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 110, damping: 20, delay: 0.05 } }}
+                exit={{ opacity: 0, scale: reduced ? 1 : 0.94, y: reduced ? 0 : 12, transition: { duration: 0.22 } }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="wu2-card">
 
-                        <div className="wu2-chips">
-                          {q.options.map((opt) => {
-                            const sel = selected.includes(opt);
-                            return (
-                              <button
-                                key={opt} type="button"
-                                className={`wu2-chip${sel ? " is-sel" : ""}`}
-                                style={sel ? {
-                                  background: currentColor,
-                                  borderColor: currentColor,
-                                  boxShadow: `0 4px 18px ${currentColor}38`,
-                                } : {}}
-                                onClick={() => handleChipClick(q.id, opt, q.type)}
-                                aria-pressed={sel}
-                              >
-                                <span
-                                  className={`wu2-chip-dot${sel ? " is-sel" : ""}`}
-                                  style={sel ? { background: "rgba(255,255,255,0.9)", borderColor: "transparent" } : {}}
-                                />
-                                {opt}
-                              </button>
-                            );
-                          })}
-                        </div>
+                  <div className="wu2-prog-track" aria-hidden="true">
+                    <motion.div
+                      className="wu2-prog-fill"
+                      animate={{ width: `${progressPct}%`, background: progressColor }}
+                      transition={{ type: "spring", stiffness: 70, damping: 20 }}
+                    />
+                  </div>
 
-                        <div className="wu2-step-actions">
-                          {step > 0
-                            ? <button type="button" className="wu2-back-btn" onClick={handleBack}>← Back</button>
-                            : <span />}
-                          <button
-                            type="button"
-                            className={`wu2-next-btn${canNext ? "" : " is-off"}`}
-                            style={canNext ? { background: currentColor, boxShadow: `0 4px 20px ${currentColor}44` } : {}}
-                            onClick={canNext ? handleNext : undefined}
-                            disabled={!canNext}
-                          >
-                            {step === QUESTIONS.length - 1 ? "See my result" : "Next"}
-                            <ArrowRight size={14} strokeWidth={2.5} />
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
+                  <div className="wu2-card-hdr">
+                    <div className="wu2-dots" aria-hidden="true">
+                      {QUESTIONS.map((_, i) => {
+                        const done = isResult || i < step;
+                        const active = !isResult && i === step;
+                        return (
+                          <motion.span
+                            key={i} className="wu2-dot" layout
+                            animate={{
+                              background: (done || active) ? progressColor : "#E5E7EB",
+                              width: active ? 20 : 8,
+                            }}
+                            transition={{ type: "spring", stiffness: 140, damping: 18 }}
+                          />
+                        );
+                      })}
+                    </div>
+                    <span className="wu2-card-meta">
+                      {isResult ? "Your result" : `${step + 1} of ${QUESTIONS.length}`}
+                      <span className="wu2-meta-sep">·</span>
+                      <span className="wu2-time-badge">~60 sec</span>
+                    </span>
+                    <button type="button" className="wu2-close-btn" onClick={handleClose} aria-label="Exit quiz">
+                      <X size={15} strokeWidth={2.4} />
+                    </button>
+                  </div>
 
-                    {phase === "result" && (
-                      <ResultCard
-                        key="result"
-                        answers={answers}
-                        onReset={() => { setSavedAnswers(null); setPhase("quiz"); setStep(0); setDirection(1); setAnswers({}); }}
-                        onBook={() => { handleClose(); openBooking(); }}
-                        reduced={reduced}
-                      />
-                    )}
+                  <div className="wu2-card-body">
+                    <AnimatePresence mode="wait">
 
-                  </AnimatePresence>
+                      {phase === "quiz" && (
+                        <motion.div
+                          key={step} className="wu2-step"
+                          initial={{ opacity: 0, x: reduced ? 0 : direction * 52 }}
+                          animate={{ opacity: 1, x: 0, transition: { type: "spring", stiffness: 100, damping: 20 } }}
+                          exit={{ opacity: 0, x: reduced ? 0 : direction * -52, transition: { duration: 0.15 } }}
+                        >
+                          <h3 className="wu2-step-q">{q.question}</h3>
+                          <p className="wu2-step-hint">{q.hint}</p>
+
+                          <div className="wu2-chips">
+                            {q.options.map((opt) => {
+                              const sel = selected.includes(opt);
+                              return (
+                                <button
+                                  key={opt} type="button"
+                                  className={`wu2-chip${sel ? " is-sel" : ""}`}
+                                  style={sel ? {
+                                    background: currentColor,
+                                    borderColor: currentColor,
+                                    boxShadow: `0 4px 18px ${currentColor}38`,
+                                  } : {}}
+                                  onClick={() => handleChipClick(q.id, opt, q.type)}
+                                  aria-pressed={sel}
+                                >
+                                  <span
+                                    className={`wu2-chip-dot${sel ? " is-sel" : ""}`}
+                                    style={sel ? { background: "rgba(255,255,255,0.9)", borderColor: "transparent" } : {}}
+                                  />
+                                  {opt}
+                                </button>
+                              );
+                            })}
+                          </div>
+
+                          <div className="wu2-step-actions">
+                            {step > 0
+                              ? <button type="button" className="wu2-back-btn" onClick={handleBack}>← Back</button>
+                              : <span />}
+                            <button
+                              type="button"
+                              className={`wu2-next-btn${canNext ? "" : " is-off"}`}
+                              style={canNext ? { background: currentColor, boxShadow: `0 4px 20px ${currentColor}44` } : {}}
+                              onClick={canNext ? handleNext : undefined}
+                              disabled={!canNext}
+                            >
+                              {step === QUESTIONS.length - 1 ? "See my result" : "Next"}
+                              <ArrowRight size={14} strokeWidth={2.5} />
+                            </button>
+                          </div>
+                        </motion.div>
+                      )}
+
+                      {phase === "result" && (
+                        <ResultCard
+                          key="result"
+                          answers={answers}
+                          onReset={() => { setSavedAnswers(null); setPhase("quiz"); setStep(0); setDirection(1); setAnswers({}); }}
+                          onBook={() => { handleClose(); openBooking(); }}
+                          reduced={reduced}
+                        />
+                      )}
+
+                    </AnimatePresence>
+                  </div>
+
                 </div>
-
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   );
 }

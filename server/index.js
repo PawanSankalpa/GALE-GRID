@@ -11,6 +11,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import db, { connectDB } from "./db.js";
+import { isGoogleAuthConfigured } from "./utils/authConfig.js";
 
 dotenv.config();
 
@@ -81,36 +82,40 @@ passport.use(
 );
 
 // GOOGLE STRATEGY
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:8000/", //https://gale-grid-1.onrender.com/auth/google/callback
-      passReqToCallback: true,
-    },
-    async (req, accessToken, refreshToken, profile, done) => {
-      try {
-        const email = profile.email.toLowerCase();
-        const result = await db.query("SELECT * FROM users WHERE email = $1", [email]);
+if (isGoogleAuthConfigured(process.env)) {
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: "http://localhost:8000/", //https://gale-grid-1.onrender.com/auth/google/callback
+        passReqToCallback: true,
+      },
+      async (req, accessToken, refreshToken, profile, done) => {
+        try {
+          const email = profile.email.toLowerCase();
+          const result = await db.query("SELECT * FROM users WHERE email = $1", [email]);
 
-        if (result.rows.length > 0) return done(null, result.rows[0]);
+          if (result.rows.length > 0) return done(null, result.rows[0]);
 
-        const firstName = profile.given_name || profile.displayName.split(' ')[0];
-        const lastName = profile.family_name || profile.displayName.split(' ')[1] || '';
-        const username = profile.displayName.replace(/\s+/g, '').toLowerCase();
+          const firstName = profile.given_name || profile.displayName.split(' ')[0];
+          const lastName = profile.family_name || profile.displayName.split(' ')[1] || '';
+          const username = profile.displayName.replace(/\s+/g, '').toLowerCase();
 
-        const newUser = await db.query(
-          "INSERT INTO users (first_name, last_name, username, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-          [firstName, lastName, username, email, null]
-        );
-        return done(null, newUser.rows[0]);
-      } catch (err) {
-        return done(err, false);
+          const newUser = await db.query(
+            "INSERT INTO users (first_name, last_name, username, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [firstName, lastName, username, email, null]
+          );
+          return done(null, newUser.rows[0]);
+        } catch (err) {
+          return done(err, false);
+        }
       }
-    }
-  )
-);
+    )
+  );
+} else {
+  console.warn("Google OAuth is not configured. Skipping Google strategy registration.");
+}
 
 
 // ──────────────────────────────────────────────────────
@@ -186,18 +191,20 @@ app.post("/logout", (req, res) => {
 // ──────────────────────────────────────────────────────
 // 6. GOOGLE OAUTH ROUTES
 // ──────────────────────────────────────────────────────
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["email", "profile"] })
-);
+if (isGoogleAuthConfigured(process.env)) {
+  app.get(
+    "/auth/google",
+    passport.authenticate("google", { scope: ["email", "profile"] })
+  );
 
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: "http://localhost:3000/login", //"https://www.galegrid.com/login
-    successRedirect: "http://localhost:3000/", //https://www.galegrid.com/
-  })
-);
+  app.get(
+    "/auth/google/callback",
+    passport.authenticate("google", {
+      failureRedirect: "http://localhost:3000/login", //"https://www.galegrid.com/login
+      successRedirect: "http://localhost:3000/", //https://www.galegrid.com/
+    })
+  );
+}
 
 
 // ──────────────────────────────────────────────────────
