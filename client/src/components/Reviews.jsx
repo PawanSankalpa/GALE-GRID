@@ -106,17 +106,28 @@ function StatCard({ s, i }) {
 }
 
 export default function ReviewsSection() {
+  const [reviewsList, setReviewsList] = useState(reviews);
   const [active, setActive] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    role: "",
+    project: "",
+    metric: "",
+    rating: 5,
+    quote: ""
+  });
 
   useEffect(() => {
     if (!autoplay) return;
-    const t = setInterval(() => setActive((p) => (p + 1) % reviews.length), 5500);
+    const t = setInterval(() => setActive((p) => (p + 1) % reviewsList.length), 5500);
     return () => clearInterval(t);
-  }, [autoplay]);
+  }, [autoplay, reviewsList.length]);
 
-  const prev = () => { setAutoplay(false); setActive((p) => (p - 1 + reviews.length) % reviews.length); };
-  const next = () => { setAutoplay(false); setActive((p) => (p + 1) % reviews.length); };
+  const prev = () => { setAutoplay(false); setActive((p) => (p - 1 + reviewsList.length) % reviewsList.length); };
+  const next = () => { setAutoplay(false); setActive((p) => (p + 1) % reviewsList.length); };
 
   const touchStartX = useRef(null);
   const handleTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
@@ -127,7 +138,49 @@ export default function ReviewsSection() {
     touchStartX.current = null;
   };
 
-  const current = reviews[active];
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    if (!formData.name || !formData.role || !formData.quote) return;
+
+    const words = formData.name.trim().split(" ");
+    const initials = words.length > 1 
+      ? (words[0][0] + words[1][0]).toUpperCase() 
+      : words[0][0].toUpperCase();
+
+    const colors = ["#FF8C00", "#3B82F6", "#10B981", "#8B5CF6", "#EC4899", "#F59E0B"];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+    const newReview = {
+      id: reviewsList.length + 1,
+      name: formData.name,
+      role: formData.role,
+      initials,
+      color: randomColor,
+      rating: formData.rating,
+      quote: formData.quote,
+      metric: formData.metric || "Project Completed",
+      project: formData.project || "Digital Solution"
+    };
+
+    const updated = [...reviewsList, newReview];
+    setReviewsList(updated);
+    setActive(updated.length - 1);
+    setAutoplay(false);
+
+    setFormData({
+      name: "",
+      role: "",
+      project: "",
+      metric: "",
+      rating: 5,
+      quote: ""
+    });
+    setShowForm(false);
+    setSuccessMsg("Thank you! Your story has been added successfully.");
+    setTimeout(() => setSuccessMsg(""), 5000);
+  };
+
+  const current = reviewsList[active];
   const headerRef = React.useRef(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-60px" });
 
@@ -159,7 +212,7 @@ export default function ReviewsSection() {
         >
           {/* Thumbnail strip */}
           <div className="rv-thumbs">
-            {reviews.map((r, i) => (
+            {reviewsList.map((r, i) => (
               <button
                 key={r.id}
                 className={`rv-thumb${active === i ? " rv-thumb--active" : ""}`}
@@ -236,11 +289,11 @@ export default function ReviewsSection() {
                 <ArrowLeft size={18} />
               </button>
               <div className="rv-dots">
-                {reviews.map((_, i) => (
+                {reviewsList.map((_, i) => (
                   <button
                     key={i}
                     className={`rv-dot${active === i ? " rv-dot--active" : ""}`}
-                    style={{ "--dc": reviews[i].color }}
+                    style={{ "--dc": reviewsList[i].color }}
                     onClick={() => { setAutoplay(false); setActive(i); }}
                     aria-label={`Review ${i + 1}`}
                   />
@@ -258,6 +311,113 @@ export default function ReviewsSection() {
           {stats.map((s, i) => (
             <StatCard key={i} s={s} i={i} />
           ))}
+        </div>
+
+        {/* Dynamic User Review Additions Section */}
+        <div className="rv-user-add-section">
+          {successMsg && (
+            <div className="rv-toast-success">
+              {successMsg}
+            </div>
+          )}
+
+          <div className="rv-add-trigger">
+            <button className="rv-add-toggle-btn" onClick={() => setShowForm(!showForm)}>
+              {showForm ? "Cancel Review" : "Write a Review"}
+            </button>
+          </div>
+
+          <AnimatePresence>
+            {showForm && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="rv-form-wrapper"
+              >
+                <form onSubmit={handleFormSubmit} className="rv-form-card">
+                  <h3 className="rv-form-title">Share Your Story</h3>
+                  <p className="rv-form-subtitle">Tell us about your experience collaborating with GALE GRID.</p>
+
+                  <div className="rv-form-grid">
+                    <div className="rv-form-group">
+                      <label>Your Name</label>
+                      <input 
+                        type="text" 
+                        value={formData.name} 
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
+                        required 
+                        placeholder="e.g. Sarah Mitchell" 
+                      />
+                    </div>
+
+                    <div className="rv-form-group">
+                      <label>Role & Company</label>
+                      <input 
+                        type="text" 
+                        value={formData.role} 
+                        onChange={(e) => setFormData({ ...formData, role: e.target.value })} 
+                        required 
+                        placeholder="e.g. CEO, TechVenture Inc." 
+                      />
+                    </div>
+
+                    <div className="rv-form-group">
+                      <label>Project Type</label>
+                      <input 
+                        type="text" 
+                        value={formData.project} 
+                        onChange={(e) => setFormData({ ...formData, project: e.target.value })} 
+                        required 
+                        placeholder="e.g. E-commerce Platform" 
+                      />
+                    </div>
+
+                    <div className="rv-form-group">
+                      <label>Growth Metric Achieved</label>
+                      <input 
+                        type="text" 
+                        value={formData.metric} 
+                        onChange={(e) => setFormData({ ...formData, metric: e.target.value })} 
+                        required 
+                        placeholder="e.g. 250% more conversions" 
+                      />
+                    </div>
+                  </div>
+
+                  <div className="rv-form-group">
+                    <label>Rating</label>
+                    <div className="rv-form-stars">
+                      {[1, 2, 3, 4, 5].map((val) => (
+                        <button
+                          type="button"
+                          key={val}
+                          className={`rv-form-star-btn${formData.rating >= val ? " active" : ""}`}
+                          onClick={() => setFormData({ ...formData, rating: val })}
+                        >
+                          <Star size={20} fill={formData.rating >= val ? "#FBBF24" : "transparent"} color={formData.rating >= val ? "#FBBF24" : "#94A3B8"} />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rv-form-group">
+                    <label>Your Review</label>
+                    <textarea 
+                      value={formData.quote} 
+                      onChange={(e) => setFormData({ ...formData, quote: e.target.value })} 
+                      required 
+                      placeholder="Describe what we built and how it helped your business..." 
+                      rows={4} 
+                    />
+                  </div>
+
+                  <button type="submit" className="rv-submit-btn">Submit Review</button>
+                </form>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </section>
