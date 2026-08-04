@@ -8,6 +8,8 @@ import rightImg from "../assets/portfolioPics/luxia-item.png";
 import proj4 from "../assets/portfolioPics/hotel-full.png";
 import modernHouse from "../assets/portfolioPics/lifecare.jpeg";
 import luxiaHero3 from "../assets/portfolioPics/luxia-hero3.png";
+import reflectImg from "../assets/portfolioPics/reflect.png";
+import sunmaxImg from "../assets/portfolioPics/sunmaxenergy1.png";
 import "./styles/PortfolioSection.css";
 
 const cards = [
@@ -18,6 +20,7 @@ const cards = [
     title: "LIFECARE MEDICAL",
     hook: "+45% Conversion",
     industry: "Healthcare Platform",
+    link: "https://jayathura-lifecare.vercel.app/",
     stat: true,
     delay: 0,
   },
@@ -35,6 +38,7 @@ const cards = [
     title: "GRAND HOTEL",
     hook: "+30% Bookings",
     industry: "Luxury Hospitality",
+    link: "https://serenity-bay.gale-grid.com",
     delay: 0.16,
   },
   {
@@ -44,6 +48,7 @@ const cards = [
     title: "EMERALD ESTATES",
     hook: "+35% Conversion Rate",
     industry: "Luxury Real Estate · Dubai",
+    link: "https://emerald-estates.gale-grid.com",
     delay: 0.24,
   },
   {
@@ -53,6 +58,7 @@ const cards = [
     title: "OPERA LISTINGS",
     hook: "Virtual Tours",
     industry: "Real Estate",
+    link: "https://opera-listings.gale-grid.com",
     delay: 0.32,
   },
   {
@@ -61,6 +67,26 @@ const cards = [
     alt: "Client recommendation",
     isStat: true,
     delay: 0.4,
+  },
+  {
+    cls: "pf-r3-left",
+    img: reflectImg,
+    alt: "Reflect Fashion project",
+    title: "REFLECT FASHION",
+    hook: "E-Commerce Experience",
+    industry: "Fashion E-Commerce",
+    link: "https://reflect-sandy.vercel.app/",
+    delay: 0.48,
+  },
+  {
+    cls: "pf-r3-right",
+    img: sunmaxImg,
+    alt: "SunMax Energy project",
+    title: "SUNMAX ENERGY",
+    hook: "Page 1 Google SEO",
+    industry: "Clean Energy Platform",
+    link: "https://sunmax-energy.gale-grid.com",
+    delay: 0.56,
   },
 ];
 
@@ -167,12 +193,16 @@ function PfCard({ card }) {
         <span className="pf-card-title">{card.title}</span>
         <span className="pf-card-hook">{card.hook}</span>
       </div>
-      <motion.div
+      <motion.a
+        href={card.link || "#"}
+        target="_blank"
+        rel="noopener noreferrer"
         className="pf-arrow-fixed"
         whileHover={{ rotate: 45, scale: 1.1, transition: { type: "spring", stiffness: 300 } }}
+        aria-label={`Visit ${card.title} website`}
       >
         <ArrowUpRight size={20} />
-      </motion.div>
+      </motion.a>
     </motion.article>
   );
 }
