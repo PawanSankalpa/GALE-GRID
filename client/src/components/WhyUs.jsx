@@ -4,6 +4,7 @@ import { ArrowRight, Check, X } from "lucide-react";
 import { useBooking } from "../context/BookingContext.jsx";
 import { lockBodyScroll } from "../utils/scrollLock";
 import { createPortal } from "react-dom";
+import roboHand from "../assets/statsPics/robo_hand-removebg-preview.png";
 import "./styles/WhyUs.css";
 
 const STEP_COLORS = ["#FF8C00", "#FF8C00", "#FF8C00"];
@@ -512,15 +513,22 @@ export default function WhyUs() {
             animate={{ opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 20 } }}
             exit={{ opacity: 0, y: -16, transition: { duration: 0.18 } }}
           >
-            <span className="wu2-eyebrow">Why Choose Us</span>
-            <h2 className="wu2-headline" id="wu2-headline">
-              What does your business<br />actually need online?
-            </h2>
-            <p className="wu2-sub">3 questions. 45 seconds. Your answer, built around your goals.</p>
-            <button type="button" className="wu2-open-btn" onClick={handleOpen}>
-              Find out now <ArrowRight size={16} strokeWidth={2.4} />
-            </button>
-            <p className="wu2-no-commitment">No commitment &nbsp;·&nbsp; Exit anytime</p>
+            <div className="wu2-teaser-inner">
+              <div className="wu2-teaser-media">
+                <img src={roboHand} alt="Robotic Hand Illustration" className="wu2-robo-hand-img" />
+              </div>
+              <div className="wu2-teaser-content">
+                <span className="wu2-eyebrow">Why Choose Us</span>
+                <h2 className="wu2-headline" id="wu2-headline">
+                  What does your business<br /><span>actually need</span> online?
+                </h2>
+                <p className="wu2-sub">3 questions. 45 seconds. Your answer, built around your goals.</p>
+                <button type="button" className="wu2-open-btn" onClick={handleOpen}>
+                  Find out now <ArrowRight size={16} strokeWidth={2.4} />
+                </button>
+                <p className="wu2-no-commitment">No commitment &nbsp;·&nbsp; Exit anytime</p>
+              </div>
+            </div>
           </motion.div>
         ) : (
           /* Inline result — replaces teaser after quiz completion */

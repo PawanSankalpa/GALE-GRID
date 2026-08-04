@@ -11,79 +11,159 @@
      • CTA: subtle gradient adds perceived dimensionality (not flat orange)
      • Three-layer card shadow: deep warm + close warm + micro-orange outline
        — card appears to float on brand-color heat
-   ===================================================================== */
-
-/* ── Section ── */
+   ====================================================/* ── Section ── */
 .wu2-section {
-  background: #FAFAF8;
+  position: relative;
+  background: radial-gradient(circle at center, rgba(255, 107, 0, 0.02) 0%, #FAF9F6 100%);
+  background-image: 
+    radial-gradient(rgba(15, 23, 42, 0.035) 1.2px, transparent 1.2px);
+  background-size: 28px 28px;
   overflow: hidden;
+  border-top: 1px solid rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.02);
 }
 
 /* ══════════════════════════════════════════════
    TEASER
-══════════════════════════════════════════════ */
+   ══════════════════════════════════════════════ */
 .wu2-teaser {
-  max-width: 620px;
+  max-width: 1400px; /* Filled layout: stretches across the screen */
   margin: 0 auto;
-  padding: clamp(72px, 10vw, 112px) clamp(1.5rem, 5vw, 40px) clamp(60px, 9vw, 100px);
+  padding: clamp(20px, 4vw, 40px) clamp(1.5rem, 5vw, 40px) clamp(20px, 4vw, 40px) 0; /* 0 left padding so hand touches left margin */
+  position: relative;
+  z-index: 1;
+}
+
+.wu2-teaser-inner {
+  display: flex;
+  align-items: center;
+  gap: 0; /* Remove empty spacing between layout blocks */
+  width: 100%;
+}
+
+.wu2-teaser-content {
+  flex: 0.85;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding-left: clamp(8px, 1.5vw, 24px); /* Shifted closer to the fingertip */
+}
+
+.wu2-teaser-media {
+  flex: 1.15;
+  display: flex;
+  justify-content: flex-start; /* Stretches the hand graphic directly to the left edge */
   align-items: center;
-  text-align: center;
+  position: relative;
+  min-height: 520px;
+  margin-left: -50px; /* Pull hand asset fully into left viewport margin */
+}
+
+.wu2-robo-hand-img {
+  width: 108%;
+  max-width: 640px; /* Massive robotic hand */
+  height: auto;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.05)) contrast(1.02);
+  pointer-events: none;
+}
+
+@media (max-width: 860px) {
+  .wu2-teaser {
+    padding: 32px 16px;
+  }
+  .wu2-teaser-inner {
+    flex-direction: column-reverse; /* Stacks image below text on mobile */
+    text-align: center;
+    gap: 32px;
+  }
+  .wu2-teaser-content {
+    align-items: center;
+    text-align: center;
+    padding-left: 0;
+    flex: 1;
+  }
+  .wu2-teaser-media {
+    min-height: auto;
+    justify-content: center;
+    margin-left: 0;
+    flex: 1;
+    width: 100%;
+  }
+  .wu2-robo-hand-img {
+    max-width: 340px;
+  }
 }
 
 .wu2-eyebrow {
   display: inline-block;
-  font-size: 0.69rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: #FF6B00;
-  background: rgba(255, 107, 0, 0.07);
-  border: 1px solid rgba(255, 107, 0, 0.2);
-  padding: 5px 14px;
-  border-radius: 999px;
-  margin-bottom: 22px;
+  color: #FF8C00;
+  background: rgba(255, 140, 0, 0.06);
+  border: 1px solid rgba(255, 140, 0, 0.16);
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(255, 140, 0, 0.02);
 }
 
 .wu2-headline {
-  font-size: clamp(1.9rem, 4.2vw, 3rem);
-  font-weight: 800;
-  /* Slate-900: blue-black depth — reads premium like Apple / Chanel */
+  font-size: clamp(2.1rem, 4.8vw, 3.4rem);
+  font-weight: 850;
   color: #0F172A;
-  line-height: 1.1;
-  letter-spacing: -0.036em;
-  margin: 0 0 16px;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  margin: 0 0 18px;
+  max-width: 680px;
+}
+.wu2-headline span {
+  background: linear-gradient(135deg, #FF9E2C 0%, #FF6B00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 
 .wu2-sub {
-  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
-  /* Slate-500 harmonises with slate-900 headline — same family */
-  color: #64748B;
-  line-height: 1.68;
-  margin: 0 0 32px;
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+  color: #475569;
+  line-height: 1.65;
+  margin: 0 0 36px;
+  max-width: 500px;
 }
 
 .wu2-open-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  /* Subtle gradient: warm → pure → deep — creates perceived dimensionality */
-  background: linear-gradient(135deg, #FF7A20 0%, #FF6B00 50%, #F55D00 100%);
-  color: #fff;
-  font-size: 0.95rem;
-  font-weight: 700;
+  gap: 10px;
+  background: linear-gradient(135deg, #FF8C00 0%, #FF6B00 100%);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 800;
   border: none;
-  border-radius: 999px;
-  padding: 14px 30px;
+  border-radius: 20px;
+  padding: 16px 36px;
   cursor: pointer;
-  margin-bottom: 14px;
-  box-shadow: 0 8px 28px rgba(255, 107, 0, 0.3), 0 2px 6px rgba(255, 107, 0, 0.16);
-  transition: opacity 0.18s, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  margin-bottom: 16px;
+  box-shadow: 
+    0 12px 30px rgba(255, 107, 0, 0.25),
+    0 4px 10px rgba(255, 107, 0, 0.12);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .wu2-open-btn:hover {
-  opacity: 0.9;
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 
+    0 18px 40px rgba(255, 107, 0, 0.35),
+    0 6px 15px rgba(255, 107, 0, 0.18);
+  background: linear-gradient(135deg, #FFA036 0%, #FF740A 100%);
+}
+.wu2-open-btn svg {
+  transition: transform 0.25s ease;
+}
+.wu2-open-btn:hover svg {
+  transform: translateX(4px);
 }
 
 .wu2-no-commitment {
