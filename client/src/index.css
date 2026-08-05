@@ -1,6 +1,8 @@
-/* ── Global horizontal overflow guard (prevents document-level horizontal scroll) ── */
+/* ── Global scroll resets (prevents scroll locks on html tag) ── */
 html {
-  overflow-x: hidden;
+  overflow-x: clip;
+  scroll-behavior: smooth;
+  height: auto;
 }
 
 body {
@@ -10,6 +12,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {

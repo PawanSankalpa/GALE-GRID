@@ -114,6 +114,9 @@
   padding: 6px 8px; /* standard tap/click area */
   border-radius: 6px;
 }
+.nav-links a.active {
+  color: #ff8c00 !important;
+}
 
 .nav-links {
   display: flex;
@@ -420,6 +423,12 @@
   position: relative;
   overflow: hidden;
   text-decoration: none;
+}
+.drawer-nav a.active {
+  color: #ff8c00 !important;
+  border-color: rgba(255,140,0,0.3) !important;
+  background: rgba(255,159,0,0.06) !important;
+  box-shadow: 0 4px 12px rgba(255,140,0,0.08) !important;
 }
 .drawer-nav li { width: 100%; }
 .drawer-nav a:hover { 

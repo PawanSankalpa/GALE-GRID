@@ -6,6 +6,7 @@ import "./styles/mobile-noon.css";
 import "./styles/mobile-premium.css";
 import BottomTabBar from "./components/BottomTabBar";
 import { recordRouteVisit } from "./utils/prefetch.js";
+import { releaseAllBodyScrollLocks } from "./utils/scrollLock.js";
 
 // Public pages
 // HomePage is eager — it's the entry point, must render immediately.
@@ -61,6 +62,7 @@ function AppInner() {
 
   useEffect(() => {
     recordRouteVisit(pathname);
+    releaseAllBodyScrollLocks();
   }, [pathname]);
 
   return (

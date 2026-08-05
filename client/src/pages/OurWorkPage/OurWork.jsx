@@ -24,6 +24,16 @@ import sunmaxAfter from '../../assets/OurWork/screencapture-sunmaxenergy-lk-2026
 import galegridBefore from '../../assets/OurWork/Screenshot 2026-01-16 at 19.43.45.png';
 import galegridAfter from '../../assets/OurWork/screencapture-galegrid-2026-01-16-19_40_58.png';
 
+// Portfolio Section Assets Imports
+import hotelImg from '../../assets/portfolioPics/hotel11.png';
+import operaImg from '../../assets/portfolioPics/luxia-item.png';
+import emeraldImg from '../../assets/portfolioPics/hotel-full.png';
+import lifecareImg from '../../assets/portfolioPics/lifecare.jpeg';
+import reflectImgImport from '../../assets/portfolioPics/reflect.png';
+import aurumImgImport from '../../assets/portfolioPics/AURUM.png';
+import lostFoundImgImport from '../../assets/portfolioPics/lost and found.jpg';
+import diaryImgImport from '../../assets/portfolioPics/Diary.jpeg';
+
 /* ─────────────────────────────────────────
    DATA
 ───────────────────────────────────────── */
@@ -453,6 +463,302 @@ const caseStudies = [
       'Results section uses anonymised summaries to maintain client confidentiality',
     ],
   },
+  {
+    id: 11,
+    title: 'LifeCare Medical',
+    industry: 'Healthcare',
+    type: 'Healthcare Platform',
+    year: '2025',
+    size: 'md',
+    isNew: false,
+    problem: 'Outdated interface with high patient friction, causing drop-offs in appointment booking and online inquiries.',
+    image: lifecareImg,
+    beforeImage: null,
+    afterImage: null,
+    metricValue: '+45%',
+    metricLabel: 'Conversion Rate',
+    color: '#10B981',
+    tags: ['UI/UX', 'Medical Platform', 'SEO'],
+    category: 'design',
+    problems: [
+      'Appointment system took 8 steps and was not mobile friendly',
+      'Zero patient onboarding resources leading to administrative overload',
+      'High bounce rate due to slow loading speeds on imagery-rich pages',
+    ],
+    solutions: [
+      'Streamlined patient portal to a fast 2-step booking flow',
+      'Designed patient resources section for fast searchability',
+      'Optimized hosting performance and image compressions',
+    ],
+    results: [
+      { value: '+45%', label: 'Conversions' },
+      { value: '-40%', label: 'Admin Time' },
+      { value: '98%', label: 'Patient Satisfaction' },
+    ],
+    decisions: [
+      'Prioritized privacy and accessibility standards compliance',
+      'Kept brand colors sterile yet welcoming',
+    ],
+  },
+  {
+    id: 12,
+    title: 'Grand Hotel',
+    industry: 'Hospitality',
+    type: 'Booking Website',
+    year: '2025',
+    size: 'wide',
+    isNew: false,
+    problem: 'Heavy reliance on third-party OTAs eroding margins, with direct booking website failing to attract and convert users.',
+    image: hotelImg,
+    beforeImage: null,
+    afterImage: null,
+    metricValue: '+30%',
+    metricLabel: 'Direct Bookings',
+    color: '#FBBF24',
+    tags: ['Branding', 'Hotel Systems', 'Conversion'],
+    category: 'branding',
+    problems: [
+      'High OTA commission fees reducing hospitality margins',
+      'Room descriptions lacked visual storytelling and clear pricing',
+      'Checkout process was non-secure and slow on mobile devices',
+    ],
+    solutions: [
+      'Integrated custom room booking engine with direct API connectivity',
+      'Built immersive room gallery pages with video capabilities',
+      'Designed lightning-fast secure checkout flow with multiple payment methods',
+    ],
+    results: [
+      { value: '+30%', label: 'Direct Bookings' },
+      { value: '-22%', label: 'OTA Commission' },
+      { value: '+140%', label: 'Average Stay Value' },
+    ],
+    decisions: [
+      'Used luxurious gold accents to echo the premium offline experiences',
+      'Emphasized direct booking perks (e.g. free breakfast) across pages',
+    ],
+  },
+  {
+    id: 13,
+    title: 'Emerald Estates',
+    industry: 'Real Estate',
+    type: 'Luxury Real Estate Platform',
+    year: '2025',
+    size: 'lg',
+    isNew: false,
+    problem: 'Ultra-high-net-worth buyers exiting early due to generic UI templates and slow performance loading 4K photos.',
+    image: emeraldImg,
+    beforeImage: null,
+    afterImage: null,
+    metricValue: '+35%',
+    metricLabel: 'Inquiries',
+    color: '#047857',
+    tags: ['UI/UX', 'Luxury Design', 'Development'],
+    category: 'design',
+    problems: [
+      'Generic listings templates failed to convey high-end property value',
+      'Zero lead qualification mechanisms for high-value properties',
+      'Image galleries loaded slowly, degrading premium brand prestige',
+    ],
+    solutions: [
+      'Designed bespoke property showcase templates featuring editorial layouts',
+      'Integrated dynamic lead qualifier forms based on buyer budgets',
+      'Implemented progressive loading and optimized hosting assets',
+    ],
+    results: [
+      { value: '+35%', label: 'Inquiries' },
+      { value: '1.4s', label: 'Load Time' },
+      { value: '+220%', label: 'Qualified Leads' },
+    ],
+    decisions: [
+      'Adopted a deep emerald and gold palette for brand consistency',
+      'Focussed on visual immersion with minimal copywriting',
+    ],
+  },
+  {
+    id: 14,
+    title: 'Opera Listings',
+    industry: 'Real Estate',
+    type: 'Property Platform',
+    year: '2025',
+    size: 'sm',
+    isNew: false,
+    problem: 'Static real estate listings failing to capture buyer engagement, resulting in low property viewing requests.',
+    image: operaImg,
+    beforeImage: null,
+    afterImage: null,
+    metricValue: 'Virtual Tours',
+    metricLabel: 'Feature Launch',
+    color: '#6366F1',
+    tags: ['Web Design', 'Development', 'Virtual Tours'],
+    category: 'development',
+    problems: [
+      'Buyers struggled to visualize property layouts from photos alone',
+      'High volume of unqualified property viewings wasting agents time',
+      'Slow loading listing pages on 3G/4G connections',
+    ],
+    solutions: [
+      'Integrated interactive 3D virtual tours and floor plans into listing pages',
+      'Built self-serve showing reservation system with verification steps',
+      'Created performance-driven static pages utilizing Next.js configurations',
+    ],
+    results: [
+      { value: '+85%', label: 'User Engagement' },
+      { value: '-40%', label: 'Unqualified Viewings' },
+      { value: '+50%', label: 'Virtual Showings' },
+    ],
+    decisions: [
+      'Placed virtual tour buttons as the primary action on property cards',
+      'Implemented automated follow-up emails for virtual tour attendees',
+    ],
+  },
+  {
+    id: 15,
+    title: 'Reflect Fashion',
+    industry: 'Fashion E-Commerce',
+    type: 'Online Store',
+    year: '2025',
+    size: 'md',
+    isNew: false,
+    problem: 'Online clothing boutique suffering from a rigid e-commerce template with a high cart abandonment rate.',
+    image: reflectImgImport,
+    beforeImage: null,
+    afterImage: null,
+    metricValue: '+55%',
+    metricLabel: 'Sales Growth',
+    color: '#EC4899',
+    tags: ['E-Commerce', 'UI/UX Design', 'Branding'],
+    category: 'design',
+    problems: [
+      'High cart abandonment due to complex checkout processes',
+      'Mobile layout made selecting product sizes and colors difficult',
+      'Lacked personalized recommendation systems to boost order size',
+    ],
+    solutions: [
+      'Designed clean single-page checkout flow with Apple Pay and Google Pay',
+      'Built bottom-sheet selector menus optimized for mobile gestures',
+      'Implemented smart recommendation widgets based on user behavior',
+    ],
+    results: [
+      { value: '+55%', label: 'Sales Growth' },
+      { value: '-30%', label: 'Cart Abandonment' },
+      { value: '+25%', label: 'Avg. Order Size' },
+    ],
+    decisions: [
+      'Chose neon colors and high-contrast styling to attract Gen-Z shoppers',
+      'Integrated customer reviews directly into checkout sheets',
+    ],
+  },
+  {
+    id: 16,
+    title: 'Aurum Jewellery',
+    industry: 'Jewellery E-Commerce',
+    type: 'Online Store',
+    year: '2025',
+    size: 'md',
+    isNew: false,
+    problem: 'Exquisite jewellery brand with poor digital storytelling, failing to build trust online and convert visitors into buyers.',
+    image: aurumImgImport,
+    beforeImage: null,
+    afterImage: null,
+    metricValue: '+70%',
+    metricLabel: 'Online Sales',
+    color: '#D97706',
+    tags: ['E-Commerce', 'Development', 'Premium Design'],
+    category: 'development',
+    problems: [
+      'Lacked high-resolution detailing zoom for premium fine jewellery',
+      'Customer trust issues purchasing high-value luxury items online',
+      'Poor site performance on mobile slowing product search speeds',
+    ],
+    solutions: [
+      'Developed custom ultra-high-definition zoom viewer for items',
+      'Built robust security signaling and certificates integration',
+      'Optimized product data structures to speed up filtering and browsing',
+    ],
+    results: [
+      { value: '+70%', label: 'Online Sales' },
+      { value: '+40%', label: 'Brand Trust Score' },
+      { value: '1.2s', label: 'Category Page Speed' },
+    ],
+    decisions: [
+      'Designed minimal interfaces to emphasize jewellery images',
+      'Added dynamic financing options integrations directly on product sheets',
+    ],
+  },
+  {
+    id: 17,
+    title: 'Lost & Found Hub',
+    industry: 'Mobile Applications',
+    type: 'Cross-Platform Mobile App',
+    year: '2025',
+    size: 'sm',
+    isNew: true,
+    problem: 'University students losing valuable belongings on campus with no central, real-time method for report and recovery.',
+    image: lostFoundImgImport,
+    beforeImage: null,
+    afterImage: null,
+    metricValue: '10k+ Users',
+    metricLabel: 'University Adoption',
+    color: '#6366F1',
+    tags: ['Mobile App', 'Development', 'Push Notifications'],
+    category: 'development',
+    problems: [
+      'Slow physical bulletin board methods for lost items',
+      'Lacked instant alert capabilities for high-value lost items',
+      'Authentication issues restricting campus-only access security',
+    ],
+    solutions: [
+      'Built a cross-platform React Native app with instant posting flows',
+      'Integrated push notification triggers based on geofenced tags',
+      'Implemented secure university email sign-on checks',
+    ],
+    results: [
+      { value: '10k+', label: 'Active Users' },
+      { value: '85%', label: 'Belongings Found' },
+      { value: '<5m', label: 'Reporting Time' },
+    ],
+    decisions: [
+      'Designed dashboard feed to emphasize recently posted items first',
+      'Used map views for item tags rather than textual descriptions',
+    ],
+  },
+  {
+    id: 18,
+    title: 'WorkDiary AI',
+    industry: 'Mobile Applications',
+    type: 'Voice & AI Assistant',
+    year: '2025',
+    size: 'sm',
+    isNew: true,
+    problem: 'Interns struggling to record daily progress and outcomes, leading to incomplete reports and feedback reviews.',
+    image: diaryImgImport,
+    beforeImage: null,
+    afterImage: null,
+    metricValue: 'AI Verified',
+    metricLabel: 'Gemini AI API',
+    color: '#8B5CF6',
+    tags: ['Mobile App', 'AI Integration', 'Voice API'],
+    category: 'development',
+    problems: [
+      'Manual daily logging was tedious and frequently forgotten by interns',
+      'Writing quality of logs was poor and lacked actionable summaries',
+      'No review analytics for university advisors and supervisors',
+    ],
+    solutions: [
+      'Built voice-to-text logging app powered by Gemini AI summaries',
+      'Integrated automatic log categorization and tag systems',
+      'Designed supervisor review dashboard with interactive statistics',
+    ],
+    results: [
+      { value: '100%', label: 'Completion Rate' },
+      { value: '-80%', label: 'Log Prep Time' },
+      { value: '4.9★', label: 'App Store Rating' },
+    ],
+    decisions: [
+      'Implemented offline audio caching for logging without connections',
+      'Adopted a calm, minimal workspace aesthetic to lower user friction',
+    ],
+  },
 ];
 
 const CATEGORIES = ['all', ...new Set(caseStudies.map(c => c.category))];
@@ -462,7 +768,7 @@ const filters = CATEGORIES.map(cat => ({
   count: cat === 'all' ? caseStudies.length : caseStudies.filter(c => c.category === cat).length,
 }));
 
-const SKELETON_LAYOUT = ['lg', 'wide', 'md', 'sm', 'md', 'wide', 'sm', 'sm', 'wide', 'sm'];
+const SKELETON_LAYOUT = ['lg', 'wide', 'md', 'sm', 'md', 'wide', 'sm', 'sm', 'wide', 'sm', 'md', 'wide', 'lg', 'sm', 'md', 'md', 'sm', 'sm'];
 
 const proofStats = [
   { endValue: 340, suffix: '%', label: 'Avg. lead increase', prefix: '+' },

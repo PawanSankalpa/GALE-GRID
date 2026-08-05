@@ -90,7 +90,13 @@ const NavBar = () => {
         {/* Desktop links */}
         <div className="nav-links desktop-only">
           {navLinks.map((l) => (
-            <Link key={l.to} to={l.to}>{l.label}</Link>
+            <Link
+              key={l.to}
+              to={l.to}
+              className={location.pathname === l.to ? 'active' : ''}
+            >
+              {l.label}
+            </Link>
           ))}
           <button type="button" className="nav-cta" onClick={openBooking}>Let's Talk</button>
         </div>
@@ -162,7 +168,13 @@ const NavBar = () => {
                 >
                   {navLinks.map((l) => (
                     <motion.li key={l.to} variants={linkItemVariants}>
-                      <Link to={l.to} onClick={() => setMenuOpen(false)}>{l.label}</Link>
+                      <Link
+                        to={l.to}
+                        onClick={() => setMenuOpen(false)}
+                        className={location.pathname === l.to ? 'active' : ''}
+                      >
+                        {l.label}
+                      </Link>
                     </motion.li>
                   ))}
                 </motion.ul>
