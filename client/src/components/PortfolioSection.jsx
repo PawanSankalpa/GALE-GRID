@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useBooking } from "../context/BookingContext.jsx";
 import { motion, useInView } from "framer-motion";
-import { ArrowUpRight, Star, ExternalLink } from "lucide-react";
+import { ArrowUpRight, Star, ExternalLink, ChevronDown } from "lucide-react";
 import leftImg from "../assets/portfolioPics/hotel11.png";
 import rightImg from "../assets/portfolioPics/luxia-item.png";
 import proj4 from "../assets/portfolioPics/hotel-full.png";
@@ -10,6 +10,9 @@ import modernHouse from "../assets/portfolioPics/lifecare.jpeg";
 import luxiaHero3 from "../assets/portfolioPics/luxia-hero3.png";
 import reflectImg from "../assets/portfolioPics/reflect.png";
 import sunmaxImg from "../assets/portfolioPics/sunmaxenergy1.png";
+import aurumImg from "../assets/portfolioPics/AURUM.png";
+import lostFoundImg from "../assets/portfolioPics/lost and found.jpg";
+import diaryImg from "../assets/portfolioPics/Diary.jpeg";
 import droppedImg from "../assets/statsPics/dropped.png";
 import "./styles/PortfolioSection.css";
 
@@ -81,19 +84,52 @@ const cards = [
   },
   {
     cls: "pf-r3-right",
+    img: aurumImg,
+    alt: "AURUM Jewellery Shop project",
+    title: "AURUM JEWELLERY",
+    hook: "Elegant E-Commerce Store",
+    industry: "Jewellery E-Commerce",
+    link: "https://e-commerce-1-ruby.vercel.app/",
+    delay: 0.56,
+  },
+  {
+    cls: "pf-r4-left",
     img: sunmaxImg,
     alt: "SunMax Energy project",
     title: "SUNMAX ENERGY",
     hook: "Page 1 Google SEO",
     industry: "Clean Energy Platform",
     link: "https://sunmax-energy.gale-grid.com",
-    delay: 0.56,
+    delay: 0.15,
+  },
+  {
+    cls: "pf-r4-center",
+    img: lostFoundImg,
+    alt: "Lost & Found Hub mobile application",
+    title: "LOST & FOUND HUB",
+    hook: "Cross-Platform University Mobile App",
+    industry: "Mobile Application",
+    link: "https://www.linkedin.com/in/tharani-jayathura-96235226b/details/projects/",
+    delay: 0.2,
+  },
+  {
+    cls: "pf-r4-right",
+    img: diaryImg,
+    alt: "WorkDiary AI mobile application",
+    title: "WORKDIARY AI",
+    hook: "Voice & AI Enhancer (Gemini API)",
+    industry: "Internship Management Mobile App",
+    link: "https://www.linkedin.com/in/tharani-jayathura-96235226b/details/projects/",
+    delay: 0.25,
   },
 ];
 
 const PortfolioSection = () => {
   const headerRef = useRef(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-10% 0px" });
+  const [expanded, setExpanded] = useState(false);
+
+  const visibleCards = expanded ? cards : cards.slice(0, 6);
 
   return (
     <section id="portfolio" className="pf-section" aria-labelledby="pf-title">
@@ -117,16 +153,34 @@ const PortfolioSection = () => {
 
         {/* Mosaic */}
         <div className="pf-mosaic">
-          {cards.map((card, i) => (
+          {visibleCards.map((card, i) => (
             <PfCard key={i} card={card} />
           ))}
+        </div>
+
+        {/* See More Actions */}
+        <div className="pf-more-actions">
+          <button
+            type="button"
+            className="pf-more-btn"
+            onClick={() => setExpanded(!expanded)}
+          >
+            {expanded ? "See Less" : "See More"}
+            <ChevronDown
+              size={18}
+              style={{
+                transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
+                transition: "transform 0.28s ease",
+              }}
+            />
+          </button>
         </div>
       </div>
 
       {/* Stats footer */}
       <div className="pf-stats-footer">
         <div className="psf-item">
-          <Star size={18} fill="#FBBF24" strokeWidth={0} />
+          <Star size={22} fill="#FBBF24" strokeWidth={0} />
           <div>
             <span className="psf-num">4.9/5</span>
             <span className="psf-label">Google Rating</span>
@@ -134,7 +188,7 @@ const PortfolioSection = () => {
         </div>
         <div className="psf-divider" />
         <div className="psf-item">
-          <ArrowUpRight size={18} className="psf-icon" />
+          <ArrowUpRight size={22} className="psf-icon" />
           <div>
             <span className="psf-num">10+</span>
             <span className="psf-label">Projects</span>
@@ -142,7 +196,7 @@ const PortfolioSection = () => {
         </div>
         <div className="psf-divider" />
         <div className="psf-item">
-          <ExternalLink size={17} className="psf-icon" />
+          <ExternalLink size={22} className="psf-icon" />
           <div>
             <span className="psf-num">2–8</span>
             <span className="psf-label">Weeks Delivery</span>
