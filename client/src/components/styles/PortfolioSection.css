@@ -62,6 +62,24 @@
   color: #FFA834; /* Glowing warm gold-orange */
 }
 
+/* Liquid Drip effect transition from stats showcase above */
+.pf-drip-container {
+  position: absolute;
+  top: 0;
+  right: -10px;
+  width: clamp(240px, 28vw, 420px);
+  pointer-events: none;
+  z-index: 5;
+  transform: translateY(-2px); /* Seamless overlap to prevent white boundary gaps */
+}
+.pf-drip-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* Deepen image tones to match the exact dark charcoal (#090B0F) of the stats showcase above */
+  filter: brightness(0.06) contrast(1.15);
+}
+
 /* Main Section */
 .pf-section {
   position: relative;
@@ -325,6 +343,9 @@
 
 /* Mobile responsive */
 @media (max-width: 768px) {
+  .pf-drip-container {
+    width: 140px; /* Scale down on mobile viewports to prevent covering text */
+  }
   .pf-section {
     padding: 3rem 1rem;
     overflow-x: hidden;

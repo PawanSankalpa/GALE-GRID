@@ -10,6 +10,7 @@ import modernHouse from "../assets/portfolioPics/lifecare.jpeg";
 import luxiaHero3 from "../assets/portfolioPics/luxia-hero3.png";
 import reflectImg from "../assets/portfolioPics/reflect.png";
 import sunmaxImg from "../assets/portfolioPics/sunmaxenergy1.png";
+import droppedImg from "../assets/statsPics/dropped.png";
 import "./styles/PortfolioSection.css";
 
 const cards = [
@@ -96,6 +97,10 @@ const PortfolioSection = () => {
 
   return (
     <section id="portfolio" className="pf-section" aria-labelledby="pf-title">
+      {/* Liquid drip transition from stats showcase above */}
+      <div className="pf-drip-container">
+        <img src={droppedImg} alt="" className="pf-drip-img" aria-hidden="true" />
+      </div>
       <div className="pf-shell">
         {/* Header */}
         <motion.header

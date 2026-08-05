@@ -389,6 +389,12 @@
   gap: 10px;
 }
 
+.wu2-step-actions-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .wu2-back-btn {
   background: none;
   border: none;
@@ -403,6 +409,22 @@
 .wu2-back-btn:hover {
   color: #FFF;
   background: rgba(255, 255, 255, 0.05);
+}
+
+.wu2-cancel-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #64748B;
+  padding: 10px 14px;
+  border-radius: 10px;
+  transition: color 0.15s, background 0.15s;
+}
+.wu2-cancel-btn:hover {
+  color: #EF4444; /* Exit red color hover */
+  background: rgba(239, 68, 68, 0.06);
 }
 
 .wu2-next-btn {

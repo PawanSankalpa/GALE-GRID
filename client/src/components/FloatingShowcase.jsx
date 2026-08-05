@@ -10,17 +10,18 @@ function StatItem({ value, label, icon: Icon, delay }) {
   return (
     <motion.div
       ref={ref}
-      className="ts-stat-card"
+      className="ts-stat-item"
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ type: "spring", stiffness: 80, damping: 20, delay }}
-      whileHover={{ y: -6, boxShadow: "0 16px 36px rgba(255, 140, 0, 0.08)", borderColor: "rgba(255, 140, 0, 0.25)" }}
     >
       <div className="ts-stat-icon-wrapper">
         <Icon size={20} className="ts-stat-icon" />
       </div>
-      <span className="ts-stat-num">{value}</span>
-      <span className="ts-stat-label">{label}</span>
+      <div className="ts-stat-body">
+        <span className="ts-stat-num">{value}</span>
+        <span className="ts-stat-label">{label}</span>
+      </div>
     </motion.div>
   );
 }
@@ -75,10 +76,9 @@ const FloatingShowcase = () => {
             ))}
           </div>
 
-          {/* Centre: brand logo card */}
+          {/* Centre: brand logo (no box background) */}
           <div className="ts-ed-center">
-            <div className="ts-brand-card">
-              <div className="ts-brand-mesh" />
+            <div className="ts-brand-container">
               <motion.div
                 className="ts-logo-wrap"
                 initial={{ opacity: 0, scale: 0.88 }}
@@ -92,6 +92,10 @@ const FloatingShowcase = () => {
                   draggable={false}
                 />
               </motion.div>
+              
+              {/* Divider line with glow point in the center */}
+              <div className="ts-brand-divider" />
+              
               <motion.p
                 className="ts-ed-tagline"
                 initial={{ opacity: 0, y: 12 }}

@@ -615,19 +615,7 @@ export default function WhyUs() {
                 aria-hidden="true"
               />
 
-              {/* Floating images positioned behind the card but on top of backdrop */}
-              <div className="wu2-floating-container desktop-only">
-                <img
-                  src="/images/quiz_left_vector.jpg"
-                  alt="Creative Analytics Dashboard"
-                  className="wu2-floating-img wu2-float-left"
-                />
-                <img
-                  src="/images/quiz_right_vector.jpg"
-                  alt="Strategy and Innovation"
-                  className="wu2-floating-img wu2-float-right"
-                />
-              </div>
+              {/* Side illustrations removed for clean focus */}
 
               <motion.div
                 className="wu2-overlay-wrap"
@@ -708,9 +696,16 @@ export default function WhyUs() {
                           </div>
 
                           <div className="wu2-step-actions">
-                            {step > 0
-                              ? <button type="button" className="wu2-back-btn" onClick={handleBack}>← Back</button>
-                              : <span />}
+                            <div className="wu2-step-actions-left">
+                              {step > 0 && (
+                                <button type="button" className="wu2-back-btn" onClick={handleBack}>
+                                  ← Back
+                                </button>
+                              )}
+                              <button type="button" className="wu2-cancel-btn" onClick={handleClose}>
+                                Cancel
+                              </button>
+                            </div>
                             <button
                               type="button"
                               className={`wu2-next-btn${canNext ? "" : " is-off"}`}

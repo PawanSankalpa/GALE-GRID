@@ -198,13 +198,13 @@
    FLOATING SHOWCASE — Editorial logo layout, mobile
 ═══════════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
-  .trust-strip { padding: 0 !important; background: #FFFFFF !important; overflow: hidden !important; }
+  .trust-strip { padding: 0 !important; background: #090B0F !important; overflow: hidden !important; }
 
   .ts-marquee-wrap { padding: 10px 0 !important; }
   .ts-name   { font-size: 0.74rem !important; }
   .ts-metric { font-size: 0.70rem !important; }
 
-  .ts-editorial { padding: 36px var(--mp-md) 40px !important; background: #FFFFFF !important; }
+  .ts-editorial { padding: 36px var(--mp-md) 40px !important; background: #090B0F !important; }
 
   .ts-ed-inner { grid-template-columns: 1fr !important; gap: 24px !important; max-width: 100% !important; }
 
