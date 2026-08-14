@@ -51,7 +51,9 @@
 @media (max-width: 768px) {
   body {
     overflow-x: hidden;
+    overflow-y: visible !important;
     -webkit-text-size-adjust: 100%;
+    height: auto !important;
   }
 
   body.has-bottom-nav {
@@ -88,9 +90,36 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Scrollbar: hide on all scrollable areas */
-  * { scrollbar-width: none; -ms-overflow-style: none; }
-  *::-webkit-scrollbar { display: none; }
+  /* Scrollbar: hide on horizontal scroll strips only (not the page body) */
+  .noon-hscroll,
+  .pf-grid, .pf-cards,
+  .pc3-grid,
+  .rv-thumbs,
+  .faqn-cats,
+  .hero-trust-pills,
+  .ps-toggle,
+  .wu2-tabs, .why-tabs,
+  .srv-sidebar-nav,
+  .srv-editorial-pills,
+  .ow-filter-inner,
+  .pf-filter-tabs, .pf-tabs {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .noon-hscroll::-webkit-scrollbar,
+  .pf-grid::-webkit-scrollbar, .pf-cards::-webkit-scrollbar,
+  .pc3-grid::-webkit-scrollbar,
+  .rv-thumbs::-webkit-scrollbar,
+  .faqn-cats::-webkit-scrollbar,
+  .hero-trust-pills::-webkit-scrollbar,
+  .ps-toggle::-webkit-scrollbar,
+  .wu2-tabs::-webkit-scrollbar, .why-tabs::-webkit-scrollbar,
+  .srv-sidebar-nav::-webkit-scrollbar,
+  .srv-editorial-pills::-webkit-scrollbar,
+  .ow-filter-inner::-webkit-scrollbar,
+  .pf-filter-tabs::-webkit-scrollbar, .pf-tabs::-webkit-scrollbar {
+    display: none;
+  }
 
   /* Universal eyebrow pills */
   .faqn-eyebrow,

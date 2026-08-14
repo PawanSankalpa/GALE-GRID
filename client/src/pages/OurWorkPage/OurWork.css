@@ -606,7 +606,7 @@
   cursor: ew-resize;
   user-select: none;
   -webkit-user-select: none;
-  touch-action: none;
+  touch-action: pan-y;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.14);
 }
 .ow-compare-after {
@@ -1166,17 +1166,32 @@
     font-weight: 700;
   }
 
-  /* Bento grid: strict 2-col layout (Noon product grid) */
+  /* Bento grid: responsive layout with spacious row heights */
   .ow-bento {
+    display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    grid-auto-rows: 180px !important;
-    gap: 10px !important;
+    grid-auto-rows: minmax(280px, auto) !important;
+    gap: 14px !important;
     padding: 0 16px;
+    overflow: visible !important;
+  }
+  @media (max-width: 500px) {
+    .ow-bento {
+      grid-template-columns: 1fr !important;
+      grid-auto-rows: minmax(300px, auto) !important;
+    }
   }
   .ow-card[data-size],
   .ow-skel[data-size] {
     grid-column: span 1 !important;
     grid-row: span 1 !important;
+    min-height: 280px !important;
+  }
+  @media (max-width: 500px) {
+    .ow-card[data-size],
+    .ow-skel[data-size] {
+      min-height: 300px !important;
+    }
   }
 
   /* Modal: bottom sheet (Noon product detail sheet) */
@@ -1209,5 +1224,11 @@
     border: none!important;
     border-radius: 999px!important;
     font-weight: 800!important;
+  }
+
+  /* Bypass scroll reveal on mobile so sections are always visible */
+  .ow-hidden {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

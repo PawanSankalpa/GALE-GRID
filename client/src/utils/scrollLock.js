@@ -1,25 +1,19 @@
 let lockCount = 0;
-let previousOverflow = "";
-let previousPaddingRight = "";
 
 function canUseDOM() {
   return typeof window !== "undefined" && typeof document !== "undefined";
 }
 
+/**
+ * Lock body scroll by adding a CSS class that uses !important
+ * to override the mobile overflow-y: auto !important rules.
+ * Returns an unlock function.
+ */
 export function lockBodyScroll() {
   if (!canUseDOM()) return () => {};
 
-  const body = document.body;
-
   if (lockCount === 0) {
-    previousOverflow = body.style.overflow;
-    previousPaddingRight = body.style.paddingRight;
-
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    if (scrollbarWidth > 0) {
-      body.style.paddingRight = `${scrollbarWidth}px`;
-    }
-    body.style.overflow = "hidden";
+    document.body.classList.add("scroll-locked");
   }
 
   lockCount += 1;
@@ -31,20 +25,21 @@ export function lockBodyScroll() {
 
     lockCount = Math.max(0, lockCount - 1);
     if (lockCount === 0) {
-      body.style.overflow = previousOverflow;
-      body.style.paddingRight = previousPaddingRight;
-      previousOverflow = "";
-      previousPaddingRight = "";
+      document.body.classList.remove("scroll-locked");
     }
   };
 }
 
+/**
+ * Force-release ALL body scroll locks.
+ * Called on every route change to guarantee the page is scrollable.
+ */
 export function releaseAllBodyScrollLocks() {
   if (!canUseDOM()) return;
 
   lockCount = 0;
-  document.body.style.overflow = previousOverflow;
-  document.body.style.paddingRight = previousPaddingRight;
-  previousOverflow = "";
-  previousPaddingRight = "";
+  document.body.classList.remove("scroll-locked");
+  // Belt-and-braces: also clear any inline overflow that old code may have set
+  document.body.style.overflow = "";
+  document.body.style.paddingRight = "";
 }
