@@ -61,6 +61,7 @@ function AppInner() {
   const isAdminOrPartner = pathname.startsWith("/admin") || pathname.startsWith("/partner");
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     recordRouteVisit(pathname);
     releaseAllBodyScrollLocks();
   }, [pathname]);
