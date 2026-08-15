@@ -49,7 +49,6 @@
   background-color: #1E1E1E; /* Dark gray, similar to rgba(0, 0, 0, 0.876) */
   position: relative; /* Required for pseudo-element positioning */
   min-height: 100vh; /* Ensure full viewport coverage */
-  overflow-x: hidden; /* Prevent horizontal scroll from animation */
 }
 
 /* Pseudo-element for animated gradient */

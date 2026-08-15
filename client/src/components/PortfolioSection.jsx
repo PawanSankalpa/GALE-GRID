@@ -16,6 +16,15 @@ import diaryImg from "../assets/portfolioPics/Diary.jpeg";
 import droppedImg from "../assets/statsPics/dropped.png";
 import "./styles/PortfolioSection.css";
 
+const CATEGORY_LABELS = {
+  all: 'All Projects',
+  'web-design': 'Web Design',
+  'e-commerce': 'E-Commerce',
+  branding: 'Branding & SEO',
+  platforms: 'Platforms',
+  'mobile-apps': 'Mobile Apps'
+};
+
 const cards = [
   {
     cls: "pf-r1-left",
@@ -27,6 +36,7 @@ const cards = [
     link: "https://jayathura-lifecare.vercel.app/",
     stat: true,
     delay: 0,
+    category: "web-design",
   },
   {
     cls: "pf-r1-center pf-stat-only",
@@ -44,6 +54,7 @@ const cards = [
     industry: "Luxury Hospitality",
     link: "https://serenity-bay.gale-grid.com",
     delay: 0.16,
+    category: "branding",
   },
   {
     cls: "pf-r2-left-large",
@@ -54,6 +65,7 @@ const cards = [
     industry: "Luxury Real Estate · Dubai",
     link: "https://emerald-estates.gale-grid.com",
     delay: 0.24,
+    category: "web-design",
   },
   {
     cls: "pf-r2-right-top",
@@ -64,6 +76,7 @@ const cards = [
     industry: "Real Estate",
     link: "https://opera-listings.gale-grid.com",
     delay: 0.32,
+    category: "platforms",
   },
   {
     cls: "pf-r2-right-bottom pf-stat-only",
@@ -81,6 +94,7 @@ const cards = [
     industry: "Fashion E-Commerce",
     link: "https://reflect-sandy.vercel.app/",
     delay: 0.48,
+    category: "e-commerce",
   },
   {
     cls: "pf-r3-right",
@@ -91,6 +105,7 @@ const cards = [
     industry: "Jewellery E-Commerce",
     link: "https://e-commerce-1-ruby.vercel.app/",
     delay: 0.56,
+    category: "e-commerce",
   },
   {
     cls: "pf-r4-left",
@@ -101,6 +116,7 @@ const cards = [
     industry: "Clean Energy Platform",
     link: "https://sunmax-energy.gale-grid.com",
     delay: 0.15,
+    category: "branding",
   },
   {
     cls: "pf-r4-center",
@@ -111,6 +127,7 @@ const cards = [
     industry: "Mobile Application",
     link: "https://www.linkedin.com/in/tharani-jayathura-96235226b/details/projects/",
     delay: 0.2,
+    category: "mobile-apps",
   },
   {
     cls: "pf-r4-right",
@@ -121,6 +138,7 @@ const cards = [
     industry: "Internship Management Mobile App",
     link: "https://www.linkedin.com/in/tharani-jayathura-96235226b/details/projects/",
     delay: 0.25,
+    category: "mobile-apps",
   },
 ];
 
@@ -128,8 +146,15 @@ const PortfolioSection = () => {
   const headerRef = useRef(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-10% 0px" });
   const [expanded, setExpanded] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("all");
 
-  const visibleCards = expanded ? cards : cards.slice(0, 6);
+  const filteredCards = activeFilter === "all"
+    ? cards
+    : cards.filter(c => !c.isStat && c.category === activeFilter);
+
+  const visibleCards = activeFilter === "all"
+    ? (expanded ? filteredCards : filteredCards.slice(0, 6))
+    : filteredCards;
 
   return (
     <section id="portfolio" className="pf-section" aria-labelledby="pf-title">
@@ -151,30 +176,55 @@ const PortfolioSection = () => {
           <p className="pf-hd-sub">Real projects. Measurable results. Feel free to explore the live sites.</p>
         </motion.header>
 
-        {/* Mosaic */}
-        <div className="pf-mosaic">
+        {/* Filter bar */}
+        <div className="pf-filters-bar">
+          <div className="pf-filters-inner">
+            {Object.entries(CATEGORY_LABELS).map(([id, label]) => {
+              // Count matching projects (excluding stats cards)
+              const count = id === "all"
+                ? cards.filter(c => !c.isStat).length
+                : cards.filter(c => !c.isStat && c.category === id).length;
+              
+              return (
+                <button
+                  key={id}
+                  className={`pf-filter-pill ${activeFilter === id ? "active" : ""}`}
+                  onClick={() => setActiveFilter(id)}
+                >
+                  {label}
+                  <span className="pf-filter-count">{count}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Mosaic Grid */}
+        <div className={activeFilter === "all" ? "pf-mosaic" : "pf-mosaic pf-mosaic-filtered"}>
           {visibleCards.map((card, i) => (
-            <PfCard key={i} card={card} />
+            <PfCard key={card.title || i} card={card} />
           ))}
         </div>
 
         {/* See More Actions */}
-        <div className="pf-more-actions">
-          <button
-            type="button"
-            className="pf-more-btn"
-            onClick={() => setExpanded(!expanded)}
-          >
-            {expanded ? "See Less" : "See More"}
-            <ChevronDown
-              size={18}
-              style={{
-                transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
-                transition: "transform 0.28s ease",
-              }}
-            />
-          </button>
-        </div>
+        {activeFilter === "all" && (
+          <div className="pf-more-actions">
+            <button
+              type="button"
+              className="pf-more-btn"
+              onClick={() => setExpanded(!expanded)}
+            >
+              {expanded ? "See Less" : "See More"}
+              <ChevronDown
+                size={18}
+                style={{
+                  transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
+                  transition: "transform 0.28s ease",
+                }}
+              />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Stats footer */}

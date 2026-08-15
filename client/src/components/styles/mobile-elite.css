@@ -50,8 +50,6 @@
 ───────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   body {
-    overflow-x: hidden;
-    overflow-y: visible !important;
     -webkit-text-size-adjust: 100%;
     height: auto !important;
   }

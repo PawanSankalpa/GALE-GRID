@@ -54,7 +54,7 @@ const caseStudies = [
     metricLabel: 'Lead Generation',
     color: '#3B82F6',
     tags: ['UX Design', 'Development', 'SEO'],
-    category: 'design',
+    category: 'web-design',
     problems: [
       "Website looked outdated and didn't reflect premium brand positioning",
       'No clear call-to-action leading to missed conversion opportunities',
@@ -136,7 +136,7 @@ const caseStudies = [
     metricLabel: 'Trial Sign-ups',
     color: '#8B5CF6',
     tags: ['UI/UX', 'Conversion', 'Development'],
-    category: 'development',
+    category: 'platforms',
     problems: [
       'Technical jargon alienated non-technical decision makers',
       'Trial sign-up process had 7 steps causing 90% drop-off',
@@ -232,7 +232,7 @@ const caseStudies = [
     metricLabel: 'Bookings',
     color: '#EC4899',
     tags: ['UI/UX', 'Booking System', 'SEO'],
-    category: 'design',
+    category: 'web-design',
     problem: 'Beauty clinic relying on Instagram DMs for bookings, losing high-value clients to competitors with professional online presence.',
     problems: [
       'All bookings managed through Instagram DMs — chaotic and unscalable',
@@ -314,7 +314,7 @@ const caseStudies = [
     metricLabel: 'Enquiries',
     color: '#6366F1',
     tags: ['Development', 'UI/UX', 'Maps API'],
-    category: 'development',
+    category: 'platforms',
     problem: 'Real estate agency losing qualified leads to property portals charging high listing fees and showing competitor listings.',
     problems: [
       'Over-reliance on Rightmove and Zoopla eroding margin and brand control',
@@ -355,7 +355,7 @@ const caseStudies = [
     metricLabel: 'Consultations',
     color: '#0EA5E9',
     tags: ['UI/UX', 'Compliance', 'Development'],
-    category: 'design',
+    category: 'web-design',
     problem: 'Independent financial adviser invisible online — all clients from word of mouth, zero digital acquisition.',
     problems: [
       'Website looked like it was built in 2009 — destroying trust instantly',
@@ -396,7 +396,7 @@ const caseStudies = [
     metricLabel: 'Bookings',
     color: '#F97316',
     tags: ['UI/UX', 'Booking', 'Development'],
-    category: 'development',
+    category: 'platforms',
     problem: 'Boutique travel agency manually handling all bookings via email — unable to scale and losing tech-savvy travellers to OTAs.',
     problems: [
       'All trip bookings managed through email chains taking days to confirm',
@@ -437,7 +437,7 @@ const caseStudies = [
     metricLabel: 'Case Enquiries',
     color: '#475569',
     tags: ['UI/UX', 'SEO', 'Content Strategy'],
-    category: 'design',
+    category: 'web-design',
     problem: 'Mid-size law firm with strong reputation but no digital presence — losing high-value cases to less experienced but digitally active competitors.',
     problems: [
       'Website had no practice area pages — invisible for service-specific searches',
@@ -479,7 +479,7 @@ const caseStudies = [
     metricLabel: 'Conversion Rate',
     color: '#10B981',
     tags: ['UI/UX', 'Medical Platform', 'SEO'],
-    category: 'design',
+    category: 'web-design',
     problems: [
       'Appointment system took 8 steps and was not mobile friendly',
       'Zero patient onboarding resources leading to administrative overload',
@@ -553,7 +553,7 @@ const caseStudies = [
     metricLabel: 'Inquiries',
     color: '#047857',
     tags: ['UI/UX', 'Luxury Design', 'Development'],
-    category: 'design',
+    category: 'web-design',
     problems: [
       'Generic listings templates failed to convey high-end property value',
       'Zero lead qualification mechanisms for high-value properties',
@@ -590,7 +590,7 @@ const caseStudies = [
     metricLabel: 'Feature Launch',
     color: '#6366F1',
     tags: ['Web Design', 'Development', 'Virtual Tours'],
-    category: 'development',
+    category: 'platforms',
     problems: [
       'Buyers struggled to visualize property layouts from photos alone',
       'High volume of unqualified property viewings wasting agents time',
@@ -627,7 +627,7 @@ const caseStudies = [
     metricLabel: 'Sales Growth',
     color: '#EC4899',
     tags: ['E-Commerce', 'UI/UX Design', 'Branding'],
-    category: 'design',
+    category: 'e-commerce',
     problems: [
       'High cart abandonment due to complex checkout processes',
       'Mobile layout made selecting product sizes and colors difficult',
@@ -664,7 +664,7 @@ const caseStudies = [
     metricLabel: 'Online Sales',
     color: '#D97706',
     tags: ['E-Commerce', 'Development', 'Premium Design'],
-    category: 'development',
+    category: 'e-commerce',
     problems: [
       'Lacked high-resolution detailing zoom for premium fine jewellery',
       'Customer trust issues purchasing high-value luxury items online',
@@ -701,7 +701,7 @@ const caseStudies = [
     metricLabel: 'University Adoption',
     color: '#6366F1',
     tags: ['Mobile App', 'Development', 'Push Notifications'],
-    category: 'development',
+    category: 'mobile-apps',
     problems: [
       'Slow physical bulletin board methods for lost items',
       'Lacked instant alert capabilities for high-value lost items',
@@ -738,7 +738,7 @@ const caseStudies = [
     metricLabel: 'Gemini AI API',
     color: '#8B5CF6',
     tags: ['Mobile App', 'AI Integration', 'Voice API'],
-    category: 'development',
+    category: 'mobile-apps',
     problems: [
       'Manual daily logging was tedious and frequently forgotten by interns',
       'Writing quality of logs was poor and lacked actionable summaries',
@@ -761,10 +761,19 @@ const caseStudies = [
   },
 ];
 
-const CATEGORIES = ['all', ...new Set(caseStudies.map(c => c.category))];
+const CATEGORY_LABELS = {
+  all: 'All Projects',
+  'web-design': 'Web Design',
+  'e-commerce': 'E-Commerce',
+  branding: 'Branding & SEO',
+  platforms: 'Platforms',
+  'mobile-apps': 'Mobile Apps'
+};
+
+const CATEGORIES = ['all', 'web-design', 'e-commerce', 'branding', 'platforms', 'mobile-apps'];
 const filters = CATEGORIES.map(cat => ({
   id: cat,
-  label: cat === 'all' ? 'All Projects' : cat.charAt(0).toUpperCase() + cat.slice(1),
+  label: CATEGORY_LABELS[cat] || cat,
   count: cat === 'all' ? caseStudies.length : caseStudies.filter(c => c.category === cat).length,
 }));
 
