@@ -398,10 +398,10 @@ export default function FAQ() {
                 color: "#7C3AED",
               },
               {
-                href: "mailto:hello@galegrid.com",
+                href: "mailto:hello.galegrid@gmail.com",
                 Icon: Mail,
                 label: "Email",
-                sub: "hello@galegrid.com",
+                sub: "hello.galegrid@gmail.com",
                 color: "#38BDF8",
               },
             ].map((c, i) => (

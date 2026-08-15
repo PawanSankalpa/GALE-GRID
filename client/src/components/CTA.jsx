@@ -16,10 +16,10 @@ const contacts = [
     color: "#25D366",
   },
   {
-    href: "mailto:hello@galegrid.com",
+    href: "mailto:hello.galegrid@gmail.com",
     icon: Mail,
     title: "Send an Email",
-    sub: "hello@galegrid.com",
+    sub: "hello.galegrid@gmail.com",
     color: "#3B82F6",
   },
   {

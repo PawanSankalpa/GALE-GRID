@@ -34,7 +34,7 @@ function Footer() {
             
             {/* Brand Section */}
             <section className="footer-section footer-brand" aria-label="Brand information">
-              <h3 className="brand-logo">GALE GRID</h3>
+              <h3 className="brand-logo">GALE <span className="brand-accent">GRID</span></h3>
               <p className="brand-tagline">
                 Designing Your Digital Future
               </p>
@@ -73,7 +73,7 @@ function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <button type="button" aria-label="Book a discovery call" onClick={openBooking} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 4, color: "inherit", fontFamily: "inherit", fontSize: "inherit", padding: 0 }}>
+                  <button type="button" aria-label="Book a discovery call" onClick={openBooking} className="footer-link-btn">
                     <span>Contact</span>
                     <ArrowUpRight size={14} />
                   </button>
@@ -85,13 +85,13 @@ function Footer() {
             <section className="footer-section footer-contact" aria-label="Contact information">
               <h4 className="footer-section-title">Get in Touch</h4>
               <address className="footer-contact-list">
-                <a href="mailto:hello@galegrid.com" className="footer-contact-item">
+                <a href="mailto:hello.galegrid@gmail.com" className="footer-contact-item">
                   <div className="contact-icon">
                     <Mail size={18} />
                   </div>
                   <div className="contact-details">
                     <span className="contact-label">Email</span>
-                    <span className="contact-value">hello@galegrid.com</span>
+                    <span className="contact-value">hello.galegrid@gmail.com</span>
                   </div>
                 </a>
                 

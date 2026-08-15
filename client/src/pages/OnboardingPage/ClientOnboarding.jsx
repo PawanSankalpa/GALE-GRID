@@ -255,8 +255,8 @@ export default function ClientOnboarding() {
 
         <p style={S.footer}>
           Questions? Email us at{" "}
-          <a href="mailto:hello@galegrid.com" style={{ color: "rgba(255,255,255,0.5)" }}>
-            hello@galegrid.com
+          <a href="mailto:hello.galegrid@gmail.com" style={{ color: "rgba(255,255,255,0.5)" }}>
+            hello.galegrid@gmail.com
           </a>
         </p>
       </div>
