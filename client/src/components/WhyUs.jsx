@@ -384,26 +384,8 @@ export default function WhyUs() {
   const autoRef = useRef(null);
   const unlockScrollRef = useRef(null);
 
-  /* Pop on visit:
-     - sessionStorage("wu2_dismissed") set this session → do nothing
-     - localStorage("wu2_visited") set (returning visitor)  → welcome-back toast
-     - neither set (brand new visitor)                      → full quiz popup     */
-  useEffect(() => {
-    try {
-      if (sessionStorage.getItem("wu2_dismissed")) return;
-      // Don't auto-pop on mobile — inline quiz section is the CTA there
-      if (window.innerWidth <= 768) return;
-      const t = setTimeout(() => {
-        if (localStorage.getItem("wu2_visited")) {
-          setWelcomeBack(true);
-        } else {
-          localStorage.setItem("wu2_visited", "1");
-          setIsOpen(true);
-        }
-      }, 800);
-      return () => clearTimeout(t);
-    } catch (_) {}
-  }, []);
+  /* Auto-popup removed — quiz is only triggered via the "Find out now" button
+     in the Why Choose Us section. */
 
   /* Save answers when quiz reaches result phase */
   useEffect(() => {
